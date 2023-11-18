@@ -1,0 +1,105 @@
+$color-skin: #fd7d14b7;
+// $color-low: #fd7d147a;
+$color-low: #fd7d143b;
+$font: #6b6b6b;
+$border: #ccc;
+:root {
+
+  // --el-color-primary: #fd7e14;
+
+  // --el-color-primary-light-2: #fc9038;
+  // --el-color-primary-light-3: #ffab67;
+  // --el-color-primary-light-4: #fccaa1;
+  // --el-color-primary-light-5: #ffe0d2;
+  //   --el-button-active-color:#ffe0d2;
+  //   --el-button-active-bg-color:#ffab67;
+  //   --el-button-active-border-color:#ffe0d2;
+  //   --el-button-active-bg-color:#ffab67;
+  // // 全局文字顏色
+  // --el-color-text: $color;
+
+
+  --el-color-primary-rgb:#fd7e14;
+  --el-color-primary:#fd7e14;
+  --el-color-primary-light-3:#fc8f36;
+  --el-color-primary-light-5:#fca55e;
+  --el-color-primary-light-7:#ffb980;
+  --el-color-primary-light-8:#ffd7b6;
+  --el-color-primary-light-9:#fce2cc;
+  --el-color-primary-dark-2:#e27924;
+}
+$color-high: #ff4800;
+$color: #fd7e14;
+$color-light-3: #fc8f36;
+$color-light-5: #fca55e;
+$color-light-7: #ffb980;
+$color-light-8: #ffd7b6;
+$color-light-9: #fce2cc;
+$color-dark-2: #e27924;
+
+  //   --el-button-active-color:#ffe0d2;
+// @forward 'element-plus/theme-chalk/src/common/var.scss' with (
+//   $colors: (
+//     'primary': (
+//       'base': green,
+//     ),
+//   ),
+// );
+// @use 'xxx.scss' as *;
+
+$breakpoint-xs: 540px;
+$breakpoint-sm: 720px;
+$breakpoint-md: 960px;
+$breakpoint-lg: 1140px;
+$breakpoint-xl: 1320px;
+$breakpoint-xxl: 1500px;
+
+
+// 左侧logo高度
+$base-menu-logo-height: 50px;
+
+// 左侧logo文字大小
+$base-logo-title-fontSize: 20px;
+
+$base-menu-width: 200px;
+
+
+
+div {
+
+  caret-color: transparent;
+}
+
+input {
+  caret-color: rgb(0, 0, 0);
+
+}
+
+.change {
+  color: $color;
+  cursor: pointer;
+  outline: none;
+  caret-color: transparent;
+  // caret-color: none;
+}
+
+
+.change:hover {
+  color: black;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  color: #fd7e14;
+}
+
+
+
+.border {
+  border: 1px solid #dad8d8;
+}
+
+.border:hover {
+  border: 1px solid $color;
+}
