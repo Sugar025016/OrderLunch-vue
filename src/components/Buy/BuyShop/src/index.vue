@@ -1,22 +1,27 @@
 <template>
   <div class="buyShop">
-    <div class="header">
-      <div class="header-link">
-        <socialMedia></socialMedia>
-      </div>
-      <div class="header-shop">
-        <shop></shop>
-      </div>
-    </div>
-    <div class="buy-product-footer">
-      <products></products>
-    </div>
+    <rwdBody>
+      <template #slotName>
+        <div class="header">
+          <div class="header-link">
+            <socialMedia></socialMedia>
+          </div>
+          <div class="header-shop">
+            <shop></shop>
+          </div>
+        </div>
+        <div class="buy-product-footer">
+          <products></products>
+        </div>
+      </template>
+    </rwdBody>
   </div>
 </template>
 <script setup lang="ts">
 import products from './products/index.vue'
 import socialMedia from './socialMedia/index.vue'
 import shop from './shop/index.vue'
+import rwdBody from '@/components/layout/rwdBody/index.vue'
 </script>
 <style lang="scss" scoped>
 .buyShop {

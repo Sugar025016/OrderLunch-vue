@@ -1,88 +1,6 @@
-<template>
-  <div class="buyOrder">
-    <h1>我的訂單</h1>
-
-    <div class="tabs">
-      <!-- <div class="tabs-header">
-        <div
-          v-for="(tab, index) in tabs"
-          :key="index"
-          @click="changeTab(index)"
-        >
-          <span
-            class="tab-label underline"
-            :class="{ active: activeTab === index }"
-          >
-            {{ tab.label }}
-          </span>
-        </div>
-      </div> -->
-      <div class="tabs-content">
-        <!-- <table class="table">
-          <thead>
-            <tr>
-              <th scope="col"></th>
-              <th scope="col">店家</th>
-              <th scope="col">訂單編號</th>
-              <th scope="col">狀態</th>
-              <th scope="col">取餐時間</th>
-              <th scope="col">金額</th>
-              <th scope="col">備註</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="order in orderPageResponse?.content">
-              <td>
-                <img
-                  :src="order.imgUrl"
-                  alt=""
-                  style="width: 130px; height: 100px"
-                />
-              </td>
-              <th scope="row">{{ order.shopName }}</th>
-              <th scope="row">{{ order.orderId }}</th>
-              <td>{{ order.status }}</td>
-              <td>{{ order.takeTime }}</td>
-              <td>{{ order.totalPrise }}</td>
-              <td>{{ order.remark }}</td>
-            </tr>
-          </tbody>
-        </table> -->
-        <el-table
-          :data="order"
-          style="width: 100%"
-          :row-class-name="tableRowClassName"
-          :cell-style="cellStyle"
-        >
-          <el-table-column label="圖片" prop="imgUrl" align="center">
-            <template #="{ row, $index }">
-              <el-image
-                :src="row.imgUrl"
-                alt=""
-                style="width: 130px; height: 100px"
-                lazy
-              />
-            </template>
-          </el-table-column>
-          <el-table-column prop="shopName" label="店家" width="100" />
-          <el-table-column prop="orderId" label="訂單編號" width="100" />
-          <el-table-column prop="statusChinese" label="狀態" />
-          <el-table-column prop="takeTime" label="取餐時間" />
-          <el-table-column prop="totalPrise" label="金額" />
-          <el-table-column prop="remark" label="備註" :cell-style="cellStyle" />
-        </el-table>
-        <!-- <div class="loading"></div>
-        <div v-if="loading" class="loading" v-loading="loading">
-          <p v-loading="loading"></p>
-        </div> -->
-      </div>
-
-      <div v-if="loading" class="loading" v-loading="loading"></div>
-      <!-- <div class="loading"></div> -->
-    </div>
-  </div>
-</template>
 <script setup lang="ts">
+import rwdBody from '@/components/layout/rwdBody/index.vue'
+
 import { reqGetOrder } from '@/api/order'
 import {
   GetOrderPageResponse,
@@ -94,6 +12,7 @@ import {
 import { ElMessage } from 'element-plus/lib/components/index.js'
 
 import { onMounted, ref } from 'vue'
+import { formatDate } from '@/utils/time'
 const activeTab = ref(0)
 interface Tab {
   label: string
@@ -183,6 +102,68 @@ onMounted(() => {
   getOrder(page.value)
 })
 </script>
+
+<template>
+  <div class="buyOrder">
+    <rwdBody>
+      <template #slotName>
+        <h1>我的訂單</h1>
+
+        <div class="tabs">
+          <div class="tabs-content">
+            <el-table
+              :data="order"
+              style="width: 100%"
+              :row-class-name="tableRowClassName"
+              :cell-style="cellStyle"
+            >
+              <el-table-column label="圖片" prop="imgUrl" align="center">
+                <template #="{ row, $index }">
+                  <el-image
+                    :src="row.imgUrl"
+                    alt=""
+                    style="width: 130px; height: 100px"
+                    lazy
+                  />
+                </template>
+              </el-table-column>
+              <el-table-column prop="shopName" label="店家" width="100" />
+              <el-table-column prop="orderId" label="訂單編號" width="100" />
+              <el-table-column prop="statusChinese" label="狀態" />
+              <!-- <el-table-column prop="takeTime" label="取餐時間" /> -->
+              <el-table-column
+                prop="takeTime"
+                label="取餐日期"
+                width="100"
+                max-width="180"
+                align="center"
+                column-key="date"
+                :formatter="formatDate"
+              />
+              <el-table-column
+                prop="takeTime"
+                label="取餐時間"
+                width="100"
+                max-width="180"
+                align="center"
+                column-key="time"
+                :formatter="formatDate"
+              />
+              <el-table-column prop="totalPrise" label="金額" />
+              <el-table-column
+                prop="remark"
+                label="備註"
+                :cell-style="cellStyle"
+              />
+            </el-table>
+          </div>
+          <div v-if="loading" class="loading" v-loading="loading"></div>
+        </div>
+      </template>
+    </rwdBody>
+  </div>
+</template>
+
 <style lang="scss" scoped>
 // @import '@/styles/bootstrap.scss';
 

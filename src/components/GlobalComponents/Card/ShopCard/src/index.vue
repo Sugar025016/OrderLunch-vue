@@ -46,7 +46,8 @@ onMounted(async () => {
       />
     </div>
     <div class="overlay" v-if="shop.orderable">
-      <div class="overlay-text">可線上訂購</div>
+      <span class="overlay-text">可線上</span>
+      <span class="overlay-text">訂購</span>
     </div>
     <div style="padding: 14px">
       <div class="bottom">
@@ -118,22 +119,64 @@ onMounted(async () => {
   .no-image-label {
     display: none; /* 設置缺圖片時隱藏（缺圖圖標） */
   }
+  // .overlay {
+  //   position: absolute;
+  //   top: -15px;
+  //   right: -15px;
+  //   width: 75px;
+  //   height: 75px;
+  //   // background-color: #fd7e14;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  //   z-index: 100;
+  //   background-size: cover;
+  //   background-repeat: no-repeat;
+  //   background-image: url('@/assets/images/plate.png') ; /* 設置背景圖片 */
+  //   background-position: center center;
+  //   .overlay-text {
+  //     color: $color;
+  //     font-size: 14px;
+  //     font-weight: bold;
+  //     z-index: 100;
+  //     white-space: pre-line;
+  //     margin: 10px;
+  //     text-align: center;
+  //   }
+  // }
   .overlay {
     position: absolute;
-    top: 15px;
-    right: -5px;
-    width: 100px;
-    height: 25px;
-    background-color: #fd7e14;
+    top: -17px;
+    right: -18px;
+    padding: 10px;
+    width: 25%; /* 這裡修改為 100% */
+    height: 35%; /* 這裡修改為 100% */
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 100;
+    flex-direction: column;
+    z-index: 1;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    background-image: url('@/assets/images/plate.png');
+    background-position: center center;
+    object-fit: contain;
+    transition: opacity 0.3s ease;
+    font-size: 16px;
     .overlay-text {
-      color: #ffffff;
-      font-size: 14px;
+      color: $color;
       font-weight: bold;
       z-index: 100;
+      width: 100%;
+      height: auto;
+
+      margin: 2px 10px;
+      text-align: center;
+
+      white-space: nowrap;
+    font-size: 1rem;
+
     }
   }
   .bottom {

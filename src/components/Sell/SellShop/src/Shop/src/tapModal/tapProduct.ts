@@ -6,5 +6,4 @@ export const tapProduct = ref<TabData>({
   name: '',
   shelve: false,
   products: [],
-  value: undefined,
 })

@@ -34,21 +34,26 @@
             <div class="information">
               <el-icon :size="20"><Watch /></el-icon>
               <span>今日營業時間：</span>
-              <!-- <component v-if="shopData && shopData.schedules[dayOfWeek] && shopData.schedules[dayOfWeek].timePeriods && shopData.schedules[dayOfWeek].timePeriods.length > 0" 
-                v-for="timePeriod in shopData?.schedules[dayOfWeek].timePeriods">
-                <span>{{timePeriod.startTime}}-{{timePeriod.endTime}}</span>
-              </component>
-              <span v-else>{{ shopData?.schedules[dayOfWeek] }}</span> -->
-
-              <component
+              <div
                 v-if="
-                  shopData?.schedules[dayOfWeek].timePeriods &&
-                  shopData?.schedules[dayOfWeek].timePeriods?.length > 0
+                  shopData?.schedules[dayOfWeek]?.timePeriods &&
+                  shopData?.schedules[dayOfWeek]?.timePeriods.length > 0
                 "
-                v-for="timePeriod in shopData?.schedules[dayOfWeek].timePeriods"
+                v-for="(timePeriod, i) in shopData?.schedules[dayOfWeek]
+                  .timePeriods"
+                class="times"
               >
-                <span>{{ timePeriod.startTime }}~{{ timePeriod.endTime }}</span>
-              </component>
+                <span v-if="i > 0">,</span>
+                <span>
+                  {{ showTime(timePeriod.startTime) }}~{{
+                    showTime(
+                      timePeriod.endTime === '00:00:00'
+                        ? '24:00'
+                        : timePeriod.endTime,
+                    )
+                  }}
+                </span>
+              </div>
               <span v-else>{{ shopData?.schedules[dayOfWeek] }}</span>
               <span v-else>非營業日</span>
             </div>
@@ -91,7 +96,6 @@
               :icon="Watch"
               round
               plain
-              color=""
               data-bs-toggle="modal"
               data-bs-target="#shopInfoModal"
             >
@@ -119,6 +123,7 @@ import { ShopData, ShopResponseData } from '@/api/shop/type'
 // import 'bootstrap/dist/css/bootstrap.css' // Import Bootstrap CSS
 import shopInfoModal from '../shopInfoModal/index.vue'
 import useUserStore from '@/store/modules/user'
+import { deleteSecond as showTime } from '@/utils/time'
 
 let $route = useRoute()
 

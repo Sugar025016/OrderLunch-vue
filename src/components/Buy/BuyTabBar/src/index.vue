@@ -4,9 +4,9 @@
       <div class="toolbar_left">
         <BreadCrumb />
       </div>
-      <div class="toolbar_order">
+      <!-- <div class="toolbar_order">
         <order></order>
-      </div>
+      </div> -->
       <div class="toolbar_right">
         <Setting />
       </div>
@@ -52,7 +52,7 @@ defineProps(['scene'])
 .toolbar {
   position: sticky;
   top: 0; /* 元素固定的位置，這裡是頂部 */
-  background-color: #f1f1f1; /* 元素的背景色 */
+  // background-color: #da680b00;
   z-index: 100; /* 可選的，如果有其他元素重疊時可以使用 */
   display: flex;
   justify-content: space-between;

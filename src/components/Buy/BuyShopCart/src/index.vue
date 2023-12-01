@@ -1,89 +1,10 @@
-<template>
-  <div class="shopCart">
-    <div class="shopCart-header">
-      <h1>購物車</h1>
-    </div>
-    <div class="shopCart-body">
-      <el-row class="shopCart-body" :gutter="20">
-        <el-col :span="16">
-          <span>訂購店家:{{ carts.shopName }}，滿300可外送</span>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">商品名稱</th>
-                <th scope="col">部門/單位</th>
-                <th scope="col">訂購人</th>
-                <th scope="col">單價</th>
-                <th scope="col">備註</th>
-                <th scope="col">數量</th>
-                <th scope="col">小計</th>
-                <th scope="col">變更</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="cart in carts.cartResponses">
-                <th scope="row">{{ cart.productResponse.productName }}</th>
-                <td>{{ cart.department }}</td>
-                <td>{{ cart.orderUsername }}</td>
-                <td>{{ cart.productResponse.price }}</td>
-                <td>{{ cart.remark }}</td>
-                <td>
-                  <el-input-number
-                    v-model="cart.qty"
-                    :min="1"
-                    :max="10"
-                    @click="updateCart(cart.cartId, cart.qty)"
-                    size="small"
-                  />
-                </td>
-                <td>{{ cart.productResponse.price * cart.qty }}</td>
-                <td>
-                  <el-icon @click="deleteCart(cart.cartId)">
-                    <DeleteFilled />
-                  </el-icon>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </el-col>
-        <el-col :span="8">
-          <div class="body-right">
-            <span class="total">總金額:</span>
-            <span class="total-data">NT${{ sum }}</span>
-            <hr />
-            <el-button
-              type="warning"
-              size="large"
-              class="button-orange"
-              @click="checkLink"
-              round
-            >
-              確認訂單
-            </el-button>
-            <el-button
-              type="warning"
-              size="large"
-              class="button-wight"
-              @click="shopLink"
-              round
-            >
-              繼續購物
-            </el-button>
-            <el-button type="warning" size="large" class="button-wight" round>
-              糾團
-            </el-button>
-          </div>
-        </el-col>
-      </el-row>
-    </div>
-  </div>
-</template>
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { apiGetCart, apiDeleteCart, apiPutCart } from '@/api/cart'
 import { CartList, CartResponseData, CartsData } from '@/api/cart/type'
 import useUserStore from '@/store/modules/user'
+import rwdBody from '@/components/layout/rwdBody/index.vue'
 
 let userStore = useUserStore()
 let $router = useRouter()
@@ -157,6 +78,117 @@ const updateCart = async (cartId: number, qty: number) => {
   }
 }
 </script>
+<template>
+  <div class="shopCart">
+    <rwdBody>
+      <template #slotName>
+        <div class="shopCart-header">
+          <h1>購物車</h1>
+        </div>
+        <div class="shopCart-body">
+          <el-row class="shopCart-body" :gutter="20">
+            <el-col :span="16">
+              <span>訂購店家:{{ carts.shopName }}，滿300可外送</span>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col" class="table-title">商品名稱</th>
+                    <th scope="col" class="table-title">部門/單位</th>
+                    <th scope="col" class="table-title">訂購人</th>
+                    <th scope="col" class="table-title">備註</th>
+                    <th scope="col" class="table-title">單價</th>
+                    <th scope="col" class="table-title">數量</th>
+                    <th scope="col" class="table-title">小計</th>
+                    <th scope="col" class="table-title">變更</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="cart in carts.cartResponses">
+                    <th class="table-content" scope="row">{{ cart.productResponse.productName }}</th>
+                    <td class="table-content table-width">
+                      {{ cart.department }}
+                    </td>
+                    <td class="table-content table-width">
+                      {{ cart.orderUsername }}
+                    </td>
+                    <!-- <td class="remark">{{ cart.remark }}</td> -->
+                    <td class="table-content remark">
+                      <el-popover
+                        placement="top-start"
+                        title="備註"
+                        :width="200"
+                        trigger="hover"
+                        :content="cart.remark"
+                      >
+                        <template #reference>
+                          {{ cart.remark }}
+                        </template>
+                      </el-popover>
+                    </td>
+                    <td class="table-content table-width">
+                      {{ cart.productResponse.price }}
+                    </td>
+                    <td class="table-content">
+                      <el-input-number
+                        v-model="cart.qty"
+                        :min="1"
+                        :max="10"
+                        @click="updateCart(cart.cartId, cart.qty)"
+                        size="small"
+                      />
+                    </td>
+                    <td class="table-content">
+                      {{ cart.productResponse.price * cart.qty }}
+                    </td>
+                    <td class="table-content">
+                      <el-icon @click="deleteCart(cart.cartId)">
+                        <DeleteFilled />
+                      </el-icon>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </el-col>
+            <el-col :span="8">
+              <div class="body-right">
+                <span class="total">總金額:</span>
+                <span class="total-data">NT${{ sum }}</span>
+                <hr />
+                <el-button
+                  type="warning"
+                  size="large"
+                  class="button-orange"
+                  @click="checkLink"
+                  round
+                >
+                  確認訂單
+                </el-button>
+                <el-button
+                  type="warning"
+                  size="large"
+                  class="button-wight"
+                  @click="shopLink"
+                  round
+                >
+                  繼續購物
+                </el-button>
+                <el-button
+                  type="warning"
+                  size="large"
+                  class="button-wight"
+                  round
+                >
+                  糾團
+                </el-button>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+      </template>
+    </rwdBody>
+  </div>
+</template>
+
 <style lang="scss" scoped>
 // @import "../node_modules/bootstrap/scss/_modal.scss";
 
@@ -186,8 +218,26 @@ $table-border-color: rgb(155, 155, 155); //
     // display: flex;
     .table {
       tr {
+        .table-title {
+          text-align: center;
+          //         display: flex;
+          // justify-content: center; /* 水平居中 */
+          // align-items: stretch;
+        }
         .el-icon {
           cursor: pointer; /* 添加手型光标效果 */
+        }
+        .table-content {
+          text-align: center;
+        }
+        .table-width {
+          max-width: 100px;
+        }
+        .remark {
+          white-space: nowrap; /* 让文字不换行 */
+          overflow: hidden; /* 隐藏溢出部分 */
+          text-overflow: ellipsis; /* 显示省略号 */
+          max-width: 200px;
         }
       }
     }

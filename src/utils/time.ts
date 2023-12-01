@@ -32,3 +32,17 @@ export const formatTime = (today: Date) => {
 
   return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`
 }
+
+import moment from 'moment'
+export const formatDate = (row: any, column: any) => {
+  const date = row.takeTime
+  let formattedDate
+  if (column.columnKey === 'date') {
+    formattedDate = moment(date).format('YYYY-MM-DD')
+  }
+  if (column.columnKey === 'time') {
+    formattedDate = moment(date).format('HH:mm:ss')
+  }
+  // 使用您想要的日期格式
+  return formattedDate
+}

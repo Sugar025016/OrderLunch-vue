@@ -43,7 +43,6 @@
 </template>
 
 <script setup lang="ts">
-import productsCard from '.././productsCard/index.vue'
 import productModal from '../productModal/index.vue'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
@@ -58,16 +57,13 @@ import { ProductData } from '@/api/product/type'
 import useUserStore from '@/store/modules/user'
 import useShopStore from '@/store/modules/shop'
 
-const props = defineProps<{
-  scrollWhere: String
-}>()
 
 let userStore = useUserStore()
 let shopStore = useShopStore()
 
 let $route = useRoute()
 
-let id: number = $route.params.id
+let id: number = $route.params.id 
 
 let TabProductsData = ref<TabData[]>([])
 

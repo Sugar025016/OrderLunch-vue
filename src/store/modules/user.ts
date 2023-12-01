@@ -61,6 +61,8 @@ const useUserStore = defineStore('User', {
       avatar: '',
       buttons: [],
       cartCount: 0,
+      orderCount: 0,
+      shopOrderCount: 0,
       addresses: {
         id: 0,
         city: '',
@@ -102,6 +104,8 @@ const useUserStore = defineStore('User', {
         this.email = res.data.email
         this.favoriteShop = res.data.favoriteShops
         this.cartCount = res.data.cartCount
+        this.orderCount = res.data.orderCount
+        this.shopOrderCount = res.data.shopOrderCount
         this.address = res.data.address as Address
 
         // const userAsyncRoute = filterAsyncRoute(

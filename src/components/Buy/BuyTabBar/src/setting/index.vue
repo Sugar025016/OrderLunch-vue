@@ -9,7 +9,7 @@
   ></def-svg-icon>
   <!-- <img :src="userStore.avatar" alt=""  v-if="(userStore.token != '')"/> -->
 
-  <el-dropdown class="car" v-if="userStore.username">
+  <el-dropdown class="list" v-if="userStore.username">
     <!-- <el-dropdown class="car" > -->
     <span class="el-dropdown-link" style="cursor: pointer">
       {{ userStore.username }}
@@ -42,14 +42,47 @@
       </el-dropdown-menu>
     </template>
   </el-dropdown>
-  <div class="car shopCar">
+  <div class="list shopCar">
     <router-link :to="'/BuyShopCart'" class="link">
-      <ShoppingBag class="icon car" />
-      <span class="cartQuantity text-white bg-warning conut">
+      <ShoppingBag class="icon list" />
+      <span class="cartQuantity text-white bg-warning count">
         {{ userStore.cartCount }}
       </span>
     </router-link>
+    <router-link :to="'/BuyOrder'" class="link">
+      <Document class="icon list order" />
+      <span class="cartQuantity text-white bg-warning count order-count">
+        {{ userStore.orderCount }}
+      </span>
+    </router-link>
+    <div class="link">
+      <el-link :underline="false" @click="openSellOrderModal">
+        <Shop class="icon list shopOrder" />
+        <span class="cartQuantity text-white bg-warning count shopOrder-count">
+          {{ userStore.shopOrderCount }}
+        </span>
+      </el-link>
+    </div>
   </div>
+  <!-- <SellOrderModal
+    :v-if="sellOrderModalOpen"
+  /> -->
+  <SellOrderModal
+  v-model:scheduleVisible="sellOrderModalOpen"
+
+  ></SellOrderModal>
+  <!-- <sellOrderModal></sellOrderModal> -->
+
+  <!-- <tap-modal
+    :v-if="openModal"
+    :products="sellShopStore.shop.products"
+    :title="
+      sellShopStore.shop.products.length > 0
+        ? '分類 設定'
+        : '還沒有餐點，請新增餐點'
+    "
+    ref="tapModalRef"
+  ></tap-modal> -->
 </template>
 
 <script setup lang="ts">
@@ -65,10 +98,19 @@ let layoutSettingStore = useLayOutSettingStore()
 import useUserStore from '@/store/modules/user'
 import { useRouter, useRoute } from 'vue-router'
 
+import SellOrderModal from '@/components/Buy/BuyShop/src/sellOrderModal/index.vue'
+
 let $router = useRouter()
 let $route = useRoute()
 let userStore = useUserStore()
 let dark = ref<boolean>(false)
+let sellOrderModalOpen = ref(false)
+
+const sellOrderModalRef = ref<typeof SellOrderModal | null>(null)
+const openSellOrderModal = () => {
+  sellOrderModalOpen.value = true
+  console.log('---------------', sellOrderModalOpen.value)
+}
 
 const goRoute = (path: string) => {
   $router.push(path)
@@ -144,6 +186,7 @@ const setColor = () => {
 </script>
 
 <style lang="scss" scoped>
+
 img {
   width: 30px;
   height: 30px;
@@ -156,18 +199,33 @@ img {
   margin: 2px;
 }
 
-.car {
+.list {
   // margin: 0 30px 0 0;
   // background-color: aqua;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
   .icon {
     margin: 0;
   }
-  .conut {
+  .count {
     border-radius: 50%;
-    background: $color;
     background-color: $color;
-    // background-color: brown;
+  }
+  .order {
+    color: rgb(255, 72, 72);
+  }
+  .order-count {
+    border-radius: 50%;
+    background-color: rgb(255, 72, 72);
+  }
+  .shopOrder {
+    color: rgb(61, 144, 253);
+  }
+  .shopOrder-count {
+    border-radius: 50%;
+    background-color: rgb(61, 144, 253);
   }
 }
 

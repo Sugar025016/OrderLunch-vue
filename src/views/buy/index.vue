@@ -4,9 +4,6 @@
       <el-header class="buy-header">
         <def-buy-tabBar class="container"></def-buy-tabBar>
       </el-header>
-      <el-message class="buy-message">
-        <def-buy-message class="container"></def-buy-message>
-      </el-message>
       <el-main class="buy-body">
         <Router-view></Router-view>
       </el-main>
@@ -42,14 +39,12 @@ watch(
 }
 
 .common-layout {
-  // background: url('@/assets/images/fondo.webp');
-  // background-color: rgba(201, 192, 167, 0.507);
-  background-color: rgba(250, 205, 69, 0.1);
+  // background-color: rgba(250, 205, 69, 0.1);
+  background-color: rgba(214, 164, 13, 0.1);
+
   width: auto;
   height: 500px;
   border-radius: 0 0 100% 100% / 100% 100% 100% 100%;
-  //   background-color: #f00; /* 背景顏色為紅色 */
-  // font-size: 10px;
 
   .buy {
     min-height: 100vh;
@@ -60,11 +55,15 @@ watch(
       height: 80px;
       position: sticky;
       top: 0; /* 元素固定的位置，這裡是頂部 */
-      background-color: #f1f1f1; /* 元素的背景色 */
+      // background-color: #ffeee000;
       z-index: 100; /* 可選的，如果有其他元素重疊時可以使用 */
       display: flex;
       justify-content: center;
       align-items: center;
+      background-color: rgb(255, 255, 255);
+      box-shadow:
+        3px 3px 5px #dbdbdb,
+        -3px -3px 5px #e2e2e2;
     }
     .buy-message {
       margin: 0;
@@ -73,41 +72,13 @@ watch(
     .buy-body {
       overflow: visible;
       padding: 0px;
-      margin: 40px 0;
-      @media (min-width: $breakpoint-xs) {
-        margin-left: 5px;
-        margin-right: 5px;
-      }
-      @media (min-width: $breakpoint-sm) {
-        margin-left: 10px;
-        margin-right: 10px;
-      }
-      @media (min-width: $breakpoint-md) {
-        margin-left: 20px;
-        margin-right: 20px;
-      }
-      @media (min-width: $breakpoint-lg) {
-        margin-left: 40px;
-        margin-right: 40px;
-      }
-      @media (min-width: $breakpoint-xl) {
-        margin-left: 80px;
-        margin-right: 80px;
-      }
-
-      @media (min-width: $breakpoint-xxl) {
-        margin-left: 160px;
-        margin-right: 160px;
-      }
     }
     .buy-el-footer {
-      // margin: 20px 0;
       background-color: black;
       height: 200px;
       padding: 35px 0;
-      // height: auto;
 
-      // position: relative;
+      position: relative;
       @media (min-width: $breakpoint-xs) {
         padding-left: 5px;
         padding-right: 5px;

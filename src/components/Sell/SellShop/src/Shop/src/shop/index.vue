@@ -1,59 +1,30 @@
 <script setup lang="ts">
 import { deleteSecond as showTime } from '@/utils/time'
 import { House, ChatRound, User, Watch } from '@element-plus/icons-vue'
-import { useRoute } from 'vue-router'
-import { onMounted, ref, computed, reactive, watch } from 'vue'
+import { ref, computed } from 'vue'
 import useSellShopStore from '@/store/modules/sellShop'
 import { ShopDetailData } from '@/api/shop/type'
-// import 'bootstrap/dist/css/bootstrap.css' // Import Bootstrap CSS
+import EditScheduleModel from './EditScheduleModel.vue'
 
-// import shopInfoModal from '../shopInfoModal/index.vue'
-import EditSchedule from './EditSchedule.vue'
-// const scheduleModelSwitch = ref(false)
-// const scheduleSetModel = ref(false)
-// const formLabelWidth = '140px'
-// const dialogVisible = ref(false);
-
-import EditShop from './EditShop.vue'
+import EditShopModel from './EditShopModel.vue'
 
 const scheduleVisible = ref(false)
 
-const dialogVisible = ref(false)
 const dialogTitle = ref('My Dialog Title')
 
 const dialogMessage = ref('This is a dialog message.')
 
-const openDialog = () => {
-  dialogVisible.value = true
-}
-
-const EditShopRef = ref<typeof EditShop>()
+const EditShopRef = ref<typeof EditShopModel>()
 
 const shopDrawerOpen = () => {
   sellShopStore.shopDrawer = true
   EditShopRef.value?.updateShop()
 }
 
-// const dialogVisible = ref(false);
-// scheduleModelSwitch.value = computed(() => props.scheduleModelSwitch  )
-const form = reactive({
-  name: '',
-  region: '',
-  date1: '',
-  date2: '',
-  delivery: false,
-  type: [],
-  resource: '',
-  desc: '',
-})
+
 
 let sellShopStore = useSellShopStore()
-let $route = useRoute()
 
-let id: number = parseInt($route.params.id as string)
-const props = defineProps({
-  shopId: Object as () => number,
-})
 let shopData = ref<ShopDetailData>({
   id: 0,
   name: '',
@@ -97,14 +68,6 @@ const shopImageStyle = computed(() => {
   return {}
 })
 
-// const getShopDetail = async (shopId: number) => {
-//   await sellShopStore.getSellShop(shopId)
-//
-// }
-
-// onMounted(() => {
-//   getShopDetail(id)
-// })
 const currentDate = new Date()
 const dayOfWeek = currentDate.getDay()
 </script>
@@ -162,15 +125,7 @@ const dayOfWeek = currentDate.getDay()
               <span v-else>{{ shopData?.schedules[dayOfWeek] }}</span>
               <span v-else>非營業日</span>
             </div>
-            <div class="information">
-              <!-- <span
-                class="change"
-                data-bs-toggle="modal"
-                data-bs-target="#shopInfoModal"
-              >
-                營業時間
-              </span> -->
-            </div>
+            <div class="information"></div>
             <div class="information">
               <span class="change" @click="scheduleVisible = true">
                 編輯營業時間
@@ -229,14 +184,14 @@ const dayOfWeek = currentDate.getDay()
       </el-row>
     </div>
   </div>
-  <EditSchedule
+  <EditScheduleModel
     v-model:scheduleVisible="scheduleVisible"
     :title="dialogTitle"
     :message="dialogMessage"
     :schedules="shopData.schedules"
   />
 
-  <EditShop
+  <EditShopModel
     v-model:scheduleVisible="scheduleVisible"
     :title="dialogTitle"
     :message="dialogMessage"
@@ -344,8 +299,6 @@ $b-color: $color;
 
           .change:hover {
             color: $color-light-7;
-            // color: #ffb171;
-            // background-color: aquamarine;
           }
           .times {
             display: flex;
@@ -359,23 +312,7 @@ $b-color: $color;
         justify-content: space-around;
         align-items: center;
 
-        // display: grid; /* 使用CSS Grid布局 */
-        // align-items: center;
-        // grid-template-columns: repeat(1, 1fr);
-        // grid-gap: 10px;
-        // @media (min-width: $breakpoint-xs) {
-        //   grid-template-columns: repeat(1, 1fr);
-        // }
-
-        // @media (min-width: $breakpoint-md) {
-        //   grid-template-columns: repeat(2, 1fr);
-        // }
-        // @media (min-width: $breakpoint-xxl) {
-        //   grid-template-columns: repeat(4, 1fr);
-        // }
-
         .shop-button {
-          // color: $color;
           font-size: 17px;
           width: 100%;
         }

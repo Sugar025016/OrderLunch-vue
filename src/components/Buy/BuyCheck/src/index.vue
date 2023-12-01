@@ -12,6 +12,7 @@ import { reqGetUserAddresses, reqPutUserAddresses } from '@/api/user'
 import { Plus } from '@element-plus/icons-vue'
 import { reqAddOrder } from '@/api/order'
 import { OrderResponseData, ReqAddOrder } from '@/api/order/type'
+import rwdBody from '@/components/layout/rwdBody/index.vue'
 
 let userStore = useUserStore()
 
@@ -206,30 +207,32 @@ onBeforeUnmount(() => {
 </script>
 <template>
   <div class="shopCart">
-    <div class="shopCart-header">
-      <h1>訂單資料確認</h1>
-    </div>
-    <div class="shopCart-body">
-      <el-row class="shopCart-body" :gutter="20">
-        <el-col :span="16">
-          <div class="date-time-item">
-            <span>外送時間：</span>
-            <div class="item date-time">
-              <TimeSelect
-                v-on:date="getSelectDate"
-                v-on:time="getSelectTime"
-                v-on:deliveryTime="getDeliveryTime"
-                :schedules="carts.schedules"
-                ref="TimeSelectRef"
-              ></TimeSelect>
-            </div>
-          </div>
+    <rwdBody>
+      <template #slotName>
+        <div class="shopCart-header">
+          <h1>訂單資料確認</h1>
+        </div>
+        <div class="shopCart-body">
+          <el-row class="shopCart-body" :gutter="20">
+            <el-col :span="16">
+              <div class="date-time-item">
+                <span>外送時間：</span>
+                <div class="item date-time">
+                  <TimeSelect
+                    v-on:date="getSelectDate"
+                    v-on:time="getSelectTime"
+                    v-on:deliveryTime="getDeliveryTime"
+                    :schedules="carts.schedules"
+                    ref="TimeSelectRef"
+                  ></TimeSelect>
+                </div>
+              </div>
 
-          <hr />
-          <div class="address">
-            <span>外送地址：</span>
-            <div v-if="isChangeAddress" class="item address-radio">
-              <!-- <div v-for="address in addresses">
+              <hr />
+              <div class="address">
+                <span>外送地址：</span>
+                <div v-if="isChangeAddress" class="item address-radio">
+                  <!-- <div v-for="address in addresses">
                 <span>
                   {{
                     address.city +
@@ -249,137 +252,145 @@ onBeforeUnmount(() => {
                   編輯
                 </el-button>
               </div> -->
-              <el-radio-group v-model="radio1" class="radio">
-                <el-radio
-                  v-for="(address, index) in addresses"
-                  :label="index"
-                  size="large"
-                >
-                  {{
-                    address.city +
-                    '&nbsp-&nbsp' +
-                    address.area +
-                    '&nbsp-&nbsp' +
-                    address.detail
-                  }}
-                </el-radio>
-                <!-- <el-radio label="2" size="large">Option 2</el-radio> -->
-              </el-radio-group>
-              <div class="address-edit">
-                <el-button
-                  type="primary"
-                  size="large"
-                  class="button-wight"
-                  @click="isChangeAddress = false"
-                  round
-                  plain
-                >
-                  編輯
-                </el-button>
-              </div>
-            </div>
+                  <el-radio-group v-model="radio1" class="radio">
+                    <el-radio
+                      v-for="(address, index) in addresses"
+                      :label="index"
+                      size="large"
+                    >
+                      {{
+                        address.city +
+                        '&nbsp-&nbsp' +
+                        address.area +
+                        '&nbsp-&nbsp' +
+                        address.detail
+                      }}
+                    </el-radio>
+                    <!-- <el-radio label="2" size="large">Option 2</el-radio> -->
+                  </el-radio-group>
+                  <div class="address-edit">
+                    <el-button
+                      type="primary"
+                      size="large"
+                      class="button-wight"
+                      @click="isChangeAddress = false"
+                      round
+                      plain
+                    >
+                      編輯
+                    </el-button>
+                  </div>
+                </div>
 
-            <div v-else class="item address-add">
-              <div
-                v-for="(address, index) in addressParams"
-                :key="index"
-                class="address"
-              >
-                <EditAddressModal
-                  :ref="
-                    (el: typeof EditAddressModal) => (AddressRefs[index] = el)
-                  "
-                  :address="address"
-                  :deleteAddress="deleteAddress"
-                  :index="index"
-                  @updateAddress="
-                    (newAddress) => {
-                      addressParams[index] = newAddress
-                    }
-                  "
-                ></EditAddressModal>
-              </div>
-              <div class="button">
-                <el-button
-                  class="button-icon button-left"
-                  type="primary"
-                  size="large"
-                  :icon="Plus"
-                  circle
-                  @click="addAddresses()"
-                  v-if="addressParams.length < 5"
-                />
-                <div class="button-right">
-                  <el-button
-                    class="button-icon"
-                    type="primary"
-                    size="large"
-                    round
-                    plain
-                    @click="close"
+                <div v-else class="item address-add">
+                  <div
+                    v-for="(address, index) in addressParams"
+                    :key="index"
+                    class="address"
                   >
-                    取消
-                  </el-button>
-                  <el-button
-                    class="button-icon"
-                    type="primary"
-                    size="large"
-                    round
-                    @click="saveAddresses()"
-                  >
-                    確認
-                  </el-button>
+                    <EditAddressModal
+                      :ref="
+                        (el: typeof EditAddressModal) =>
+                          (AddressRefs[index] = el)
+                      "
+                      :address="address"
+                      :deleteAddress="deleteAddress"
+                      :index="index"
+                      @updateAddress="
+                        (newAddress) => {
+                          addressParams[index] = newAddress
+                        }
+                      "
+                    ></EditAddressModal>
+                  </div>
+                  <div class="button">
+                    <el-button
+                      class="button-icon button-left"
+                      type="primary"
+                      size="large"
+                      :icon="Plus"
+                      circle
+                      @click="addAddresses()"
+                      v-if="addressParams.length < 5"
+                    />
+                    <div class="button-right">
+                      <el-button
+                        class="button-icon"
+                        type="primary"
+                        size="large"
+                        round
+                        plain
+                        @click="close"
+                      >
+                        取消
+                      </el-button>
+                      <el-button
+                        class="button-icon"
+                        type="primary"
+                        size="large"
+                        round
+                        @click="saveAddresses()"
+                      >
+                        確認
+                      </el-button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <hr />
-          <div class="textarea">
-            <span>備註：</span>
-            <div class="item">
-              <el-form-item prop="desc">
-                <el-input
-                  v-model="remark"
-                  type="textarea"
-                  :minRows="2"
-                  :maxRows="6"
-                  :Rows="4"
-                />
-              </el-form-item>
-            </div>
-          </div>
-        </el-col>
-        <el-col :span="8">
-          <div class="body-right">
-            <span class="total">總金額:</span>
-            <span class="total-data">NT${{ sum }}</span>
-            <hr />
-            <el-button
-              type="warning"
-              size="large"
-              class="button-orange"
-              @click="sendOrder()"
-              round
-            >
-              送出訂單
-            </el-button>
-            <el-button
-              type="warning"
-              size="large"
-              class="button-wight"
-              @click="link"
-              round
-            >
-              繼續購物
-            </el-button>
-            <el-button type="warning" size="large" class="button-wight" round>
-              糾團
-            </el-button>
-          </div>
-        </el-col>
-      </el-row>
-    </div>
+              <hr />
+              <div class="textarea">
+                <span>備註：</span>
+                <div class="item">
+                  <el-form-item prop="desc">
+                    <el-input
+                      v-model="remark"
+                      type="textarea"
+                      :minRows="2"
+                      :maxRows="6"
+                      :Rows="4"
+                    />
+                  </el-form-item>
+                </div>
+              </div>
+            </el-col>
+            <el-col :span="8">
+              <div class="body-right">
+                <span class="total">總金額:</span>
+                <span class="total-data">NT${{ sum }}</span>
+                <hr />
+                <el-button
+                  type="warning"
+                  size="large"
+                  class="button-orange"
+                  @click="sendOrder()"
+                  round
+                >
+                  送出訂單
+                </el-button>
+                <el-button
+                  type="warning"
+                  size="large"
+                  class="button-wight"
+                  @click="link"
+                  round
+                >
+                  繼續購物
+                </el-button>
+                <el-button
+                  type="warning"
+                  size="large"
+                  class="button-wight"
+                  round
+                >
+                  糾團
+                </el-button>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+      </template>
+    </rwdBody>
   </div>
 </template>
 

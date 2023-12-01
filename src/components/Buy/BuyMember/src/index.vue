@@ -1,72 +1,77 @@
 <template>
-  <el-row class="member" :gutter="20">
-    <el-col :span="6">
-      <div class="body-left">
-        <el-button
-          @click="changeTab('profile', userData)"
-          size="large"
-          class="tabsChange"
-          :class="{ buttonDown: route.params.number === userData }"
-          round
-        >
-          會員資料
-        </el-button>
-        <el-button
-          @click="changeTab('love', userLove)"
-          size="large"
-          class="tabsChange"
-          :class="{ buttonDown: route.params.number === userLove }"
-          round
-        >
-          收藏店家
-        </el-button>
-        <el-button type="warning" size="large" class="button" round>
-          採購小幫手
-        </el-button>
-      </div>
-    </el-col>
+  <rwdBody>
+    <template #slotName>
+      <el-row class="member" :gutter="20">
+        <el-col :span="6">
+          <div class="body-left">
+            <el-button
+              @click="changeTab('profile', userData)"
+              size="large"
+              class="tabsChange"
+              :class="{ buttonDown: route.params.number === userData }"
+              round
+            >
+              會員資料
+            </el-button>
+            <el-button
+              @click="changeTab('love', userLove)"
+              size="large"
+              class="tabsChange"
+              :class="{ buttonDown: route.params.number === userLove }"
+              round
+            >
+              收藏店家
+            </el-button>
+            <el-button type="warning" size="large" class="button" round>
+              採購小幫手
+            </el-button>
+          </div>
+        </el-col>
 
-    <el-col :span="18" class="body-right">
-      <h1>會員資料</h1>
-      <div class="tabs">
-        <div class="tabs-header">
-          <div
-            v-for="(tab, index) in userTabs"
-            :key="index"
-            @click="changeTab(tab.content, userData)"
-            v-show="route.params.number === userData"
-          >
-            <span
-              class="tab-label underline"
-              :class="{ active: route.name === tab.content }"
-            >
-              {{ tab.label }}
-            </span>
+        <el-col :span="18" class="body-right">
+          <h1>會員資料</h1>
+          <div class="tabs">
+            <div class="tabs-header">
+              <div
+                v-for="(tab, index) in userTabs"
+                :key="index"
+                @click="changeTab(tab.content, userData)"
+                v-show="route.params.number === userData"
+              >
+                <span
+                  class="tab-label underline"
+                  :class="{ active: route.name === tab.content }"
+                >
+                  {{ tab.label }}
+                </span>
+              </div>
+              <div
+                v-for="(tab, index) in loveTabs"
+                :key="index"
+                @click="changeTab(tab.content, userLove)"
+                v-show="route.params.number === userLove"
+              >
+                <span
+                  class="tab-label underline"
+                  :class="{ active: route.name === tab.content }"
+                >
+                  {{ tab.label }}
+                </span>
+              </div>
+            </div>
+            <div class="tabs-content">
+              <Router-view></Router-view>
+            </div>
           </div>
-          <div
-            v-for="(tab, index) in loveTabs"
-            :key="index"
-            @click="changeTab(tab.content, userLove)"
-            v-show="route.params.number === userLove"
-          >
-            <span
-              class="tab-label underline"
-              :class="{ active: route.name === tab.content }"
-            >
-              {{ tab.label }}
-            </span>
-          </div>
-        </div>
-        <div class="tabs-content">
-          <Router-view></Router-view>
-        </div>
-      </div>
-    </el-col>
-  </el-row>
+        </el-col>
+      </el-row>
+    </template>
+  </rwdBody>
 </template>
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
+import rwdBody from '@/components/layout/rwdBody/index.vue'
 let $router = useRouter()
 const route = useRoute()
 const userData = 'userData'

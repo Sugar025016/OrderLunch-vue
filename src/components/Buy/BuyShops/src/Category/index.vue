@@ -190,6 +190,7 @@ onMounted(() => {
     padding: 0px;
     display: flex;
     align-items: center;
+    border-radius: 50px;
 
     .custom-select-wrapper {
       width: 100%;
@@ -215,6 +216,7 @@ onMounted(() => {
         outline: none;
         cursor: pointer;
         cursor: pointer; /* 預設游標樣式 */
+        background-color: rgb(255, 255, 255);
       }
 
       .custom-select:hover {
@@ -223,7 +225,8 @@ onMounted(() => {
 
       /* 禁用時游標變換成禁止圖示 */
       .custom-select:disabled {
-        color: #999;
+        // color: #999;
+        color: #777777;
         cursor: not-allowed;
       }
       .select-arrow {
@@ -235,7 +238,7 @@ onMounted(() => {
         width: 16px;
         height: 16px;
         background: url('@/assets/icons/expand.png') no-repeat;
-        z-index: -1;
+        z-index: 1;
       }
     }
   }
@@ -254,6 +257,7 @@ onMounted(() => {
       width: 100%;
       border: 1px solid #ccc;
       border-radius: 40px;
+      background-color: rgb(255, 255, 255);
       input {
         padding: 5px 20px;
         width: 80%;

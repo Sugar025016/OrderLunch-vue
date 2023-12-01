@@ -26,12 +26,14 @@ export interface UserInfoResponseData extends ResponseData {
     buttons: string[]
     roles: string[]
     name: string
-    account: string
+    account: string 
     phone: string
     email: string
     favoriteShops: ShopList
     avatar: string
     cartCount: number
+    orderCount: number
+    shopOrderCount: number
     address?: Address
   }
 }
