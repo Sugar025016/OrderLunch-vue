@@ -50,7 +50,6 @@ const timer = setTimeout(() => {
 
     $router.push('/')
   }
-  console.log('.............')
 }, 5000) // 10000 毫秒即为 10 秒
 const getCart = async () => {
   let res: CartResponseData = await apiGetCart()

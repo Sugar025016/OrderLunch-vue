@@ -9,7 +9,7 @@ import type {
   ResponseProductList,
   SellProduct,
 } from '@/api/sellProduct/type'
-import { SellProductState, ShopState } from './types/types'
+import { SellProductState, SellShopState } from './types/types'
 
 const useSellProductStore = defineStore('sellProductStore', {
   state: (): SellProductState => {

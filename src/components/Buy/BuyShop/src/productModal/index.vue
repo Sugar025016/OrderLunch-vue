@@ -32,33 +32,46 @@
           </h1>
           <span class="modal-description fs-6" id="staticBackdropLabel">
             {{ product!.description }}
+            {{ product }}
           </span>
           <hr class="divider" />
           <!-- <div class="divider"></div> -->
 
           <!-- <h1 class="modal-title fs-5" id="staticBackdropLabel">"name"</h1> -->
           <div class="modal-body-content">
-            <span>訂購人</span>
+            <!-- <span>訂購人</span> -->
+            <label for="orderUsername">訂購人:</label>
             <input
+              id="orderUsername"
               type="text"
               class="rounded-input"
               placeholder="输入文本"
               v-model="product!.orderUsername"
             />
-            <span>部門/單位</span>
+            <!-- <span>部門/單位</span> -->
+            <label for="department">部門/單位:</label>
             <input
+              id="department"
               type="text"
               class="rounded-input"
               placeholder="输入文本"
               v-model="product!.department"
             />
-            <span>備註</span>
+            <!-- <span>備註</span> -->
+            <label for="remark">備註:</label>
             <input
-              type="text"
+              id="remark"
+              type="textarea"
               class="rounded-input"
               placeholder="输入文本"
               v-model="product!.remark"
             />
+            <!-- <textarea
+              rows="5"
+              cols="33"
+              class="rounded-input input-area"
+              v-model="product!.remark"
+            ></textarea> -->
           </div>
         </div>
         <div class="modal-footer">
@@ -67,7 +80,7 @@
               type="warning"
               class="btn btn-primary btn-count"
               @click="changeCount(-1)"
-              :disabled="count < 2"
+              :disabled="props.product!.qty < 2"
               size="large"
             >
               <el-icon><Minus /></el-icon>
@@ -79,11 +92,12 @@
               type="warning"
               class="btn btn-primary btn-count"
               @click="changeCount(1)"
-              :disabled="count > 9"
+              :disabled="props.product!.qty > 9"
               size="large"
             >
               <el-icon><Plus /></el-icon>
             </el-button>
+            <span class="fs-5">總額：${{ props.product!.qty * props.product!.prise }}</span>
           </div>
           <el-button
             type="warning"
@@ -94,7 +108,6 @@
             round
           >
             加入購物車
-            <span>{{ props.product!.qty * props.product!.prise }}</span>
           </el-button>
         </div>
       </div>
@@ -203,7 +216,14 @@ const addCart = async () => {
           background-color: #50505000;
           height: 40px;
         }
+        .input-area {
+          height: 100px;
+        }
         span {
+          margin: 5px;
+        }
+
+        label {
           margin: 5px;
         }
       }

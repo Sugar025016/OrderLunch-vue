@@ -21,6 +21,7 @@ export interface GetOrderPageResponse extends Response {
 export type Orders = Order[]
 
 export interface Order {
+  shopId?: number
   orderId: number
   shopName: string
   name: string
@@ -69,4 +70,8 @@ export interface OrderFinishPage extends Page {
 
 export interface GetOrderFinishPageResponse extends Response {
   data: OrderFinishPage
+}
+
+export interface GetOrderNewResponse extends Response {
+  data: Orders
 }

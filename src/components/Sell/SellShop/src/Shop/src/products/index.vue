@@ -53,9 +53,25 @@ const scrollToSection = (sectionId: number) => {
     const targetPosition =
       element.getBoundingClientRect().top + window.scrollY - headerHeight
 
+    // sellShopStore.scrollTop = targetPosition
+    window.scrollTo({ top: targetPosition, behavior: 'smooth' })
     sellShopStore.scrollTop = targetPosition
+
   }
 }
+// const scrollToSection = (sectionId: number) => {
+//   const element = document.getElementById(sectionId + '')
+
+//   if (element) {
+//     const headerHeight = 100
+//     const targetPosition =
+//       element.getBoundingClientRect().top + window.scrollY - headerHeight
+//     window.scrollTo({ top: targetPosition, behavior: 'smooth' })
+//     shopStore.scrollTop = targetPosition
+//   }
+// }
+
+
 
 const addTab = (sectionId: number) => {
   const element = document.getElementById(sectionId + '')
@@ -137,18 +153,25 @@ const tapModalRef = ref<typeof TapModal | null>(null)
         <div class="tab-title">
           <div class="tab-setting">
             <h3>{{ tab.name }}</h3>
-            <!-- <div class="form-check form-switch">
-              <input
+            <div class="form-check form-switch">
+              <!-- <input
                 class="form-check-input"
                 type="checkbox"
                 role="switch"
                 v-model="tab.shelve"
                 :id="tab.name"
-              />
-              <label class="form-check-label" :for="tab.name">
-                上架{{ tab.shelve }}
+              /> -->
+              <label
+                class="label-shelve-true"
+                :for="tab.name"
+                v-if="tab.shelve"
+              >
+                啟用
               </label>
-            </div> -->
+              <label class="label-shelve-false" :for="tab.name" v-else>
+                未啟用
+              </label>
+            </div>
           </div>
           <div class="tab-setting">
             <h3 class="change" @click="deleteTab(tab.id)">刪除</h3>
@@ -301,14 +324,14 @@ const tapModalRef = ref<typeof TapModal | null>(null)
       .tab-title {
         display: flex;
         align-items: center;
-        // justify-content: space-between;
+        justify-content: space-between;
         h3 {
           margin: 10px;
           cursor: pointer;
         }
         .tab-setting {
           display: flex;
-          align-items: center;
+          align-items: flex-end;
           justify-content: space-between;
           .form-check {
             display: flex;
@@ -329,9 +352,15 @@ const tapModalRef = ref<typeof TapModal | null>(null)
               border: red;
               background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
             }
-            .form-check-label {
-              font-size: 22px;
+            .label-shelve-true {
+              font-size: 12px;
               color: $color;
+              margin: 14px 0;
+            }
+            .label-shelve-false {
+              font-size: 12px;
+              color: rgb(112, 112, 112);
+              margin: 14px 0;
             }
           }
         }

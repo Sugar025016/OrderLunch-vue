@@ -17,14 +17,16 @@
             :collapse="LayOutSettingStore.isCollapse"
             :router="true"
           >
-            <div class="logo" v-if="setting.logoHidden">
-              <img :src="setting.logo" alt="" />
+            <!-- <div class="logo" v-if="setting.logoHidden">
+              <img :src="setting.logo" alt="" /> -->
+              <!-- <img src="@/assets/icons/line.png" alt="" /> -->
               <!-- <span class="title" @click="">{{ setting.title }}</span> -->
               <!-- <Router-view  class="title">{{ setting.title }}</Router-view> -->
-              <router-link class="title" to="/">
-                {{ setting.title }}
+              <router-link class="logo" to="/">
+                <img src="@/assets/images/logo.png" alt="" />
+                <span class="title">{{ setting.title }}</span>
               </router-link>
-            </div>
+            <!-- </div> -->
             <!-- <div class="shop-item">
               <el-form-item>
                 <el-select v-model="shopId" placeholder="商店">
@@ -75,9 +77,11 @@
               : 'calc(100% - 200px)',
           }"
         >
-          <el-scrollbar ref="scrollbarRef" always @scroll="scroll">
+          <div class="scroll-container">
+            <!-- <el-scrollbar ref="scrollbarRef" always @scroll="scroll"> -->
             <Router-view></Router-view>
-          </el-scrollbar>
+            <!-- </el-scrollbar> -->
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -164,7 +168,17 @@ onMounted(() => {
 const scrollTop = computed(() => sellShopStore.scrollTop)
 
 watch(scrollTop, (newVal) => {
-  scrollbarRef.value!.setScrollTop(newVal + value.value)
+  // scrollbarRef.value!.setScrollTop(newVal + value.value)
+  console.log('///////////////////', sellShopStore.scrollTop)
+  const scrollContainer = document.querySelector('.scroll-container')
+  // sellShopStore.scrollTop = 0;
+  if (scrollContainer) {
+    // 将滚动效果应用到 .scroll-container 元素上
+    scrollContainer.scrollTo({
+      top: scrollTop.value,
+      behavior: 'smooth',
+    })
+  }
 })
 </script>
 
@@ -197,23 +211,26 @@ watch(scrollTop, (newVal) => {
               width: 95%;
               display: flex;
               align-items: center;
+              justify-content: center;
               height: $base-menu-logo-height;
               color: #959ea6;
               font-weight: 700;
               font-size: $base-logo-title-fontSize;
               flex-wrap: nowrap;
               overflow: hidden;
-              padding-left: 17px;
+              // padding-left: 17px;
+                text-decoration: none;
               img {
                 display: inline-block;
-                widows: 30px;
-                height: 30px;
+                widows: 45px;
+                height: 45px;
                 border-radius: 10px;
+                margin: 5px;
               }
               .title {
                 display: inline-block;
                 height: 32px;
-                margin: 2px 0 0 18px;
+                margin: 2px 0 0 8px;
                 overflow: hidden;
                 font-size: 18px;
                 font-weight: 600;
@@ -237,6 +254,11 @@ watch(scrollTop, (newVal) => {
         transition: all 0.3s;
         // width: calc(100% - $base-menu-width);
         height: calc(100vh - 60px);
+        .scroll-container {
+          scroll-behavior: smooth;
+          height: 100%; /* 设置容器高度 */
+          overflow: auto; /* 让容器产生滚动条 */
+        }
       }
       .el-header {
         width: 100%;

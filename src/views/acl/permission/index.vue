@@ -11,6 +11,7 @@ import type {
   Permission,
   MenuParams,
 } from '@/api/acl/menu/type'
+import ElMessage from 'element-plus/lib/components/message/index.js';
 
 let PermissionArr = ref<PermissionList>([])
 let dialogVisible = ref<boolean>(false)

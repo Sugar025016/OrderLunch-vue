@@ -34,6 +34,13 @@ import {
 import cloneDeep from 'lodash/cloneDeep'
 import { useRouter } from 'vue-router'
 import { ShopData } from '@/api/shop/type'
+import { GetOrderNewResponse } from '@/api/order/type'
+// import { ElMessage } from 'element-plus/es/components/index.js'
+// import { ElMessage } from 'element-plus/lib/components/index.js'
+import { reqGetOrderNew } from '@/api/order'
+import ElMessage from 'element-plus/lib/components/message/index.js'
+import useSellShopStore from '@/store/modules/sellShop'
+
 
 function filterAsyncRoute(asyncRoute: any, routes: any) {
   return asyncRoute.filter((item: any) => {
@@ -69,6 +76,8 @@ const useUserStore = defineStore('User', {
         area: '',
         detail: '',
       },
+      getNewOrderTimer: null,
+      orderNew: []
     }
   },
   // 异步|逻辑的地方
@@ -98,6 +107,8 @@ const useUserStore = defineStore('User', {
     async userInfo() {
       const res: UserInfoResponseData = await reqUserInfo()
       if (res.code === 200) {
+        // const userStore = useUserStore();
+        // userStore.clearData()
         this.username = res.data.name
         this.account = res.data.account
         this.phone = res.data.phone
@@ -112,6 +123,7 @@ const useUserStore = defineStore('User', {
         //   cloneDeep(asyncRoute),
         //   this.token,
         // )
+
 
         return 'ok'
       } else {
@@ -187,11 +199,18 @@ const useUserStore = defineStore('User', {
       this.username = ''
       this.account = ''
       this.avatar = ''
-      ;(this.email = ''),
-        (this.phone = ''),
-        (this.favoriteShop = []),
-        (this.cartCount = 0),
-        REMOVE_TOKEN()
+      this.orderCount = 0
+      this.orderNew = []
+      this.email = ''
+      this.phone = ''
+      this.favoriteShop = []
+      this.cartCount = 0
+      this.orderCount = 0
+      REMOVE_TOKEN()
+      this.stopTimer()
+
+      let sellShopStore = useSellShopStore()
+      sellShopStore.clearSellShopData();
     },
     async getUserAddress() {
       const res: UserInfoResponseData = await reqChangeUserInfo(v)
@@ -199,6 +218,33 @@ const useUserStore = defineStore('User', {
         return await this.userInfo()
       } else {
         return Promise.reject(new Error(res.message))
+      }
+    },
+
+    async getOrderNew() {
+      if (this.token != '') {
+        let res: GetOrderNewResponse = await reqGetOrderNew()
+        if (res.code === 200) {
+          this.orderNew = res.data
+        } else {
+          ElMessage({
+            type: 'error',
+            message: '搜尋失败',
+          })
+        }
+      }
+    },
+    startTimer() {
+      this.getNewOrderTimer = setInterval(() => {
+        this.getOrderNew()
+      }, 1000); // 1000 毫秒，即 1 秒
+    },
+
+    // 停止計時器
+    stopTimer() {
+      if (this.getNewOrderTimer != null) {
+        clearInterval(this.getNewOrderTimer);
+        this.getNewOrderTimer = null;
       }
     },
   },

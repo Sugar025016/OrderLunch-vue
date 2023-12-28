@@ -286,6 +286,7 @@ const formatDate = (row: any, column: any) => {
       批量餐點分類
     </el-button>
     <el-table
+      height="718"
       ref="multipleTableRef"
       style="margin: 10px 0; width: 100%"
       :data="order"

@@ -4,11 +4,18 @@
     <template v-if="!item.children">
       <el-menu-item v-if="!item.meta.hidden" :index="item.path">
         <!-- <el-menu-item v-if="!item.meta.hidden" @click="goRoute(item)"> -->
-        <el-icon>
+        <!-- <el-icon>
           <component :is="item.meta.icon"></component>
-        </el-icon>
+        </el-icon> -->
+        <def-svg-icon
+          class="buy-svg-icon"
+          :name="item.meta.icon"
+          width="28px"
+          height="28px"
+          :color="computedClass(item.path)"
+        ></def-svg-icon>
         <template #title>
-          <span>{{ item.meta.title }}</span>
+          <span class="title">{{ item.meta.title }}</span>
         </template>
       </el-menu-item>
     </template>
@@ -59,12 +66,14 @@ import { useRouter, useRoute, Router } from 'vue-router'
 import { onMounted, ref } from 'vue'
 
 import useSellShopStore from '@/store/modules/sellShop'
+import aaaa from '@/styles/variable.scss'
 
 let sellShopStore = useSellShopStore()
 let props = defineProps(['menuList'])
 
 let $router = useRouter()
 let $route = useRoute()
+
 // const shopId = ref<number>()
 // const goRoute = async (path: string, shopId: number) => {
 //
@@ -80,6 +89,77 @@ let $route = useRoute()
 //   //   $router.push(path + shopId)
 //   // }
 // }
+
+// const computedClass = computed(( title:string) => {
+//   // 在这里可以调用方法或进行其他逻辑来计算 class
+
+//   switch
+//   return {
+//     'order-new': true,
+//   };
+// });
+
+// const styleTag = document.createElement('style');
+// document.head.appendChild(styleTag);
+
+// const computedColor = computedClass('orderNew');
+// console.log('Computed Color:', computedColor);
+// function computedClass(value: string) {
+//     // console.log("//------////",aaaa)
+//     const primaryColor = 'var(icon-order-new)';
+
+//     const colorOrderNew = '--color-order-new';
+
+// // 在这里可以使用 CSS 变量
+// const computedColor = computedClass('orderNew');
+
+// console.log('Computed Color:', computedColor);
+
+// console.log('icon-order-new:', primaryColor);
+//   switch (value) {
+//     // 401: 未登錄
+//     // console.log(`var(${colorOrderNew})`)
+//     case 'orderNew':
+//       return `var(${colorOrderNew})`;
+
+//     case 'orderHandle':
+//       return '#529b2e';
+
+//     case 'orderFinish':
+//       return '#529b2e';
+
+//     default:
+//       return '#529b2e';
+//   }
+// }
+
+const colorOrderNew = '--color-order-new';
+// const colorOrderHandle = '--color-order-handle';
+const colorOrderFinish = '--color-order-finish';
+
+// 在这里可以使用 CSS 变量
+const computedColor = computedClass('orderNew');
+
+console.log('Computed Color:', computedColor);
+// console.log('Color Order Handle:', window.SassExtract.variable.$colorOrderHandle);
+// console.log('Color Order Handle:', window.getComputedStyle(document.documentElement).getPropertyValue('--color-order-handle'));
+
+// const colorOrderHandle = getComputedStyle(document.documentElement).getPropertyValue('--color-order-handle').trim();
+
+function computedClass(value: string) {
+  switch (value) {
+    case 'orderNew':
+      // return getComputedStyle(document.documentElement).getPropertyValue('--color-order-new').trim();
+      return window.getComputedStyle(document.documentElement).getPropertyValue('--color-order-new');
+    case 'orderHandle':
+      return getComputedStyle(document.documentElement).getPropertyValue('--color-order-handle').trim();
+    case 'orderFinish':
+      return getComputedStyle(document.documentElement).getPropertyValue('--color-order-finish').trim();
+    default:
+      return getComputedStyle(document.documentElement).getPropertyValue('--el-color-primary').trim();
+  }
+}
+
 
 const goRoute = async (item: any) => {
   const pattern = /^\/sell\/.*\/:shopId$/
@@ -109,4 +189,26 @@ export default {
   name: 'Menu',
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.title {
+  margin-left: 5px;
+  font-size: 16px;
+}
+
+// .order-new{
+//   color: $color-order-new;
+// }
+
+.icon {
+  color: $color;
+}
+.icon-order-new {
+  color: $color-order-new;
+}
+.icon-order-handle {
+  color: $color-order-handle;
+}
+.icon-order-finish {
+  color: $color-order-finish;
+}
+</style>

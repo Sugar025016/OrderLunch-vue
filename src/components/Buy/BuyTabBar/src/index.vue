@@ -4,9 +4,9 @@
       <div class="toolbar_left">
         <BreadCrumb />
       </div>
-      <!-- <div class="toolbar_order">
+      <div class="toolbar_order" v-if="sellShopStore.shopNames.length > 0">
         <order></order>
-      </div> -->
+      </div>
       <div class="toolbar_right">
         <Setting />
       </div>
@@ -18,33 +18,20 @@
 import BreadCrumb from './breadcrumb/index.vue'
 import Setting from './setting/index.vue'
 import order from './order/index.vue'
-import { onMounted, ref } from 'vue'
-import useUserStore from '@/store/modules/user'
+import useSellShopStore from '@/store/modules/sellShop'
+import { onMounted } from 'vue';
 
-let userStore = useUserStore()
-// import useCategoryStore from '@/store/modules/category'
+// import useSellShopStore from '@/store/modules/sellShop'
+let sellShopStore = useSellShopStore()
 
-// let categoryStore = useCategoryStore()
-//
-onMounted(() => {
-  getC1()
-})
-
-const getC1 = async () => {
-  // categoryStore.getC1()
+const getItem = async () => {
+  await sellShopStore.getShopItem()
 }
+onMounted(() => {
+  getItem()
+})
+// let sellShopStore = useSellShopStore()
 
-// const handler = (n: number) => {
-//   if (n === 1) {
-//     categoryStore.c2Id = ''
-//     categoryStore.c3Id = ''
-//     categoryStore.c3Arr = []
-//     categoryStore.getC2()
-//   } else if (n === 2) {
-//     categoryStore.c3Id = ''
-//     categoryStore.getC3()
-//   }
-// }
 
 defineProps(['scene'])
 </script>

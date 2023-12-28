@@ -221,6 +221,7 @@ $b-color: $color;
       background-size: cover;
       border-radius: 20px;
       padding: 5px 5px 5px 5px;
+      background-position: center;
       .shop-border {
         height: 100%;
         width: 100%;

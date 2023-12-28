@@ -149,11 +149,7 @@ const setOptionDate = async () => {
     startOptionDay.setDate(startOptionDay.getDate() + 1)
   }
 
-  //   if (deliveryTime.value && dateOptions.value) {
-  //   deliveryTime.value?.date = dateOptions.value.find(
-  //     (v) => !v.disabled,
-  //   ) as MyDateDisabled
-  // }
+
   deliveryTime.value.date = dateOptions.value.find(
     (v) => !v.disabled,
   ) as MyDateDisabled
@@ -195,47 +191,8 @@ const setEmit = () => {
   const [hours, minutes] = deliveryTime.value.time.split(':').map(Number)
   setDeliveryTime.setHours(hours, minutes, 0, 0)
 
-  // console.log('aaa ISO', setDeliveryTime.toISOString())
 
-  // const parsedDate2 = moment(
-  //   setDeliveryTime.toISOString(),
-  //   'YYYY/MM/DD a hh:mm:ss',
-  // ).format()
-  // console.log('------vISO-----', parsedDate2)
-  // console.log('------vISO-----', parsedDate2.format('YYYY-MM-DDTHH:mm:ss'))
-
-  // console.log('aaa6', setDeliveryTime.toString())
-  // console.log('aaa5', setDeliveryTime.toLocaleString())
-  // const momentTime = moment(
-  //   setDeliveryTime.toLocaleString(),
-  //   'YYYY-MM-DD HH:mm:ss',
-  // )
-  //   const dateString = '2023/11/7 下午3:30:00';
-  // const formatString = 'YYYY-MM-DD"T"HH:mm:ss';
-  // const formattedDate = moment(
-  //   setDeliveryTime.toLocaleString(),
-  //   'YYYY/MM/DD a hh:mm:ss',
-  // )
-
-  // console.log("aaa8",formattedDate);
-  // console.log("aaa8",momentTime.format('YYYY-MM-DD a HH:mm:ss'))
-
-  // console.log("aaa4", moment(setDeliveryTime.toLocaleString(), 'YYYY/MM/DD a hh:mm:ss').format(formatString))
-  // console.log("aaa7",momentTime.format('YYYY-MM-DD a hh:mm:ss'))
-  // $emit('deliveryTime', momentTime.format('YYYY-MM-DD T HH:mm:ss'))
-
-  // const dateString = '2023/11/7 下午13:30:00'
-  // const formatString = 'YYYY/MM/DD a hh:mm:ss'
-  // const parsedDate = moment(dateString, formatString).format('YYYY-MM-DDTHH:mm:ss');
-  console.log('-----------', setDeliveryTime.toLocaleString())
-  console.log('-----------', setDeliveryTime.toISOString())
-  console.log('-----------', setDeliveryTime.toJSON())
-  console.log('-----------', setDeliveryTime.toUTCString())
-  // const formattedDate = moment(setDeliveryTime.toLocaleString(), 'YYYY/MM/DD a hh:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
-  // const formattedDate = moment(setDeliveryTime.toLocaleString(), 'YYYY/MM/DD a hh:mm:ss').format('YYYY-MM-DDTHH:mm:ss');
-  // const formattedDate = moment(setDeliveryTime.toLocaleString(), 'YYYY/MM/DD a hh:mm:ss').format('YYYY-MM-DD HH:mm:ss');
-  // const formattedDate = moment(setDeliveryTime.toJSON(), 'YYYY/MM/DD a hh:mm:ss', 'Asia/Taipei').utcOffset('+0800').format('YYYY-MM-DDTHH:mm:ss');
-  const formattedDate = moment(setDeliveryTime.toISOString()).format(
+  const formattedDate = moment(setDeliveryTime).format(
     'YYYY-MM-DDTHH:mm:ss',
   )
   console.log('-----------', formattedDate)

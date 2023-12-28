@@ -1,4 +1,5 @@
 import { TabsData, ProductList } from '../tab/type'
+import { Response, Page, Address } from '../type'
 
 export interface ResponseData {
   code: number
@@ -41,6 +42,12 @@ export interface ShopsResponseData extends ResponseData {
   data: ShopList
 }
 
+export interface ShopPageResponse extends Page {
+  content: ShopList
+}
+export interface GetShopPageResponse extends Response {
+  data: ShopPageResponse
+}
 export interface ShopResponseData extends ResponseData {
   data: ShopDetailData
 }
@@ -67,12 +74,12 @@ export interface ShopNamesResponse extends ResponseData {
   data: ShopNames
 }
 
-export interface Address {
-  id?: number
-  city: string
-  area: string
-  detail: string
-}
+// export interface Address {
+//   id?: number
+//   city: string
+//   area: string
+//   detail: string
+// }
 
 export interface ShopDetailData {
   id: number
@@ -96,7 +103,7 @@ export interface ShopData {
   phone?: string
   imgUrl: string
   schedules?: Schedules
-  isOrderable?: boolean
+  orderable?: boolean
 }
 
 export interface PutShopData {
@@ -107,7 +114,7 @@ export interface PutShopData {
   phone?: string
   imgId: number
   imgUrl: string
-  isOrderable: boolean
+  orderable: boolean
   isDisable: boolean
 }
 

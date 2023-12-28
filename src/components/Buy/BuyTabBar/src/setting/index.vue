@@ -1,144 +1,31 @@
-<template>
-  <def-svg-icon
-    @click="toLogin"
-    name="person"
-    color="#fd7e14"
-    width="35px"
-    height="35px"
-    class="svg-icon"
-  ></def-svg-icon>
-  <!-- <img :src="userStore.avatar" alt=""  v-if="(userStore.token != '')"/> -->
-
-  <el-dropdown class="list" v-if="userStore.username">
-    <!-- <el-dropdown class="car" > -->
-    <span class="el-dropdown-link" style="cursor: pointer">
-      {{ userStore.username }}
-      <el-icon class="el-icon--right">
-        <arrow-down />
-      </el-icon>
-    </span>
-    <template #dropdown>
-      <el-dropdown-menu>
-        <el-dropdown-item @click="changeLink('profile', userData)">
-          會員資料
-        </el-dropdown-item>
-        <el-dropdown-item @click="changeLink('changeProfile', userData)">
-          修改會員資料
-        </el-dropdown-item>
-        <el-dropdown-item @click="changeLink('changeCompany', userData)">
-          修改公司資料
-        </el-dropdown-item>
-        <el-dropdown-item @click="changeLink('changePassword', userData)">
-          修改登入密碼
-        </el-dropdown-item>
-      </el-dropdown-menu>
-      <el-dropdown-menu>
-        <el-dropdown-item @click="changeLink('love', userLove)">
-          收藏店家
-        </el-dropdown-item>
-      </el-dropdown-menu>
-      <el-dropdown-menu>
-        <el-dropdown-item @click="logout('BuyShops')">登出</el-dropdown-item>
-      </el-dropdown-menu>
-    </template>
-  </el-dropdown>
-  <div class="list shopCar">
-    <router-link :to="'/BuyShopCart'" class="link">
-      <ShoppingBag class="icon list" />
-      <span class="cartQuantity text-white bg-warning count">
-        {{ userStore.cartCount }}
-      </span>
-    </router-link>
-    <router-link :to="'/BuyOrder'" class="link">
-      <Document class="icon list order" />
-      <span class="cartQuantity text-white bg-warning count order-count">
-        {{ userStore.orderCount }}
-      </span>
-    </router-link>
-    <div class="link">
-      <el-link :underline="false" @click="openSellOrderModal">
-        <Shop class="icon list shopOrder" />
-        <span class="cartQuantity text-white bg-warning count shopOrder-count">
-          {{ userStore.shopOrderCount }}
-        </span>
-      </el-link>
-    </div>
-  </div>
-  <!-- <SellOrderModal
-    :v-if="sellOrderModalOpen"
-  /> -->
-  <SellOrderModal
-  v-model:scheduleVisible="sellOrderModalOpen"
-
-  ></SellOrderModal>
-  <!-- <sellOrderModal></sellOrderModal> -->
-
-  <!-- <tap-modal
-    :v-if="openModal"
-    :products="sellShopStore.shop.products"
-    :title="
-      sellShopStore.shop.products.length > 0
-        ? '分類 設定'
-        : '還沒有餐點，請新增餐點'
-    "
-    ref="tapModalRef"
-  ></tap-modal> -->
-</template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import {
-  Refresh,
-  Setting,
-  FullScreen,
-  ArrowDown,
-} from '@element-plus/icons-vue'
-import useLayOutSettingStore from '@/store/modules/setting'
-let layoutSettingStore = useLayOutSettingStore()
+import { ArrowDown } from '@element-plus/icons-vue'
 import useUserStore from '@/store/modules/user'
 import { useRouter, useRoute } from 'vue-router'
 
-import SellOrderModal from '@/components/Buy/BuyShop/src/sellOrderModal/index.vue'
+import SellOrderModal from '../order/sellOrderModal/index.vue'
+
+import { ref, onMounted } from 'vue'
+
+import {  Orders } from '@/api/order/type'
 
 let $router = useRouter()
 let $route = useRoute()
 let userStore = useUserStore()
-let dark = ref<boolean>(false)
 let sellOrderModalOpen = ref(false)
 
-const sellOrderModalRef = ref<typeof SellOrderModal | null>(null)
-const openSellOrderModal = () => {
-  sellOrderModalOpen.value = true
-  console.log('---------------', sellOrderModalOpen.value)
-}
-
-const goRoute = (path: string) => {
-  $router.push(path)
-}
 
 const path = window.location.hash
 $router.getRoutes()
 
-const updateRefsh = () => {
-  layoutSettingStore.refsh = !layoutSettingStore.refsh
-}
 const toLogin = () => {
-  // $router.push('/login')
-
   if (
     !userStore.token ||
     userStore.token === undefined ||
     userStore.token === ''
   ) {
     $router.push({ path: '/login', query: { redirect: path } })
-  }
-}
-const fullScreen = () => {
-  let full = document.fullscreenElement
-  if (!full) {
-    document.documentElement.requestFullscreen()
-  } else {
-    document.exitFullscreen()
   }
 }
 
@@ -156,37 +43,77 @@ const changeLink = async (path: string, page: string = userData) => {
   $router.push('/BuyMember/' + path + '/' + page)
 }
 
-const color = ref('rgba(255, 69, 0, 0.68)')
-const predefineColors = ref([
-  '#ff4500',
-  '#ff8c00',
-  '#ffd700',
-  '#90ee90',
-  '#00ced1',
-  '#1e90ff',
-  '#c71585',
-  'rgba(255, 69, 0, 0.68)',
-  'rgb(255, 120, 0)',
-  'hsv(51, 100, 98)',
-  'hsva(120, 40, 94, 0.5)',
-  'hsl(181, 100%, 37%)',
-  'hsla(209, 100%, 56%, 0.73)',
-  '#c7158577',
-])
+let orderNew = ref<Orders>([])
 
-const changeDark = () => {
-  let html = document.documentElement
-  dark.value ? (html.className = 'dark') : (html.className = '')
-}
 
-const setColor = () => {
-  let html = document.documentElement
-  html.style.setProperty('--el-color-primary', color.value)
-}
 </script>
+<template>
+  <div class="order-text">
+    <def-svg-icon
+      @click="toLogin"
+      name="person"
+      color="#fd7e14"
+      width="35px"
+      height="35px"
+      class="svg-icon"
+    ></def-svg-icon>
+    <el-dropdown class="list" v-if="userStore.username">
+      <span class="el-dropdown-link" style="cursor: pointer">
+        {{ userStore.username }}
+        <el-icon class="el-icon--right">
+          <arrow-down />
+        </el-icon>
+      </span>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item @click="changeLink('profile', userData)">
+            會員資料
+          </el-dropdown-item>
+          <el-dropdown-item @click="changeLink('changeProfile', userData)">
+            修改會員資料
+          </el-dropdown-item>
+          <el-dropdown-item @click="changeLink('changeCompany', userData)">
+            修改公司資料
+          </el-dropdown-item>
+          <el-dropdown-item @click="changeLink('changePassword', userData)">
+            修改登入密碼
+          </el-dropdown-item>
+        </el-dropdown-menu>
+        <el-dropdown-menu>
+          <el-dropdown-item @click="changeLink('love', userLove)">
+            收藏店家
+          </el-dropdown-item>
+        </el-dropdown-menu>
+        <el-dropdown-menu>
+          <el-dropdown-item @click="logout()">登出</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+  </div>
+
+  <div class="list " :class="{ 'shopCar': userStore.account!='' }">
+    <router-link :to="'/BuyShopCart'" class="link">
+      <ShoppingBag class="icon list" />
+      <span class="cartQuantity text-white bg-warning count">
+        {{ userStore.cartCount }}
+      </span>
+    </router-link>
+    <router-link :to="'/BuyOrder'" class="link" v-if="userStore.account!=''">
+      <Document class="icon list order" />
+      <span class="cartQuantity text-white bg-warning count order-count">
+        {{ userStore.orderCount }}
+      </span>
+    </router-link>
+  </div>
+
+  <SellOrderModal
+    v-model:scheduleVisible="sellOrderModalOpen"
+    :orderNew="orderNew"
+  ></SellOrderModal>
+</template>
+
 
 <style lang="scss" scoped>
-
 img {
   width: 30px;
   height: 30px;
@@ -200,12 +127,13 @@ img {
 }
 
 .list {
-  // margin: 0 30px 0 0;
+  margin: 0 10px ;
   // background-color: aqua;
 
   display: flex;
   justify-content: center;
   align-items: center;
+  
   .icon {
     margin: 0;
   }
@@ -214,23 +142,36 @@ img {
     background-color: $color;
   }
   .order {
-    color: rgb(255, 72, 72);
+        color: rgb(35, 130, 255);
   }
   .order-count {
     border-radius: 50%;
-    background-color: rgb(255, 72, 72);
+        background-color: rgb(35, 130, 255);
   }
-  .shopOrder {
-    color: rgb(61, 144, 253);
-  }
-  .shopOrder-count {
-    border-radius: 50%;
-    background-color: rgb(61, 144, 253);
-  }
+
 }
 
+.order-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // margin: 11px 10px 7px 10px;
+  margin: 0 10px;
+  font-size: 15px;
+
+  a {
+    color: #333333;
+    text-decoration: none;
+  }
+  .el-dropdown-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+  }
+}
 .shopCar {
-  margin: 0 0 0 30px;
+  margin: 0 0 0 20px;
 }
 
 .position {
@@ -258,6 +199,7 @@ img {
     right: 10px;
     top: -10px;
   }
+
 }
 
 .bg-warning {

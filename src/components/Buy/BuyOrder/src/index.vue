@@ -58,7 +58,6 @@ const cellStyle = ({ row }: any) => {
   return style.value
 }
 
-const loading = ref(false)
 const getOrder = async (page: number) => {
   let res: GetOrderPageResponse = await reqGetOrder(page)
   if (res.code === 200) {
@@ -73,6 +72,7 @@ const getOrder = async (page: number) => {
   }
 }
 
+const loading = ref(false)
 window.addEventListener('scroll', async () => {
   if (
     window.innerHeight + window.scrollY >=

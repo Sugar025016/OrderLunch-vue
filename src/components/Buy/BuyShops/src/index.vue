@@ -13,34 +13,49 @@
               本站所有品相已店內同價，線上定餐免收外送服務費，歡迎線上定餐
             </span>
           </div>
+          <div class="title-shop">
+            <!-- <div class="title-shop-img">121</div> -->
+
+            <!-- <img
+              @click="openShop()"
+              src="@/assets/images/openShop3.png"
+              class="w-8 h-8 rounded-full"
+              loading="lazy"
+            /> -->
+
+            <el-tooltip
+              class="box-item"
+              effect="light"
+              content="開店"
+              placement="top-start"
+            >
+              <img
+                @click="openShop()"
+                src="@/assets/images/openShop3.png"
+                class="w-8 h-8 rounded-full"
+                loading="lazy"
+              />
+            </el-tooltip>
+          </div>
         </div>
       </el-col>
     </el-row>
     <div class="body">
       <rwdBody>
         <template #slotName>
+          <div class="overlay"></div>
           <div class="body-in">
             <el-row class="row2">
               <el-col :span="24">
                 <Category></Category>
               </el-col>
             </el-row>
-
             <el-row class="row3">
-              <template v-for="c1 in categoryStore.shopArr">
+              <template v-for="c1 in shopStore.shopArr">
                 <def-shop-card :shop="c1"></def-shop-card>
               </template>
             </el-row>
-            <div class="buyShops-more">
-              <el-button
-                class="buyShops-more-button"
-                size="large"
-                type="warning"
-                round
-              >
-                載入更多
-              </el-button>
-            </div>
+            <div v-if="loading" class="loading" v-loading="loading"></div>
           </div>
         </template>
       </rwdBody>
@@ -53,8 +68,10 @@ import Category from './Category/index.vue'
 
 import useShopStore from '@/store/modules/shop'
 import rwdBody from '@/components/layout/rwdBody/index.vue'
+import { useRouter } from 'vue-router'
 
-let categoryStore = useShopStore()
+let $router = useRouter()
+let shopStore = useShopStore()
 const isExpanded = ref(false)
 
 onMounted(() => {
@@ -69,10 +86,61 @@ const handleScroll = () => {
   console.log('Current scroll position:', scrollTop)
   isExpanded.value = scrollTop > 200
 }
+const openShop = () => {
+  // 处理滚动事件的逻辑
+  $router.push(`/Register/shop`)
+}
 
+const loading = ref(false)
+let timer: any
+// window.addEventListener('scroll', async () => {
+//   if (
+//     window.innerHeight + window.scrollY >=
+//     document.documentElement.scrollHeight - 200
+//   ) {
+//     console.log('頁面滾動到了底部')
+//     // 觸發加載更多數據的方法
+//     if (
+//       shopStore.shopPage.number < shopStore.shopPage.totalPages - 1 &&
+//       !loading.value
+//     ) {
+//       let to = window.innerHeight + window.scrollY
+//       loading.value = true
+//       timer = await setTimeout(() => {
+//         shopStore.getShopPage(shopStore.shopPage.number + 1)
+//         window.scrollTo({ top: to, behavior: 'instant' })
+//         loading.value = false
+//       }, 1400)
+//     }
+//   }
+// })
+let loadingMore = false // 添加一个标志位来表示是否正在加载更多数据
+
+window.addEventListener('scroll', async () => {
+  if (
+    window.innerHeight + window.scrollY >=
+    document.documentElement.scrollHeight - 200
+  ) {
+    console.log('頁面滾動到了底部')
+    // 触发加载更多数据的方法
+    if (
+      shopStore.shopPage.number < shopStore.shopPage.totalPages - 1 &&
+      !loadingMore
+    ) {
+      loadingMore = true // 设置为 true 表示正在加载更多数据
+      requestAnimationFrame(async () => {
+        let to = window.innerHeight + window.scrollY
+        await shopStore.getShopPage(shopStore.shopPage.number + 1)
+        window.scrollTo({ top: to, behavior: 'instant' })
+        loadingMore = false // 数据加载完成后设置为 false
+      })
+    }
+  }
+})
 // 在组件销毁时移除滚动事件监听器，防止内存泄漏
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
+  clearTimeout(timer)
 })
 </script>
 <style lang="scss" scoped>
@@ -93,9 +161,8 @@ onBeforeUnmount(() => {
     // border-radius: 40px;
     top: 1px;
     .buyCard {
-
       position: fixed;
-      z-index: -1000;
+      // z-index: -1000;
       top: 1280;
       width: 100%;
       // height: calc(100vh - 80px);
@@ -122,7 +189,7 @@ onBeforeUnmount(() => {
           flex-direction: column;
           justify-content: center;
 
-          padding: 0 18%;
+          padding: 0 0 0 18%;
           .title-span {
             display: flex;
             width: auto;
@@ -137,6 +204,80 @@ onBeforeUnmount(() => {
             font-size: 20px;
           }
         }
+
+        .title-shop {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          // height: 200px;
+          padding: 0 8% 0 0;
+
+          // .title-shop-img {
+          //   // height: 200px;
+          //   background-image: url('@/assets/images/product001.jpeg') !important; /* 設置背景圖片 */
+          //   height: 200px;
+          //   width: 200px;
+          //   border-radius: 20px;
+          //   border: 1px solid white;
+          //   overflow: hidden;
+          //   background-position: center;
+          //   max-width: 100%;
+          //   background-repeat: no-repeat;
+          //   background-attachment: fixed;
+          //   background-size: cover;
+          //   -webkit-background-size: cover;
+          //   -moz-background-size: cover;
+          //   zoom: 1;
+
+          //   // position: fixed;
+          //   //     z-index: -1000;
+          //   //     top: 1280;
+          //   //     width: 20vh;
+          //   //     // height: calc(100vh - 80px);
+          //   //     height: 20vh;
+          //   //     transition: height 0.5s ease; /* 添加动画效果 */
+
+          //   //     background: url('@/assets/images/food-home.jpg') no-repeat;
+          //   //     background-size: cover;
+          //   //     // border-radius: 40px;
+          //   //     padding: 5px 5px 5px 5px;
+          //   //     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          // }
+
+          img {
+            width: auto; /* Ensure image does not exceed container width */
+            height: auto; /* Ensure image does not exceed container height */
+            max-width: 75%;
+            max-height: 75%;
+
+            min-width: 200px;
+            min-height: 200px;
+            object-fit: contain;
+            transition: transform 0.3s ease-in-out; /* 添加过渡效果 */
+            // background-color: bisque;
+            cursor: pointer;
+          }
+          // img:hover {
+          //   animation: shake 0.5s ease-in-out infinite; /* 添加摇动动画 */
+          // }
+          img:hover {
+            animation: shake 0.5s ease-in-out infinite; /* 添加摇动动画 */
+          }
+
+          @keyframes shake {
+            0%,
+            100% {
+              transform: rotate(0deg);
+            }
+            25%,
+            75% {
+              transform: rotate(-8deg);
+            }
+            50% {
+              transform: rotate(18deg);
+            }
+          }
+        }
       }
     }
 
@@ -146,47 +287,22 @@ onBeforeUnmount(() => {
   }
 
   .body {
-    background-color: rgba(255, 242, 224, 0.589);
+    position: relative;
     margin: 0px 0;
 
     padding: 10px 0;
-    
-
+    .overlay {
+      /* 遮罩 */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 242, 224, 0.589);
+    }
     .body-in {
-      // margin: 10px ;
-      // background-color: rgb(209, 21, 21);
-      // padding: 40px 0;
       position: relative;
       height: 120%;
-      // margin: calc(2% - 10px);
-
-      // top: -40;
-      // margin: 40px ;
-      // @media (min-width: $breakpoint-xs) {
-      //   margin-left: 5px;
-      //   margin-right: 5px;
-      // }
-      // @media (min-width: $breakpoint-sm) {
-      //   margin-left: 10px;
-      //   margin-right: 10px;
-      // }
-      // @media (min-width: $breakpoint-md) {
-      //   margin-left: 20px;
-      //   margin-right: 20px;
-      // }
-      // @media (min-width: $breakpoint-lg) {
-      //   margin-left: 40px;
-      //   margin-right: 40px;
-      // }
-      // @media (min-width: $breakpoint-xl) {
-      //   margin-left: 80px;
-      //   margin-right: 80px;
-      // }
-
-      // @media (min-width: $breakpoint-xxl) {
-      //   margin-left: 160px;
-      //   margin-right: 160px;
-      // }
 
       .row2 {
         margin: 40px 0 20px 0;
@@ -217,14 +333,10 @@ onBeforeUnmount(() => {
           grid-template-columns: repeat(4, 1fr);
         }
       }
-      .buyShops-more {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        .buyShops-more-button {
-          background-color: $color;
-        }
+
+      .loading {
+        margin: 30px 0;
+        height: 0px;
       }
     }
   }

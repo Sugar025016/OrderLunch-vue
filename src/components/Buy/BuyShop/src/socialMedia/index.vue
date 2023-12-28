@@ -24,11 +24,12 @@
   justify-content: center; /* 水平置中 */
   align-items: center; /* 垂直置中 */
   text-decoration: none; /* 去除底線 */
+  z-index: 10;
   img {
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
     border-radius: 20px;
-    margin: 0 10px;
+    margin: 0 8px;
   }
   .icon-span {
     color: #030303;

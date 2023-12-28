@@ -1,42 +1,18 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 // import useCategoryStore from '@/store/modules/category'
 import useShopStore from '@/store/modules/shop'
 import { ShopSearch } from '@/api/shop/type'
 import { getCategoryList } from '@/api/category'
-import cityAreas from '@/utils/areaData.js'
-import {
-  Category,
-  CategoryList,
-  CategoryListResponse,
-} from '@/api/category/type'
+import address from '@/utils/address.js'
+import { Category, CategoryListResponse } from '@/api/category/type'
 
-let selectedOption1 = ref(0)
+let selectedOption1 = ref(-1)
 let selectedOption2 = ref('')
 let selectedOption3 = ref(0)
 let categoryList = ref<Category[]>([])
-// let categoryList: CategoryList
-const city: string[] = Object.keys(cityAreas)
-const areas: string[][] = Object.values(cityAreas)
 
 let data: ShopSearch = {}
-watch(selectedOption1, () => {
-  selectedOption2.value = ''
-  data.city = city[selectedOption1.value]
-  getC1()
-})
-
-watch(selectedOption2, () => {
-  data.area = selectedOption2.value === '' ? undefined : selectedOption2.value
-  getC1()
-})
-
-watch(selectedOption3, () => {
-  data.categoryId =
-    selectedOption3.value == 0 ? undefined : selectedOption3.value
-
-  getC1()
-})
 
 let shopStore = useShopStore()
 
@@ -45,7 +21,9 @@ const getCategory = async () => {
   categoryList.value = res.data
 }
 const getC1 = async () => {
-  await shopStore.getShopList(data)
+  shopStore.shopSearch = data
+  shopStore.shopArr.clear()
+  await shopStore.getShopPage()
 }
 
 const searchText = ref('')
@@ -98,26 +76,52 @@ onMounted(() => {
     }
   })
 })
+
+export interface Area {
+  areaName: string
+  streets: [{ streetKey: number; streetName: string }]
+}
+export type Areas = Area[]
+
+const changeCity = () => {
+  selectedOption2.value = ''
+  if (selectedOption1.value < 0) {
+    data.city = ''
+  } else {
+    data.city = address[selectedOption1.value].cityName
+  }
+  getC1()
+}
+
+const changeArea = () => {
+  data.area = selectedOption2.value === '' ? undefined : selectedOption2.value
+  getC1()
+}
+const changeCategory = () => {
+  data.categoryId =
+    selectedOption3.value == 0 ? undefined : selectedOption3.value
+  getC1()
+}
 </script>
 <template>
   <div class="form">
     <div class="form-item el-form-item">
       <div class="custom-select-wrapper">
-        <select class="custom-select" v-model="selectedOption1">
+        <select
+          class="custom-select"
+          v-model="selectedOption1"
+          @change="changeCity"
+        >
+          <option selected value="-1">縣市</option>
           <option
-            v-for="(c1, index) in city"
+            v-for="(item, index) in address"
             :key="index"
+            :label="item.cityName"
             :value="index"
-            :disabled="index === 0"
           >
-            {{ c1 }}
+            {{ item }}
           </option>
         </select>
-        <div class="select-arrow">
-          <el-icon class="el-icon--right">
-            <arrow-down />
-          </el-icon>
-        </div>
       </div>
     </div>
 
@@ -127,33 +131,34 @@ onMounted(() => {
           class="custom-select area"
           :disabled="selectedOption1 === 0"
           v-model="selectedOption2"
+          @change="changeArea"
         >
           <option selected value="">區域鄉鎮</option>
-          <option v-for="c1 in areas[selectedOption1]" :key="c1" :value="c1">
-            {{ c1 }}
+          <option
+            v-if="selectedOption1 > -1"
+            v-for="area in address[selectedOption1].areas"
+            :key="area.areaName"
+            :value="area.areaName"
+            :label="area.areaName"
+          >
+            {{ area }}
           </option>
         </select>
-        <div class="select-arrow">
-          <el-icon class="el-icon--right">
-            <arrow-down />
-          </el-icon>
-        </div>
       </div>
     </div>
 
     <div class="el-form-item item-category">
       <div class="custom-select-wrapper">
-        <select class="custom-select category" v-model="selectedOption3">
+        <select
+          class="custom-select category"
+          v-model="selectedOption3"
+          @change="changeCategory"
+        >
           <option value="0">全部</option>
           <option v-for="c1 in categoryList" :key="c1.id" :value="c1.id">
             {{ c1.name }}
           </option>
         </select>
-        <div class="select-arrow">
-          <el-icon class="el-icon--right">
-            <arrow-down />
-          </el-icon>
-        </div>
       </div>
     </div>
     <div class="el-form-item search-container">
@@ -191,6 +196,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     border-radius: 50px;
+    background-color: rgb(255, 255, 255);
 
     .custom-select-wrapper {
       width: 100%;
@@ -214,9 +220,12 @@ onMounted(() => {
         font-weight: 500;
         color: $font;
         outline: none;
-        cursor: pointer;
         cursor: pointer; /* 預設游標樣式 */
         background-color: rgb(255, 255, 255);
+        z-index: 2;
+        background: url('@/assets/icons/expand.png') no-repeat;
+        background-size: 20px;
+        background-position: right 10px center;
       }
 
       .custom-select:hover {
@@ -228,17 +237,6 @@ onMounted(() => {
         // color: #999;
         color: #777777;
         cursor: not-allowed;
-      }
-      .select-arrow {
-        display: flex;
-        position: absolute;
-        top: 50%;
-        right: 20px;
-        transform: translateY(-50%);
-        width: 16px;
-        height: 16px;
-        background: url('@/assets/icons/expand.png') no-repeat;
-        z-index: 1;
       }
     }
   }

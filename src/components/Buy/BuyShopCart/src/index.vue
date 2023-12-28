@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { apiGetCart, apiDeleteCart, apiPutCart } from '@/api/cart'
 import { CartList, CartResponseData, CartsData } from '@/api/cart/type'
 import useUserStore from '@/store/modules/user'
 import rwdBody from '@/components/layout/rwdBody/index.vue'
+import { ElMessageBox } from 'element-plus/lib/components/index.js'
 
 let userStore = useUserStore()
 let $router = useRouter()
@@ -30,6 +31,7 @@ const checkLink = () => {
   $router.push('/BuyCheck')
 }
 
+let timer: any
 const getCart = async () => {
   let res: CartResponseData = await apiGetCart()
 
@@ -42,13 +44,26 @@ const getCart = async () => {
         (total, v) => total + v.qty * v.productResponse.price,
         0,
       )
+    }else{
+      ElMessageBox.alert('購物車空的，購物去', '購物車', {
+        callback: () => {
+          // 关闭弹窗的回调函数
+          ElMessageBox.close()
+          $router.push('/')
+        },
+      })
+      timer=setTimeout(() => {
+        const messageBoxInstance = ElMessageBox
+        if (messageBoxInstance) {
+          messageBoxInstance.close()
+
+          $router.push('/')
+        }
+      }, 5000) // 10000 毫秒即为 10 秒
     }
   }
 }
 
-onMounted(() => {
-  getCart()
-})
 const deleteCart = async (cartId: number) => {
   let res: CartResponseData = await apiDeleteCart(cartId)
   if (res.code === 200) {
@@ -77,6 +92,13 @@ const updateCart = async (cartId: number, qty: number) => {
     userStore.cartCount = getCartCount(res.data.cartResponses)
   }
 }
+
+onMounted(() => {
+  getCart()
+})
+onBeforeUnmount(() => {
+  clearTimeout(timer)
+})
 </script>
 <template>
   <div class="shopCart">
@@ -196,6 +218,8 @@ const updateCart = async (cartId: number, qty: number) => {
 $table-cell-padding-y: 1.5rem; //
 $table-border-color: rgb(155, 155, 155); //
 @import 'node_modules/bootstrap/scss/_tables.scss';
+
+
 
 .shopCart {
   display: block;

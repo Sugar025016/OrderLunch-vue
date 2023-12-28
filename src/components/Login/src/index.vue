@@ -1,7 +1,7 @@
 <template>
   <div class="login_container">
     <el-card class="login_form">
-      <h1>{{ title }}</h1>
+      <!-- <h1>{{ title }}</h1> -->
       <h3>會員登入</h3>
       <el-form :model="loginForm" :rules="rules" ref="loginForms">
         <el-form-item prop="username">
@@ -241,7 +241,7 @@ const rules = {
       font-weight: 600;
       margin-bottom: 40px;
       margin-top: -10px;
-      color: rgb(255, 255, 255);
+      color: rgb(87, 87, 87);
     }
     .login_btn {
       width: 100%;

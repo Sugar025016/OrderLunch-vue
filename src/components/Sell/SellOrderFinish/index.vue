@@ -67,6 +67,7 @@ const childBorder = ref(false)
 <template>
   <el-card style="margin: 0px m-20px">
     <el-table
+      height="760"
       style="margin: 0 0 10px 0; width: 100%"
       :data="order"
       :border="parentBorder"

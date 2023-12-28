@@ -19,9 +19,16 @@ export interface Page {
 //   data: Page
 // }
 
+// export interface Address {
+//   id?: number
+//   city: string
+//   area: string
+//   detail: string
+// }
 export interface Address {
   id?: number
-  city: string
-  area: string
-  detail: string
+  city: string | undefined
+  area: string | undefined
+  street: string | undefined
+  detail: string | undefined
 }

@@ -73,12 +73,14 @@ const deleteProduct = async (productId: number) => {
       v-if="choose"
     />
     <div class="products-content">
-      <span class="content-title">
-        {{ product.name }}
-      </span>
-      <span class="content-description">
-        {{ product.description }}
-      </span>
+      <div class="content-top">
+        <span class="content-title">
+          {{ product.name }}
+        </span>
+        <span class="content-description">
+          {{ product.description }}
+        </span>
+      </div>
       <span class="content-price">{{ product.prise }}$</span>
     </div>
     <img :src="product.imgUrl" v-if="product.imgUrl" alt="AA" />
@@ -171,10 +173,16 @@ const deleteProduct = async (productId: number) => {
       font-size: 20px;
       color: rgba(0, 0, 0, 0.801);
     }
-
-    .content-description {
-      color: rgba(134, 134, 134, 0.801);
-      font-size: 15px;
+    .content-top {
+      display: flex;
+      flex-direction: column;
+      .content-title {
+        margin-bottom: 10px;
+      }
+      .content-description {
+        color: rgb(116, 116, 116);
+        font-size: 15px;
+      }
     }
   }
 

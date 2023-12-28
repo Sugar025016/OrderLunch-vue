@@ -1,10 +1,10 @@
-import { getShop, getShopList, getShopNames } from '@/api/shop'
+import { getShop, reqGetShopList as reqGetShopPage, getShopNames } from '@/api/shop'
 import { defineStore } from 'pinia'
 import type {
-  ShopsResponseData,
-  ShopSearch,
   ShopResponseData,
   ShopNamesResponse,
+  GetShopPageResponse,
+  ShopData,
 } from '@/api/shop/type'
 import { ShopState } from './types/types'
 import ElMessage from 'element-plus/lib/components/message/index.js'
@@ -40,35 +40,36 @@ const useShopStore = defineStore('Category', {
           },
         ],
         isOrderable: false,
+        tabProducts: [],
+        products: []
       },
       shopNames: [],
       shopId: 0,
-      shopArr: [],
+      shopPage: {
+        content: [],
+        totalElements: 0,
+        size: 0,
+        number: -1,
+        totalPages: 0
+      },
+      shopArr:new Set<ShopData>,
       scrollTop: 0,
+      shopSearch:{}
     }
   },
   actions: {
-    async getShopList(data: ShopSearch) {
-      const res: ShopsResponseData = await getShopList(data)
+    async getShopPage(page:number = 0) {
+      console.log("page", page )
+      const res: GetShopPageResponse = await reqGetShopPage(this.shopSearch ,page)
       if (res.code === 200) {
-        this.shopArr = res.data
+        this.shopPage = res.data
+        res.data.content.forEach((shopData) => {
+          this.shopArr.add(shopData);
+        });
       } else {
         return Promise.reject(new Error(res.message))
       }
     },
-    // async getShop2() {
-    //   let res: ShopResponseData = await getShop(this.shopId)
-    //
-    //   if (res.code === 200) {
-    //     this.shop = res.data
-    //   } else {
-    //     ElMessage({
-    //       type: 'error',
-    //       message: '搜尋失败',
-    //     })
-    //   }
-    // },
-
     async getShop(shopId: number) {
       let res: ShopResponseData = await getShop(shopId)
 

@@ -195,13 +195,23 @@ export const constantRoute = [
       icon: 'HomeFilled',
       mustToken: false,
     },
-    redirect: '/Register',
+    redirect: '/Register/member',
     children: [
       {
-        path: '/Register',
-        component: () => import('@/components/Register/src/index.vue'),
+        path: 'member',
+        component: () => import('@/components/Register/src/member/index.vue'),
         meta: {
-          title: 'Register',
+          title: '註冊帳號',
+          hidden: false,
+          icon: 'HomeFilled',
+          mustToken: false,
+        },
+      },
+      {
+        path: 'shop',
+        component: () => import('@/components/Register/src/shop/index.vue'),
+        meta: {
+          title: '註冊餐廳',
           hidden: false,
           icon: 'HomeFilled',
           mustToken: false,
@@ -357,7 +367,7 @@ export const sellShop = [
         meta: {
           title: '商店編輯',
           hidden: false,
-          icon: 'HomeFilled',
+          icon: 'shopEdit',
           mustToken: false,
           id: 0,
         },
@@ -368,7 +378,7 @@ export const sellShop = [
         meta: {
           title: '餐點編輯',
           hidden: false,
-          icon: 'HomeFilled',
+          icon: 'foodAdd',
           mustToken: false,
           id: 0,
         },
@@ -379,17 +389,17 @@ export const sellShop = [
         meta: {
           title: '新訂單',
           hidden: false,
-          icon: 'HomeFilled',
+          icon: 'order',
           mustToken: false,
         },
       },
       {
-        path: 'orderPending',
-        component: () => import('@/components/Sell/SellOrderPending/index.vue'),
+        path: 'orderHandle',
+        component: () => import('@/components/Sell/SellOrderHandle/index.vue'),
         meta: {
           title: '待處理訂單',
           hidden: false,
-          icon: 'HomeFilled',
+          icon: 'order',
           mustToken: false,
         },
       },
@@ -399,7 +409,7 @@ export const sellShop = [
         meta: {
           title: '已完成訂單',
           hidden: false,
-          icon: 'HomeFilled',
+          icon: 'order',
           mustToken: false,
         },
       },
@@ -409,7 +419,7 @@ export const sellShop = [
 
 export const asyncRoute = [
   {
-    path: '/Backstage',
+    path: '/Register',
     component: () => import('@/views/backstage/index.vue'),
     meta: {
       title: '後台',
@@ -417,10 +427,10 @@ export const asyncRoute = [
       icon: 'HomeFilled',
       mustToken: true,
     },
-    redirect: '/Backstage/shops',
+    redirect: '/Register/member',
     children: [
       {
-        path: '/Backstage/shops',
+        path: 'member',
         component: () =>
           import('@/components/Backstage/BackstageShops/src/index.vue'),
         meta: {
@@ -431,7 +441,7 @@ export const asyncRoute = [
         },
       },
       {
-        path: '/Backstage/users',
+        path: 'shop',
         component: () =>
           import('@/components/Backstage/BackstageUser/src/index.vue'),
         meta: {
@@ -524,7 +534,7 @@ export const menuSellRoutes = [
     meta: {
       title: '編輯商店',
       hidden: false,
-      icon: 'HomeFilled',
+      icon: 'shopEdit',
       mustToken: true,
       shopId: 0,
     },
@@ -535,7 +545,7 @@ export const menuSellRoutes = [
     meta: {
       title: '編輯商品',
       hidden: false,
-      icon: 'HomeFilled',
+      icon: 'productEdit',
       mustToken: true,
       shopId: 0,
     },

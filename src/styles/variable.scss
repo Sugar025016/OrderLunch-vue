@@ -3,6 +3,12 @@ $color-skin: #fd7d14b7;
 $color-low: #fd7d143b;
 $font: #6b6b6b;
 $border: #ccc;
+
+$color-order-new: #ff96b9;
+$color-order-handle: #85d15f;
+$color-order-finish: #a19bff;
+
+
 :root {
 
   // --el-color-primary: #fd7e14;
@@ -17,7 +23,9 @@ $border: #ccc;
   //   --el-button-active-bg-color:#ffab67;
   // // 全局文字顏色
   // --el-color-text: $color;
-
+  --color-order-new: #{$color-order-new};
+  --color-order-handle: #{$color-order-handle};
+  --color-order-finish: #{$color-order-finish};
 
   --el-color-primary-rgb:#fd7e14;
   --el-color-primary:#fd7e14;

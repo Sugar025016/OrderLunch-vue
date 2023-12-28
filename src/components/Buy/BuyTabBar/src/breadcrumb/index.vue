@@ -7,7 +7,11 @@
       :to="item.path"
     > -->
   <!-- <div class="flex justify-space-between mb-4 flex-wrap gap-4"> -->
-  <el-button class="title" @click="goRoute('/')" text>{{ title }}</el-button>
+  <!-- <el-button class="title" @click="goRoute('/')" text>{{ title }}</el-button> -->
+  <div class="title">
+    <def-title ></def-title>
+  </div>
+
   <!-- </el-breadcrumb> -->
 </template>
 <script setup lang="ts">

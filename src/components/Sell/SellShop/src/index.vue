@@ -40,7 +40,7 @@ let shopParams = reactive<PutShopData>({
   },
   imgId: 0,
   imgUrl: '',
-  isOrderable: false,
+  orderable: false,
   isDisable: false,
 })
 // const updateShop = async (row: ShopData) => {

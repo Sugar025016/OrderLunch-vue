@@ -9,6 +9,7 @@ import type {
   ShopData,
   PutShopData,
   PutShopResponse,
+  GetShopPageResponse,
 } from './type'
 enum API {
   SHOPS = '/api/shop',
@@ -26,17 +27,26 @@ export const getShop = (data: number) =>
 //     API.SHOPS
 //   )
 
-export const getShopList = (data: ShopSearch) =>
-  request.get<any, ShopsResponseData>(
-    API.SHOPS +
-      '?' +
-      `${data.city !== undefined ? 'city=' + data.city : null}` +
-      `&${data.area !== undefined ? 'area=' + data.area : null}` +
-      `&${
-        data.categoryId !== undefined ? 'categoryId=' + data.categoryId : null
-      }` +
-      `&${data.other !== undefined ? 'other=' + data.other : null}`,
-  )
+// export const getShopList = (data: ShopSearch) =>
+//   request.get<any, ShopsResponseData>(
+//     API.SHOPS +
+//     '?' +
+//     `${data.city !== undefined ? 'city=' + data.city : null}` +
+//     `&${data.area !== undefined ? 'area=' + data.area : null}` +
+//     `&${data.categoryId !== undefined ? 'categoryId=' + data.categoryId : null
+//     }` +
+//     `&${data.other !== undefined ? 'other=' + data.other : null}`,
+//   )
+
+export const reqGetShopList = ( data: ShopSearch,page: number, limit: number = 2) =>
+  request.get<any, GetShopPageResponse>(
+    API.SHOP + `?name=${data.other}&page=${page}&size=${limit}` +
+    `&${data.city !== undefined ? 'city=' + data.city : null}` +
+    `&${data.area !== undefined ? 'area=' + data.area : null}` +
+    `&${data.categoryId !== undefined ? 'categoryId=' + data.categoryId : null
+    }` +
+    `&${data.other !== undefined ? 'other=' + data.other : null}`, )
+
 
 export const getRecommendShops = (data: ShopSearch) =>
   request.get<any, ShopsResponseData>(API.SHOPS_RECOMMEND, data)

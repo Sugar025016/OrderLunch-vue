@@ -6,9 +6,12 @@ import {
   ShopData,
   ShopNames,
   ShopDetailData,
+  ShopPageResponse,
+  ShopSearch,
 } from '@/api/shop/type'
 import { Address } from '@/api/user/type'
 import { SellProductList } from '@/api/sellProduct/type'
+import { Orders } from '@/api/order/type'
 
 export interface UserState {
   token: string | null
@@ -26,6 +29,8 @@ export interface UserState {
   orderCount: number
   shopOrderCount: number
   addresses: Address
+  getNewOrderTimer: ReturnType<typeof setInterval> | null
+  orderNew: Orders
 }
 
 // export interface CategoryState {
@@ -38,14 +43,24 @@ export interface UserState {
 //   c4Arr: Category[]
 //   c5Arr: Shop
 // }
-
 export interface ShopState {
   shop: ShopDetailData
   shopNames: ShopNames
   shopId: number
-  shopArr: ShopList
+  shopPage: ShopPageResponse
+  shopArr:  Set<ShopData>
+  scrollTop: number
+  shopSearch: ShopSearch
+}
+export interface SellShopState {
+  shop: ShopDetailData
+  shopNames: ShopNames
+  shopId: number
+  shopPage: ShopPageResponse
+  shopArr:  Set<ShopData>
   scrollTop: number
   shopDrawer: boolean
+  shopSearch: ShopSearch
 }
 export interface SellProductState {
   products: SellProductList

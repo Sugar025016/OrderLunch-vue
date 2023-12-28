@@ -109,20 +109,9 @@ const setOrder = (orderId: number, status: number) => {
   putOrderByShop(shopId, status, orderIds.value)
 }
 
-import moment from 'moment'
 import { ResultResponse } from '@/api/type'
-const formatDate = (row: any, column: any) => {
-  const date = row.takeTime
-  let formattedDate
-  if (column.columnKey === 'date') {
-    formattedDate = moment(date).format('YYYY-MM-DD')
-  }
-  if (column.columnKey === 'time') {
-    formattedDate = moment(date).format('HH:mm:ss')
-  }
-  // 使用您想要的日期格式
-  return formattedDate
-}
+import { formatDate } from '@/utils/time'
+
 </script>
 
 <template>
@@ -151,6 +140,7 @@ const formatDate = (row: any, column: any) => {
       </template>
     </el-popconfirm>
     <el-table
+      height="718"
       ref="multipleTableRef"
       style="margin: 10px 0; width: 100%"
       :data="order"

@@ -100,8 +100,10 @@ const accordion = ref(true)
             <div class="detail-qty">數量：{{ detail.qty }}</div>
             <div class="detail-remark">備註：{{ detail.remark }}</div>
           </div>
-
-          <hr />
+          <div  class="hr">
+            <hr />
+          </div>
+          
           <div item class="detail">
             <div class="detail-total">總數：{{ grouped.productTotalQty }}</div>
           </div>
@@ -167,9 +169,21 @@ const accordion = ref(true)
         width: 100px;
       }
     }
-    hr {
+
+    
+    .hr {
+
+
+      width: 100px;
+      margin: 0 30px;
+      hr {
       border-color: $color;
       background-color: aqua;
+
+      position: static;
+      left: 0;
+      width: 110px;
+    }
     }
   }
 }

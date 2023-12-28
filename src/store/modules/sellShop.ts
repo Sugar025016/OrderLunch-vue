@@ -1,4 +1,4 @@
-import { getSellShop, getShop, getShopList, getShopNames } from '@/api/shop'
+import { getSellShop, getShop, reqGetShopList, getShopNames } from '@/api/shop'
 import { defineStore } from 'pinia'
 import type {
   ShopsResponseData,
@@ -6,14 +6,17 @@ import type {
   ShopResponseData,
   ShopNamesResponse,
   ShopDetailsResponse,
+  ShopDetailData,
 } from '@/api/shop/type'
-import { ShopState } from './types/types'
+import { SellShopState } from './types/types'
 import ElMessage from 'element-plus/lib/components/message/index.js'
 import { useRouter } from 'vue-router'
+import useUserStore from '@/store/modules/user'
+
 let $router = useRouter()
 
 const useSellShopStore = defineStore('sellShopStore', {
-  state: (): ShopState => {
+  state: (): SellShopState => {
     return {
       shop: {
         id: 0,
@@ -46,7 +49,7 @@ const useSellShopStore = defineStore('sellShopStore', {
       },
       shopNames: [],
       shopId: 0,
-      shopArr: [],
+      shopPage: [],
       scrollTop: 0,
       shopDrawer: false,
     }
@@ -83,7 +86,7 @@ const useSellShopStore = defineStore('sellShopStore', {
         })
       }
     },
-    async deleteSellProduct(shopId: number) {},
+    async deleteSellProduct(shopId: number) { },
     async getSellShopThisId() {
       if (this.shopId === 0) {
         if (this.shopNames.length === 0) {
@@ -103,23 +106,35 @@ const useSellShopStore = defineStore('sellShopStore', {
       }
     },
     async getShopItem() {
-      let res: ShopNamesResponse = await getShopNames()
-      if (res.code === 200) {
-        if (res.data.length === 0) {
-          $router.push('/')
-          return
+      let userStore = useUserStore()
+      if (userStore.account) {
+        let res: ShopNamesResponse = await getShopNames()
+        if (res.code === 200) {
+          if (res.data.length === 0) {
+            $router.push('/')
+            return
+          }
+          this.shopNames = res.data
+          if (this.shopId === 0) {
+            this.shopId = this.shopNames[0].id
+          }
+          return this.shopNames
+        } else {
+          ElMessage({
+            type: 'error',
+            message: '搜尋失败',
+          })
         }
-        this.shopNames = res.data
-        if (this.shopId === 0) {
-          this.shopId = this.shopNames[0].id
-        }
-        return this.shopNames
-      } else {
-        ElMessage({
-          type: 'error',
-          message: '搜尋失败',
-        })
       }
+
+    },
+
+    async clearSellShopData() {
+      this.shop = {} as ShopDetailData
+      this.shopNames = []
+      this.shopId = 0
+      this.shopPage = []
+
     },
 
     // async goRoute() {

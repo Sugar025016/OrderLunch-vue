@@ -1,6 +1,6 @@
 const address = [
   {
-    cityName: '臺北市',
+    cityName: '台北市',
     areas: [
       {
         areaName: '中正區',
@@ -24579,25 +24579,25 @@ const address = [
         ],
       },
       {
-        areaName: '釣魚臺',
+        areaName: '釣魚台',
         streets: [
           {
             streetKey: 6060,
-            streetName: '釣魚臺列嶼',
+            streetName: '釣魚台列嶼',
           },
         ],
       },
     ],
   },
   {
-    cityName: '釣魚臺',
+    cityName: '釣魚台',
     areas: [
       {
-        areaName: '釣魚臺',
+        areaName: '釣魚台',
         streets: [
           {
             streetKey: 6061,
-            streetName: '釣魚臺列嶼',
+            streetName: '釣魚台列嶼',
           },
         ],
       },
@@ -57187,7 +57187,7 @@ const address = [
     ],
   },
   {
-    cityName: '臺中市',
+    cityName: '台中市',
     areas: [
       {
         areaName: '中區',
@@ -57294,7 +57294,7 @@ const address = [
           },
           {
             streetKey: 14169,
-            streetName: '臺灣大道１段',
+            streetName: '台灣大道１段',
           },
           {
             streetKey: 14170,
@@ -59209,11 +59209,11 @@ const address = [
           },
           {
             streetKey: 14644,
-            streetName: '臺灣大道１段',
+            streetName: '台灣大道１段',
           },
           {
             streetKey: 14645,
-            streetName: '臺灣大道２段',
+            streetName: '台灣大道２段',
           },
           {
             streetKey: 14646,
@@ -60050,11 +60050,11 @@ const address = [
           },
           {
             streetKey: 14853,
-            streetName: '臺灣大道１段',
+            streetName: '台灣大道１段',
           },
           {
             streetKey: 14854,
-            streetName: '臺灣大道２段',
+            streetName: '台灣大道２段',
           },
           {
             streetKey: 14855,
@@ -63688,19 +63688,19 @@ const address = [
           },
           {
             streetKey: 15760,
-            streetName: '臺灣大道２段',
+            streetName: '台灣大道２段',
           },
           {
             streetKey: 15761,
-            streetName: '臺灣大道３段',
+            streetName: '台灣大道３段',
           },
           {
             streetKey: 15762,
-            streetName: '臺灣大道４段',
+            streetName: '台灣大道４段',
           },
           {
             streetKey: 15763,
-            streetName: '臺灣大道５段',
+            streetName: '台灣大道５段',
           },
           {
             streetKey: 15764,
@@ -74472,11 +74472,11 @@ const address = [
           },
           {
             streetKey: 18436,
-            streetName: '臺灣大道６段',
+            streetName: '台灣大道６段',
           },
           {
             streetKey: 18437,
-            streetName: '臺灣大道７段',
+            streetName: '台灣大道７段',
           },
           {
             streetKey: 18438,
@@ -74925,11 +74925,11 @@ const address = [
           },
           {
             streetKey: 18548,
-            streetName: '臺灣大道５段',
+            streetName: '台灣大道５段',
           },
           {
             streetKey: 18549,
-            streetName: '臺灣大道６段',
+            streetName: '台灣大道６段',
           },
           {
             streetKey: 18550,
@@ -75610,15 +75610,15 @@ const address = [
           },
           {
             streetKey: 18718,
-            streetName: '臺灣大道１０段',
+            streetName: '台灣大道１０段',
           },
           {
             streetKey: 18719,
-            streetName: '臺灣大道８段',
+            streetName: '台灣大道８段',
           },
           {
             streetKey: 18720,
-            streetName: '臺灣大道９段',
+            streetName: '台灣大道９段',
           },
           {
             streetKey: 18721,
@@ -109633,7 +109633,7 @@ const address = [
         ],
       },
       {
-        areaName: '臺西鄉',
+        areaName: '台西鄉',
         streets: [
           {
             streetKey: 27131,
@@ -115357,7 +115357,7 @@ const address = [
     ],
   },
   {
-    cityName: '臺南市',
+    cityName: '台南市',
     areas: [
       {
         areaName: '中西區',
@@ -156666,7 +156666,7 @@ const address = [
         ],
       },
       {
-        areaName: '霧臺鄉',
+        areaName: '霧台鄉',
         streets: [
           {
             streetKey: 38748,
@@ -166495,10 +166495,10 @@ const address = [
     ],
   },
   {
-    cityName: '臺東縣',
+    cityName: '台東縣',
     areas: [
       {
-        areaName: '臺東市',
+        areaName: '台東市',
         streets: [
           {
             streetKey: 41166,
@@ -176082,3 +176082,5 @@ const address = [
     ],
   },
 ]
+
+export default address

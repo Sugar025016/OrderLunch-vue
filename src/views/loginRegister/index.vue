@@ -2,7 +2,8 @@
   <div class="common-layout">
     <el-container class="buy">
       <el-main class="buy-body">
-        <Router-view></Router-view>
+        <!-- <Router-view></Router-view> -->
+        <reactive></reactive>
       </el-main>
       <el-footer class="buy-el-footer">
         <def-buy-footer class=""></def-buy-footer>
@@ -11,7 +12,10 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+import reactive from '@/components/Register/src/index.vue'
+</script>
 
 <script setup lang="ts"></script>
 <style lang="scss" scoped>

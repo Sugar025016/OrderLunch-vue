@@ -72,6 +72,7 @@ watch(
     .buy-body {
       overflow: visible;
       padding: 0px;
+      overflow: hidden;
     }
     .buy-el-footer {
       background-color: black;

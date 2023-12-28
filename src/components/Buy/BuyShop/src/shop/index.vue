@@ -2,10 +2,17 @@
   <div class="">
     <div class="shop">
       <el-row :gutter="0" class="shop-card">
-        <el-col :span="8" class="shop-img" :style="shopImageStyle">
+        <el-col :span="12" class="shop-img" :style="shopImageStyle">
+          <div class="overlay" v-if="shopData?.orderable">
+            <span class="overlay-text">可線上AA</span>
+            <span class="overlay-text">訂購</span>
+          </div>
           <div class="shop-border"></div>
         </el-col>
-        <el-col :span="16" class="shop-content">
+        <!-- <div class="overlay" v-if="shop.orderable">
+          <div class="overlay-text">可線上訂購</div>
+        </div> -->
+        <el-col :span="12" class="shop-content">
           <div class="shop-title">
             <span>{{ shopData?.name }}</span>
             <div @click="changeFavorite" class="favorite">
@@ -29,7 +36,13 @@
           <div class="shop-information">
             <div class="information">
               <el-icon :size="20"><Location /></el-icon>
+              <span>地址：</span>
               <span>{{ shopData?.address }}</span>
+            </div>
+            <div class="information">
+              <el-icon :size="20"><Phone /></el-icon>
+              <span>電話：</span>
+              <span>{{ shopData?.phone }}</span>
             </div>
             <div class="information">
               <el-icon :size="20"><Watch /></el-icon>
@@ -56,51 +69,19 @@
               </div>
               <span v-else>{{ shopData?.schedules[dayOfWeek] }}</span>
               <span v-else>非營業日</span>
+              <el-link
+                class="more"
+                data-bs-toggle="modal"
+                data-bs-target="#shopInfoModal"
+              >
+                <el-icon><WarningFilled /></el-icon>
+                更多資訊
+              </el-link>
             </div>
           </div>
-          <div class="shop-buttons">
-            <el-button
-              size="large"
-              type="warning"
-              class="shop-button"
-              :icon="House"
-              round
-              plain
-            >
-              Primary
-            </el-button>
-            <el-button
-              size="large"
-              type="warning"
-              class="shop-button"
-              :icon="User"
-              round
-              plain
-            >
-              Primary
-            </el-button>
-            <el-button
-              size="large"
-              type="warning"
-              class="shop-button"
-              :icon="ChatRound"
-              round
-              plain
-            >
-              Primary
-            </el-button>
-            <el-button
-              size="large"
-              type="warning"
-              class="shop-button btn btn-primary"
-              :icon="Watch"
-              round
-              plain
-              data-bs-toggle="modal"
-              data-bs-target="#shopInfoModal"
-            >
-              營業資訊
-            </el-button>
+
+          <div class="header-link">
+            <socialMedia></socialMedia>
           </div>
         </el-col>
       </el-row>
@@ -124,6 +105,8 @@ import { ShopData, ShopResponseData } from '@/api/shop/type'
 import shopInfoModal from '../shopInfoModal/index.vue'
 import useUserStore from '@/store/modules/user'
 import { deleteSecond as showTime } from '@/utils/time'
+import socialMedia from '../socialMedia/index.vue'
+import ElMessage from 'element-plus/lib/components/message/index.js'
 
 let $route = useRoute()
 
@@ -157,7 +140,9 @@ onMounted(async () => {
 
 const getShopData = async (id: number) => {
   let res: ShopResponseData = await getShop(id)
+
   shopData.value = res.data
+
 }
 
 const shopImageStyle = computed(() => {
@@ -185,6 +170,7 @@ $b-color: $color;
       display: flex;
       width: 100%;
       height: 380px;
+      background-position: center;
       // background: url('@/assets/images/food.jpg') no-repeat;
       // background: url('@/assets/images/food.jpg') no-repeat;
       // background-image: url('#{shopData.img}');
@@ -192,6 +178,8 @@ $b-color: $color;
       background-size: cover;
       border-radius: 20px;
       padding: 5px 5px 5px 5px;
+      min-width: 460px;
+      position: relative;
       .shop-border {
         height: 100%;
         width: 100%;
@@ -200,15 +188,72 @@ $b-color: $color;
         overflow: hidden;
         display: flex;
       }
+      .overlay {
+        position: absolute;
+        top: -50px;
+        left: -50px;
+        padding: 10px;
+        width: 160px; /* 這裡修改為 100% */
+        height: 160px; /* 這裡修改為 100% */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 1;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        background-image: url('@/assets/images/plate.png');
+        background-position: center center;
+        object-fit: contain;
+        transition: opacity 0.3s ease;
+        font-size: 16px;
+        .overlay-text {
+          color: $color;
+          font-weight: bold;
+          z-index: 100;
+          width: 100%;
+          height: auto;
+
+          margin: 2px 10px;
+          text-align: center;
+
+          white-space: nowrap;
+          font-size: 1.5rem;
+        }
+      }
     }
+    // .overlay {
+    //   position: absolute;
+    //   top: 15px;
+    //   right: -5px;
+    //   width: 100px;
+    //   height: 25px;
+    //   background-color: #fd7e14;
+    //   display: flex;
+    //   justify-content: center;
+    //   align-items: center;
+    //   z-index: 100;
+    //   .overlay-text {
+    //     color: #ffffff;
+    //     font-size: 14px;
+    //     font-weight: bold;
+    //     z-index: 100;
+    //   }
+    // }
+
     .shop-content {
-      box-shadow: 0px 4px 3px 2px rgba(0, 0, 0, 0.1);
-      background-color: rgb(255, 255, 254);
+      border-radius: 20px;
+      box-shadow: 0px 4px 3px 2px rgba(255, 255, 255, 0.1);
+      background-color: rgba(255, 255, 254, 0.614);
       // .shop-content-row {
       // margin: 30px;
       padding: 30px;
       // height:calc(440px - 60px) ;
-      height: 340px;
+      height: 300px;
+      margin: 10px;
+      width: 600px;
+      min-width: 460px;
       .shop-title {
         display: flex;
         width: 100%;
@@ -241,12 +286,12 @@ $b-color: $color;
           word-wrap: break-word;
           word-break: break-all;
           max-width: 100%;
-          color: rgba(134, 134, 134, 0.801);
+          color: rgb(134, 134, 134);
           font-size: 20px;
         }
       }
       .shop-information {
-        margin: 40px 0;
+        margin: 30px 0;
         .information {
           margin: 10px 0;
           display: flex;
@@ -263,6 +308,22 @@ $b-color: $color;
           el-icon {
             width: 20px;
             height: 0px;
+          }
+          .more {
+            margin: 4px 0 0 8px;
+            display: flex;
+            align-items: center;
+            color: rgb(255, 103, 103);
+            color: $color;
+            font-size: 12px;
+            .el-icon {
+              width: 16px;
+              height: 16px;
+            }
+          }
+          .times {
+            display: flex;
+            align-items: center;
           }
         }
       }
@@ -283,5 +344,11 @@ $b-color: $color;
       }
     }
   }
+}
+.header-link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 50;
 }
 </style>

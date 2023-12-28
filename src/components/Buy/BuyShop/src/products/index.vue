@@ -131,6 +131,7 @@ myModal?.addEventListener('shown.bs.modal', () => {
 }
 
 .el-dialog {
+  
   background-image: url('@/assets/images/product001.jpeg') !important; /* 設置背景圖片 */
   border-radius: 10px !important;
 

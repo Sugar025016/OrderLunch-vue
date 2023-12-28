@@ -33,12 +33,14 @@ let tabParams = reactive<PutTabData>({
 
 const setTab = () => {
   tabParams = reactive<PutTabData>({
-    name: '',
+    id: tapProduct.value?.id,
+    name: tapProduct.value?.name as string,
     shopId: 0,
-    shelve: false,
+    shelve: tapProduct.value?.shelve as boolean,
     productIds: [],
   })
-  Object.assign(tabParams, tapProduct.value)
+  // Object.assign(tabParams, tapProduct.value)
+  console.log(tabParams)
 }
 
 const getChooses = () => {
@@ -170,7 +172,7 @@ defineExpose({
               v-model="tabParams.shelve"
             />
             <label class="form-check-label" for="flexSwitchCheckDefault">
-              上架
+              啟用
             </label>
           </div>
           <div class="footer-button">
@@ -357,6 +359,5 @@ defineExpose({
     color: $color;
     margin: 0 10px;
   }
-  
 }
 </style>

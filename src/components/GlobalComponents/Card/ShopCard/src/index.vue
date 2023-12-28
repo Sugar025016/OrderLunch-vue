@@ -46,7 +46,7 @@ onMounted(async () => {
       />
     </div>
     <div class="overlay" v-if="shop.orderable">
-      <span class="overlay-text">可線上</span>
+      <span class="overlay-text">可線上111</span>
       <span class="overlay-text">訂購</span>
     </div>
     <div style="padding: 14px">
@@ -147,7 +147,7 @@ onMounted(async () => {
   .overlay {
     position: absolute;
     top: -17px;
-    right: -18px;
+    left: -18px;
     padding: 10px;
     width: 25%; /* 這裡修改為 100% */
     height: 35%; /* 這裡修改為 100% */
@@ -175,8 +175,7 @@ onMounted(async () => {
       text-align: center;
 
       white-space: nowrap;
-    font-size: 1rem;
-
+      font-size: 1rem;
     }
   }
   .bottom {
