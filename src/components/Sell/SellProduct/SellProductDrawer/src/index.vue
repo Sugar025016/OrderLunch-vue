@@ -148,7 +148,7 @@ const uploadHeaders = {
 <template>
   <el-drawer v-model="drawer" class="drawer">
     <template #header>
-      <h4>{{ productParams.id ? '更新餐點' : '添加餐點' }}</h4>
+      <h3>{{ productParams.id ? '更新餐點' : '新增餐點' }}</h3>
     </template>
     <template #default>
       <el-form :model="productParams" :rules="rules" ref="formRef">
@@ -207,6 +207,9 @@ const uploadHeaders = {
   </el-drawer>
 </template>
 <style lang="scss" scoped>
+h3{
+  font-size: 18px;
+}
 .avatar-uploader {
   .avatar {
     width: 100%;

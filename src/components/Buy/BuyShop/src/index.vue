@@ -50,6 +50,7 @@ import rwdBody from '@/components/layout/rwdBody/index.vue'
     width: 100%;
     height: 100%;
     height: 520px;
+    height: 520px;
   }
 
   .header {

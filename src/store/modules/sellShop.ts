@@ -1,4 +1,4 @@
-import { getSellShop, getShop, reqGetShopList, getShopNames } from '@/api/shop'
+import { getSellShop, getShop,  getShopNames } from '@/api/shop'
 import { defineStore } from 'pinia'
 import type {
   ShopsResponseData,
@@ -26,6 +26,7 @@ const useSellShopStore = defineStore('sellShopStore', {
           id: 0,
           city: '',
           area: '',
+          street: '',
           detail: '',
         },
         phone: '',
@@ -43,7 +44,7 @@ const useSellShopStore = defineStore('sellShopStore', {
             ],
           },
         ],
-        isOrderable: false,
+        orderable: false,
         tabProducts: [],
         products: [],
       },
@@ -77,6 +78,7 @@ const useSellShopStore = defineStore('sellShopStore', {
       }
       let res: ShopDetailsResponse = await getSellShop(shopId)
 
+      console.log("**********let res: ShopDetailsResponse*******", res.data)
       if (res.code === 200) {
         this.shop = res.data
       } else {

@@ -83,7 +83,6 @@ interface Tab {
 const userTabs: Tab[] = [
   { label: '會員資料', content: 'profile' },
   { label: '修改會員資料', content: 'changeProfile' },
-  { label: '修改公司資料', content: 'changeCompany' },
   { label: '修改登入密碼', content: 'changePassword' },
 ]
 const loveTabs: Tab[] = [

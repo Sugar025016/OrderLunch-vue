@@ -93,7 +93,7 @@ window.addEventListener('scroll', async () => {
         window.scrollTo({ top: to, behavior: 'instant' })
         loading.value = false
       }, 1400)
-      await getOrder(page.value)
+      // await getOrder(page.value)
     }
   }
 })
@@ -117,7 +117,6 @@ onMounted(() => {
               :row-class-name="tableRowClassName"
               :cell-style="cellStyle"
             >
-
               <el-table-column label="圖片" prop="imgUrl" align="center">
                 <template #="{ row, $index }">
                   <el-image
@@ -128,21 +127,62 @@ onMounted(() => {
                   />
                 </template>
               </el-table-column>
+
+              <!-- <el-table-column prop="orderDetails" label="訂單編號" width="300" /> -->
               <el-table-column type="expand">
-                <template #default="props">
+                <!-- <template #default="props">
                   <div m="4">
                     <p m="t-0 b-2">State: {{ props.row.state }}</p>
                     <p m="t-0 b-2">City: {{ props.row.city }}</p>
                     <p m="t-0 b-2">Address: {{ props.row.address }}</p>
                     <p m="t-0 b-2">Zip: {{ props.row.zip }}</p>
                     <h3>Family</h3>
-                    <!-- <el-table :data="props.row.family" :border="childBorder">
-                      <el-table-column label="Name" prop="name" />
-                      <el-table-column label="State" prop="state" />
-                      <el-table-column label="City" prop="city" />
-                      <el-table-column label="Address" prop="address" />
-                      <el-table-column label="Zip" prop="zip" />
-                    </el-table> -->
+
+                  </div>
+                </template> -->
+                <template #default="props">
+                  <!-- <div m="4">
+                    <p m="t-0 b-2">State: {{ props.row.orderDetails }}</p>
+                    <h3>Family</h3>
+
+                  </div> -->
+                  <div m="4" style="margin: 10px 40px" class="expand-row">
+                    <el-table
+                      :data="props.row.orderDetails"
+                      class="expand-table"
+                    >
+                      <el-table-column
+                        label="圖片"
+                        prop="imgUrl"
+                        align="center"
+                        
+                      >
+                        <template #="{ row, $index }">
+                          <el-image
+                            :src="row.imgUrl"
+                            alt=""
+                            style="width: 130px; height: 100px"
+                            lazy
+                          />
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                        label="餐點"
+                        prop="productName"
+                        align="center"
+                      />
+                      <el-table-column label="數量" prop="qty" align="center" />
+                      <el-table-column
+                        label="價格"
+                        prop="prise"
+                        align="center"
+                      />
+                      <el-table-column
+                        label="備註"
+                        prop="remark"
+                        align="center"
+                      />
+                    </el-table>
                   </div>
                 </template>
               </el-table-column>
@@ -150,7 +190,6 @@ onMounted(() => {
 
               <el-table-column prop="shopName" label="店家" width="100" />
 
-              
               <el-table-column prop="statusChinese" label="狀態" />
               <!-- <el-table-column prop="takeTime" label="取餐時間" /> -->
               <el-table-column

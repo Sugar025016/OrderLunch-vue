@@ -165,21 +165,21 @@ const scroll = ({ scrollTop }) => {
 onMounted(() => {
   getItem()
 })
-const scrollTop = computed(() => sellShopStore.scrollTop)
+// const scrollTop = computed(() => sellShopStore.scrollTop)
 
-watch(scrollTop, (newVal) => {
-  // scrollbarRef.value!.setScrollTop(newVal + value.value)
-  console.log('///////////////////', sellShopStore.scrollTop)
-  const scrollContainer = document.querySelector('.scroll-container')
-  // sellShopStore.scrollTop = 0;
-  if (scrollContainer) {
-    // 将滚动效果应用到 .scroll-container 元素上
-    scrollContainer.scrollTo({
-      top: scrollTop.value,
-      behavior: 'smooth',
-    })
-  }
-})
+// watch(scrollTop, (newVal) => {
+//   // scrollbarRef.value!.setScrollTop(newVal + value.value)
+//   console.log('///////////////////', sellShopStore.scrollTop)
+//   const scrollContainer = document.querySelector('.scroll-container')
+//   // sellShopStore.scrollTop = 0;
+//   if (scrollContainer) {
+//     // 将滚动效果应用到 .scroll-container 元素上
+//     scrollContainer.scrollTo({
+//       top: scrollTop.value,
+//       behavior: 'smooth',
+//     })
+//   }
+// })
 </script>
 
 <style lang="scss" scoped>
@@ -248,13 +248,15 @@ watch(scrollTop, (newVal) => {
     .el-container {
       .el-main {
         position: absolute;
-        padding: 20px;
+        padding: 0;
+        // padding: 0px  20px;
         left: 200px;
         top: 60px;
         transition: all 0.3s;
         // width: calc(100% - $base-menu-width);
         height: calc(100vh - 60px);
         .scroll-container {
+        padding:  20px;
           scroll-behavior: smooth;
           height: 100%; /* 设置容器高度 */
           overflow: auto; /* 让容器产生滚动条 */

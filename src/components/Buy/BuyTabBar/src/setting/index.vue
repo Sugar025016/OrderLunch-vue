@@ -72,9 +72,9 @@ let orderNew = ref<Orders>([])
           <el-dropdown-item @click="changeLink('changeProfile', userData)">
             修改會員資料
           </el-dropdown-item>
-          <el-dropdown-item @click="changeLink('changeCompany', userData)">
+          <!-- <el-dropdown-item @click="changeLink('changeCompany', userData)">
             修改公司資料
-          </el-dropdown-item>
+          </el-dropdown-item> -->
           <el-dropdown-item @click="changeLink('changePassword', userData)">
             修改登入密碼
           </el-dropdown-item>

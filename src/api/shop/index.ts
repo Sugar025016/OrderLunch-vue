@@ -48,7 +48,7 @@ export const getShop = (data: number) =>
 //     `&${data.other !== undefined ? 'other=' + data.other : null}`,
 //   )
 
-export const reqGetShopList = (data: ShopSearch, page: number, limit: number = 2) =>
+export const reqGetShopPage = (data: ShopSearch, page: number, limit: number = 5) =>
   request.get<any, GetShopPageResponse>(
     API.SHOP + `?name=${data.other}&page=${page}&size=${limit}` +
     `&${data.city !== undefined ? 'city=' + data.city : null}` +

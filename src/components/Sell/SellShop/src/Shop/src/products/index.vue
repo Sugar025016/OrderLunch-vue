@@ -49,38 +49,21 @@ const scrollToSection = (sectionId: number) => {
   const element = document.getElementById(sectionId + '')
 
   if (element) {
-    const headerHeight = 100
+    var scrollContainer = document.querySelector('.scroll-container')
+    // 获取 scrollY 属性
+    let scrollY = scrollContainer?.scrollTop as number
+
+    const headerHeight = 60
     const targetPosition =
-      element.getBoundingClientRect().top + window.scrollY - headerHeight
+      element.getBoundingClientRect().top + scrollY - headerHeight
 
-    // sellShopStore.scrollTop = targetPosition
-    window.scrollTo({ top: targetPosition, behavior: 'smooth' })
-    sellShopStore.scrollTop = targetPosition
-
-  }
-}
-// const scrollToSection = (sectionId: number) => {
-//   const element = document.getElementById(sectionId + '')
-
-//   if (element) {
-//     const headerHeight = 100
-//     const targetPosition =
-//       element.getBoundingClientRect().top + window.scrollY - headerHeight
-//     window.scrollTo({ top: targetPosition, behavior: 'smooth' })
-//     shopStore.scrollTop = targetPosition
-//   }
-// }
-
-
-
-const addTab = (sectionId: number) => {
-  const element = document.getElementById(sectionId + '')
-
-  if (element) {
-    const headerHeight = 100
-    const targetPosition =
-      element.getBoundingClientRect().top + window.scrollY - headerHeight
-    sellShopStore.scrollTop = targetPosition
+    if (scrollContainer) {
+      // 将滚动效果应用到 .scroll-container 元素上
+      scrollContainer.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth',
+      })
+    }
   }
 }
 

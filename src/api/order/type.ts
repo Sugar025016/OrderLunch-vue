@@ -44,6 +44,7 @@ export interface OrderDetail {
   qty: number
   prise: number
   remark: string
+  imgUrl:URL
 }
 
 export type OrderDetails = OrderDetail[]

@@ -108,7 +108,7 @@ defineExpose({
           <input
             type="text"
             class="rounded-input"
-            placeholder="輸入分類名稱"
+            placeholder="輸入分類名稱1"
             v-model="tabParams.name"
           />
           <button
@@ -130,6 +130,7 @@ defineExpose({
         <hr class="divider" />
         <div class="modal-body">
           <Search
+            v-if="sellShopStore.shop.products.length>0"
             class="search"
             v-on:search-result="getSearchResult"
             :products="sellShopStore.shop.products"

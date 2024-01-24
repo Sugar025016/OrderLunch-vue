@@ -230,24 +230,25 @@ const useUserStore = defineStore('User', {
       }
     },
 
-    async getOrderNew() {
-      if (this.token != '') {
-        let res: GetOrderNewResponse = await reqGetOrderNew()
-        if (res.code === 200) {
-          this.orderNew = res.data
-        } else {
-          ElMessage({
-            type: 'error',
-            message: '搜尋失败',
-          })
-        }
-      }
-    },
-    startTimer() {
-      this.getNewOrderTimer = setInterval(() => {
-        this.getOrderNew()
-      }, 1000); // 1000 毫秒，即 1 秒
-    },
+    //沒用到
+    // async getOrderNew() {
+    //   if (this.token != '') {
+    //     let res: GetOrderNewResponse = await reqGetOrderNew()
+    //     if (res.code === 200) {
+    //       this.orderNew = res.data
+    //     } else {
+    //       ElMessage({
+    //         type: 'error',
+    //         message: '搜尋失败',
+    //       })
+    //     }
+    //   }
+    // },
+    // startTimer() {
+    //   this.getNewOrderTimer = setInterval(() => {
+    //     this.getOrderNew()
+    //   }, 1000); // 1000 毫秒，即 1 秒
+    // },
 
     // 停止計時器
     stopTimer() {

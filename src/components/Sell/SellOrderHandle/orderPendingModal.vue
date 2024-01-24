@@ -90,20 +90,15 @@ const accordion = ref(true)
               <div class="title-name">名稱：{{ grouped.productName }}</div>
               <div class="title-total">總數：{{ grouped.productTotalQty }}</div>
             </div>
-
-            <!-- {{ item.toString }} -->
-            <!-- <el-icon class="header-icon">
-            <info-filled />
-          </el-icon> -->
           </template>
           <div item v-for="detail in grouped.item" class="detail">
             <div class="detail-qty">數量：{{ detail.qty }}</div>
             <div class="detail-remark">備註：{{ detail.remark }}</div>
           </div>
-          <div  class="hr">
+          <div class="hr">
             <hr />
           </div>
-          
+
           <div item class="detail">
             <div class="detail-total">總數：{{ grouped.productTotalQty }}</div>
           </div>
@@ -155,35 +150,33 @@ const accordion = ref(true)
     }
   }
   .el-collapse-item__content {
-    // font-size: 16px;
-    //   background-color: aquamarine;
     .detail {
       color: $color;
       font-size: 16px;
       width: 100%;
       margin: 0 50px 0 50px;
       display: flex;
-      // justify-content: space-between;
-      align-items: center;
       .detail-qty {
-        width: 100px;
+        width: 90px;
+        min-width: 90px;
+      }
+      .detail-remark {
+        width: calc(100% - 150px);
+        word-wrap: break-word;
       }
     }
 
-    
     .hr {
-
-
       width: 100px;
       margin: 0 30px;
       hr {
-      border-color: $color;
-      background-color: aqua;
+        border-color: $color;
+        background-color: aqua;
 
-      position: static;
-      left: 0;
-      width: 110px;
-    }
+        position: static;
+        left: 0;
+        width: 110px;
+      }
     }
   }
 }

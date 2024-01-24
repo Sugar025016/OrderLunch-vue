@@ -7,6 +7,12 @@ export interface ResponseData {
   ok: boolean
 }
 
+export interface ShopIDResponseData extends ResponseData {
+  data: number
+}
+
+
+
 export interface CategoryObj {
   id: number | string
   name: string
@@ -92,7 +98,7 @@ export interface ShopDetailData {
   schedules?: Schedules
   tabProducts: TabsData
   products: ProductList
-  isOrderable: boolean
+  orderable: boolean
 }
 
 export interface ShopData {
@@ -115,7 +121,7 @@ export interface PutShopData {
   imgId: number
   imgUrl: string
   orderable: boolean
-  isDisable: boolean
+  disable: boolean
 }
 
 export interface ShopDetailsResponse extends ResponseData {

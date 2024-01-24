@@ -5,7 +5,7 @@ import type { ShopList, ShopData } from '@/api/backstage/Shop/type'
 import { ElMessage } from 'element-plus'
 import { UploadProps } from 'element-plus/es/components/upload/src/upload'
 import cityAreas from '@/utils/areaData.js'
-import address from '@/utils/address.js'
+// import address from '@/utils/address.js'
 import { reqSearchUser } from '@/api/backstage/user'
 import debounce from 'lodash/debounce'
 import { SearchUserResponseData, SearchUsers } from '@/api/backstage/user/type'
@@ -14,6 +14,8 @@ import useUserStore from '@/store/modules/user'
 import { PutShopData } from '@/api/shop/type'
 import { reqAddOrUpdateShop } from '@/api/shop'
 import { CheckboxValueType } from 'element-plus/lib/components/checkbox/src/checkbox.js'
+
+import address from '@/utils/address.js'
 
 let sellShopStore = useSellShopStore()
 
@@ -28,13 +30,17 @@ let shopParams = reactive<PutShopData>({
     id: 0,
     city: '',
     area: '',
+    street: '',
     detail: '',
   },
   imgId: 0,
   imgUrl: '',
   orderable: false,
-  isDisable: false,
+  disable: false,
 })
+
+let shopParamsCheck: string
+
 // const updateShop = async (row: ShopData) => {
 //   // let res: SearchShopRequestData = await reqTab(row.shopId)
 //   // if (res.code === 200) {
@@ -62,6 +68,19 @@ let shopParams = reactive<PutShopData>({
 
 let formRef = ref<any>()
 
+const props = defineProps({
+  shopDrawer: Boolean,
+})
+
+const visible = ref(props.shopDrawer)
+
+const $emit = defineEmits(['update:shopDrawer'])
+
+// 定义关闭对话框的方法
+const handleClose = () => {
+  $emit('update:shopDrawer', (visible.value = false))
+}
+
 // shopParams = computed(() => {
 //   const shopData: PutShopData = Object.assign({}, sellShopStore.shop);
 
@@ -87,11 +106,13 @@ const updateShop = () => {
     id: sellShopStore.shop.address.id,
     city: sellShopStore.shop.address.city,
     area: sellShopStore.shop.address.area,
+    street: sellShopStore.shop.address.street,
     detail: sellShopStore.shop.address.detail,
   }
 
   shopParams.address = tempAddress
 
+  shopParamsCheck = JSON.stringify(shopParams)
   nextTick(() => {
     formRef.value.clearValidate('description')
     formRef.value.clearValidate('img')
@@ -107,25 +128,29 @@ defineExpose({
 const save = async () => {
   await formRef.value.validate()
 
-  let res: any = await reqAddOrUpdateShop(shopParams)
+  if (JSON.stringify(shopParams) !== shopParamsCheck) {
+    let res: any = await reqAddOrUpdateShop(shopParams)
 
-  if (res.code === 200) {
-    sellShopStore.shopDrawer = false
-    ElMessage({
-      message: shopParams.id ? '更新成功' : '添加成功',
-      type: 'success',
-    })
+    if (res.code === 200) {
+      sellShopStore.shopDrawer = false
+      ElMessage({
+        message: shopParams.id ? '更新成功' : '添加成功',
+        type: 'success',
+      })
 
-    await sellShopStore.getSellShop(shopParams.id)
+      await sellShopStore.getSellShop(shopParams.id)
 
-    // window.location.reload()
-  } else {
-    sellShopStore.shopDrawer = false
-    ElMessage({
-      type: 'error',
-      message: shopParams.id ? '更新失败' : '添加失败',
-    })
+      // window.location.reload()
+    } else {
+      sellShopStore.shopDrawer = false
+      ElMessage({
+        type: 'error',
+        message: shopParams.id ? '更新失败' : '添加失败',
+      })
+    }
   }
+
+  handleClose()
 }
 
 const cancel = () => {
@@ -220,10 +245,6 @@ const remoteMethod = debounce((query) => {
   }
 }, 1000) // 1000 毫秒的防抖延迟
 
-const city: string[] = Object.keys(cityAreas)
-// const cities: Object[] = Object.keys(address)
-console.log('/////////address', address)
-// console.log("/////////cities.cityName",cities)
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   if (
     rawFile.type === 'image/png' ||
@@ -258,33 +279,31 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
   shopParams.imgId = response.id
   formRef.value.clearValidate('img')
 }
-// const changeCity = (index:number) => {
-
-// console.log("/////////index",index)
-//   shopParams.address.area = ''
-// }
-// const value = ref<CheckboxValueType[]>([])
 
 export interface Area {
   areaName: string
   streets: [{ streetKey: number; streetName: string }]
 }
 export type Areas = Area[]
-const area = ref<Areas>()
-const cityId = ref<number>(0)
 
-const changeCity = (val: number) => {
-  console.log('/////////index', val)
-  console.log('/////////address[val].areas', address[val].areas)
-  cityId.value = val
+const changeCity = () => {
   shopParams.address.area = ''
+  shopParams.address.street = ''
 }
+
+const changeArea = () => {
+  shopParams.address.street = ''
+}
+
+
+
 </script>
 <template>
   <!-- <el-card style="margin: 10px 0">
     <Router-view></Router-view>
   </el-card> -->
-  <el-drawer v-model="sellShopStore.shopDrawer">
+  <el-drawer v-model="props.shopDrawer"
+      :before-close="handleClose">
     <template #header>
       <h3>{{ shopParams.id ? '更新商店' : '添加商店' }}</h3>
     </template>
@@ -314,11 +333,11 @@ const changeCity = (val: number) => {
           ></el-input>
         </el-form-item>
         <el-form-item label="地址-city" prop="address.city" value-key="index">
-          <el-select
+          <!-- <el-select
             v-model="shopParams.address.city"
             value-key="index"
             class="m-2"
-            placeholder="城市"
+            placeholder="請選擇城市"
             size="large"
             @change="changeCity"
           >
@@ -328,13 +347,30 @@ const changeCity = (val: number) => {
               :label="item.cityName"
               :value="index"
             />
+          </el-select> -->
+          <el-select
+            v-model="shopParams.address.city"
+            class="m-2"
+            placeholder="請選擇城市"
+            size="large"
+            @change="changeCity"
+          >
+            <el-option selected value="-1" label="縣市" disabled>
+              縣市
+            </el-option>
+            <el-option
+              v-for="(item, index) in address"
+              :key="index"
+              :label="item.cityName"
+              :value="item.cityName"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="地址-area" prop="address.area">
-          <el-select
+          <!-- <el-select
             v-model="shopParams.address.area"
             class="m-2"
-            placeholder="區域"
+            placeholder="請選擇區域"
             size="large"
             no-data-text="請先選擇城市"
           >
@@ -343,6 +379,54 @@ const changeCity = (val: number) => {
               :key="item.areaName"
               :label="item.areaName"
               :value="item.areaName"
+            />
+          </el-select> -->
+          <el-select
+            v-model="shopParams.address.area"
+            class="m-2"
+            placeholder="請選擇區域"
+            size="large"
+            no-data-text="請先選擇城市"
+            @change="changeArea"
+          >
+            <el-option
+              selected
+              value="-1"
+              label="鄉鎮[市]區"
+              disabled
+            ></el-option>
+            <el-option
+              v-for="(area, index) in address.find(
+                (address) => address.cityName === shopParams.address.city,
+              )?.areas"
+              :key="index"
+              :value="area.areaName"
+              :label="area.areaName"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="地址-street" prop="address.street">
+          <el-select
+            v-model="shopParams.address.street"
+            placeholder="請選擇路(街)名或鄉里名稱"
+            size="large"
+            no-data-text="請先選擇鄉鎮[市]區"
+          >
+            <el-option
+              selected
+              value="-1"
+              label="路(街)名或鄉里"
+              disabled
+            ></el-option>
+            <el-option
+              v-for="(street, index) in address
+                .find((address) => address.cityName === shopParams.address.city)
+                ?.areas.find(
+                  (areas) => areas.areaName === shopParams.address.area,
+                )?.streets"
+              :key="index"
+              :value="street.streetName"
+              :label="street.streetName"
             />
           </el-select>
         </el-form-item>
@@ -354,8 +438,8 @@ const changeCity = (val: number) => {
             v-model="shopParams.address.detail"
           ></el-input>
         </el-form-item>
-        <el-form-item label="開店" prop="isDisable">
-          <el-switch v-model="shopParams.isDisable" />
+        <el-form-item label="餐廳上架" prop="isDisable">
+          <el-switch v-model="shopParams.disable"  />
         </el-form-item>
         <el-form-item label="可線上訂購" prop="orderable">
           <el-switch v-model="shopParams.orderable" />

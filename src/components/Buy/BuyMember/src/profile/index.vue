@@ -36,7 +36,7 @@
         </span>
       </div>
     </el-col>
-    <el-col :span="12">
+    <!-- <el-col :span="12">
       <h3>公司資料</h3>
       <div class="text">
         <span>團體名稱：</span>
@@ -66,7 +66,7 @@
         <span>預算：</span>
         <span></span>
       </div>
-    </el-col>
+    </el-col> -->
   </el-row>
 </template>
 <script setup lang="ts">

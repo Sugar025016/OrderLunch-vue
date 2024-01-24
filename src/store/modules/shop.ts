@@ -1,4 +1,4 @@
-import { getShop, reqGetShopList as reqGetShopPage, getShopNames } from '@/api/shop'
+import { getShop, reqGetShopPage, getShopNames } from '@/api/shop'
 import { defineStore } from 'pinia'
 import type {
   ShopResponseData,

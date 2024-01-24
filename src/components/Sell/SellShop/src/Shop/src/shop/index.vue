@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { deleteSecond as showTime } from '@/utils/time'
 import { House, ChatRound, User, Watch } from '@element-plus/icons-vue'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import useSellShopStore from '@/store/modules/sellShop'
 import { ShopDetailData } from '@/api/shop/type'
 import EditScheduleModel from './EditScheduleModel.vue'
@@ -16,12 +16,14 @@ const dialogMessage = ref('This is a dialog message.')
 
 const EditShopRef = ref<typeof EditShopModel>()
 
+
+const shopDrawer = ref(false)
+
 const shopDrawerOpen = () => {
-  sellShopStore.shopDrawer = true
+  // sellShopStore.shopDrawer = true
+  shopDrawer.value = true
   EditShopRef.value?.updateShop()
 }
-
-
 
 let sellShopStore = useSellShopStore()
 
@@ -33,6 +35,7 @@ let shopData = ref<ShopDetailData>({
     id: 0,
     city: '',
     area: '',
+    street: '',
     detail: '',
   },
   phone: '',
@@ -66,6 +69,19 @@ const shopImageStyle = computed(() => {
     }
   }
   return {}
+})
+
+const isShopDrawerOpen = () => {
+
+  // sellShopStore.shop.id 先確認資料已經載入，!sellShopStore.shop.imgUrl判斷有無圖片
+  if( sellShopStore.shop.id && !sellShopStore.shop.imgUrl){
+    shopDrawerOpen()
+  }
+}
+
+onMounted(() => {
+  isShopDrawerOpen()
+
 })
 
 const currentDate = new Date()
@@ -192,7 +208,7 @@ const dayOfWeek = currentDate.getDay()
   />
 
   <EditShopModel
-    v-model:scheduleVisible="scheduleVisible"
+    v-model:shopDrawer="shopDrawer"
     :title="dialogTitle"
     :message="dialogMessage"
     :schedules="shopData.schedules"

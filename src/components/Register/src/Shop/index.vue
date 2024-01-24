@@ -2,7 +2,7 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import address from '@/utils/address.js'
 import { Address } from '@/api/type'
-import { RegisterShop } from '@/api/shop/type'
+import { RegisterShop, ShopIDResponseData } from '@/api/shop/type'
 import Captcha from '../Captcha/index.vue'
 import { CheckboxValueType } from 'element-plus/lib/components/checkbox/src/checkbox.js'
 import { ElMessageBox } from 'element-plus/lib/components/message-box/index.js'
@@ -74,7 +74,7 @@ const addRegisterShop = ref<AddRegisterShop>({
     city: '',
     area: '',
     street: '',
-    detail: '',
+    detail: '123',
   },
 })
 const validatorName = (rule: any, value: any, callback: any) => {
@@ -175,6 +175,8 @@ function validateNotEmptyString(rule: any, value: any, callback: any) {
 let formRef = ref<any>()
 let timer: any
 
+import useSellShopStore from '@/store/modules/sellShop'
+  let sellShopStore = useSellShopStore()
 const save = async () => {
   await formRef.value.validate()
 
@@ -191,15 +193,11 @@ const save = async () => {
   })
 
   console.log('/////////--------------//////////',registerShop.value)
-  let res: ResponseData = await reqAddShop(registerShop.value)
+  let res: ShopIDResponseData = await reqAddShop(registerShop.value)
   if (res.code === 200) {
-    // addresses.value = res.data
-    // addressParams.value = JSON.parse(JSON.stringify(addresses.value))
-
-    // if (res.data.length === 0) {
-    //   isChangeAddress.value = false
-    //   addAddresses()
-    // }
+    console.log("/////////----",res)
+    sellShopStore.shopId = res.data
+    $router.push(`/sell/${res.data}/Shop`)
   } else {
     ElMessage({
       type: 'error',
