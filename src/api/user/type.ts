@@ -1,4 +1,15 @@
 import { ShopList } from '../shop/type'
+import { Address } from '../type'
+
+export interface RegisterMember {
+  verifyCode: string
+  name: string
+  account: string
+  password: string
+  passwordCheck: string
+  phone: string
+}
+
 
 export interface LoginFormData {
   username?: string
@@ -26,7 +37,7 @@ export interface UserInfoResponseData extends ResponseData {
     buttons: string[]
     roles: string[]
     name: string
-    account: string 
+    account: string
     phone: string
     email: string
     favoriteShops: ShopList
@@ -77,3 +88,6 @@ export interface ChangeLovesResponseData extends ResponseData {
 // export interface UserAddressResponseData extends ResponseData {
 //   data: ShopList
 // }
+
+
+

@@ -10,13 +10,23 @@ import type {
   PutShopData,
   PutShopResponse,
   GetShopPageResponse,
+  ReqShopData,
+  ResponseData,
+  RegisterShop,
 } from './type'
+
+import type {
+  Response
+} from '../type'
+
 enum API {
   SHOPS = '/api/shop',
   SHOPS_RECOMMEND = '/api/shop/recommend',
   SHOP = '/api/shop/',
   SELL_SHOP = '/sell/shop',
   SCHEDULE = '/api/schedule',
+  REGISTER_SHOP = '/api/register/shop',
+
 }
 
 export const getShop = (data: number) =>
@@ -38,18 +48,18 @@ export const getShop = (data: number) =>
 //     `&${data.other !== undefined ? 'other=' + data.other : null}`,
 //   )
 
-export const reqGetShopList = ( data: ShopSearch,page: number, limit: number = 2) =>
+export const reqGetShopList = (data: ShopSearch, page: number, limit: number = 2) =>
   request.get<any, GetShopPageResponse>(
     API.SHOP + `?name=${data.other}&page=${page}&size=${limit}` +
     `&${data.city !== undefined ? 'city=' + data.city : null}` +
     `&${data.area !== undefined ? 'area=' + data.area : null}` +
     `&${data.categoryId !== undefined ? 'categoryId=' + data.categoryId : null
     }` +
-    `&${data.other !== undefined ? 'other=' + data.other : null}`, )
+    `&${data.other !== undefined ? 'other=' + data.other : null}`,)
 
 
 export const getRecommendShops = (data: ShopSearch) =>
-  request.get<any, ShopsResponseData>(API.SHOPS_RECOMMEND, data)
+  request.get<any, ShopsResponseData>(API.SHOPS_RECOMMEND, { params: data })
 
 // export const getRecommendShops = (data: ShopSearch) =>
 // request.get<any, ShopsResponseData>(API.SHOPS_RECOMMEND)
@@ -70,3 +80,7 @@ export const reqAddOrUpdateShop = (data: PutShopData) => {
     return request.post<any, PutShopResponse>(API.SHOP, data)
   }
 }
+
+export const reqAddShop = (data: RegisterShop) =>
+  request.post<any, Response>(API.REGISTER_SHOP,  data )
+

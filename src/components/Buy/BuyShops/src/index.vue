@@ -30,7 +30,7 @@
               placement="top-start"
             >
               <img
-                @click="openShop()"
+                @click="registerShop()"
                 src="@/assets/images/openShop3.png"
                 class="w-8 h-8 rounded-full"
                 loading="lazy"
@@ -67,11 +67,14 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import Category from './Category/index.vue'
 
 import useShopStore from '@/store/modules/shop'
+import useUserStore from '@/store/modules/user'
 import rwdBody from '@/components/layout/rwdBody/index.vue'
 import { useRouter } from 'vue-router'
+import { ElMessageBox } from 'element-plus/lib/components/message-box/index.js'
 
 let $router = useRouter()
 let shopStore = useShopStore()
+let userStore = useUserStore()
 const isExpanded = ref(false)
 
 onMounted(() => {
@@ -86,9 +89,36 @@ const handleScroll = () => {
   console.log('Current scroll position:', scrollTop)
   isExpanded.value = scrollTop > 200
 }
-const openShop = () => {
+const registerShop = () => {
   // 处理滚动事件的逻辑
-  $router.push(`/Register/shop`)
+  if (userStore.token == null || userStore.token == '') {
+
+    ElMessageBox.confirm('你還未登入，請前往登入！', '前往登入！', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    })
+      .then(() => {
+        console.log('用户点击了确定按钮，执行相关操作')
+        $router.push('/login')
+      })
+      .catch(() => {
+        console.log('用户点击了取消按钮或关闭了消息框')
+        clearTimeout(timer)
+      })
+
+    // 设置定时器，在 10 秒后关闭消息框
+    timer = setTimeout(() => {
+      const messageBoxInstance = ElMessageBox
+      if (messageBoxInstance) {
+        messageBoxInstance.close()
+
+        $router.push('/login')
+      }
+    }, 5000) // 5000 毫秒即为 5 秒
+  } else {
+    $router.push(`/Register/shop`)
+  }
 }
 
 const loading = ref(false)

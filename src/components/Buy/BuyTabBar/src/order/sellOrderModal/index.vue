@@ -120,6 +120,21 @@ const confirm = async () => {
     })
   }
 }
+
+import { useRouter , useRoute } from 'vue-router'
+import useSellShopStore from '@/store/modules/sellShop'
+
+
+let sellShopStore = useSellShopStore()
+let $router = useRouter()
+let $route = useRoute()
+const goTo = (id: number) => {
+  sellShopStore.shopId = id
+  $route.meta.shopId = id
+  $router.push(`/Sell/${id}/orderNew`);
+
+}
+
 </script>
 
 <template>
@@ -135,10 +150,11 @@ const confirm = async () => {
             <el-table :data="orders" @selection-change="handleSelectionChange">
               <el-table-column type="selection" width="50" />
               <el-table-column property="orderId" label="編號" width="60" />
-              <el-table-column property="shopName" label="店名" width="100" >
-              <template #default="{ row }">
-                <el-link type="primary">             {{ row.shopName }}</el-link>
-  
+              <el-table-column property="shopName" label="店名" width="100">
+                <template #default="{ row }">
+                  <el-link @click="goTo(row.shopId)" type="primary">
+                    {{ row.shopName }}
+                  </el-link>
                 </template>
               </el-table-column>
               <el-table-column property="userName" label="訂購人" width="100" />

@@ -28,7 +28,7 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import member from './member/index.vue'
+import member from './Member/index.vue'
 import { useRoute } from 'vue-router'
 let $route = useRoute()
 $route.path
@@ -92,4 +92,6 @@ const checked1 = ref(true)
     margin: 0 10% 0 2%;
   }
 }
+
+
 </style>

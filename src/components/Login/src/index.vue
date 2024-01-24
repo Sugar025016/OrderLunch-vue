@@ -3,40 +3,38 @@
     <el-card class="login_form">
       <!-- <h1>{{ title }}</h1> -->
       <h3>會員登入</h3>
-      <el-form :model="loginForm" :rules="rules" ref="loginForms">
-        <el-form-item prop="username">
+      <el-form
+        label-position="top"
+        :model="loginForm"
+        :rules="rules"
+        ref="loginForms"
+      >
+        <el-form-item prop="username" label="帳號(信箱)：">
           <el-input
             :prefix-icon="User"
             v-model="loginForm.username"
             clearable
-            placeholder="Username"
+            placeholder="請輸入帳號"
             size="large"
           ></el-input>
         </el-form-item>
-        <el-form-item prop="password">
+        <el-form-item prop="password" label="密碼：">
           <el-input
             type="password"
             :prefix-icon="Lock"
             show-password
             v-model="loginForm.password"
             size="large"
-            placeholder="Password"
+            placeholder="請輸入密碼"
             clearable
           ></el-input>
         </el-form-item>
-        <el-form-item prop="verifyCode">
-          <el-input
-            :prefix-icon="Warning"
-            show-password
-            v-model="loginForm.verifyCode"
-            placeholder="VerifyCode"
-            size="large"
-            maxlength="4"
-          >
-            <template #append>
-              <!-- <Identify :identifyCode="identifyCode" @click="refreshCode" /> -->
-            </template>
-          </el-input>
+        <el-form-item
+          label="驗證碼："
+          prop="verifyCode"
+          class="custom-form-item"
+        >
+          <Captcha v-model="loginForm.verifyCode"></Captcha>
         </el-form-item>
         <el-form-item prop="verifyCode">
           <el-checkbox
@@ -55,9 +53,11 @@
           type="primary"
           size="default"
           @click="login"
+          round
         >
-          登录
+          登入
         </el-button>
+        <!-- <el-button type="primary" round>Primary</el-button> -->
       </el-form-item>
       <div class="forget">
         <router-link :to="'/Login/forgetPassword'" class="link">
@@ -66,8 +66,6 @@
       </div>
       <hr />
       <div class="forget">
-        <!-- <a href="#">沒有帳號這邊可以註冊</a> -->
-
         <router-link :to="'/Register'" class="link">
           沒有帳號這邊可以註冊
         </router-link>
@@ -83,6 +81,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { ElNotification } from 'element-plus'
 import { getTime } from '@/utils/time'
 import useUserStore from '@/store/modules/user'
+import Captcha from '@/components/Register/src/Captcha/index.vue'
 // import Identify from '@/components/VerifyCode/index.vue'
 // VerifyCode import
 
@@ -145,9 +144,7 @@ const validatorVerifyCode = (rule: any, value: any, callback: any) => {
     callback(new Error('请输入验证码'))
   } else if (value.length < 4) {
     callback(new Error('请输入正确的验证码'))
-  } else if (identifyCode.value !== value) {
-    callback(new Error('请输入正确的验证码'))
-  } else if (identifyCode.value === value) {
+  } else {
     callback()
   }
 }
@@ -205,12 +202,6 @@ const rules = {
   display: flex;
   align-items: center;
   justify-content: center;
-  // height: 600px;
-  // height: 100%
-  // background: url('@/assets/images/background.jpg') no-repeat;
-  // background-size: cover;
-  // position: fixed;
-
   .el-card {
     border: 0px;
     box-shadow: none;
@@ -218,10 +209,6 @@ const rules = {
   }
   .login_form {
     position: relative;
-    width: 400px;
-    // width: 55%;
-    // top: 10vh;
-    // left: 10vw;
     padding: 10px;
     background: transparent;
     h1 {
@@ -247,10 +234,10 @@ const rules = {
       width: 100%;
     }
     button {
-      background-color: $color;
-      border: 0px;
+      // border: 0px;
       height: 40px;
-      border-radius: 40px;
+      // border-radius: 40px;
+      font-size: 16px;
     }
     .forget {
       width: 100%;
@@ -267,8 +254,9 @@ const rules = {
     hr {
       border-bottom: 1px;
       border-style: solid;
-      border-color: rgb(155, 155, 155);
     }
+
+    @import '@/styles/form.scss';
   }
 }
 .custom-checkbox {

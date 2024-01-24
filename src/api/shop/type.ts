@@ -125,3 +125,21 @@ export interface ShopDetailsResponse extends ResponseData {
 export interface PutShopResponse extends ResponseData {
   data: boolean
 }
+
+export interface ReqShopData {
+  name: string
+  phone?: string
+  description: string
+  address: Address
+  captcha: string
+}
+
+
+export interface RegisterShop {
+  captcha: string
+  shopName: string
+  phone: string
+  description: string
+  addressId: number
+  addressDetail:string
+}

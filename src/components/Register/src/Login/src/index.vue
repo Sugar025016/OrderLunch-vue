@@ -33,9 +33,7 @@
             size="large"
             maxlength="4"
           >
-            <template #append>
-              <!-- <Identify :identifyCode="identifyCode" @click="refreshCode" /> -->
-            </template>
+
           </el-input>
         </el-form-item>
         <el-form-item prop="verifyCode">
@@ -85,6 +83,7 @@ import { getTime } from '@/utils/time'
 import useUserStore from '@/store/modules/user'
 // import Identify from '@/components/VerifyCode/index.vue'
 // VerifyCode import
+import Captcha from '../Captcha/index.vue'
 
 let title = document.title
 

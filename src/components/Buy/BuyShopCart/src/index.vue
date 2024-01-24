@@ -44,24 +44,28 @@ const getCart = async () => {
         (total, v) => total + v.qty * v.productResponse.price,
         0,
       )
-    }else{
-      ElMessageBox.alert('購物車空的，購物去', '購物車', {
-        callback: () => {
-          // 关闭弹窗的回调函数
-          ElMessageBox.close()
-          $router.push('/')
-        },
-      })
-      timer=setTimeout(() => {
-        const messageBoxInstance = ElMessageBox
-        if (messageBoxInstance) {
-          messageBoxInstance.close()
-
-          $router.push('/')
-        }
-      }, 5000) // 10000 毫秒即为 10 秒
+    } else {
+      getElMessageBox()
     }
   }
+}
+
+const getElMessageBox = () => {
+  ElMessageBox.alert('購物車空的，購物去', '購物車', {
+    callback: () => {
+      // 关闭弹窗的回调函数
+      ElMessageBox.close()
+      $router.push('/')
+    },
+  })
+  timer = setTimeout(() => {
+    const messageBoxInstance = ElMessageBox
+    if (messageBoxInstance) {
+      messageBoxInstance.close()
+
+      $router.push('/')
+    }
+  }, 5000) // 10000 毫秒即为 10 秒
 }
 
 const deleteCart = async (cartId: number) => {
@@ -72,6 +76,9 @@ const deleteCart = async (cartId: number) => {
       userStore.cartCount = getCartCount(res.data.cartResponses)
     } else {
       userStore.cartCount = 0
+    }
+    if(userStore.cartCount === 0){
+      getElMessageBox()
     }
   }
 }
@@ -126,7 +133,9 @@ onBeforeUnmount(() => {
                 </thead>
                 <tbody>
                   <tr v-for="cart in carts.cartResponses">
-                    <th class="table-content" scope="row">{{ cart.productResponse.productName }}</th>
+                    <th class="table-content" scope="row">
+                      {{ cart.productResponse.productName }}
+                    </th>
                     <td class="table-content table-width">
                       {{ cart.department }}
                     </td>
@@ -218,8 +227,6 @@ onBeforeUnmount(() => {
 $table-cell-padding-y: 1.5rem; //
 $table-border-color: rgb(155, 155, 155); //
 @import 'node_modules/bootstrap/scss/_tables.scss';
-
-
 
 .shopCart {
   display: block;

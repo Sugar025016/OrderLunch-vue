@@ -11,7 +11,9 @@ import type {
   UserAddressResponseData,
   Address,
   Addresses,
+  RegisterMember,
 } from './type'
+import { ResultResponse } from '../type'
 
 enum API {
   LOGIN_URL = '/login',
@@ -20,6 +22,8 @@ enum API {
   USER_PWD_URL = '/api/user/pwd',
   USER_ADDRESS_URL = '/api/user/address',
   USER_FAVORITE_URL = '/api/user/favorite',
+  REGISTER_CAPTCHA = '/api/register/captcha',
+  REGISTER_MEMBER = '/api/register/member',
 }
 
 export const reqLogin = (data: FormData) =>
@@ -50,3 +54,9 @@ export const reqGetUserAddresses = () =>
 
 export const reqPutUserAddresses = (date: Addresses) =>
   request.put<any, UserAddressResponseData>(API.USER_ADDRESS_URL, date)
+
+// export const reqRefreshCaptcha = () =>
+//   request.get<any, UserAddressResponseData>(API.REGISTER_CAPTCHA + '?timestamp=' + Date.now())
+
+export const reqAddMember = (data: RegisterMember) =>
+  request.post<any, ResultResponse>(API.REGISTER_MEMBER, data)

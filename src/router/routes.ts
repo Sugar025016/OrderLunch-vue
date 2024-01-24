@@ -199,7 +199,7 @@ export const constantRoute = [
     children: [
       {
         path: 'member',
-        component: () => import('@/components/Register/src/member/index.vue'),
+        component: () => import('@/components/Register/src/Member/index.vue'),
         meta: {
           title: '註冊帳號',
           hidden: false,
@@ -209,7 +209,7 @@ export const constantRoute = [
       },
       {
         path: 'shop',
-        component: () => import('@/components/Register/src/shop/index.vue'),
+        component: () => import('@/components/Register/src/Shop/index.vue'),
         meta: {
           title: '註冊餐廳',
           hidden: false,

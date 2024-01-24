@@ -125,6 +125,10 @@ img {
   border-radius: 20px;
   margin: 2px;
 }
+.svg-icon:hover{
+ 
+  cursor: pointer;
+}
 
 .list {
   margin: 0 10px ;

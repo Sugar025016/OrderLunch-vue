@@ -2,7 +2,7 @@
   <el-header style="text-align: right; font-size: 12px">
     <div class="toolbar">
       <div class="toolbar_left">
-        <BreadCrumb />
+        <BreadCrumb />444
       </div>
       <div class="toolbar_order">
         <order></order>
@@ -16,11 +16,12 @@
 
 <script setup lang="ts">
 import BreadCrumb from './breadcrumb.vue'
-import Setting from './setting/index.vue'
-import order from './order/index.vue'
+// import Setting from './setting/index.vue'
+// import order from './order/index.vue'
 import { onMounted, ref } from 'vue'
 import useUserStore from '@/store/modules/user'
-
+import order from '@/components/Buy/BuyTabBar/src/order/index.vue'
+import Setting from '@/components/Buy/BuyTabBar/src/setting/index.vue'
 let userStore = useUserStore()
 // import useCategoryStore from '@/store/modules/category'
 

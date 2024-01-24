@@ -3,6 +3,10 @@
     <div class="table">
       <span class="table-title">註冊帳號</span>
       <div>
+        <span>名稱</span>
+        <input type="text" class="rounded-input" placeholder="請輸入名稱" />
+      </div>
+      <div>
         <span>Email</span>
         <input type="text" class="rounded-input" placeholder="請輸入Email" />
       </div>
@@ -80,6 +84,11 @@ const checked1 = ref(true)
       background-color: $color;
       width: 100%;
       color: white;
+    }
+    .el-form-item {
+      :deep(.el-input__wrapper) {
+        border-radius: 20px !important;
+      }
     }
   }
   .register {

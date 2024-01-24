@@ -117,6 +117,7 @@ onMounted(() => {
               :row-class-name="tableRowClassName"
               :cell-style="cellStyle"
             >
+
               <el-table-column label="圖片" prop="imgUrl" align="center">
                 <template #="{ row, $index }">
                   <el-image
@@ -127,8 +128,29 @@ onMounted(() => {
                   />
                 </template>
               </el-table-column>
-              <el-table-column prop="shopName" label="店家" width="100" />
+              <el-table-column type="expand">
+                <template #default="props">
+                  <div m="4">
+                    <p m="t-0 b-2">State: {{ props.row.state }}</p>
+                    <p m="t-0 b-2">City: {{ props.row.city }}</p>
+                    <p m="t-0 b-2">Address: {{ props.row.address }}</p>
+                    <p m="t-0 b-2">Zip: {{ props.row.zip }}</p>
+                    <h3>Family</h3>
+                    <!-- <el-table :data="props.row.family" :border="childBorder">
+                      <el-table-column label="Name" prop="name" />
+                      <el-table-column label="State" prop="state" />
+                      <el-table-column label="City" prop="city" />
+                      <el-table-column label="Address" prop="address" />
+                      <el-table-column label="Zip" prop="zip" />
+                    </el-table> -->
+                  </div>
+                </template>
+              </el-table-column>
               <el-table-column prop="orderId" label="訂單編號" width="100" />
+
+              <el-table-column prop="shopName" label="店家" width="100" />
+
+              
               <el-table-column prop="statusChinese" label="狀態" />
               <!-- <el-table-column prop="takeTime" label="取餐時間" /> -->
               <el-table-column

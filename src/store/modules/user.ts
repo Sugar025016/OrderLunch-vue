@@ -40,6 +40,8 @@ import { GetOrderNewResponse } from '@/api/order/type'
 import { reqGetOrderNew } from '@/api/order'
 import ElMessage from 'element-plus/lib/components/message/index.js'
 import useSellShopStore from '@/store/modules/sellShop'
+import { Response } from '@/api/type'
+
 
 
 function filterAsyncRoute(asyncRoute: any, routes: any) {
@@ -91,17 +93,24 @@ const useUserStore = defineStore('User', {
       if (data.password !== undefined) {
         formData.append('password', data.password)
       }
+      if (data.verifyCode !== undefined) {
+        formData.append('captcha', data.verifyCode)
+      }
+
       const res: LoginResponseData = await reqLogin(formData)
       // console.log("*********",res)
       // success=>token
       // error=>error.message
-      if (res.code === 200) {
+
+      console.log("登入：：：",res)
+      const loginResponse: Response = res.data as Response
+      if (loginResponse.code === 200) {
         // console.log("*********",res)
         this.token = GET_TOKEN()
         await this.userInfo()
         return 'ok'
       } else {
-        return Promise.reject(new Error(res.data as string))
+        return Promise.reject(new Error(loginResponse.message as string))
       }
     },
     async userInfo() {

@@ -147,7 +147,7 @@ const getC1 = async () => {
           </div>
         </div>
       </div>
-      <el-checkbox v-model="checked1" label="Option 1" size="large" />
+      <!-- <el-checkbox v-model="checked1" label="Option 1" size="large" /> -->
       <el-button size="large" round>確認</el-button>
       <a></a>
     </div>

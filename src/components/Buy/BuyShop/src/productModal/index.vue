@@ -32,7 +32,7 @@
           </h1>
           <span class="modal-description fs-6" id="staticBackdropLabel">
             {{ product!.description }}
-            {{ product }}
+            <!-- {{ product }} -->
           </span>
           <hr class="divider" />
           <!-- <div class="divider"></div> -->
