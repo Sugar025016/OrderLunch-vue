@@ -34,9 +34,11 @@ const getOrderNew = async () => {
 
 const goRoute = async (shopId: number, shopName: string) => {
   $route.meta.shopId = shopId.toString()
-  await sellShopStore.getSellShop(shopId)
   sellShopStore.shopId = shopId
   $route.meta.title = shopName
+
+  console.log("router.currentRoute.value.params.id",$router.currentRoute.value.params.id)
+  console.log("shopId：：：",shopId)
   $router.push(`/sell/${shopId}/Shop`)
 }
 const addShop = async () => {
@@ -45,6 +47,7 @@ const addShop = async () => {
 }
 
 onMounted(() => {
+  getSellShop()
   const timer = setInterval(() => {
     getOrderNew()
   }, 60000)
@@ -64,6 +67,24 @@ watch(
     console.log('sellShopStore.shopNames', newOrders)
   },
 )
+
+let shopId: number
+shopId = Number($router.currentRoute.value.params.shopId as unknown)
+watch(
+  () => $router.currentRoute.value.params.shopId,
+  (newId, oldId) => {
+    console.log('路由参数变化了：', newId)
+    shopId = Number($router.currentRoute.value.params.shopId as unknown)
+    getSellShop()
+    // 在这里调用你想要执行的方法
+  },
+)
+const getSellShop = async () => {
+  console.log('shopId', shopId)
+  await sellShopStore.getSellShop(shopId)
+  $route.meta.title = sellShopStore.shop.name
+}
+
 </script>
 <template>
   <div class="order">

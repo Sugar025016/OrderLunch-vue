@@ -22,91 +22,30 @@ export const constantRoute = [
           mustToken: false,
         },
       },
+
       {
-        path: '/BuyMember',
-        component: () => import('@/components/Buy/BuyMember/src/index.vue'),
+        path: 'profile',
+        component: () => import('@/components/Buy/BuyMember/src/profile.vue'),
+        name: 'profile',
         meta: {
           title: 'BuyMember',
           hidden: false,
           icon: 'HomeFilled',
           mustToken: true,
         },
-        redirect: '/BuyMember/profile/:number',
-        children: [
-          {
-            path: '/BuyMember/profile/:number',
-            name: 'profile',
-            component: () =>
-              import('@/components/Buy/BuyMember/src/profile/index.vue'),
-            meta: {
-              title: 'profile',
-              hidden: false,
-              icon: 'HomeFilled',
-              mustToken: true,
-            },
-          },
-          {
-            path: 'changeProfile/:number',
-            name: 'changeProfile',
-            component: () =>
-              import('@/components/Buy/BuyMember/src/changeProfile/index.vue'),
-            meta: {
-              title: 'changeProfile',
-              hidden: false,
-              icon: 'HomeFilled',
-              mustToken: true,
-            },
-          },
-          {
-            path: 'changeCompany/:number',
-            name: 'changeCompany',
-            component: () =>
-              import('@/components/Buy/BuyMember/src/changeCompany/index.vue'),
-            meta: {
-              title: 'changeCompany',
-              hidden: false,
-              icon: 'HomeFilled',
-              mustToken: true,
-            },
-          },
-          {
-            path: 'changePassword/:number',
-            name: 'changePassword',
-            component: () =>
-              import('@/components/Buy/BuyMember/src/changePassword/index.vue'),
-            meta: {
-              title: 'changePassword',
-              hidden: false,
-              icon: 'HomeFilled',
-              mustToken: true,
-            },
-          },
-          {
-            path: 'love/:number',
-            name: 'love',
-            component: () =>
-              import('@/components/Buy/BuyMember/src/love/index.vue'),
-            meta: {
-              title: 'love',
-              hidden: false,
-              icon: 'HomeFilled',
-              mustToken: true,
-            },
-          },
-          {
-            path: 'recommend/:number',
-            name: 'recommend',
-            component: () =>
-              import('@/components/Buy/BuyMember/src/recommend/index.vue'),
-            meta: {
-              title: 'recommend',
-              hidden: false,
-              icon: 'HomeFilled',
-              mustToken: true,
-            },
-          },
-        ],
       },
+      {
+        path: 'favorite',
+        name: 'favorite',
+        component: () => import('@/components/Buy/BuyMember/src/favorite.vue'),
+        meta: {
+          title: 'profile',
+          hidden: false,
+          icon: 'HomeFilled',
+          mustToken: true,
+        },
+      },
+
       {
         path: 'BuyOrder',
         name: 'BuyOrder',
@@ -378,7 +317,29 @@ export const sellShop = [
         meta: {
           title: '餐點編輯',
           hidden: false,
-          icon: 'foodAdd',
+          icon: 'product',
+          mustToken: false,
+          id: 0,
+        },
+      },
+      {
+        path: 'Flavor',
+        component: () => import('@/components/Sell/SellFlavor/index.vue'),
+        meta: {
+          title: '餐點調味編輯',
+          hidden: false,
+          icon: 'addMeals',
+          mustToken: false,
+          id: 0,
+        },
+      },
+      {
+        path: 'addMeals',
+        component: () => import('@/components/Sell/SellAddMeals/src/index.vue'),
+        meta: {
+          title: '餐點加點編輯',
+          hidden: false,
+          icon: 'addMeals',
           mustToken: false,
           id: 0,
         },

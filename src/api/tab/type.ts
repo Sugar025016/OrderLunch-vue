@@ -30,6 +30,7 @@ export interface ProductModalData {
   department: string
   orderUsername: string
   remark: string
+  shopId: number
 }
 
 export interface PutTabData {

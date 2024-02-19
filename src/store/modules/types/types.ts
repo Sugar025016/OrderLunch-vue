@@ -9,7 +9,7 @@ import {
   ShopPageResponse,
   ShopSearch,
 } from '@/api/shop/type'
-import { Address } from '@/api/user/type'
+import { Address } from '@/api/type'
 import { SellProductList } from '@/api/sellProduct/type'
 import { Orders } from '@/api/order/type'
 
@@ -25,12 +25,17 @@ export interface UserState {
   avatar: string
   buttons: string[]
   favoriteShop: ShopList
+  cartShopId: number
   cartCount: number
+  cartLat: number
+  cartLng: number
+  cartDeliveryKm: number
   orderCount: number
   shopOrderCount: number
-  addresses: Address
+  address: Address | undefined
   getNewOrderTimer: ReturnType<typeof setInterval> | null
   orderNew: Orders
+  isCheckAddress:boolean
 }
 
 // export interface CategoryState {
@@ -48,16 +53,17 @@ export interface ShopState {
   shopNames: ShopNames
   shopId: number
   shopPage: ShopPageResponse
-  shopArr:  Set<ShopData>
+  shopArr: Set<ShopData>
   scrollTop: number
   shopSearch: ShopSearch
+  userAddress: Address | undefined
 }
 export interface SellShopState {
   shop: ShopDetailData
   shopNames: ShopNames
   shopId: number
   shopPage: ShopPageResponse
-  shopArr:  Set<ShopData>
+  shopArr: Set<ShopData>
   scrollTop: number
   shopDrawer: boolean
   shopSearch: ShopSearch

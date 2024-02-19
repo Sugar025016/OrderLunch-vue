@@ -48,14 +48,15 @@ const getChooses = () => {
   sellShopStore.shop.products.forEach((p) => {
     const selectedTab = tapProduct.value?.products.find((t) => t.id === p.id)
     const choose = reactive<ChooseProduct>({
-      isChoose: false,
-      id: 0,
-      name: '',
-      description: '',
-      imgUrl: '',
-      prise: 0,
-      isOrderable: false,
-    })
+    isChoose: false,
+    id: 0,
+    name: '',
+    description: '',
+    imgUrl: '',
+    prise: 0,
+    isOrderable: false,
+    shopId: 0
+})
     Object.assign(choose, p)
 
     choose.isOrderable = p.isOrderable
@@ -108,7 +109,7 @@ defineExpose({
           <input
             type="text"
             class="rounded-input"
-            placeholder="輸入分類名稱1"
+            placeholder="輸入分類名稱"
             v-model="tabParams.name"
           />
           <button

@@ -18,15 +18,16 @@ let id: number = $route.params.id
 let tabProductsData = ref<TabData[]>([])
 
 let productData = ref<ProductModalData>({
-  productId: 0,
-  name: '',
-  description: '',
-  qty: 1,
-  imgUrl: '',
-  prise: 0,
-  department: '',
-  orderUsername: '',
-  remark: '',
+productId: 0,
+name: '',
+description: '',
+qty: 1,
+imgUrl: '',
+prise: 0,
+department: '',
+orderUsername: '',
+remark: '',
+shopId: 0
 })
 
 const openModal = (v: ProductData) => {
@@ -135,7 +136,9 @@ const tapModalRef = ref<typeof TapModal | null>(null)
       >
         <div class="tab-title">
           <div class="tab-setting">
-            <h3>{{ tab.name }}</h3>
+            <!-- <h3 :class="{ label_name: !tab.shelve }">{{ tab.name }}</h3> -->
+            <h3 >{{ tab.name }}</h3>
+
             <div class="form-check form-switch">
               <!-- <input
                 class="form-check-input"
@@ -345,6 +348,10 @@ const tapModalRef = ref<typeof TapModal | null>(null)
               color: rgb(112, 112, 112);
               margin: 14px 0;
             }
+          }
+          .label_name{
+
+            color: rgb(112, 112, 112);
           }
         }
       }

@@ -9,11 +9,11 @@ import type {
   ChangeLovesResponseData,
   UserAddress,
   UserAddressResponseData,
-  Address,
   Addresses,
   RegisterMember,
+  AddressResponseData,
 } from './type'
-import { ResultResponse } from '../type'
+import { ResultResponse, Address ,ResponseData } from '../type'
 
 enum API {
   LOGIN_URL = '/login',
@@ -24,6 +24,7 @@ enum API {
   USER_FAVORITE_URL = '/api/user/favorite',
   REGISTER_CAPTCHA = '/api/register/captcha',
   REGISTER_MEMBER = '/api/register/member',
+  USER_ADDRESS_DELIVERY_URL = '/api/user/address/delivery',
 }
 
 export const reqLogin = (data: FormData) =>
@@ -60,3 +61,25 @@ export const reqPutUserAddresses = (date: Addresses) =>
 
 export const reqAddMember = (data: RegisterMember) =>
   request.post<any, ResultResponse>(API.REGISTER_MEMBER, data)
+
+
+// export const reqAddUserAddresses = (date: Address) =>
+//   request.put<any, AddressResponseData>(API.USER_ADDRESS_URL, date)
+
+
+export const reqAddUserAddresses = (data: Address) => {
+  if (data.id) {
+    return request.put<any, AddressResponseData>(API.USER_ADDRESS_URL, data)
+  } else {
+    return request.post<any, AddressResponseData>(API.USER_ADDRESS_URL, data)
+  }
+}
+
+
+export const reqDeleteUserAddresses = (addressId: number) =>
+  request.delete<any, ResponseData>(API.USER_ADDRESS_URL+ '/' + addressId)
+
+
+
+  export const reqPutUserAddressDelivery = (addressId: number)  =>
+  request.put<any, ResponseData>(API.USER_ADDRESS_DELIVERY_URL+ '/' + addressId)

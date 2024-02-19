@@ -1,19 +1,3 @@
-<template>
-  <el-header style="text-align: right; font-size: 12px">
-    <div class="toolbar">
-      <div class="toolbar_left">
-        <BreadCrumb />444
-      </div>
-      <div class="toolbar_order">
-        <order></order>
-      </div>
-      <div class="toolbar_right">
-        <Setting />
-      </div>
-    </div>
-  </el-header>
-</template>
-
 <script setup lang="ts">
 import BreadCrumb from './breadcrumb.vue'
 // import Setting from './setting/index.vue'
@@ -49,6 +33,24 @@ const getC1 = async () => {
 
 defineProps(['scene'])
 </script>
+
+<template>
+  <el-header style="text-align: right; font-size: 12px">
+    <div class="toolbar">
+      <div class="toolbar_left">
+        <BreadCrumb />
+        444
+      </div>
+      <div class="toolbar_order">
+        <order></order>
+      </div>
+      <div class="toolbar_right">
+        <Setting />
+      </div>
+    </div>
+  </el-header>
+</template>
+
 <style lang="scss" scoped>
 .toolbar {
   position: sticky;

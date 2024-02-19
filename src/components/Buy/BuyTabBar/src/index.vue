@@ -1,5 +1,6 @@
 <template>
-  <el-header style="text-align: right; font-size: 12px">
+  <!-- <el-header style="text-align: right; font-size: 12px"> -->
+  <el-header >
     <div class="toolbar">
       <div class="toolbar_left">
         <BreadCrumb />

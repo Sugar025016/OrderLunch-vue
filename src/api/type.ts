@@ -1,10 +1,10 @@
-export interface Response {
+export interface ResponseData {
   code?: number
   message?: string
   ok?: boolean
 }
 
-export interface ResultResponse extends Response {
+export interface ResultResponse extends ResponseData {
   data: boolean
 }
 
@@ -31,4 +31,6 @@ export interface Address {
   area: string | undefined
   street: string | undefined
   detail: string | undefined
+  lat: number | undefined
+  lng: number | undefined
 }

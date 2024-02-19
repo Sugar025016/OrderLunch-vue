@@ -46,8 +46,9 @@ onMounted(async () => {
       />
     </div>
     <div class="overlay" v-if="shop.orderable">
-      <span class="overlay-text">可線上111</span>
-      <span class="overlay-text">訂購</span>
+      <!-- <span class="overlay-text">可線上</span>
+      <span class="overlay-text">訂購</span> -->
+      <img src="@/assets/images/plateOrder.png" alt="" />
     </div>
     <div style="padding: 14px">
       <div class="bottom">
@@ -74,6 +75,9 @@ onMounted(async () => {
 .el-card {
   border-radius: 20px;
   overflow: visible;
+}
+.el-card:hover {
+  transform: scale(1.02); /* 鼠标悬停时放大 20% */
 }
 .card {
   border-radius: 20px;
@@ -132,7 +136,7 @@ onMounted(async () => {
   //   z-index: 100;
   //   background-size: cover;
   //   background-repeat: no-repeat;
-  //   background-image: url('@/assets/images/plate.png') ; /* 設置背景圖片 */
+  //   background-image: url('@/assets/images/plateOrder.png') ; /* 設置背景圖片 */
   //   background-position: center center;
   //   .overlay-text {
   //     color: $color;
@@ -144,40 +148,22 @@ onMounted(async () => {
   //     text-align: center;
   //   }
   // }
+
   .overlay {
     position: absolute;
-    top: -17px;
-    left: -18px;
-    padding: 10px;
-    width: 25%; /* 這裡修改為 100% */
-    height: 35%; /* 這裡修改為 100% */
+    top: -14px;
+    right: 14px;
+    width: 100%;
     display: flex;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
-    flex-direction: column;
-    z-index: 1;
-    background-size: cover;
-    background-repeat: no-repeat;
-
-    background-image: url('@/assets/images/plate.png');
-    background-position: center center;
-    object-fit: contain;
-    transition: opacity 0.3s ease;
-    font-size: 16px;
-    .overlay-text {
-      color: $color;
-      font-weight: bold;
-      z-index: 100;
-      width: 100%;
-      height: auto;
-
-      margin: 2px 10px;
-      text-align: center;
-
-      white-space: nowrap;
-      font-size: 1rem;
+    z-index: 100;
+    img {
+      width: 90px; /* 设置图片的宽度 */
+      height: auto; /* 高度自动根据宽度和图片比例进行调整 */
     }
   }
+
   .bottom {
     margin-top: 1px;
     line-height: 26px;

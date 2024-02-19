@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
-import { apiGetCart, apiDeleteCart, apiPutCart } from '@/api/cart'
+import { reqGetCart, reqDeleteCart, reqPutCart } from '@/api/cart'
 import { CartList, CartResponseData, CartsData } from '@/api/cart/type'
 import useUserStore from '@/store/modules/user'
+import useShopStore from '@/store/modules/shop'
 import rwdBody from '@/components/layout/rwdBody/index.vue'
 import { ElMessageBox } from 'element-plus/lib/components/index.js'
 
 let userStore = useUserStore()
+let shopStore = useShopStore()
 let $router = useRouter()
 
 const sum = ref(0)
@@ -17,6 +19,8 @@ const carts = ref<CartsData>({
   orderable: false,
   cartResponses: [],
   schedules: [],
+  deliveryKm: 0,
+  deliveryPrice: 0,
 })
 
 const shopLink = () => {
@@ -28,12 +32,28 @@ const shopLink = () => {
 }
 
 const checkLink = () => {
-  $router.push('/BuyCheck')
+  if (carts.value.deliveryPrice > sum.value) {
+    ElMessageBox.alert(
+      `未滿外送金額${carts.value.deliveryPrice}元，還差${
+        carts.value.deliveryPrice - sum.value
+      }元，購物去`,
+      '未滿外送金額',
+      {
+        callback: () => {
+          // 关闭弹窗的回调函数
+          ElMessageBox.close()
+          $router.push('/BuyShop/' + carts.value.shopId)
+        },
+      },
+    )
+  } else {
+    $router.push('/BuyCheck')
+  }
 }
 
 let timer: any
 const getCart = async () => {
-  let res: CartResponseData = await apiGetCart()
+  let res: CartResponseData = await reqGetCart()
 
   if (res.code === 200) {
     carts.value = res.data
@@ -69,7 +89,7 @@ const getElMessageBox = () => {
 }
 
 const deleteCart = async (cartId: number) => {
-  let res: CartResponseData = await apiDeleteCart(cartId)
+  let res: CartResponseData = await reqDeleteCart(cartId)
   if (res.code === 200) {
     carts.value = res.data
     if (res.data.cartResponses) {
@@ -77,7 +97,7 @@ const deleteCart = async (cartId: number) => {
     } else {
       userStore.cartCount = 0
     }
-    if(userStore.cartCount === 0){
+    if (userStore.cartCount === 0) {
       getElMessageBox()
     }
   }
@@ -93,7 +113,7 @@ const getCartCount = (cartResponses: CartList) => {
 }
 
 const updateCart = async (cartId: number, qty: number) => {
-  let res: CartResponseData = await apiPutCart(cartId, qty)
+  let res: CartResponseData = await reqPutCart(cartId, qty)
   if (res.code === 200) {
     carts.value = res.data
     userStore.cartCount = getCartCount(res.data.cartResponses)
@@ -117,7 +137,9 @@ onBeforeUnmount(() => {
         <div class="shopCart-body">
           <el-row class="shopCart-body" :gutter="20">
             <el-col :span="16">
-              <span>訂購店家:{{ carts.shopName }}，滿300可外送</span>
+              <span>
+                訂購店家:{{ carts.shopName }}，滿{{ carts.deliveryPrice }}可外送
+              </span>
               <table class="table">
                 <thead>
                   <tr>

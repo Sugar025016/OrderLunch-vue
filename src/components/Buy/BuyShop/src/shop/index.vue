@@ -48,9 +48,9 @@ const getShopData = async (id: number) => {
 }
 
 const shopImageStyle = computed(() => {
-  if (shopData.value && shopData.value.img) {
+  if (shopData.value && shopData.value.imgUrl) {
     return {
-      backgroundImage: `url(${shopData.value.img})`,
+      backgroundImage: `url(${shopData.value.imgUrl})`,
     }
   }
   return {}
@@ -64,8 +64,8 @@ const dayOfWeek = currentDate.getDay()
       <div class="shop-card">
         <div :span="12" class="shop-img" :style="shopImageStyle" v-if="shopData?.imgUrl">
           <div class="overlay" v-if="shopData?.orderable">
-            <span class="overlay-text">可線上AA</span>
-            <span class="overlay-text">訂購</span>
+            <!-- <span class="overlay-text">可線上AA</span>
+            <span class="overlay-text">訂購</span> -->
           </div>
           <div class="shop-border"></div>
         </div>
@@ -192,6 +192,40 @@ $b-color: $color;
         border: white 1px solid;
         overflow: hidden;
         display: flex;
+      }
+      .overlay {
+        position: absolute;
+        top: -50px;
+        left: -50px;
+        padding: 10px;
+        width: 160px; /* 這裡修改為 100% */
+        height: 160px; /* 這裡修改為 100% */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 1;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        background-image: url('@/assets/images/plateOrder.png');
+        background-position: center center;
+        object-fit: contain;
+        transition: opacity 0.3s ease;
+        font-size: 16px;
+        .overlay-text {
+          color: $color;
+          font-weight: bold;
+          z-index: 100;
+          width: 100%;
+          height: auto;
+
+          margin: 2px 10px;
+          text-align: center;
+
+          white-space: nowrap;
+          font-size: 1.5rem;
+        }
       }
     }
 

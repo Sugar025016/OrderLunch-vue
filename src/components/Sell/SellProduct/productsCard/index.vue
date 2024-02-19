@@ -109,6 +109,7 @@ const deleteProduct = async (productId: number) => {
   justify-content: space-between;
 
   border-radius: 10px;
+  
   .overlay {
     position: absolute;
     width: calc(100% + 2px);

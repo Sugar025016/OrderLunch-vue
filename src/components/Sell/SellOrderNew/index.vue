@@ -48,7 +48,6 @@ const putOrderByShop = async (
   toStatus: number,
   orderIdList: number[],
 ) => {
-  console.log(shopId, toStatus, orderIdList)
   let res: ResultResponse = await reqPutOrderByShop(
     shopId,
     toStatus,
@@ -93,7 +92,6 @@ const multipleSelection = ref<Order[]>([])
 const orderIds = ref<number[]>([])
 
 const handleSelectionChange = (val: Order[]) => {
-  console.log('val', val)
   multipleSelection.value = val
 }
 

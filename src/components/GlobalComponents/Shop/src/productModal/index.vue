@@ -105,13 +105,14 @@
 import { ref } from 'vue'
 import { ProductModalData } from '@/api/tab/type'
 import useUserStore from '@/store/modules/user'
-import { apiAddCart } from '@/api/cart'
+import { reqAddCart } from '@/api/cart'
 import { CartRequest } from '@/api/cart/type'
 
 let userStore = useUserStore()
 
 const props = defineProps({
   product: Object as () => ProductModalData,
+  shop: Object as () => ShopData,
 })
 const inputUserName = ref('')
 inputUserName.value = userStore.username
@@ -124,6 +125,18 @@ const changeCount = (v: number) => {
   totalPrice.value = count.value * props.product!.prise
 }
 
+const checkAddCart = async () => {
+  if (mk > userStore.cartDeliveryKm) {
+    ElMessageBox.confirm('外送地址變更，需要清空購物車，你確定要變更嗎？').then(
+      () => {
+        chooseAddress()
+      },
+    )
+  } else {
+    chooseAddress()
+  }
+}
+
 const addCart = async () => {
   let cartReq = ref<CartRequest>({
     productId: props.product!.productId,
@@ -134,7 +147,7 @@ const addCart = async () => {
   })
   // Object.assign(cartReq.value, productModal.value)
 
-  let res = await apiAddCart(cartReq.value)
+  let res = await reqAddCart(cartReq.value)
 
   if (res.code === 200) {
     userStore.cartCount = res.data

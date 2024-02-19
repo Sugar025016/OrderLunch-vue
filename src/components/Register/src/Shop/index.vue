@@ -12,7 +12,6 @@ import useUserStore from '@/store/modules/user'
 import { Action } from 'element-plus/es/components/message-box/src/message-box.type.js'
 import ElMessage from 'element-plus/lib/components/message/index.js'
 import { reqAddShop } from '@/api/shop'
-import { ResponseData } from '@/api/shop/type'
 
 let userStore = useUserStore()
 let $router = useRouter()

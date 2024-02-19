@@ -40,7 +40,7 @@ import { GetOrderNewResponse } from '@/api/order/type'
 import { reqGetOrderNew } from '@/api/order'
 import ElMessage from 'element-plus/lib/components/message/index.js'
 import useSellShopStore from '@/store/modules/sellShop'
-import { Response } from '@/api/type'
+import { ResponseData } from '@/api/type'
 
 
 
@@ -69,17 +69,17 @@ const useUserStore = defineStore('User', {
       favoriteShop: [],
       avatar: '',
       buttons: [],
+      cartShopId: 0,
       cartCount: 0,
+      cartLat: 0,
+      cartLng: 0,
+      cartDeliveryKm: 0,
       orderCount: 0,
       shopOrderCount: 0,
-      addresses: {
-        id: 0,
-        city: '',
-        area: '',
-        detail: '',
-      },
+      address: undefined,
       getNewOrderTimer: null,
-      orderNew: []
+      orderNew: [],
+      isCheckAddress: false,
     }
   },
   // 异步|逻辑的地方
@@ -98,23 +98,34 @@ const useUserStore = defineStore('User', {
       }
 
       const res: LoginResponseData = await reqLogin(formData)
+
       // console.log("*********",res)
       // success=>token
       // error=>error.message
 
-      console.log("登入：：：",res)
-      const loginResponse: Response = res.data as Response
+      console.log("登入：：：", res)
+      const loginResponse: ResponseData = res.data as ResponseData
       if (loginResponse.code === 200) {
-        // console.log("*********",res)
         this.token = GET_TOKEN()
         await this.userInfo()
-        return 'ok'
-      } else {
-        return Promise.reject(new Error(loginResponse.message as string))
       }
+      return loginResponse;
+      // return loginResponse;
+
+      // if (loginResponse.code === 200) {
+      //   // console.log("*********",res)
+      //   this.token = GET_TOKEN()
+      //   await this.userInfo()
+      //   return 'ok'
+      // } else {
+      //   console.log("**********//////登入：：：//////**********")
+      //   // Promise.reject(new Error(loginResponse.message as string))
+      //   return loginResponse.code;
+      // }
     },
     async userInfo() {
       const res: UserInfoResponseData = await reqUserInfo()
+      console.log("**********//////UserInfoResponseData：：：//////**********", res)
       if (res.code === 200) {
         // const userStore = useUserStore();
         // userStore.clearData()
@@ -123,10 +134,15 @@ const useUserStore = defineStore('User', {
         this.phone = res.data.phone
         this.email = res.data.email
         this.favoriteShop = res.data.favoriteShops
+        this.cartShopId = res.data.cartShopId
         this.cartCount = res.data.cartCount
+        this.cartLat = res.data.cartLat
+        this.cartLng = res.data.cartLng 
+        this.cartDeliveryKm = res.data.cartDeliveryKm
         this.orderCount = res.data.orderCount
         this.shopOrderCount = res.data.shopOrderCount
         this.address = res.data.address as Address
+
 
         // const userAsyncRoute = filterAsyncRoute(
         //   cloneDeep(asyncRoute),
@@ -197,7 +213,10 @@ const useUserStore = defineStore('User', {
     async userLogout() {
       const res = await reqLogOut()
       if (res.code === 200) {
+        await window.location.reload();
+        console.log("///////////*************///////////")
         this.userClear()
+
         return res
       } else {
         return Promise.reject(new Error(res.message))
@@ -213,8 +232,10 @@ const useUserStore = defineStore('User', {
       this.email = ''
       this.phone = ''
       this.favoriteShop = []
+      this.address = undefined
       this.cartCount = 0
       this.orderCount = 0
+      this.setCheckAddress(false)
       REMOVE_TOKEN()
       this.stopTimer()
 
@@ -256,6 +277,18 @@ const useUserStore = defineStore('User', {
         clearInterval(this.getNewOrderTimer);
         this.getNewOrderTimer = null;
       }
+    },
+
+    async isCheckChooseAddress() {
+      if(this.account!=""&& (this.address===undefined || !this.isCheckAddress)){
+
+        return true
+      }
+        return false
+    },
+
+    async setCheckAddress(is:boolean) {
+      this.isCheckAddress=is;
     },
   },
   getters: {},

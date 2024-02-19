@@ -101,7 +101,7 @@ const updateUser = (row: User) => {
 }
 
 const save = async () => {
-  formRef.value.validate()
+  await formRef.value.validate()
   let res: any = await reqAddOrUpdateUser(userParams)
   if (res.code === 200) {
     getHasUser()

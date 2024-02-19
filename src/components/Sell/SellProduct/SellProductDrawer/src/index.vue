@@ -146,57 +146,129 @@ const uploadHeaders = {
 }
 </script>
 <template>
-  <el-drawer v-model="drawer" class="drawer">
+  <el-drawer v-model="drawer" class="drawer" size="90%">
     <template #header>
       <h3>{{ productParams.id ? '更新餐點' : '新增餐點' }}</h3>
     </template>
     <template #default>
-      <el-form :model="productParams" :rules="rules" ref="formRef">
-        <el-form-item label="產品名稱" prop="name">
-          <el-input
-            placeholder="请您输入產品名稱"
-            v-model="productParams.name"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="產品介紹" prop="description">
-          <el-input
-            placeholder="请您输入產品介紹"
-            v-model="productParams.description"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="產品價格" prop="prise">
-          <el-input
-            placeholder="请您输入產品價格"
-            v-model="productParams.prise"
-            :formatter="
-              (value: string) =>
-                `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-            "
-            :parser="(value: string) => value.replace(/\$\s?|(,*)/g, '')"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="上架" prop="order">
-          <el-switch v-model="productParams.orderable" />
-        </el-form-item>
-        <el-form-item label="產品圖">
-          <el-upload
-            class="avatar-uploader"
-            action="/api/api/upload"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-            :with-credentials="true"
-            :headers="uploadHeaders"
-          >
-            <img
-              v-if="productParams.imgUrl"
-              :src="productParams.imgUrl.toString()"
-              class="avatar"
-            />
-            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
-          </el-upload>
-        </el-form-item>
-      </el-form>
+      <div class="product_revise">
+        <!-- <el-form :model="productParams" :rules="rules" ref="formRef"
+    label-position="top"> -->
+        <el-form
+          class="revise"
+          :model="productParams"
+          :rules="rules"
+          ref="formRef"
+          label-width="auto"
+        >
+          <el-form-item label="產品名稱：" prop="name">
+            <el-input
+              placeholder="请您输入產品名稱"
+              v-model="productParams.name"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="產品介紹：" prop="description">
+            <el-input
+              placeholder="请您输入產品介紹"
+              v-model="productParams.description"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="產品價格：" prop="prise">
+            <el-input
+              placeholder="请您输入產品價格"
+              v-model="productParams.prise"
+              :formatter="
+                (value: string) =>
+                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+              "
+              :parser="(value: string) => value.replace(/\$\s?|(,*)/g, '')"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="上架：" prop="order">
+            <el-switch v-model="productParams.orderable" />
+          </el-form-item>
+          <el-form-item label="產品圖：">
+            <el-upload
+              class="avatar-uploader"
+              action="/api/api/upload"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+              :with-credentials="true"
+              :headers="uploadHeaders"
+            >
+              <img
+                v-if="productParams.imgUrl"
+                :src="productParams.imgUrl.toString()"
+                class="avatar"
+              />
+              <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+            </el-upload>
+          </el-form-item>
+        </el-form>
+
+        <div class="revise_add-to-purchase revise">
+          <div class="add-to-purchase">
+            <div class="add_group">
+              <el-button size="large" type="primary" round>
+                新增加購分類商品
+              </el-button>
+            </div>
+          </div>
+        </div>
+
+        <el-form
+          :model="productParams"
+          :rules="rules"
+          ref="formRef"
+          class="revise"
+        >
+          <el-form-item label="產品名稱" prop="name">
+            <el-input
+              placeholder="请您输入產品名稱"
+              v-model="productParams.name"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="產品介紹" prop="description">
+            <el-input
+              placeholder="请您输入產品介紹"
+              v-model="productParams.description"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="產品價格" prop="prise">
+            <el-input
+              placeholder="请您输入產品價格"
+              v-model="productParams.prise"
+              :formatter="
+                (value: string) =>
+                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+              "
+              :parser="(value: string) => value.replace(/\$\s?|(,*)/g, '')"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="上架" prop="order">
+            <el-switch v-model="productParams.orderable" />
+          </el-form-item>
+          <el-form-item label="產品圖：" class="img">
+            <el-upload
+              class="avatar-uploader"
+              action="/api/api/upload"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+              :with-credentials="true"
+              :headers="uploadHeaders"
+            >
+              <img
+                v-if="productParams.imgUrl"
+                :src="productParams.imgUrl.toString()"
+                class="avatar"
+              />
+              <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+            </el-upload>
+          </el-form-item>
+        </el-form>
+      </div>
     </template>
     <template #footer>
       <div style="flex: auto">
@@ -207,13 +279,58 @@ const uploadHeaders = {
   </el-drawer>
 </template>
 <style lang="scss" scoped>
-h3{
-  font-size: 18px;
+h3 {
+  font-size: 28px;
 }
 .avatar-uploader {
   .avatar {
     width: 100%;
     display: block;
+  }
+}
+.product_revise {
+  height: 100%;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  // overflow: auto;
+  .revise {
+    margin: 0 5px 0 0;
+    border: 1px solid rgb(59, 59, 59);
+    border-radius: 10px;
+    padding: 10px;
+  }
+  .el-form {
+    height: 100%;
+    overflow: auto;
+
+    :last-child.el-form-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      img {
+        // margin: 10px;
+        padding: 0 0 0 10px;
+      }
+    }
+  }
+  .revise_add-to-purchase {
+    height: 100%;
+    // border: 1px ;
+    // border-color: aqua;
+
+    .add-to-purchase {
+      height: 100%;
+      .add_group {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        button {
+        }
+      }
+    }
   }
 }
 </style>

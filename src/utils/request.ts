@@ -58,9 +58,9 @@ request.interceptors.response.use(
           break // 403 token過期
         // 401: 未登錄
         case 401:
+          userStore.userClear()
           router.push('/login')
           message = '未登錄'
-          userStore.userClear()
           break // 403 token過期
         case 403:
           router.push('/login')

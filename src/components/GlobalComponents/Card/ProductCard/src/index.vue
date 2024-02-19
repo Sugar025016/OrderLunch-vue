@@ -193,6 +193,11 @@ const deleteProduct = async (productId: number) => {
     width: 150px;
   }
 }
+
+.productCard:hover {
+  transform: scale(1.02);
+}
+
 .addCard {
   cursor: pointer;
   .add {

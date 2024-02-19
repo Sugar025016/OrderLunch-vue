@@ -26,7 +26,6 @@
 import useLoadingStore from '@/store/modules/loading'
 import { ref, watch } from 'vue'
 import SellTabBar from './SellTabBar/src/index.vue'
-// import order from '@/components/Buy/BuyTabBar/src/order/index.vue'
 
 const loadingStore = useLoadingStore()
 

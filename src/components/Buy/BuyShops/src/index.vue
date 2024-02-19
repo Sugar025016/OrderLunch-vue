@@ -1,3 +1,101 @@
+<script setup lang="ts">
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+import Category from './Category/index.vue'
+
+import useShopStore from '@/store/modules/shop'
+import useUserStore from '@/store/modules/user'
+import rwdBody from '@/components/layout/rwdBody/index.vue'
+import { useRouter } from 'vue-router'
+import { ElMessageBox } from 'element-plus/lib/components/message-box/index.js'
+
+import ChooseAddressModel from './ChooseAddressModel/index.vue'
+
+let $router = useRouter()
+let shopStore = useShopStore()
+let userStore = useUserStore()
+const isExpanded = ref(false)
+
+onMounted(() => {
+  // 在组件挂载后添加滚动事件监听器
+  window.addEventListener('scroll', handleScroll), 
+  chooseAddress()
+})
+
+const chooseAddress = async () => {
+  let isCheckChooseAddress =await userStore.isCheckChooseAddress()
+
+  console.log("isCheckChooseAddress:",isCheckChooseAddress)
+  if ( isCheckChooseAddress) {
+    chooseAddressRef.value?.open();
+  }
+}
+const chooseAddressRef = ref<typeof ChooseAddressModel>()
+const registerShop = () => {
+  // 处理滚动事件的逻辑
+  if (userStore.token == null || userStore.token == '') {
+    ElMessageBox.confirm('你還未登入，請前往登入！', '前往登入！', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    })
+      .then(() => {
+        console.log('用户点击了确定按钮，执行相关操作')
+        $router.push('/login')
+      })
+      .catch(() => {
+        console.log('用户点击了取消按钮或关闭了消息框')
+        clearTimeout(timer)
+      })
+
+    // 设置定时器，在 10 秒后关闭消息框
+    timer = setTimeout(() => {
+      const messageBoxInstance = ElMessageBox
+      if (messageBoxInstance) {
+        messageBoxInstance.close()
+
+        $router.push('/login')
+      }
+    }, 5000) // 5000 毫秒即为 5 秒
+  } else {
+    $router.push(`/Register/shop`)
+  }
+}
+
+const loading = ref(false)
+let timer: any
+let loadingMore = false 
+let aaa = 0
+const handleScroll = async () => {
+  const scrollTop = window.scrollY || document.documentElement.scrollTop
+
+  isExpanded.value = scrollTop > 200
+  if (
+    window.innerHeight + window.scrollY >=
+    document.documentElement.scrollHeight - 200
+  ) {
+    console.log('頁面滾動到了底部', aaa++)
+    if (
+      shopStore.shopPage.number < shopStore.shopPage.totalPages - 1 &&
+      !loadingMore
+    ) {
+      loadingMore = true 
+      requestAnimationFrame(async () => {
+        let to = window.innerHeight + window.scrollY
+        await shopStore.getShopPage(shopStore.shopPage.number + 1)
+
+        window.scrollTo({ top: to, behavior: 'instant' })
+        loadingMore = false // 数据加载完成后设置为 false
+      })
+    }
+  }
+}
+// 在组件销毁时移除滚动事件监听器，防止内存泄漏
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll)
+  clearTimeout(timer)
+})
+</script>
+
 <template>
   <div class="buyShops">
     <el-row class="row1">
@@ -27,7 +125,7 @@
               class="box-item"
               effect="light"
               content="開店"
-              placement="top-start"
+              placement="top-end"
             >
               <img
                 @click="registerShop()"
@@ -61,118 +159,12 @@
       </rwdBody>
     </div>
   </div>
+
+  <ChooseAddressModel
+    ref="chooseAddressRef"
+  ></ChooseAddressModel>
 </template>
-<script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
-import Category from './Category/index.vue'
 
-import useShopStore from '@/store/modules/shop'
-import useUserStore from '@/store/modules/user'
-import rwdBody from '@/components/layout/rwdBody/index.vue'
-import { useRouter } from 'vue-router'
-import { ElMessageBox } from 'element-plus/lib/components/message-box/index.js'
-
-let $router = useRouter()
-let shopStore = useShopStore()
-let userStore = useUserStore()
-const isExpanded = ref(false)
-
-onMounted(() => {
-  // 在组件挂载后添加滚动事件监听器
-  window.addEventListener('scroll', handleScroll)
-})
-
-const handleScroll = () => {
-  // 处理滚动事件的逻辑
-  const scrollTop = window.scrollY || document.documentElement.scrollTop
-
-  console.log('Current scroll position:', scrollTop)
-  isExpanded.value = scrollTop > 200
-}
-const registerShop = () => {
-  // 处理滚动事件的逻辑
-  if (userStore.token == null || userStore.token == '') {
-
-    ElMessageBox.confirm('你還未登入，請前往登入！', '前往登入！', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning',
-    })
-      .then(() => {
-        console.log('用户点击了确定按钮，执行相关操作')
-        $router.push('/login')
-      })
-      .catch(() => {
-        console.log('用户点击了取消按钮或关闭了消息框')
-        clearTimeout(timer)
-      })
-
-    // 设置定时器，在 10 秒后关闭消息框
-    timer = setTimeout(() => {
-      const messageBoxInstance = ElMessageBox
-      if (messageBoxInstance) {
-        messageBoxInstance.close()
-
-        $router.push('/login')
-      }
-    }, 5000) // 5000 毫秒即为 5 秒
-  } else {
-    $router.push(`/Register/shop`)
-  }
-}
-
-const loading = ref(false)
-let timer: any
-// window.addEventListener('scroll', async () => {
-//   if (
-//     window.innerHeight + window.scrollY >=
-//     document.documentElement.scrollHeight - 200
-//   ) {
-//     console.log('頁面滾動到了底部')
-//     // 觸發加載更多數據的方法
-//     if (
-//       shopStore.shopPage.number < shopStore.shopPage.totalPages - 1 &&
-//       !loading.value
-//     ) {
-//       let to = window.innerHeight + window.scrollY
-//       loading.value = true
-//       timer = await setTimeout(() => {
-//         shopStore.getShopPage(shopStore.shopPage.number + 1)
-//         window.scrollTo({ top: to, behavior: 'instant' })
-//         loading.value = false
-//       }, 1400)
-//     }
-//   }
-// })
-let loadingMore = false // 添加一个标志位来表示是否正在加载更多数据
-
-window.addEventListener('scroll', async () => {
-  if (
-    window.innerHeight + window.scrollY >=
-    document.documentElement.scrollHeight - 200
-  ) {
-    console.log('頁面滾動到了底部')
-    // 触发加载更多数据的方法
-    if (
-      shopStore.shopPage.number < shopStore.shopPage.totalPages - 1 &&
-      !loadingMore
-    ) {
-      loadingMore = true // 设置为 true 表示正在加载更多数据
-      requestAnimationFrame(async () => {
-        let to = window.innerHeight + window.scrollY
-        await shopStore.getShopPage(shopStore.shopPage.number + 1)
-        window.scrollTo({ top: to, behavior: 'instant' })
-        loadingMore = false // 数据加载完成后设置为 false
-      })
-    }
-  }
-})
-// 在组件销毁时移除滚动事件监听器，防止内存泄漏
-onBeforeUnmount(() => {
-  window.removeEventListener('scroll', handleScroll)
-  clearTimeout(timer)
-})
-</script>
 <style lang="scss" scoped>
 .shadow {
   box-shadow: 0px 0px 0px 20px red inset;

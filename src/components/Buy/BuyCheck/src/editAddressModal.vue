@@ -1,28 +1,29 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import cityAreas from '@/utils/areaData.js'
-import { Address } from '@/api/user/type'
+import { nextTick, reactive, ref, defineEmits } from 'vue'
+// import cityAreas from '@/utils/areaData.js'
+import { Address } from '@/api/type'
 
-const props = defineProps({
-  address: {
-    type: Object as () => Address,
-    required: true,
-  },
-  deleteAddress: Function,
-  index: Number,
-})
-// let $emit = defineEmits(['props.address'])
-let $emit = defineEmits(['updateAddress'])
-const updateAddress = () => {
-  $emit('updateAddress', props.address)
+import address from '@/utils/address.js'
+import { reqAddUserAddresses } from '@/api/user'
+import ElMessage from 'element-plus/lib/components/message/index.js'
+import { AddressResponseData } from '@/api/user/type'
+import useUserStore from '@/store/modules/user'
+
+const addAddressModalOpen = ref<boolean>(false)
+const handleClose = () => {
+  addAddressModalOpen.value = false
 }
 
-const city: string[] = Object.keys(cityAreas)
-
+let userStore = useUserStore()
 const formSize = ref('default')
 
-const clearArea = () => {
-  props.address.area = ''
+const changeCity = () => {
+  addressData.area = ''
+  addressData.street = ''
+}
+
+const changeArea = () => {
+  addressData.street = ''
 }
 
 const validatorShopAddressDetail = (rule: any, value: any, callBack: any) => {
@@ -40,8 +41,9 @@ const validateNotEmptyString = (rule: any, value: any, callback: any) => {
   }
 }
 const addressRules = {
-  city: [{ required: true, message: '請選擇城市', trigger: 'change' }],
-  area: [{ required: true, message: '請選擇區域', trigger: 'change' }],
+  city: [{ required: true, message: '請選擇城市', trigger: 'blur' }],
+  area: [{ required: true, message: '請選擇區域', trigger: 'blur' }],
+  street: [{ required: true, message: '請選擇街道', trigger: 'blur' }],
   detail: [
     {
       required: true,
@@ -52,101 +54,195 @@ const addressRules = {
     {
       validator: validateNotEmptyString,
       trigger: 'blur',
-      message: '地址不能為空',
+      message: '请输入外送地址',
     },
   ],
 }
 
 let formRef = ref<any>()
 
-const save = async () => {
+let addressData = reactive<Address>({
+  city: '',
+  area: '',
+  street: '',
+  detail: '',
+  lat: undefined,
+  lng: undefined,
+})
+const emits = defineEmits(['childClosed'])
+const saveAddress = async () => {
   await formRef.value.validate()
+  let res: AddressResponseData = await reqAddUserAddresses(addressData)
+  if (res.code === 200) {
+    await userStore.userInfo()
+    addAddressModalOpen.value = false
+    emits('childClosed') // 触发父组件的关闭方法
+  } else {
+    ElMessage({
+      type: 'error',
+      message: '搜尋失败',
+    })
+  }
 }
+
+const addShop = () => {
+  addAddressModalOpen.value = true
+
+  Object.assign(addressData, {
+    city: '',
+    area: '',
+    street: '',
+    detail: '',
+  })
+  title.value = '新增地址'
+  nextTick(() => {
+    formRef.value.clearValidate('city')
+    formRef.value.clearValidate('area')
+    formRef.value.clearValidate('street')
+    formRef.value.clearValidate('detail')
+  })
+}
+
+const updateShop = (address: Address) => {
+  addAddressModalOpen.value = true
+
+  title.value = '更改地址'
+  Object.assign(addressData, address)
+
+  nextTick(() => {
+    formRef.value.clearValidate('city')
+    formRef.value.clearValidate('area')
+    formRef.value.clearValidate('street')
+    formRef.value.clearValidate('detail')
+  })
+}
+const title = ref<string>()
+
 defineExpose({
-  save,
+  updateShop,
+  addShop,
 })
 </script>
 <template>
-  <el-form
-    ref="formRef"
-    :model="props.address"
-    :rules="addressRules"
-    label-width="120px"
-    class="demo-ruleForm"
-    :size="formSize"
-    status-icon
-    label-position="top"
-  >
-    <el-form-item prop="city">
-      <el-select
-        v-model="props.address.city"
-        class="m-2"
-        placeholder="請選擇城市"
-        size="large"
-        @change="clearArea()"
-      >
-        <el-option
-          v-for="(item, index) in city"
-          :key="index"
-          :label="item"
-          :value="item"
-          :disabled="index === 0"
-        />
-        ：
-      </el-select>
-    </el-form-item>
-    <el-form-item prop="area">
-      <el-select
-        v-model="props.address.area"
-        class="m-2"
-        placeholder="請選擇區域"
-        size="large"
-        no-data-text="請先選擇城市"
-      >
-        <el-option
-          v-for="item in cityAreas[
-            props.address.city as keyof typeof cityAreas
-          ]"
-          :key="item"
-          :label="item"
-          :value="item"
-        />
-      </el-select>
-    </el-form-item>
-    <el-form-item prop="detail">
-      <el-input
-        v-model="props.address.detail"
-        size="large"
-        placeholder="请您输入外送地址"
-      ></el-input>
-    </el-form-item>
-    <el-button
-      type="primary"
-      size="large"
-      @click="deleteAddress(props.index)"
-      round
-      plain
+  <div class="dialog">
+    <el-dialog
+      v-model="addAddressModalOpen"
+      :title="title"
+      :before-close="handleClose"
+      class="test1"
+      width="40%"
     >
-      刪除
-    </el-button>
-  </el-form>
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <el-form
+            ref="formRef"
+            :model="addressData"
+            :rules="addressRules"
+            label-width="120px"
+            class="demo-ruleForm"
+            :size="formSize"
+            status-icon
+            label-position="top"
+          >
+            <el-form-item prop="city">
+              <el-select
+                v-model="addressData.city"
+                class="m-2"
+                placeholder="請選擇城市"
+                size="large"
+                @change="changeCity()"
+              >
+                <el-option
+                  v-for="(item, index) in address"
+                  :key="index"
+                  :label="item.cityName"
+                  :value="item.cityName"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item prop="area">
+              <el-select
+                v-model="addressData.area"
+                class="m-2"
+                placeholder="請選擇區域"
+                size="large"
+                no-data-text="請先選擇城市"
+                @change="changeArea()"
+              >
+                <el-option
+                  v-for="(area, index) in address.find(
+                    (address) => address.cityName === addressData.city,
+                  )?.areas"
+                  :key="index"
+                  :value="area.areaName"
+                  :label="area.areaName"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item prop="street">
+              <el-select
+                class="m-4"
+                v-model="addressData.street"
+                placeholder="請選擇路(街)名或鄉里名稱"
+                size="large"
+                no-data-text="請先選擇鄉鎮[市]區"
+              >
+                <el-option
+                  v-for="(street, index) in address
+                    .find((address) => address.cityName === addressData.city)
+                    ?.areas.find((areas) => areas.areaName === addressData.area)
+                    ?.streets"
+                  :key="index"
+                  :value="street.streetName"
+                  :label="street.streetName"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item prop="detail">
+              <el-input
+                v-model="addressData.detail"
+                size="large"
+                placeholder="请您输入外送地址"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button
+            class="btn btn-primary"
+            @click="handleClose()"
+            type="primary"
+            round
+            plain
+          >
+            取消
+          </el-button>
+
+          <el-button
+            class="btn btn-primary"
+            @click="saveAddress()"
+            type="primary"
+            round
+            plain
+          >
+            確定
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 .el-form {
-  display: grid;
-  grid-template-columns:
-    minmax(120px, 2fr) minmax(130px, 2fr) minmax(320px, 5fr)
-    minmax(75px, 1fr);
-  // grid-column-gap: 10px;
-  grid-gap: 10px;
-  // margin: 10px;
-
   .el-form-item {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 22px;
+    max-width: 500px;
     .el-form-item__label {
       display: flex;
       justify-content: center;
@@ -157,33 +253,8 @@ defineExpose({
     .el-select {
       margin: 0 !important;
     }
-  }
-  .el-button {
-    // margin: auto 0 auto 5px;
-  }
-  @media (max-width: $breakpoint-lg) {
-    display: grid;
-    grid-template-rows: auto auto; /* 調整每行的高度 */
-    grid-template-columns: minmax(150px, 2fr) minmax(150px, 4fr) auto; /* 調整每列的寬度比例 */
-
-    .el-form-item:nth-child(1) {
-      grid-row: 1; /* 將第一個元素放置在第一行 */
-      grid-column: 1; /* 將第一個元素放置在第一列 */
-    }
-
-    .el-form-item:nth-child(2) {
-      grid-row: 1; /* 將第二個元素放置在第一行 */
-      grid-column: 2; /* 將第二個元素放置在第二列 */
-    }
-
-    .el-form-item:nth-child(3) {
-      grid-row: 2; /* 將第三個元素放置在第二行 */
-      grid-column: 1 / span 2; /* 設置第三個元素佔第一列的80% */
-    }
-
-    .el-button {
-      grid-row: 2; /* 將第四個元素放置在第二行 */
-      grid-column: 3 / span 1; /* 設置第四個元素佔第二列的20% */
+    :deep(.el-form-item__error) {
+      margin: 2px !important;
     }
   }
 

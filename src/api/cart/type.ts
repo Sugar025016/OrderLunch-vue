@@ -10,8 +10,10 @@ export interface CartsData {
   shopId?: number
   shopName: string
   orderable: boolean
+  deliveryKm: number
   cartResponses: CartList
   schedules: Schedules
+  deliveryPrice: number
 }
 
 export type CartList = CartData[]

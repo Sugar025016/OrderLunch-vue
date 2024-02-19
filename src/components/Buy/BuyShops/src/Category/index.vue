@@ -6,7 +6,8 @@ import { ShopSearch } from '@/api/shop/type'
 import { getCategoryList } from '@/api/category'
 import address from '@/utils/address.js'
 import { Category, CategoryListResponse } from '@/api/category/type'
-
+import useUserStore from '@/store/modules/user'
+let userStore = useUserStore()
 let selectedOption1 = ref(-1)
 let selectedOption2 = ref('')
 let selectedOption3 = ref(0)
@@ -104,8 +105,8 @@ const changeCategory = () => {
 }
 </script>
 <template>
-  <div class="form">
-    <div class="form-item el-form-item">
+  <div class="form" :class="{ haveAddress: userStore.address }">
+    <div class="form-item el-form-item" v-if="!userStore.address">
       <div class="custom-select-wrapper">
         <select
           class="custom-select"
@@ -125,7 +126,7 @@ const changeCategory = () => {
       </div>
     </div>
 
-    <div class="form-item el-form-item">
+    <div class="form-item el-form-item" v-if="!userStore.address">
       <div class="custom-select-wrapper">
         <select
           class="custom-select area"
@@ -334,6 +335,39 @@ const changeCategory = () => {
     margin: 0 10px;
     display: grid;
     grid-template-columns: minmax(120px, 2fr) minmax(150px, 3fr);
+    grid-column-gap: 10px;
+    .search-container {
+      display: grid;
+      grid-column: span 2;
+    }
+    .item-category {
+      display: grid;
+      grid-column: span 2;
+    }
+  }
+}
+.haveAddress{
+
+  display: grid;
+  grid-template-columns:  5fr 12fr;
+  grid-column-gap: 10px;
+
+  @media (max-width: $breakpoint-md) {
+    margin: 0 10px;
+    display: grid;
+    grid-template-columns:  minmax(150px, 4fr) minmax(
+        200px,
+        12fr
+      );
+    .search-container {
+      display: grid;
+      grid-column: span 1;
+    }
+  }
+
+  @media (max-width: $breakpoint-xs) {
+    margin: 0 10px;
+    display: grid;
     grid-column-gap: 10px;
     .search-container {
       display: grid;

@@ -1,3 +1,111 @@
+<script setup lang="ts">
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { ProductModalData } from '@/api/tab/type'
+import useUserStore from '@/store/modules/user'
+import { reqAddCart } from '@/api/cart'
+import { CartRequest } from '@/api/cart/type'
+
+import { useRouter } from 'vue-router'
+import { ElMessageBox } from 'element-plus/lib/components/message-box/index.js'
+
+let $router = useRouter()
+
+let userStore = useUserStore()
+
+const props = defineProps({
+  product: Object as () => ProductModalData,
+})
+const inputUserName = ref('')
+inputUserName.value = userStore.username
+const count = ref(1)
+const totalPrice = ref()
+totalPrice.value = props.product!.prise
+count.value = 1
+const changeCount = (v: number) => {
+  props.product!.qty = props.product!.qty + v
+  totalPrice.value = count.value * props.product!.prise
+}
+
+let timer: any
+const checkAddCart = async () => {
+  if (await userStore.isCheckChooseAddress()) {
+    ElMessageBox.confirm(
+      '你還未設定外送地點，請前往首頁設定外送地點！',
+      '前往首頁！',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      },
+    )
+      .then(() => {
+        $router.push('/login')
+      })
+      .catch(() => {
+        clearTimeout(timer)
+      })
+
+    // 设置定时器，在 10 秒后关闭消息框
+    timer = setTimeout(() => {
+      const messageBoxInstance = ElMessageBox
+      if (messageBoxInstance) {
+        messageBoxInstance.close()
+
+        $router.push('/login')
+      }
+    }, 5000) // 5000 毫秒即为 5 秒
+  } else {
+    if (
+      userStore.cartShopId != 0 &&
+      userStore.cartShopId != props.product?.shopId
+    ) {
+      ElMessageBox.confirm(
+        '你購買了其他店家商品，購物車將被清空，你確定要要清空舊購物商品！',
+        '清空購物車！',
+        {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        },
+      )
+        .then(() => {
+          console.log('清空購物車，加入新商品')
+          addCart()
+        })
+        .catch(() => {
+          // 用户点击了 "取消" 按钮或者关闭了消息框
+          // 不执行相关操作
+          console.log('用户点击了取消按钮或关闭了消息框')
+        })
+    } else {
+      addCart()
+    }
+  }
+
+  // Object.assign(cartReq.value, productModal.value)
+}
+
+const addCart = async () => {
+  let cartReq = ref<CartRequest>({
+    productId: props.product!.productId,
+    department: props.product!.department,
+    orderUsername: props.product!.orderUsername,
+    qty: props.product!.qty,
+    remark: props.product!.remark,
+  })
+  let res = await reqAddCart(cartReq.value)
+
+  if (res.code === 200) {
+    userStore.userInfo()
+  }
+}
+
+
+onBeforeUnmount(() => {
+  clearTimeout(timer)
+})
+</script>
+
 <template>
   <div
     class="modal fade"
@@ -97,13 +205,15 @@
             >
               <el-icon><Plus /></el-icon>
             </el-button>
-            <span class="fs-5">總額：${{ props.product!.qty * props.product!.prise }}</span>
+            <span class="fs-5">
+              總額：${{ props.product!.qty * props.product!.prise }}
+            </span>
           </div>
           <el-button
             type="warning"
             class="btn btn-primary"
             size="large"
-            @click="addCart()"
+            @click="checkAddCart()"
             data-bs-dismiss="modal"
             round
           >
@@ -114,46 +224,6 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import { ref } from 'vue'
-import { ProductModalData } from '@/api/tab/type'
-import useUserStore from '@/store/modules/user'
-import { apiAddCart } from '@/api/cart'
-import { CartRequest } from '@/api/cart/type'
-
-let userStore = useUserStore()
-
-const props = defineProps({
-  product: Object as () => ProductModalData,
-})
-const inputUserName = ref('')
-inputUserName.value = userStore.username
-const count = ref(1)
-const totalPrice = ref()
-totalPrice.value = props.product!.prise
-count.value = 1
-const changeCount = (v: number) => {
-  props.product!.qty = props.product!.qty + v
-  totalPrice.value = count.value * props.product!.prise
-}
-
-const addCart = async () => {
-  let cartReq = ref<CartRequest>({
-    productId: props.product!.productId,
-    department: props.product!.department,
-    orderUsername: props.product!.orderUsername,
-    qty: props.product!.qty,
-    remark: props.product!.remark,
-  })
-  // Object.assign(cartReq.value, productModal.value)
-
-  let res = await apiAddCart(cartReq.value)
-
-  if (res.code === 200) {
-    userStore.cartCount = res.data
-  }
-}
-</script>
 <style lang="scss" scoped>
 @import '@/styles/bootstrap.scss';
 @import '../node_modules/bootstrap/scss/_modal.scss';

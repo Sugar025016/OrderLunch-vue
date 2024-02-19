@@ -42,23 +42,31 @@ export interface UserInfoResponseData extends ResponseData {
     email: string
     favoriteShops: ShopList
     avatar: string
+    cartShopId: number
     cartCount: number
+    cartLat: number
+    cartLng: number
+    cartDeliveryKm: number
     orderCount: number
     shopOrderCount: number
     address?: Address
   }
 }
 
-export interface Address {
-  id?: number
-  city: string
-  area: string
-  detail: string
-}
+// export interface Address {
+//   id?: number
+//   city: string
+//   area: string
+//   detail: string
+// }
 export type Addresses = Address[]
 
 export interface UserAddressResponseData extends ResponseData {
   data: Addresses
+}
+
+export interface AddressResponseData extends ResponseData {
+  data: Address
 }
 
 export interface UserProfile {

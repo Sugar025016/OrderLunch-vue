@@ -43,8 +43,9 @@ watch(
   background-color: rgba(214, 164, 13, 0.1);
 
   width: auto;
-  height: 500px;
-  border-radius: 0 0 100% 100% / 100% 100% 100% 100%;
+  // height: 500px;
+  // border-radius: 0 0 100% 100% / 100% 100% 100% 100%;
+  // border-radius: 0 0 100% 100% / 100% 100% 100% 100%;
 
   .buy {
     min-height: 100vh;
@@ -73,11 +74,13 @@ watch(
       overflow: visible;
       padding: 0px;
       overflow: hidden;
+      z-index: 1;
     }
     .buy-el-footer {
       background-color: black;
       height: 200px;
       padding: 35px 0;
+      z-index: 1;
 
       position: relative;
       @media (min-width: $breakpoint-xs) {

@@ -9,8 +9,9 @@ export interface ProductData {
   name: string
   description: string
   imgUrl: string
-  prise: number
   isOrderable: boolean
+  prise: number
+  shopId: number
 }
 // export interface ProductData {
 //   id: number | string

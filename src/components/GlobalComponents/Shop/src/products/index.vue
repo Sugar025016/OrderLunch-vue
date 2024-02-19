@@ -83,7 +83,7 @@ const openModal = (v: ProductData) => {
   productData.value.name = v.name
   productData.value.description = ''
   productData.value.qty = 1
-  productData.value.img = v.img
+  productData.value.imgUrl = v.imgUrl
   productData.value.prise = v.prise
   productData.value.department = ''
   productData.value.orderUsername = userStore.username

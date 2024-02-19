@@ -9,6 +9,7 @@ import type {
 import { ShopState } from './types/types'
 import ElMessage from 'element-plus/lib/components/message/index.js'
 import { useRouter } from 'vue-router'
+import useUserStore from './user';
 let $router = useRouter()
 
 const useShopStore = defineStore('Category', {
@@ -22,7 +23,10 @@ const useShopStore = defineStore('Category', {
           id: 0,
           city: '',
           area: '',
+          street: '',
           detail: '',
+          lat: 0,
+          lng: 0,
         },
         phone: '',
         imgId: 0,
@@ -52,20 +56,29 @@ const useShopStore = defineStore('Category', {
         number: -1,
         totalPages: 0
       },
-      shopArr:new Set<ShopData>,
+      shopArr: new Set<ShopData>,
       scrollTop: 0,
-      shopSearch:{}
+      shopSearch: {},
     }
   },
   actions: {
-    async getShopPage(page:number = 0) {
-      console.log("page", page )
-      const res: GetShopPageResponse = await reqGetShopPage(this.shopSearch ,page)
+    async getShopPage(page: number = 0) {
+      if (page === 0) {
+        await this.shopArr.clear();
+        console.log("this.shopArr----------", this.shopArr)
+      }
+      const userStore = useUserStore();
+      console.log("userStore.address?.id----------", userStore.address?.id)
+      this.shopSearch.userAddressId = userStore.address?.id
+      console.log("this.shopSearch----------", this.shopSearch)
+
+      const res: GetShopPageResponse = await reqGetShopPage(this.shopSearch, page)
       if (res.code === 200) {
         this.shopPage = res.data
         res.data.content.forEach((shopData) => {
           this.shopArr.add(shopData);
         });
+        await console.log("this.shopArr-----200-----", this.shopArr)
       } else {
         return Promise.reject(new Error(res.message))
       }

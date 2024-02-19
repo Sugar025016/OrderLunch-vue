@@ -11,7 +11,7 @@ import {
 
 import { ElMessage } from 'element-plus/lib/components/index.js'
 
-import { onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { formatDate } from '@/utils/time'
 const activeTab = ref(0)
 interface Tab {
@@ -73,7 +73,31 @@ const getOrder = async (page: number) => {
 }
 
 const loading = ref(false)
-window.addEventListener('scroll', async () => {
+// window.addEventListener('scroll', async () => {
+//   if (
+//     window.innerHeight + window.scrollY >=
+//     document.documentElement.scrollHeight - 200
+//   ) {
+//     console.log('頁面滾動到了底部')
+//     // 觸發加載更多數據的方法
+//     if (
+//       orderPageResponse.value?.totalPages &&
+//       page.value < orderPageResponse.value?.totalPages &&
+//       !loading.value
+//     ) {
+//       let to = window.innerHeight + window.scrollY
+//       loading.value = true
+//       page.value = page.value + 1
+//       await setTimeout(() => {
+//         getOrder(page.value)
+//         window.scrollTo({ top: to, behavior: 'instant' })
+//         loading.value = false
+//       }, 1400)
+//       // await getOrder(page.value)
+//     }
+//   }
+// })
+const handleScroll = async () => {
   if (
     window.innerHeight + window.scrollY >=
     document.documentElement.scrollHeight - 200
@@ -93,12 +117,15 @@ window.addEventListener('scroll', async () => {
         window.scrollTo({ top: to, behavior: 'instant' })
         loading.value = false
       }, 1400)
-      // await getOrder(page.value)
     }
   }
+};
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll)
 })
-
 onMounted(() => {
+  
+window.addEventListener('scroll', handleScroll),
   getOrder(page.value)
 })
 </script>
@@ -245,7 +272,7 @@ $table-border-color: rgba(155, 155, 155, 0.548); //
 .buyOrder {
   h1 {
     font-size: 36px;
-    margin: 0 10px 10px 10px;
+    margin: 0 10px 20px 10px;
     color: $color;
   }
   .tabs {

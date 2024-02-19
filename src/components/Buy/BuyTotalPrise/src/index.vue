@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
-import { apiGetCart } from '@/api/cart'
+import { reqGetCart } from '@/api/cart'
 import { CartResponseData, CartsData } from '@/api/cart/type'
 import useUserStore from '@/store/modules/user'
 import { ElMessage, ElMessageBox } from 'element-plus/lib/components/index.js'
@@ -52,7 +52,7 @@ const timer = setTimeout(() => {
   }
 }, 5000) // 10000 毫秒即为 10 秒
 const getCart = async () => {
-  let res: CartResponseData = await apiGetCart()
+  let res: CartResponseData = await reqGetCart()
   console.log('res.data.cartResponses', res.data.cartResponses)
   if (res.code === 200) {
     console.log('XXXXXXXXXXXXXXXX', res.data.cartResponses?.length)

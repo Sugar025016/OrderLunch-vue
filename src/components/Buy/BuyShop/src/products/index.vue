@@ -68,15 +68,16 @@ let id: number = $route.params.id
 let TabProductsData = ref<TabData[]>([])
 
 let productData = ref<ProductModalData>({
-  productId: 0,
-  name: '',
-  description: '',
-  qty: 1,
-  imgUrl: '',
-  prise: 0,
-  department: '',
-  orderUsername: '',
-  remark: '',
+productId: 0,
+name: '',
+description: '',
+qty: 1,
+imgUrl: '',
+prise: 0,
+department: '',
+orderUsername: '',
+remark: '',
+shopId: 0
 })
 
 const openModal = (v: ProductData) => {
@@ -89,6 +90,7 @@ const openModal = (v: ProductData) => {
   productData.value.department = ''
   productData.value.orderUsername = userStore.username
   productData.value.remark = ''
+  productData.value.shopId = v.shopId
 }
 
 const getProductsData = async (id: number) => {

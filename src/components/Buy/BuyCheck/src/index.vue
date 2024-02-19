@@ -1,18 +1,22 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
-import { apiGetCart } from '@/api/cart'
+import { reqGetCart } from '@/api/cart'
 import { CartResponseData, CartsData } from '@/api/cart/type'
 import useUserStore from '@/store/modules/user'
 import { Address, UserAddressResponseData } from '@/api/user/type'
+
 import EditAddressModal from './editAddressModal.vue'
 import TimeSelect from './timeSelect.vue'
 import { ElMessage, ElMessageBox } from 'element-plus/lib/components/index.js'
 import { reqGetUserAddresses, reqPutUserAddresses } from '@/api/user'
 import { Plus } from '@element-plus/icons-vue'
 import { reqAddOrder } from '@/api/order'
-import { OrderResponseData, ReqAddOrder } from '@/api/order/type'
+// import { OrderResponseData, ReqAddOrder } from '@/api/order/type'
 import rwdBody from '@/components/layout/rwdBody/index.vue'
+import ChooseAddressModel from '@/components/Buy/BuyShops/src/ChooseAddressModel/index.vue'
+
+const chooseAddressRef = ref<typeof ChooseAddressModel>()
 
 let userStore = useUserStore()
 
@@ -25,6 +29,7 @@ const carts = ref<CartsData>({
   orderable: false,
   cartResponses: [],
   schedules: [],
+  deliveryKm: 0,
 })
 
 const link = () => {
@@ -43,7 +48,8 @@ const oneWeekLater = new Date()
 oneWeekLater.setDate(startOptionDay.getDate() + 7)
 let timer: any
 const getCart = async () => {
-  let res: CartResponseData = await apiGetCart()
+  radio1.value = userStore.address?.id as number
+  let res: CartResponseData = await reqGetCart()
   if (res.code === 200) {
     if (res.data.cartResponses && res.data.cartResponses?.length !== 0) {
       clearTimeout(timer)
@@ -110,6 +116,11 @@ const getUserAddress = async () => {
   }
 }
 
+const chooseAddressRefOpen = async () => {
+  chooseAddressRef.value?.open();
+
+}
+
 const addAddresses = async () => {
   let address = reactive<Address>({
     city: '',
@@ -120,7 +131,6 @@ const addAddresses = async () => {
 }
 
 const saveAddresses = async () => {
-  await AddressRefs.value.forEach((v) => (v !== null ? v.save() : v))
   if (JSON.stringify(addresses.value) !== JSON.stringify(addressParams.value)) {
     let res: UserAddressResponseData = await reqPutUserAddresses(
       addressParams.value,
@@ -182,7 +192,8 @@ const sendOrder = async () => {
   await TimeSelectRef.value?.save()
   const order = ref<ReqAddOrder>({
     takeTime: aaa,
-    addressId: addresses.value[radio1.value].id as number,
+    // addressId: addresses.value[radio1.value].id as number,
+    addressId: userStore.address?.id,
     remark: remark.value,
   })
   // reqAddOrder()
@@ -199,8 +210,6 @@ const sendOrder = async () => {
   }
 }
 
-const AddressRefs = ref<(typeof EditAddressModal)[]>([])
-
 onBeforeUnmount(() => {
   clearTimeout(timer)
 })
@@ -215,7 +224,7 @@ onBeforeUnmount(() => {
         <div class="shopCart-body">
           <el-row class="shopCart-body" :gutter="20">
             <el-col :span="16">
-              <div class="date-time-item">
+              <div class="order_check date-time-item">
                 <span>外送時間：</span>
                 <div class="item date-time">
                   <TimeSelect
@@ -229,30 +238,10 @@ onBeforeUnmount(() => {
               </div>
 
               <hr />
-              <div class="address">
+              <div class="order_check address">
                 <span>外送地址：</span>
                 <div v-if="isChangeAddress" class="item address-radio">
-                  <!-- <div v-for="address in addresses">
-                <span>
-                  {{
-                    address.city +
-                    '&nbsp-&nbsp' +
-                    address.area +
-                    '&nbsp-&nbsp' +
-                    address.detail
-                  }}
-                </span>
-                <el-button
-                  type="primary"
-                  size="large"
-                  class="button-wight"
-                  round
-                  plain
-                >
-                  編輯
-                </el-button>
-              </div> -->
-                  <el-radio-group v-model="radio1" class="radio">
+                  <!-- <el-radio-group v-model="radio1" class="radio">
                     <el-radio
                       v-for="(address, index) in addresses"
                       :label="index"
@@ -263,17 +252,63 @@ onBeforeUnmount(() => {
                         '&nbsp-&nbsp' +
                         address.area +
                         '&nbsp-&nbsp' +
+                        address.street +
+                        '&nbsp-&nbsp' +
                         address.detail
                       }}
                     </el-radio>
-                    <!-- <el-radio label="2" size="large">Option 2</el-radio> -->
-                  </el-radio-group>
+                  </el-radio-group> -->
+
+                  <!-- <el-select
+                    v-model="radio1"
+                    placeholder="请选择外送地址"
+                    size="large"
+                    value-key="date"
+                  >
+                    <el-option
+                      v-for="(address, index) in addresses"
+                      :key="index + 1"
+                      :label="
+                        address.city +
+                        '&nbsp-&nbsp' +
+                        address.area +
+                        '&nbsp-&nbsp' +
+                        address.street +
+                        '&nbsp-&nbsp' +
+                        address.detail
+                      "
+                      :value="address.id"
+                      :disabled="address.disabled"
+                    />
+                  </el-select> -->
+                  <!-- <div class="address-edit">
+                    <el-button
+                      class="button-icon button-left"
+                      type="primary"
+                      size="large"
+                      :icon="Plus"
+                      circle
+                      @click="addAddress()"
+                    />
+                  </div> -->
+
+                  <div class="address-edit">
+                    <span>             {{
+                        userStore.address?.city +
+                        '&nbsp-&nbsp' +
+                        userStore.address?.area +
+                        '&nbsp-&nbsp' +
+                        userStore.address?.street +
+                        '&nbsp-&nbsp' +
+                        userStore.address?.detail
+                      }}</span>
+                  </div>
                   <div class="address-edit">
                     <el-button
                       type="primary"
                       size="large"
                       class="button-wight"
-                      @click="isChangeAddress = false"
+                      @click="chooseAddressRefOpen() "
                       round
                       plain
                     >
@@ -339,7 +374,7 @@ onBeforeUnmount(() => {
               </div>
 
               <hr />
-              <div class="textarea">
+              <div class="order_check textarea">
                 <span>備註：</span>
                 <div class="item">
                   <el-form-item prop="desc">
@@ -392,6 +427,10 @@ onBeforeUnmount(() => {
       </template>
     </rwdBody>
   </div>
+
+  <ChooseAddressModel
+    ref="chooseAddressRef"
+  ></ChooseAddressModel>
 </template>
 
 <style lang="scss" scoped>
@@ -422,13 +461,16 @@ $table-border-color: rgb(155, 155, 155); //
   }
   .shopCart-body {
     .item {
-      margin: 10px 50px;
+      margin: 20px 50px;
     }
     .date-time-item {
       display: grid;
-      .date-time {
-        // margin: 10px 0px 0px 10px;
-      }
+      // .date-time {
+      //   margin: 10px 0px 0px 10px;
+        
+
+      //   margin: 10px 0;
+      // }
     }
     .address {
       .address-radio {
@@ -437,24 +479,26 @@ $table-border-color: rgb(155, 155, 155); //
         display: flex;
         flex-direction: column;
 
-        .el-radio-group {
-          margin: 0 0 10px 0;
-          display: flex;
-          align-items: flex-start;
-          flex-direction: column;
-          justify-content: center;
-          .el-radio {
-            display: flex;
-            flex-direction: center;
-            justify-content: center;
-          }
+        .el-select {
+          // margin: 0 0 10px 0;
+          // display: flex;
+          // align-items: flex-start;
+          // flex-direction: column;
+          // justify-content: center;
+          max-width: 600px;
+          // .el-radio {
+          //   display: flex;
+          //   flex-direction: center;
+          //   justify-content: center;
+          // max-width: 600px;
+          // }
         }
         .address-edit {
           width: 100%;
           position: relative;
           display: flex;
           flex-direction: center;
-          justify-content: flex-end;
+          margin:0 0 20px 0;
         }
       }
       .address-add {
@@ -483,7 +527,7 @@ $table-border-color: rgb(155, 155, 155); //
     .textarea {
       .el-form-item {
         width: 500px;
-        margin: 10px;
+        // margin: 10px;
 
         div {
           caret-color: white;
@@ -521,6 +565,13 @@ $table-border-color: rgb(155, 155, 155); //
         background-color: rgba(253, 114, 1, 0.247);
         color: #000;
       }
+    }
+
+
+    .order_check {
+      margin: 20px;
+      margin: 0 calc(20% - 80px);
+      
     }
   }
   @media (max-width: $breakpoint-xs) {

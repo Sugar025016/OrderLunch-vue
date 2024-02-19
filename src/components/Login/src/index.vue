@@ -34,7 +34,7 @@
           prop="verifyCode"
           class="custom-form-item"
         >
-          <Captcha v-model="loginForm.verifyCode"></Captcha>
+          <Captcha v-model="loginForm.verifyCode" ref="captchaRef"></Captcha>
         </el-form-item>
         <el-form-item prop="verifyCode">
           <el-checkbox
@@ -82,8 +82,10 @@ import { ElNotification } from 'element-plus'
 import { getTime } from '@/utils/time'
 import useUserStore from '@/store/modules/user'
 import Captcha from '@/components/Register/src/Captcha/index.vue'
+
 // import Identify from '@/components/VerifyCode/index.vue'
 // VerifyCode import
+const captchaRef = ref<typeof Captcha | null>(null)
 
 let title = document.title
 
@@ -115,7 +117,7 @@ let useStore = useUserStore()
 let loginForms = ref()
 
 const loginForm = reactive({
-  username: 'admin',
+  username: 'admin@gmail.com',
   password: 'password',
   verifyCode: '1234',
   rememberMe: true,
@@ -148,22 +150,41 @@ const validatorVerifyCode = (rule: any, value: any, callback: any) => {
     callback()
   }
 }
-
+import { ResponseData } from '@/api/type'
 const login = async () => {
   await loginForms.value.validate()
   loading.value = true
   try {
-    await useStore.userLogin(loginForm)
+    const loginResponse: ResponseData = await useStore.userLogin(loginForm)
 
-    let redirect: string = $route.query.redirect as string
+    if (loginResponse?.code === 411) {
+      captchaRef.value?.refreshCaptcha()
 
-    $router.push({ path: redirect || '/' })
-    // $router.push('/')
-    ElNotification({
-      type: 'success',
-      message: '登陆成功',
-      title: `Hi, ${getTime()}好`,
-    })
+      ElNotification({
+        type: 'error',
+        message: '驗證碼過期，更新驗證碼',
+        title: '驗證碼錯誤',
+      })
+    } else if(loginResponse?.code === 401){
+
+      // $router.push('/')
+      ElNotification({
+        type: 'error',
+        message: '帳號或密碼錯，請輸入正確的帳號或密碼',
+        title: '帳號或密碼錯',
+      })
+    } else {
+      let redirect: string = $route.query.redirect as string
+
+      $router.push({ path: redirect || '/' })
+      // $router.push('/')
+      ElNotification({
+        type: 'success',
+        message: '登陆成功',
+        title: `Hi, ${getTime()}好`,
+      })
+    }
+
     loading.value = false
   } catch (error) {
     loading.value = false

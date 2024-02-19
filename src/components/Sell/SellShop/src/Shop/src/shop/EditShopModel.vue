@@ -16,6 +16,7 @@ import { reqAddOrUpdateShop } from '@/api/shop'
 import { CheckboxValueType } from 'element-plus/lib/components/checkbox/src/checkbox.js'
 
 import address from '@/utils/address.js'
+import { Address } from '@/api/type'
 
 let sellShopStore = useSellShopStore()
 
@@ -32,11 +33,15 @@ let shopParams = reactive<PutShopData>({
     area: '',
     street: '',
     detail: '',
+    lat: 0,
+    lng: 0,
   },
   imgId: 0,
   imgUrl: '',
   orderable: false,
   disable: false,
+  deliveryKm: 0,
+  deliveryPrice: 0,
 })
 
 let shopParamsCheck: string
@@ -110,7 +115,7 @@ const updateShop = () => {
     detail: sellShopStore.shop.address.detail,
   }
 
-  shopParams.address = tempAddress
+  shopParams.address = tempAddress as Address
 
   shopParamsCheck = JSON.stringify(shopParams)
   nextTick(() => {
@@ -130,7 +135,6 @@ const save = async () => {
 
   if (JSON.stringify(shopParams) !== shopParamsCheck) {
     let res: any = await reqAddOrUpdateShop(shopParams)
-
     if (res.code === 200) {
       sellShopStore.shopDrawer = false
       ElMessage({
@@ -211,6 +215,7 @@ const rules = {
       message: '地址不能為空',
     },
   ],
+  deliveryKm: [{ required: true, message: '請設定外送距離', trigger: 'blur' }],
 }
 function validateNotEmptyString(rule: any, value: any, callback: any) {
   if (value.trim() === '') {
@@ -294,16 +299,9 @@ const changeCity = () => {
 const changeArea = () => {
   shopParams.address.street = ''
 }
-
-
-
 </script>
 <template>
-  <!-- <el-card style="margin: 10px 0">
-    <Router-view></Router-view>
-  </el-card> -->
-  <el-drawer v-model="props.shopDrawer"
-      :before-close="handleClose">
+  <el-drawer v-model="props.shopDrawer" :before-close="handleClose">
     <template #header>
       <h3>{{ shopParams.id ? '更新商店' : '添加商店' }}</h3>
     </template>
@@ -312,7 +310,7 @@ const changeArea = () => {
         :model="shopParams"
         :rules="rules"
         ref="formRef"
-        label-width="90px"
+        label-width="110px"
       >
         <!-- <el-form-item label="商店名稱" prop="shopName" v-if="!shopParams.id">
           <el-input
@@ -333,21 +331,6 @@ const changeArea = () => {
           ></el-input>
         </el-form-item>
         <el-form-item label="地址-city" prop="address.city" value-key="index">
-          <!-- <el-select
-            v-model="shopParams.address.city"
-            value-key="index"
-            class="m-2"
-            placeholder="請選擇城市"
-            size="large"
-            @change="changeCity"
-          >
-            <el-option
-              v-for="(item, index) in address"
-              :key="index"
-              :label="item.cityName"
-              :value="index"
-            />
-          </el-select> -->
           <el-select
             v-model="shopParams.address.city"
             class="m-2"
@@ -367,20 +350,6 @@ const changeArea = () => {
           </el-select>
         </el-form-item>
         <el-form-item label="地址-area" prop="address.area">
-          <!-- <el-select
-            v-model="shopParams.address.area"
-            class="m-2"
-            placeholder="請選擇區域"
-            size="large"
-            no-data-text="請先選擇城市"
-          >
-            <el-option
-              v-for="item in address[cityId].areas"
-              :key="item.areaName"
-              :label="item.areaName"
-              :value="item.areaName"
-            />
-          </el-select> -->
           <el-select
             v-model="shopParams.address.area"
             class="m-2"
@@ -438,8 +407,25 @@ const changeArea = () => {
             v-model="shopParams.address.detail"
           ></el-input>
         </el-form-item>
+        <el-form-item label="最低外送價格" prop="deliveryPrice">
+          <el-input-number
+            size="large"
+            v-model="shopParams.deliveryPrice"
+            :max="10000"
+          />
+        </el-form-item>
+        <el-form-item label="最遠外送距離" prop="deliveryKm">
+          <el-input-number
+            size="large"
+            v-model="shopParams.deliveryKm"
+            :precision="1"
+            :step="0.1"
+            :max="100"
+          />
+          <span class="km">（公里）</span>
+        </el-form-item>
         <el-form-item label="餐廳上架" prop="isDisable">
-          <el-switch v-model="shopParams.disable"  />
+          <el-switch v-model="shopParams.disable" />
         </el-form-item>
         <el-form-item label="可線上訂購" prop="orderable">
           <el-switch v-model="shopParams.orderable" />
@@ -481,7 +467,10 @@ h3 {
   justify-content: space-between;
   align-items: center;
 }
-
+.km {
+  color: #a9a297;
+  margin: 0 10px;
+}
 .avatar-uploader {
   .avatar {
     width: 100%;

@@ -16,7 +16,6 @@ const dialogMessage = ref('This is a dialog message.')
 
 const EditShopRef = ref<typeof EditShopModel>()
 
-
 const shopDrawer = ref(false)
 
 const shopDrawerOpen = () => {
@@ -37,6 +36,8 @@ let shopData = ref<ShopDetailData>({
     area: '',
     street: '',
     detail: '',
+    lat: undefined,
+    lng: undefined,
   },
   phone: '',
   imgId: 0,
@@ -53,7 +54,7 @@ let shopData = ref<ShopDetailData>({
       ],
     },
   ],
-  isOrderable: false,
+  orderable: false,
   tabProducts: [],
   products: [],
 })
@@ -72,16 +73,14 @@ const shopImageStyle = computed(() => {
 })
 
 const isShopDrawerOpen = () => {
-
   // sellShopStore.shop.id 先確認資料已經載入，!sellShopStore.shop.imgUrl判斷有無圖片
-  if( sellShopStore.shop.id && !sellShopStore.shop.imgUrl){
+  if (sellShopStore.shop.id && !sellShopStore.shop.imgUrl) {
     shopDrawerOpen()
   }
 }
 
 onMounted(() => {
   isShopDrawerOpen()
-
 })
 
 const currentDate = new Date()
@@ -111,6 +110,7 @@ const dayOfWeek = currentDate.getDay()
                 {{
                   shopData?.address.city +
                   shopData?.address.area +
+                  shopData?.address.street +
                   shopData?.address.detail
                 }}
               </span>

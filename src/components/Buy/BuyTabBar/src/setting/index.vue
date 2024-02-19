@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import { ArrowDown } from '@element-plus/icons-vue'
 import useUserStore from '@/store/modules/user'
@@ -6,15 +5,20 @@ import { useRouter, useRoute } from 'vue-router'
 
 import SellOrderModal from '../order/sellOrderModal/index.vue'
 
+import MemberModel from './memberModel.vue'
+
 import { ref, onMounted } from 'vue'
 
-import {  Orders } from '@/api/order/type'
+import { Orders } from '@/api/order/type'
+import ChooseAddressModel from '@/components/Buy/BuyShops/src/ChooseAddressModel/index.vue'
 
 let $router = useRouter()
 let $route = useRoute()
 let userStore = useUserStore()
 let sellOrderModalOpen = ref(false)
+let memberModelOpen = ref(false)
 
+const chooseAddressRef = ref<typeof ChooseAddressModel>()
 
 const path = window.location.hash
 $router.getRoutes()
@@ -31,21 +35,26 @@ const toLogin = () => {
 
 const logout = async () => {
   let res: any = await userStore.userLogout()
+
   if (res.code === 200) {
-    if ($route.meta.mustToken) {
-      $router.push({ path: '/', query: { redirect: $route.path } })
-    }
+    console.log('///////////****Buy*********///////////')
+    $router.push({ path: '/', query: { redirect: $route.path } })
+    // if ($route.meta.mustToken) {
+    // console.log("///////////****Buy*********///////////")
+    //   $router.push({ path: '/', query: { redirect: $route.path } })
+    // }
   }
 }
-const userData = 'userData'
-const userLove = 'userLove'
-const changeLink = async (path: string, page: string = userData) => {
-  $router.push('/BuyMember/' + path + '/' + page)
+
+const changeLink = async (to: string) => {
+  // $router.push('/BuyMember/' + path + '/' + page)
+  $router.push(to)
 }
 
 let orderNew = ref<Orders>([])
-
-
+const chooseAddressOpen = async () => {
+  chooseAddressRef.value?.open()
+}
 </script>
 <template>
   <div class="order-text">
@@ -66,22 +75,29 @@ let orderNew = ref<Orders>([])
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item @click="changeLink('profile', userData)">
+          <el-dropdown-item @click="changeLink('/profile')">
             會員資料
           </el-dropdown-item>
-          <el-dropdown-item @click="changeLink('changeProfile', userData)">
-            修改會員資料
+
+          <el-dropdown-item @click="changeLink('/BuyOrder')">
+            歷史訂單
           </el-dropdown-item>
+          <el-dropdown-item @click="changeLink('/favorite')">
+            收藏店家
+          </el-dropdown-item>
+          <!-- <el-dropdown-item @click="changeLink('changeProfile', userData)">
+            修改會員資料
+          </el-dropdown-item> -->
           <!-- <el-dropdown-item @click="changeLink('changeCompany', userData)">
             修改公司資料
           </el-dropdown-item> -->
-          <el-dropdown-item @click="changeLink('changePassword', userData)">
+          <!-- <el-dropdown-item @click="changeLink('changePassword', userData)">
             修改登入密碼
-          </el-dropdown-item>
+          </el-dropdown-item> -->
         </el-dropdown-menu>
         <el-dropdown-menu>
-          <el-dropdown-item @click="changeLink('love', userLove)">
-            收藏店家
+          <el-dropdown-item @click="chooseAddressOpen()">
+            設定外送地點
           </el-dropdown-item>
         </el-dropdown-menu>
         <el-dropdown-menu>
@@ -91,14 +107,14 @@ let orderNew = ref<Orders>([])
     </el-dropdown>
   </div>
 
-  <div class="list " :class="{ 'shopCar': userStore.account!='' }">
+  <div class="list" :class="{ shopCar: userStore.account != '' }">
     <router-link :to="'/BuyShopCart'" class="link">
       <ShoppingBag class="icon list" />
       <span class="cartQuantity text-white bg-warning count">
         {{ userStore.cartCount }}
       </span>
     </router-link>
-    <router-link :to="'/BuyOrder'" class="link" v-if="userStore.account!=''">
+    <router-link :to="'/BuyOrder'" class="link" v-if="userStore.account != ''">
       <Document class="icon list order" />
       <span class="cartQuantity text-white bg-warning count order-count">
         {{ userStore.orderCount }}
@@ -110,8 +126,10 @@ let orderNew = ref<Orders>([])
     v-model:scheduleVisible="sellOrderModalOpen"
     :orderNew="orderNew"
   ></SellOrderModal>
-</template>
+  <MemberModel v-model:memberModelOpen="memberModelOpen"></MemberModel>
 
+  <ChooseAddressModel ref="chooseAddressRef"></ChooseAddressModel>
+</template>
 
 <style lang="scss" scoped>
 img {
@@ -125,19 +143,18 @@ img {
   border-radius: 20px;
   margin: 2px;
 }
-.svg-icon:hover{
- 
+.svg-icon:hover {
   cursor: pointer;
 }
 
 .list {
-  margin: 0 10px ;
+  margin: 0 10px;
   // background-color: aqua;
 
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   .icon {
     margin: 0;
   }
@@ -146,13 +163,12 @@ img {
     background-color: $color;
   }
   .order {
-        color: rgb(35, 130, 255);
+    color: rgb(35, 130, 255);
   }
   .order-count {
     border-radius: 50%;
-        background-color: rgb(35, 130, 255);
+    background-color: rgb(35, 130, 255);
   }
-
 }
 
 .order-text {
@@ -203,7 +219,6 @@ img {
     right: 10px;
     top: -10px;
   }
-
 }
 
 .bg-warning {

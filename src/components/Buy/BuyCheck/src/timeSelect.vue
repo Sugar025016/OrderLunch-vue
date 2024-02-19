@@ -134,7 +134,9 @@ const setOptionDate = async () => {
       (startOptionDay.getMonth() + 1) +
       ' - ' +
       startOptionDay.getDate() +
-      (disabled ? ' 休息' : '')
+      (disabled ? (timePeriods.length>0?' 已打烊':' 休息') : '')
+
+
     const dateData = ref<MyDateDisabled>({
       year: startOptionDay.getFullYear(),
       month: startOptionDay.getMonth() + 1,
@@ -149,17 +151,24 @@ const setOptionDate = async () => {
     startOptionDay.setDate(startOptionDay.getDate() + 1)
   }
 
-
   deliveryTime.value.date = dateOptions.value.find(
     (v) => !v.disabled,
   ) as MyDateDisabled
 
-  if (selectedDate.value.date === startGetDate.getDate()) {
-    deliveryTime.value.time = selectedDate.value.times[0]
+  // if (selectedDate.value.date === startGetDate.getDate()) {
+  //   deliveryTime.value.time = selectedDate.value.times[0]
+  // } else {
+  //   deliveryTime.value.date = dateOptions.value[0]
+  //   deliveryTime.value.time = ''
+  // }
+
+  deliveryTime.value.date = dateOptions.value[0]
+  if (deliveryTime.value.date.times.length > 0) {
+    deliveryTime.value.time = deliveryTime.value.date.times[0]
   } else {
-    deliveryTime.value.date = dateOptions.value[0]
     deliveryTime.value.time = ''
   }
+
   setEmit()
 }
 
@@ -191,10 +200,7 @@ const setEmit = () => {
   const [hours, minutes] = deliveryTime.value.time.split(':').map(Number)
   setDeliveryTime.setHours(hours, minutes, 0, 0)
 
-
-  const formattedDate = moment(setDeliveryTime).format(
-    'YYYY-MM-DDTHH:mm:ss',
-  )
+  const formattedDate = moment(setDeliveryTime).format('YYYY-MM-DDTHH:mm:ss')
   console.log('-----------', formattedDate)
 
   $emit('deliveryTime', formattedDate)

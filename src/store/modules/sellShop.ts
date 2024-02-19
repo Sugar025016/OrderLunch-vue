@@ -1,4 +1,4 @@
-import { getSellShop, getShop,  getShopNames } from '@/api/shop'
+import {  reqGetSellShop, getShop,  getShopNames } from '@/api/shop'
 import { defineStore } from 'pinia'
 import type {
   ShopsResponseData,
@@ -7,6 +7,7 @@ import type {
   ShopNamesResponse,
   ShopDetailsResponse,
   ShopDetailData,
+  ShopPageResponse,
 } from '@/api/shop/type'
 import { SellShopState } from './types/types'
 import ElMessage from 'element-plus/lib/components/message/index.js'
@@ -28,6 +29,8 @@ const useSellShopStore = defineStore('sellShopStore', {
           area: '',
           street: '',
           detail: '',
+          lat: undefined,
+          lng: undefined
         },
         phone: '',
         imgId: 0,
@@ -50,7 +53,13 @@ const useSellShopStore = defineStore('sellShopStore', {
       },
       shopNames: [],
       shopId: 0,
-      shopPage: [],
+      shopPage: {
+        content: [],
+        totalElements: 0,
+        size: 0,
+        number: 0,
+        totalPages: 0
+      },
       scrollTop: 0,
       shopDrawer: false,
     }
@@ -76,9 +85,9 @@ const useSellShopStore = defineStore('sellShopStore', {
         }
         shopId = this.shopNames[0].id
       }
-      let res: ShopDetailsResponse = await getSellShop(shopId)
+      let res: ShopDetailsResponse = await reqGetSellShop(shopId)
 
-      console.log("**********let res: ShopDetailsResponse*******", res.data)
+      console.log("**********let res: ShopDetailsResponse*******111", res.data)
       if (res.code === 200) {
         this.shop = res.data
       } else {
@@ -96,7 +105,7 @@ const useSellShopStore = defineStore('sellShopStore', {
         }
         this.shopId = this.shopNames[0].id
       }
-      let res: ShopDetailsResponse = await getSellShop(this.shopId)
+      let res: ShopDetailsResponse = await reqGetSellShop(this.shopId)
 
       if (res.code === 200) {
         this.shop = res.data
@@ -135,7 +144,7 @@ const useSellShopStore = defineStore('sellShopStore', {
       this.shop = {} as ShopDetailData
       this.shopNames = []
       this.shopId = 0
-      this.shopPage = []
+      this.shopPage = {} as ShopPageResponse
 
     },
 
