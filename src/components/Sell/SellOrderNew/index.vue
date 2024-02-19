@@ -262,15 +262,5 @@ import { formatDate } from '@/utils/time'
 </template>
 
 <style lang="scss" scoped>
-.el-card {
-  // background-color: #ff85855e;
-}
 
-// .expand-row {
-//   background-color: rgba(155, 155, 155, 0.05);
-// }
-
-// .expand-table {
-//   background-color: rgba(155, 155, 155, 0.05);
-// }
 </style>

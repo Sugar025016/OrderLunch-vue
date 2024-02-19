@@ -110,68 +110,6 @@ const changeTab = (name: string, number: string = userData) => {
           grid-template-columns: repeat(4, 1fr);
         }
       }
-      // .tabs-header {
-      //   // display: flex;
-      //   // margin: 20px 0 0 0;
-      //   // color: #636262;
-      //   // border-bottom: 1px solid #63626236;
-      //   // white-space: nowrap;
-      //   // overflow-x: auto;
-      //   div {
-      //     position: relative;
-      //     padding: 0 32px 0 0;
-      //     cursor: pointer;
-      //     display: flex;
-      //     align-items: center;
-      //     justify-content: center;
-      //     flex-direction: column;
-      //   }
-      //   .tab-label {
-      //     display: inline-block;
-      //     position: relative;
-      //     padding: 16px 0;
-      //     z-index: 1;
-      //   }
-
-      //   .underline {
-      //     position: absolute;
-      //     bottom: 0;
-      //     left: 0;
-      //     width: 100%;
-      //     height: 3px;
-      //     background-color: transparent;
-      //     transition: background-color 0.2s;
-      //     display: inline-flex;
-      //     position: relative;
-      //     align-items: center;
-      //     justify-content: center;
-      //     border-bottom: 3px solid rgba(0, 0, 0, 0);
-      //   }
-      //   div:hover .underline {
-      //     border-bottom: 3px solid $color;
-      //   }
-      //   .active {
-      //     color: #000000;
-      //     border-bottom: 3px solid $color;
-      //   }
-      //   div:hover {
-      //     color: #000000;
-      //   }
-      //   .tabs-content {
-      //     // font-size: 30px;
-      //     // margin: 10px;
-      //     // border-bottom: #636262;
-      //     // display: flex;
-      //     // align-items: center;
-      //     // .cards {
-      //     //   margin: 30px 0;
-      //     //   display: grid; /* 使用CSS Grid布局 */
-      //     //   grid-template-columns: repeat(3, 1fr);
-      //     //   grid-gap: 10px;
-      //     // }
-
-      //   }
-      // }
     }
   }
 }

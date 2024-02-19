@@ -27,14 +27,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
-import member from './Member/index.vue'
 import { useRoute } from 'vue-router'
 let $route = useRoute()
 $route.path
 
-let title = document.title
-const checked1 = ref(true)
 </script>
 <style lang="scss" scoped>
 .register {

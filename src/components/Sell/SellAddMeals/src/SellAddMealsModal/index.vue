@@ -41,8 +41,6 @@ const setTab = () => {
     shelve: tapProduct.value?.shelve as boolean,
     productIds: [],
   })
-  // Object.assign(tabParams, tapProduct.value)
-  console.log(tabParams)
 }
 
 const getChooses = () => {

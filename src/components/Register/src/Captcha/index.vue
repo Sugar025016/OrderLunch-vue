@@ -8,12 +8,8 @@ const emits = defineEmits(['update:verifyCode'])
 const captchaUrl = ref<string>(
   '/api/api/register/captcha?timestamp=' + Date.now(),
 )
-// const refreshCaptcha = () => {
-//   console.log("到底是...........")
-//   captchaUrl.value = '/api/api/register/captcha?timestamp=' + Date.now()
-// }
+
 const refreshCaptcha = async () => {
-  console.log("到底是...........")
   captchaUrl.value =  await '/api/api/register/captcha?timestamp=' + Date.now()
 }
 

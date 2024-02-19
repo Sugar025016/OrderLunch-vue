@@ -67,7 +67,6 @@ watch(
   (newOrders) => {
     // 在这里执行你的逻辑，更新 shopNameSet
     if (!deepEqual(newOrders as Orders, orders.value)) {
-      console.log('-------', orders.value)
       orders.value = newOrders as Orders
       updateShopNameSet(newOrders as Orders)
     }

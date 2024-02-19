@@ -40,7 +40,7 @@ const checkLink = () => {
       '未滿外送金額',
       {
         callback: () => {
-          // 关闭弹窗的回调函数
+          // 關閉彈跳窗的回調函數
           ElMessageBox.close()
           $router.push('/BuyShop/' + carts.value.shopId)
         },
@@ -73,7 +73,7 @@ const getCart = async () => {
 const getElMessageBox = () => {
   ElMessageBox.alert('購物車空的，購物去', '購物車', {
     callback: () => {
-      // 关闭弹窗的回调函数
+      // 關閉彈跳窗的回調函數
       ElMessageBox.close()
       $router.push('/')
     },
@@ -243,11 +243,10 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss" scoped>
-// @import "../node_modules/bootstrap/scss/_modal.scss";
 
 @import '@/styles/bootstrap.scss';
-$table-cell-padding-y: 1.5rem; //
-$table-border-color: rgb(155, 155, 155); //
+$table-cell-padding-y: 1.5rem; 
+$table-border-color: rgb(155, 155, 155); 
 @import 'node_modules/bootstrap/scss/_tables.scss';
 
 .shopCart {
@@ -268,14 +267,10 @@ $table-border-color: rgb(155, 155, 155); //
     }
   }
   .shopCart-body {
-    // display: flex;
     .table {
       tr {
         .table-title {
           text-align: center;
-          //         display: flex;
-          // justify-content: center; /* 水平居中 */
-          // align-items: stretch;
         }
         .el-icon {
           cursor: pointer; /* 添加手型光标效果 */

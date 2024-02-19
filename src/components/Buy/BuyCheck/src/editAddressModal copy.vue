@@ -11,11 +11,8 @@ const props = defineProps({
   deleteAddress: Function,
   index: Number,
 })
-// let $emit = defineEmits(['props.address'])
 let $emit = defineEmits(['updateAddress'])
-const updateAddress = () => {
-  $emit('updateAddress', props.address)
-}
+
 
 const city: string[] = Object.keys(cityAreas)
 
@@ -140,7 +137,6 @@ defineExpose({
     minmax(75px, 1fr);
   // grid-column-gap: 10px;
   grid-gap: 10px;
-  // margin: 10px;
 
   .el-form-item {
     display: flex;

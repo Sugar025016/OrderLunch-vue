@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-// import { SellProductList } from '@/api/sellProduct/type'
 
 const props = defineProps({
   products: Object as () => any,

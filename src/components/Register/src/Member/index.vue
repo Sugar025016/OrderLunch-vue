@@ -49,7 +49,6 @@ const validatorPassword = (rule: any, value: any, callback: any) => {
   }
 }
 const validatorPasswordCheck = (rule: any, value: any, callback: any) => {
-  console.log(value)
   const password = registerMember.value.password
   if (value.length === 0) {
     callback(new Error('请输入密码確認'))
@@ -60,7 +59,6 @@ const validatorPasswordCheck = (rule: any, value: any, callback: any) => {
   }
 }
 const validatorVerifyCode = (rule: any, value: any, callback: any) => {
-  console.log("value.length:",value.length)
   if (value.length === 0) {
     callback(new Error('请输入验证码'))
   } else if (value.length < 4) {

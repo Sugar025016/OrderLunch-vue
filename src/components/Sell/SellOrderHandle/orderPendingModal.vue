@@ -1,39 +1,18 @@
 <script setup lang="ts">
-import { Order, OrderDetail } from '@/api/order/type'
 import { reactive, ref, defineProps } from 'vue'
 import { GroupedData } from './orderPending'
-// const orderPendingVisible = ref(false)
-// const props = defineProps({
-//   orderPendingVisible: Boolean,
-// })
+
 const props = defineProps({
   orderPendingVisible: Boolean,
   groupedData: Object as () => GroupedData[],
 })
 
 const visible = ref(props.orderPendingVisible)
-// console.log("groupedData",groupedData.value)
 
-// let groupedData = ref<OrderDetail[]>()
-//   let productNames: string[] ;
-// if (props.groupedData) {
-//   console.log("props.groupedData",props.groupedData)
-//    groupedData = ref< OrderDetail[]>(props.groupedData)
-//   console.log("groupedData",groupedData.value)
-//   //  productNames = Object.keys(groupedData.value)
-//   // console.log("productNames",productNames)
-//   // 其他代碼
-// }
-// const groupedData = ref<Record<string, OrderDetail[]>>(props.groupedData)
-
-// // const groupedData = ref(props.groupedData)
-// const city: string[] = Object.keys(groupedData.value)
 const $emit = defineEmits(['update:orderPendingVisible'])
 
 // 定义关闭对话框的方法
 const handleClose = () => {
-  // console.log("groupedData",groupedData.value)
-  // console.log("city",city)
   props.orderPendingVisible
   $emit('update:orderPendingVisible', (visible.value = false))
 }
@@ -42,32 +21,7 @@ const accordion = ref(true)
 </script>
 
 <template>
-  <!-- <el-dialog
-    v-model="props.orderPendingVisible"
-    title="Shipping address"
-    :before-close="handleClose"
-  >
-    <el-table  
-      :data="props.groupedData">
-    <el-table-column
-        prop="productName"
-        label="productName"
-        align="center"
-      />
-      <el-table-column
-        prop="qty"
-        label="qty"
-        align="center"
-      />    <el-table-column
-        prop="remark"
-        label="remark"
-        align="center"
-      />    
-    </el-table>
-  </el-dialog> -->
-
-  <!-- <el-tree v-for="item in GroupedData" :data="item" :props="defaultProps" @node-click="handleNodeClick" /> -->
-
+  
   <el-dialog
     v-model="props.orderPendingVisible"
     title="餐點分類"

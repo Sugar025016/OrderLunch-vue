@@ -25,7 +25,6 @@ onMounted(() => {
 address.value = '台南市永康區復國二路46號'
 
 const geocodeAddress = async () => {
-  console.log('address', address.value)
   const response = await fetch(
     `https://nominatim.openstreetmap.org/search?q=${address.value}&format=json`,
   )

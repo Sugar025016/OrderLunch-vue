@@ -43,48 +43,11 @@ let shopParams = reactive<PutShopData>({
   orderable: false,
   isDisable: false,
 })
-// const updateShop = async (row: ShopData) => {
-//   // let res: SearchShopRequestData = await reqTab(row.shopId)
-//   // if (res.code === 200) {
-//   //   searchTabsData.value = res.data.tabs
-//   // } else {
-//   //   ElMessage({
-//   //     type: 'error',
-//   //     message: '空標籤',
-//   //   })
-//   // }
-//   Object.assign(shopParams, row)
 
-//   // drawer.value = true
-
-//   nextTick(() => {
-//     if (formRef.value) {
-//       formRef.value.clearValidate('description');
-//       formRef.value.clearValidate('img');
-//       formRef.value.clearValidate('address.city');
-//       formRef.value.clearValidate('address.area');
-//       formRef.value.clearValidate('address.detail');
-//     }
-//   });
-// }
 
 let formRef = ref<any>()
 
-// shopParams = computed(() => {
-//   const shopData: PutShopData = Object.assign({}, sellShopStore.shop);
 
-//   // nextTick(() => {
-//   //   if (formRef.value) {
-//   //     formRef.value.clearValidate('description');
-//   //     formRef.value.clearValidate('img');
-//   //     formRef.value.clearValidate('address.city');
-//   //     formRef.value.clearValidate('address.area');
-//   //     formRef.value.clearValidate('address.detail');
-//   //   }
-//   // });
-
-//   return shopData;
-// });
 const updateShop = () => {
   sellShopStore.shopDrawer = true
   Object.assign(shopParams, sellShopStore.shop)

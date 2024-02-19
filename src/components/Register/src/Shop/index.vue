@@ -1,60 +1,31 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import address from '@/utils/address.js'
 import { Address } from '@/api/type'
 import { RegisterShop, ShopIDResponseData } from '@/api/shop/type'
 import Captcha from '../Captcha/index.vue'
-import { CheckboxValueType } from 'element-plus/lib/components/checkbox/src/checkbox.js'
-import { ElMessageBox } from 'element-plus/lib/components/message-box/index.js'
 
 import { useRouter } from 'vue-router'
-import useUserStore from '@/store/modules/user'
-import { Action } from 'element-plus/es/components/message-box/src/message-box.type.js'
-import ElMessage from 'element-plus/lib/components/message/index.js'
 import { reqAddShop } from '@/api/shop'
 
-let userStore = useUserStore()
 let $router = useRouter()
-
-const checked1 = ref(true)
 
 let selectedOption1 = ref(-1)
 let selectedOption2 = ref(-1)
 let selectedOption3 = ref(-1)
 
-let data: Address = {
-  city: '',
-  area: '',
-  detail: '',
-  street: '',
-}
 const changeCity = (value: number) => {
   selectedOption1.value = value
-  // selectedOption2.value = -1
-  // selectedOption3.value = -1
   addRegisterShop.value.address.area = ''
   addRegisterShop.value.address.street = ''
-
-  getC1()
 }
 
 const changeArea = (value: number) => {
   selectedOption2.value = value
-  // selectedOption3.value = -1
   addRegisterShop.value.address.street = ''
-
-  getC1()
 }
 const changeStreet = (value: number) => {
   selectedOption3.value = value
-
-  getC1()
-}
-
-const getC1 = async () => {
-  // shopStore.shopSearch = data
-  // shopStore.shopArr.clear()
-  // await shopStore.getShopPage()
 }
 
 export interface AddRegisterShop {
@@ -74,6 +45,8 @@ const addRegisterShop = ref<AddRegisterShop>({
     area: '',
     street: '',
     detail: '123',
+    lat: undefined,
+    lng: undefined,
   },
 })
 const validatorName = (rule: any, value: any, callback: any) => {
@@ -172,10 +145,10 @@ function validateNotEmptyString(rule: any, value: any, callback: any) {
   }
 }
 let formRef = ref<any>()
-let timer: any
 
 import useSellShopStore from '@/store/modules/sellShop'
-  let sellShopStore = useSellShopStore()
+import { ElMessage } from 'element-plus/lib/components/index.js'
+let sellShopStore = useSellShopStore()
 const save = async () => {
   await formRef.value.validate()
 
@@ -191,10 +164,8 @@ const save = async () => {
     addressDetail: addRegisterShop.value.address.detail as string,
   })
 
-  console.log('/////////--------------//////////',registerShop.value)
   let res: ShopIDResponseData = await reqAddShop(registerShop.value)
   if (res.code === 200) {
-    console.log("/////////----",res)
     sellShopStore.shopId = res.data
     $router.push(`/sell/${res.data}/Shop`)
   } else {
@@ -204,42 +175,6 @@ const save = async () => {
     })
   }
 }
-// const isLogin = () => {
-//   console.log('************************************')
-
-//   // 处理滚动事件的逻辑
-//   if (userStore.token == null || userStore.token == '') {
-//     console.log('*******************/////////*****************')
-//     ElMessageBox.alert('你還未登入，請前往登入！', '前往登入！', {
-//       // if you want to disable its autofocus
-//       // autofocus: false,
-//       confirmButtonText: 'OK',
-//     })
-//       .then(() => {
-//     console.log('*******************/////////*****************3')
-//         // 用户点击 OK 后执行的操作
-//         $router.push('/login')
-//       })
-//       .catch(() => {
-//         // 用户点击取消或关闭消息框后执行的操作
-//         clearTimeout(timer)
-//       })
-
-//     // 设置定时器，在 10 秒后关闭消息框
-//     timer = setTimeout(() => {
-//       ElMessageBox.close()
-//       $router.push('/login')
-//     }, 5000) // 5000 毫秒即为 5 秒
-//   }
-// }
-
-// onBeforeUnmount(() => {
-//   clearTimeout(timer)
-// })
-
-// onMounted(() => {
-//   isLogin()
-// })
 </script>
 <template>
   <div class="register-member">

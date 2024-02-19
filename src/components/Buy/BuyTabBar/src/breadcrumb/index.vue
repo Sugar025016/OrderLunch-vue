@@ -18,9 +18,7 @@
 // import { ArrowRight, Fold, Expand } from '@element-plus/icons-vue'
 import useLayOutSettingStore from '@/store/modules/setting'
 let LayOutSettingStore = useLayOutSettingStore()
-// const changeIcon = () => {
-//   LayOutSettingStore.isCollapse = !LayOutSettingStore.isCollapse
-// }
+
 import { useRouter } from 'vue-router'
 let $router = useRouter()
 
@@ -35,7 +33,6 @@ const goRoute = (path: string) => {
   vertical-align: middle;
   font-size: 35px;
   font-weight: 700;
-  // cursor: pointer;
 }
 
 .el-button.is-text {

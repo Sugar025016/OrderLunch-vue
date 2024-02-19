@@ -25,7 +25,6 @@ const selectedDate = ref<MyDateDisabled>({
   times: [],
 })
 
-// 计算日期选项
 const startOptionDay = new Date()
 const oneWeekLater = new Date()
 oneWeekLater.setDate(startOptionDay.getDate() + 7)
@@ -85,7 +84,7 @@ const availableTimes = (time: number, timePeriods: TimePeriods) => {
   })
   return times.filter((item) => item !== '00:00').sort()
 }
-// 辅助函数，将时间格式化为HH:mm字符串
+// 輔助函數，將時間格式化為HH:mm字串
 function formatTime(time: Date) {
   const hours = time.getHours().toString().padStart(2, '0')
   const minutes = time.getMinutes().toString().padStart(2, '0')
@@ -155,12 +154,6 @@ const setOptionDate = async () => {
     (v) => !v.disabled,
   ) as MyDateDisabled
 
-  // if (selectedDate.value.date === startGetDate.getDate()) {
-  //   deliveryTime.value.time = selectedDate.value.times[0]
-  // } else {
-  //   deliveryTime.value.date = dateOptions.value[0]
-  //   deliveryTime.value.time = ''
-  // }
 
   deliveryTime.value.date = dateOptions.value[0]
   if (deliveryTime.value.date.times.length > 0) {

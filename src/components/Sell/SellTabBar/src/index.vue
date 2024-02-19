@@ -1,35 +1,9 @@
 <script setup lang="ts">
 import BreadCrumb from './breadcrumb.vue'
-// import Setting from './setting/index.vue'
-// import order from './order/index.vue'
-import { onMounted, ref } from 'vue'
-import useUserStore from '@/store/modules/user'
+
 import order from '@/components/Buy/BuyTabBar/src/order/index.vue'
 import Setting from '@/components/Buy/BuyTabBar/src/setting/index.vue'
-let userStore = useUserStore()
-// import useCategoryStore from '@/store/modules/category'
 
-// let categoryStore = useCategoryStore()
-//
-onMounted(() => {
-  getC1()
-})
-
-const getC1 = async () => {
-  // categoryStore.getC1()
-}
-
-// const handler = (n: number) => {
-//   if (n === 1) {
-//     categoryStore.c2Id = ''
-//     categoryStore.c3Id = ''
-//     categoryStore.c3Arr = []
-//     categoryStore.getC2()
-//   } else if (n === 2) {
-//     categoryStore.c3Id = ''
-//     categoryStore.getC3()
-//   }
-// }
 
 defineProps(['scene'])
 </script>
@@ -62,9 +36,7 @@ defineProps(['scene'])
   align-items: center;
   width: 100%;
   height: 100%;
-  // padding: 0 10px;
-  // display: grid;
-  // grid-template-columns: repeat(3, 1fr);
+
   .toolbar_left {
     display: flex;
     align-items: center;
@@ -72,12 +44,7 @@ defineProps(['scene'])
   }
 
   .toolbar_order {
-    // width: 100px;
-    // display: inline-block;
-    // display: inline-flex;
 
-    // margin: auto;淤ㄝ
-    // height: auto;
     display: flex;
     align-items: center;
     justify-content: center;

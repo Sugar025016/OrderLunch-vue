@@ -1,18 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ElMessageBox } from 'element-plus'
 import useUserStore from '@/store/modules/user'
 let userStore = useUserStore()
 const dialogVisible = ref(false)
 
-// const handleClose = (done: () => void) => {
-//     .then(() => {
-//       done()
-//     })
-//     .catch(() => {
-//       // catch error
-//     })
-// }
+
 
 const props = defineProps({
   memberModelOpen: Boolean,
@@ -23,7 +15,6 @@ const visible = ref(props.memberModelOpen)
 const $emit = defineEmits(['update:memberModelOpen'])
 
 const handleClose = () => {
-  // ElMessageBox.confirm('Are you sure to close this dialog?')
   $emit('update:memberModelOpen', (visible.value = false))
 }
 </script>
@@ -56,16 +47,7 @@ const handleClose = () => {
         <span>BBBBB</span>
         <el-button class="text-button" round>連結Line Notify</el-button>
       </div>
-      <!-- <div class="text">
-      <span>外送地址：</span>
-      <span v-if="userStore.address">
-        {{
-          userStore.address.city +
-          userStore.address.area +
-          userStore.address.detail
-        }}
-      </span>
-    </div> -->
+
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">Cancel</el-button>
@@ -79,21 +61,7 @@ const handleClose = () => {
 </template>
 
 <style lang="scss" scoped>
-// .dialog-footer button:first-child {
-//   margin-right: 10px;
-// }
-// .dialog {
-//   ::v-deep .el-dialog {
-//     // background: aqua;
-//     // --darkreader-bg--el-dialog-bg-color:aqua;
-//     :deep(.el-dialog__header) {
-//       background-color: aqua;
-//       .el-dialog__title {
-//         font-size: 52px;
-//       }
-//     }
-//   }
-// }
+
 
 .dialog {
   ::v-deep .el-dialog {

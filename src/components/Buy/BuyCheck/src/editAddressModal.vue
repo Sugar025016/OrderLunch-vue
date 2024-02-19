@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { nextTick, reactive, ref, defineEmits } from 'vue'
-// import cityAreas from '@/utils/areaData.js'
 import { Address } from '@/api/type'
 
 import address from '@/utils/address.js'
@@ -76,7 +75,7 @@ const saveAddress = async () => {
   if (res.code === 200) {
     await userStore.userInfo()
     addAddressModalOpen.value = false
-    emits('childClosed') // 触发父组件的关闭方法
+    emits('childClosed') 
   } else {
     ElMessage({
       type: 'error',

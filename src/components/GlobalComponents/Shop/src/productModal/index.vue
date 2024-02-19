@@ -125,17 +125,7 @@ const changeCount = (v: number) => {
   totalPrice.value = count.value * props.product!.prise
 }
 
-const checkAddCart = async () => {
-  if (mk > userStore.cartDeliveryKm) {
-    ElMessageBox.confirm('外送地址變更，需要清空購物車，你確定要變更嗎？').then(
-      () => {
-        chooseAddress()
-      },
-    )
-  } else {
-    chooseAddress()
-  }
-}
+
 
 const addCart = async () => {
   let cartReq = ref<CartRequest>({
@@ -145,7 +135,6 @@ const addCart = async () => {
     qty: props.product!.qty,
     remark: props.product!.remark,
   })
-  // Object.assign(cartReq.value, productModal.value)
 
   let res = await reqAddCart(cartReq.value)
 
@@ -194,16 +183,7 @@ const addCart = async () => {
         border-color: #505050;
         height: 2px;
       }
-      // .divider::after {
-      //   content: '';
-      //   position: absolute;
-      //   top: 62px;
-      //   left: 0;
-      //   width: 100%;
-      //   height: 2px;
-      //   background-color: #838282;
-      //   transform: translateY(50%);
-      // }
+
       .modal-body-content {
         display: flex;
         flex-direction: column;

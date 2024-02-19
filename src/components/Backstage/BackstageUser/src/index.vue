@@ -1,18 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive, nextTick } from 'vue'
-// import {
-//   // reqUserInfo,
-//   // reqAddOrUpdateUser,
-//   reqAllRole,
-//   reqSetUserRole,
-//   reqRemoveUser,
-//   reqSelectUser,
-// } from '@/api/acl/user'
+
 import type {
-  // UserResponseData,
-  // Records,
-  // User,
-  AllRoleResponseData,
   AllRole,
   SetRoleData,
 } from '@/api/acl/user/type'
@@ -65,11 +54,9 @@ const getHasUser = async (pager = 1) => {
     pageSize.value,
     keyword.value,
   )
-  // if (res.code === 200) {
   total.value = res.data.totalElements
   userArr.value = res.data.content
 
-  // }
 }
 
 const handler = () => {
@@ -154,16 +141,7 @@ const rules = {
   password: [{ required: true, trigger: 'blur', validator: validatorPassword }],
 }
 
-// const setRole = async (row: User) => {
-//   drawer1.value = true
-//   Object.assign(userParams, row)
-//   let res: AllRoleResponseData = await reqAllRole(userParams.id as number)
-//   if (res.code === 200) {
-//     allRole.value = res.data.allRolesList
-//     userRole.value = res.data.assignRoles
-//     drawer1.value = true
-//   }
-// }
+
 
 const checkAll = ref<boolean>(false)
 const isIndeterminate = ref<boolean>(true)

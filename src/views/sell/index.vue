@@ -93,93 +93,35 @@ import setting from '@/setting'
 import useLayOutSettingStore from '@/store/modules/setting'
 import useUserStore from '@/store/modules/user'
 import { useRoute, useRouter } from 'vue-router'
-import { getShop, getShopNames } from '@/api/shop'
 import {
-  ShopData,
   ShopNames,
-  ShopNamesResponse,
-  ShopResponseData,
 } from '@/api/shop/type'
 import { computed, onMounted, ref, watch } from 'vue'
-import ElMessage from 'element-plus/lib/components/message/index.js'
 import drawer from 'element-plus/lib/components/drawer/index.js'
 import useSellShopStore from '@/store/modules/sellShop'
 import SellTabBar from '@/components/Sell/SellTabBar/src/index.vue'
+
+import { ElScrollbar } from 'element-plus'
 
 let LayOutSettingStore = useLayOutSettingStore()
 let userStore = useUserStore()
 let sellShopStore = useSellShopStore()
 let $route = useRoute()
-// let $router = useRouter()
 const shopNameItem = ref<ShopNames>([])
-// const shopId = ref(0)
-let shopId: number = parseInt($route.params.shopId as string)
 const getItem = async () => {
   drawer.value = true
 
   let res: ShopNames = await sellShopStore.getShopItem()
 
   shopNameItem.value = res
-  // shopId.value = shopNameItem.value
-  // getShopData(shopId.value)
-  // await sellShopStore.getSellShop(shopId)
-  // if (res.code === 200) {
-  //   if (res.data.length === 0) {
-  //     // $router.push('/')
-  //   }
-  //
-  //   shopNameItem.value = res.data
-  //   shopId.value = shopNameItem.value[0].id
-  //   // getShopData(shopId.value)
-  //   await getShopData()
-  // } else {
-  //   drawer.value = false
-  //   ElMessage({
-  //     type: 'error',
-  //     message: '搜尋失败',
-  //   })
-  // }
-}
-const shopData = ref<ShopData>()
-// const getShopData = async (id: number) => {
-//   sellShopStore.getSellShop(id)
-//   shopData.value = sellShopStore.shop
-// }
 
-const getShopData = async () => {
-  await sellShopStore.getSellShop()
-  shopData.value = sellShopStore.shop
 }
 
-import { ElScrollbar } from 'element-plus'
-
-const max = ref(0)
-const value = ref(0)
-const innerRef = ref<HTMLDivElement>()
-const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
-
-const scroll = ({ scrollTop }) => {
-  value.value = scrollTop
-}
 
 onMounted(() => {
   getItem()
 })
-// const scrollTop = computed(() => sellShopStore.scrollTop)
 
-// watch(scrollTop, (newVal) => {
-//   // scrollbarRef.value!.setScrollTop(newVal + value.value)
-//   console.log('///////////////////', sellShopStore.scrollTop)
-//   const scrollContainer = document.querySelector('.scroll-container')
-//   // sellShopStore.scrollTop = 0;
-//   if (scrollContainer) {
-//     // 将滚动效果应用到 .scroll-container 元素上
-//     scrollContainer.scrollTo({
-//       top: scrollTop.value,
-//       behavior: 'smooth',
-//     })
-//   }
-// })
 </script>
 
 <style lang="scss" scoped>
@@ -258,8 +200,8 @@ onMounted(() => {
         .scroll-container {
         padding:  20px;
           scroll-behavior: smooth;
-          height: 100%; /* 设置容器高度 */
-          overflow: auto; /* 让容器产生滚动条 */
+          height: 100%; /* 設定容器高度 */
+          overflow: auto; /* 讓容器產生滾動條 */
         }
       }
       .el-header {

@@ -63,7 +63,6 @@ const getOrder = async (page: number) => {
   if (res.code === 200) {
     orderPageResponse.value = res.data
     order.value.push(...res.data.content)
-    // console.log('/////////////', orderPageResponse.value)
   } else {
     ElMessage({
       type: 'error',
@@ -73,30 +72,7 @@ const getOrder = async (page: number) => {
 }
 
 const loading = ref(false)
-// window.addEventListener('scroll', async () => {
-//   if (
-//     window.innerHeight + window.scrollY >=
-//     document.documentElement.scrollHeight - 200
-//   ) {
-//     console.log('頁面滾動到了底部')
-//     // 觸發加載更多數據的方法
-//     if (
-//       orderPageResponse.value?.totalPages &&
-//       page.value < orderPageResponse.value?.totalPages &&
-//       !loading.value
-//     ) {
-//       let to = window.innerHeight + window.scrollY
-//       loading.value = true
-//       page.value = page.value + 1
-//       await setTimeout(() => {
-//         getOrder(page.value)
-//         window.scrollTo({ top: to, behavior: 'instant' })
-//         loading.value = false
-//       }, 1400)
-//       // await getOrder(page.value)
-//     }
-//   }
-// })
+
 const handleScroll = async () => {
   if (
     window.innerHeight + window.scrollY >=
@@ -119,14 +95,12 @@ const handleScroll = async () => {
       }, 1400)
     }
   }
-};
+}
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 onMounted(() => {
-  
-window.addEventListener('scroll', handleScroll),
-  getOrder(page.value)
+  window.addEventListener('scroll', handleScroll), getOrder(page.value)
 })
 </script>
 
@@ -182,7 +156,6 @@ window.addEventListener('scroll', handleScroll),
                         label="圖片"
                         prop="imgUrl"
                         align="center"
-                        
                       >
                         <template #="{ row, $index }">
                           <el-image
@@ -253,13 +226,10 @@ window.addEventListener('scroll', handleScroll),
 </template>
 
 <style lang="scss" scoped>
-// @import '@/styles/bootstrap.scss';
+$table-cell-padding-y: 1.5rem;
+$table-border-color: rgb(155, 155, 155);
+$table-border-color: rgba(155, 155, 155, 0.548);
 
-$table-cell-padding-y: 1.5rem; //
-$table-border-color: rgb(155, 155, 155); //
-$table-border-color: rgba(155, 155, 155, 0.548); //
-
-// @import 'node_modules/bootstrap/scss/_tables.scss';
 .example-showcase .el-loading-mask {
   z-index: 9;
 }

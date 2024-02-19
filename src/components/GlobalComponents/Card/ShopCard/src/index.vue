@@ -81,7 +81,6 @@ onMounted(async () => {
 }
 .card {
   border-radius: 20px;
-  // padding: 0px;
   cursor: pointer;
   position: relative;
 
@@ -123,31 +122,7 @@ onMounted(async () => {
   .no-image-label {
     display: none; /* 設置缺圖片時隱藏（缺圖圖標） */
   }
-  // .overlay {
-  //   position: absolute;
-  //   top: -15px;
-  //   right: -15px;
-  //   width: 75px;
-  //   height: 75px;
-  //   // background-color: #fd7e14;
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   z-index: 100;
-  //   background-size: cover;
-  //   background-repeat: no-repeat;
-  //   background-image: url('@/assets/images/plateOrder.png') ; /* 設置背景圖片 */
-  //   background-position: center center;
-  //   .overlay-text {
-  //     color: $color;
-  //     font-size: 14px;
-  //     font-weight: bold;
-  //     z-index: 100;
-  //     white-space: pre-line;
-  //     margin: 10px;
-  //     text-align: center;
-  //   }
-  // }
+
 
   .overlay {
     position: absolute;
@@ -168,15 +143,11 @@ onMounted(async () => {
     margin-top: 1px;
     line-height: 26px;
     display: flex;
-    /* justify-content: columns; */
     flex-direction: column;
-    /* align-items: center; */
     .title_favorite {
       display: flex;
-      // background-color: aqua;
 
       justify-content: space-between;
-      // align-items: center;
     }
     .title {
       font-size: 24px;

@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import SellAddMealsModal from './SellAddMealsModal/index.vue'
 
-// const sellAddMealsModalRef = ref<typeof SellAddMealsModal>()
 const sellAddMealsModalRef = ref<typeof SellAddMealsModal>()
 </script>
 

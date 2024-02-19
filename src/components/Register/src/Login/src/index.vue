@@ -204,11 +204,6 @@ const rules = {
   display: flex;
   align-items: center;
   justify-content: center;
-  // height: 600px;
-  // height: 100%
-  // background: url('@/assets/images/background.jpg') no-repeat;
-  // background-size: cover;
-  // position: fixed;
 
   .el-card {
     border: 0px;
@@ -218,9 +213,6 @@ const rules = {
   .login_form {
     position: relative;
     width: 400px;
-    // width: 55%;
-    // top: 10vh;
-    // left: 10vw;
     padding: 10px;
     background: transparent;
     h1 {

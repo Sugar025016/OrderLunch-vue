@@ -123,7 +123,6 @@ const updateShop = (row: ShopData) => {
   drawer.value = true
   Object.assign(shopParams, row)
 
-  // 创建一个临时的地址对象，以免影响到 row 对象
   const tempAddress = {
     id: shopParams.address.id,
     city: shopParams.address.city,
@@ -228,8 +227,6 @@ function validateNotEmptyString(rule: any, value: any, callback: any) {
   }
 }
 
-// const checkAll = ref<boolean>(false)
-// const isIndeterminate = ref<boolean>(true)
 
 const deleteShop = async (ShopId: number) => {
   let res: any = await reqRemoveShop(ShopId)
@@ -244,25 +241,7 @@ const selectChange = (value: any) => {
   selectIdArr.value = value
 }
 
-// const deleteSelectShop = async () => {
-//   let idList: any = selectIdArr.value.map((item) => {
-//     return item.id
-//   })
-//   let res: any = await reqSelectShop(idList)
-//   if (res.code === 200) {
-//     ElMessage({ type: 'success', message: '删除成功' })
-//     getHasShop(ShopArr.value.length > 1 ? pageNo.value : pageNo.value - 1)
-//   }
-// }
 
-// const search = () => {
-//   getHasShop()
-//   keyword.value = ''
-// }
-
-// const reset = () => {
-//   settingStore.refsh = !settingStore.refsh
-// }
 
 const loading = ref(false)
 const search = async (query: string) => {
@@ -600,26 +579,5 @@ const changeCity = () => {
   background-color: bisque;
 }
 
-// .el-switch{
 
-//   // background-color: bisque;
-// }
-// ::v-deep .el-switch__action {
-//   background-color: $color;
-//   ::v-deep .el-switch__action {
-//     background-color: bisque;
-//   }
-// }
-
-// ::v-deep .el-switch__core {
-//   background-color: rgb(255, 81, 12);
-//   ::v-deep .el-switch__action {
-//     background-color: bisque;
-//   }
-// }
-// ::v-deep .is-checked {
-//   ::v-deep .el-switch__action {
-//     background-color: red;
-//   }
-// }
 </style>

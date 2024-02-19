@@ -48,8 +48,6 @@ import { ref } from 'vue'
 let userStore = useUserStore()
 const loadingStore = useLoadingStore()
 
-// const pwd = ref('')
-// const newPwd = ref('')
 const checkPwd = ref('')
 
 let userPwd = ref<UserPwd>({

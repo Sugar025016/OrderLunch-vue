@@ -37,12 +37,7 @@ const logout = async () => {
   let res: any = await userStore.userLogout()
 
   if (res.code === 200) {
-    console.log('///////////****Buy*********///////////')
     $router.push({ path: '/', query: { redirect: $route.path } })
-    // if ($route.meta.mustToken) {
-    // console.log("///////////****Buy*********///////////")
-    //   $router.push({ path: '/', query: { redirect: $route.path } })
-    // }
   }
 }
 

@@ -16,7 +16,7 @@ let userStore = useUserStore()
 const isExpanded = ref(false)
 
 onMounted(() => {
-  // 在组件挂载后添加滚动事件监听器
+  // 在元件掛載後新增滾動事件監聽器
   window.addEventListener('scroll', handleScroll), 
   chooseAddress()
 })
@@ -24,14 +24,13 @@ onMounted(() => {
 const chooseAddress = async () => {
   let isCheckChooseAddress =await userStore.isCheckChooseAddress()
 
-  console.log("isCheckChooseAddress:",isCheckChooseAddress)
   if ( isCheckChooseAddress) {
     chooseAddressRef.value?.open();
   }
 }
 const chooseAddressRef = ref<typeof ChooseAddressModel>()
 const registerShop = () => {
-  // 处理滚动事件的逻辑
+  // 處理滾動事件的邏輯
   if (userStore.token == null || userStore.token == '') {
     ElMessageBox.confirm('你還未登入，請前往登入！', '前往登入！', {
       confirmButtonText: '确定',
@@ -39,15 +38,13 @@ const registerShop = () => {
       type: 'warning',
     })
       .then(() => {
-        console.log('用户点击了确定按钮，执行相关操作')
         $router.push('/login')
       })
       .catch(() => {
-        console.log('用户点击了取消按钮或关闭了消息框')
         clearTimeout(timer)
       })
 
-    // 设置定时器，在 10 秒后关闭消息框
+    // 設定定時器，在 10 秒後關閉訊息框
     timer = setTimeout(() => {
       const messageBoxInstance = ElMessageBox
       if (messageBoxInstance) {
@@ -84,12 +81,12 @@ const handleScroll = async () => {
         await shopStore.getShopPage(shopStore.shopPage.number + 1)
 
         window.scrollTo({ top: to, behavior: 'instant' })
-        loadingMore = false // 数据加载完成后设置为 false
+        loadingMore = false 
       })
     }
   }
 }
-// 在组件销毁时移除滚动事件监听器，防止内存泄漏
+// 在組件銷毀時移除滾動事件監聽器，防止記憶體洩漏
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
   clearTimeout(timer)
@@ -231,40 +228,8 @@ onBeforeUnmount(() => {
           display: flex;
           align-items: center;
           justify-content: center;
-          // height: 200px;
           padding: 0 8% 0 0;
 
-          // .title-shop-img {
-          //   // height: 200px;
-          //   background-image: url('@/assets/images/product001.jpeg') !important; /* 設置背景圖片 */
-          //   height: 200px;
-          //   width: 200px;
-          //   border-radius: 20px;
-          //   border: 1px solid white;
-          //   overflow: hidden;
-          //   background-position: center;
-          //   max-width: 100%;
-          //   background-repeat: no-repeat;
-          //   background-attachment: fixed;
-          //   background-size: cover;
-          //   -webkit-background-size: cover;
-          //   -moz-background-size: cover;
-          //   zoom: 1;
-
-          //   // position: fixed;
-          //   //     z-index: -1000;
-          //   //     top: 1280;
-          //   //     width: 20vh;
-          //   //     // height: calc(100vh - 80px);
-          //   //     height: 20vh;
-          //   //     transition: height 0.5s ease; /* 添加动画效果 */
-
-          //   //     background: url('@/assets/images/food-home.jpg') no-repeat;
-          //   //     background-size: cover;
-          //   //     // border-radius: 40px;
-          //   //     padding: 5px 5px 5px 5px;
-          //   //     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-          // }
 
           img {
             width: auto; /* Ensure image does not exceed container width */
@@ -276,12 +241,9 @@ onBeforeUnmount(() => {
             min-height: 200px;
             object-fit: contain;
             transition: transform 0.3s ease-in-out; /* 添加过渡效果 */
-            // background-color: bisque;
             cursor: pointer;
           }
-          // img:hover {
-          //   animation: shake 0.5s ease-in-out infinite; /* 添加摇动动画 */
-          // }
+
           img:hover {
             animation: shake 0.5s ease-in-out infinite; /* 添加摇动动画 */
           }
@@ -302,7 +264,6 @@ onBeforeUnmount(() => {
         }
       }
     }
-
     .buyCard-height {
       height: calc(100vh - 80px);
     }

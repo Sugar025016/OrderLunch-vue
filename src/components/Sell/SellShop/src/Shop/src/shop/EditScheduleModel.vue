@@ -11,7 +11,7 @@ let sellShopStore = useSellShopStore()
 // const props = defineProps({
 //   product: Object as () => ProductModalData,
 // })」defineEmit」
-// 定义需要的 props
+// 定義需要的 props
 const props = defineProps({
   scheduleVisible: Boolean,
   title: String,
@@ -24,7 +24,6 @@ let schedulesChange = ref<Schedules>([])
 // let schedulesChange = ref<Schedules>([])
 
 const setting = () => {
-  // 在这里处理来自子组件的数据
   schedulesChange.value = JSON.parse(
     JSON.stringify(sellShopStore.shop.schedules),
   )
@@ -45,26 +44,13 @@ const receivedData = ref<ScheduleParams>({
 })
 
 const handleChangeEvent = (data: ScheduleParams) => {
-  // 在这里处理来自子组件的数据
   receivedData.value = data
 
   receivedData.value.weeks.forEach((v) => {
     schedulesChange.value[v].timePeriods = receivedData.value.times
   })
 }
-// const setSchedulesChange = () => {
-//   schedulesChange.value=Object.assign({}, sellShopStore.shop.schedules);
-//   // const weeks = [1, 2, 3, 4, 5, 6, 0]
 
-//   // weeks.forEach((v) => {
-//   //   const scheduleChange = ref<Schedule>({
-//   //     week: v,
-//   //     timePeriods: [],
-//   //   })
-//   //   schedulesChange.value.push(scheduleChange.value)
-//   // })
-
-// }
 const deleteTimePeriods = (i: number) => {
   if (sellShopStore.shop.schedules !== undefined) {
     schedulesChange.value[i].timePeriods = JSON.parse(
@@ -75,18 +61,11 @@ const deleteTimePeriods = (i: number) => {
   }
 }
 
-const receivedValue = ref(0)
-// onMounted(() => {
-//   context.emits['custom-event'] = (value: number) => {
-//     receivedValue.value = value;
-//   };
-// })
 
 const visible = ref(props.scheduleVisible)
 
 const $emit = defineEmits(['update:scheduleVisible'])
 
-// 定义关闭对话框的方法
 const handleClose = () => {
   $emit('update:scheduleVisible', (visible.value = false))
 }
@@ -143,15 +122,11 @@ const confirm = async () => {
 const cancel = () => {
   handleClose()
 }
-// function arraysAreEqual(arr1: TimePeriods, arr2: TimePeriods) {
-//   return true
-// }
+
 const scheduleSetModal = ref(false)
 
 import { deleteSecond } from '@/utils/time'
-import { space } from 'postcss/lib/list'
 import { reqPutSchedule } from '@/api/shop'
-import { number } from 'echarts'
 </script>
 
 <template>
@@ -299,7 +274,6 @@ import { number } from 'echarts'
   ::v-deep .el-dialog {
     border-radius: 20px;
     width: 500px;
-    // margin: 10px;
     .el-dialog__header {
       margin: 0px;
       border-bottom: 1px;
@@ -320,12 +294,10 @@ import { number } from 'echarts'
         }
       }
       .modal-body {
-        // border-width: 2px;
 
         .item {
           .title {
             display: flex;
-            // justify-content: center;
             align-items: center;
             font-size: 20px;
             font-weight: 900;

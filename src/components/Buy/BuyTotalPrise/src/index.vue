@@ -17,6 +17,8 @@ const carts = ref<CartsData>({
   orderable: false,
   cartResponses: [],
   schedules: [],
+  deliveryKm: 0,
+  deliveryPrice: 0,
 })
 
 const link = () => {
@@ -53,11 +55,8 @@ const timer = setTimeout(() => {
 }, 5000) // 10000 毫秒即为 10 秒
 const getCart = async () => {
   let res: CartResponseData = await reqGetCart()
-  console.log('res.data.cartResponses', res.data.cartResponses)
   if (res.code === 200) {
-    console.log('XXXXXXXXXXXXXXXX', res.data.cartResponses?.length)
     if (res.data.cartResponses && res.data.cartResponses?.length !== 0) {
-      await getUserAddress()
       carts.value = res.data
       userStore.cartCount =
         res.data.cartResponses?.length > 0

@@ -45,7 +45,7 @@ const checkAddCart = async () => {
         clearTimeout(timer)
       })
 
-    // 设置定时器，在 10 秒后关闭消息框
+    // 設定定時器，在 10 秒後關閉訊息框
     timer = setTimeout(() => {
       const messageBoxInstance = ElMessageBox
       if (messageBoxInstance) {
@@ -73,8 +73,7 @@ const checkAddCart = async () => {
           addCart()
         })
         .catch(() => {
-          // 用户点击了 "取消" 按钮或者关闭了消息框
-          // 不执行相关操作
+          // 使用者點擊了 "取消" 按鈕或關閉了訊息框
           console.log('用户点击了取消按钮或关闭了消息框')
         })
     } else {
@@ -82,7 +81,6 @@ const checkAddCart = async () => {
     }
   }
 
-  // Object.assign(cartReq.value, productModal.value)
 }
 
 const addCart = async () => {
@@ -241,7 +239,6 @@ onBeforeUnmount(() => {
       position: absolute;
       top: 30px;
       right: 30px;
-      // top:1;
     }
     .modal-header {
       height: 200px;
@@ -264,16 +261,7 @@ onBeforeUnmount(() => {
         border-color: #505050;
         height: 2px;
       }
-      // .divider::after {
-      //   content: '';
-      //   position: absolute;
-      //   top: 62px;
-      //   left: 0;
-      //   width: 100%;
-      //   height: 2px;
-      //   background-color: #838282;
-      //   transform: translateY(50%);
-      // }
+
       .modal-body-content {
         display: flex;
         flex-direction: column;

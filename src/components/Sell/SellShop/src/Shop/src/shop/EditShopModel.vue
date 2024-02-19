@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive, nextTick, watch, computed } from 'vue'
 
-import type { ShopList, ShopData } from '@/api/backstage/Shop/type'
 import { ElMessage } from 'element-plus'
 import { UploadProps } from 'element-plus/es/components/upload/src/upload'
-import cityAreas from '@/utils/areaData.js'
-// import address from '@/utils/address.js'
 import { reqSearchUser } from '@/api/backstage/user'
 import debounce from 'lodash/debounce'
 import { SearchUserResponseData, SearchUsers } from '@/api/backstage/user/type'
@@ -13,7 +10,6 @@ import useSellShopStore from '@/store/modules/sellShop'
 import useUserStore from '@/store/modules/user'
 import { PutShopData } from '@/api/shop/type'
 import { reqAddOrUpdateShop } from '@/api/shop'
-import { CheckboxValueType } from 'element-plus/lib/components/checkbox/src/checkbox.js'
 
 import address from '@/utils/address.js'
 import { Address } from '@/api/type'
@@ -46,30 +42,6 @@ let shopParams = reactive<PutShopData>({
 
 let shopParamsCheck: string
 
-// const updateShop = async (row: ShopData) => {
-//   // let res: SearchShopRequestData = await reqTab(row.shopId)
-//   // if (res.code === 200) {
-//   //   searchTabsData.value = res.data.tabs
-//   // } else {
-//   //   ElMessage({
-//   //     type: 'error',
-//   //     message: '空標籤',
-//   //   })
-//   // }
-//   Object.assign(shopParams, row)
-
-//   // drawer.value = true
-
-//   nextTick(() => {
-//     if (formRef.value) {
-//       formRef.value.clearValidate('description');
-//       formRef.value.clearValidate('img');
-//       formRef.value.clearValidate('address.city');
-//       formRef.value.clearValidate('address.area');
-//       formRef.value.clearValidate('address.detail');
-//     }
-//   });
-// }
 
 let formRef = ref<any>()
 
@@ -81,32 +53,17 @@ const visible = ref(props.shopDrawer)
 
 const $emit = defineEmits(['update:shopDrawer'])
 
-// 定义关闭对话框的方法
 const handleClose = () => {
   $emit('update:shopDrawer', (visible.value = false))
 }
 
-// shopParams = computed(() => {
-//   const shopData: PutShopData = Object.assign({}, sellShopStore.shop);
 
-//   // nextTick(() => {
-//   //   if (formRef.value) {
-//   //     formRef.value.clearValidate('description');
-//   //     formRef.value.clearValidate('img');
-//   //     formRef.value.clearValidate('address.city');
-//   //     formRef.value.clearValidate('address.area');
-//   //     formRef.value.clearValidate('address.detail');
-//   //   }
-//   // });
-
-//   return shopData;
-// });
 const updateShop = () => {
   sellShopStore.shopDrawer = true
 
   Object.assign(shopParams, sellShopStore.shop)
 
-  // 创建一个临时的地址对象，以免影响到 row 对象
+  // 建立一個臨時的地址對象，以免影響 row 對象
   const tempAddress = {
     id: sellShopStore.shop.address.id,
     city: sellShopStore.shop.address.city,

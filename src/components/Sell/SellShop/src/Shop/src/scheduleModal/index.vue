@@ -195,7 +195,6 @@ const formLabelWidth = '140px'
       margin: 10px;
       .title {
         display: flex;
-        // justify-content: center;
         align-items: center;
         margin: 10px 0;
         font-size: 20px;

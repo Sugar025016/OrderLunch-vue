@@ -53,7 +53,6 @@ const putOrderByShop = async (
   toStatus: number,
   orderIdList: number[],
 ) => {
-  console.log(shopId, toStatus, orderIdList)
   let res: ResultResponse = await reqPutOrderByShop(
     shopId,
     toStatus,
@@ -98,7 +97,6 @@ const multipleSelection = ref<Order[]>([])
 const orderIds = ref<number[]>([])
 
 const handleSelectionChange = (val: Order[]) => {
-  console.log('val', val)
   multipleSelection.value = val
 }
 
@@ -114,15 +112,8 @@ const setOrder = (orderId: number, status: number) => {
   putOrderByShop(shopId, status, orderIds.value)
 }
 const groupedData = ref<GroupedData[]>()
-// const transformedData: GroupedData[]
-// type GroupedData = {
-//   productId: number
-//   productName: string
-//   productTotalQty: number
-//   item: OrderDetail[]
-// }
+
 const getMealGroup = (order: Order) => {
-  console.log('///////////////////', order)
 
   orderPendingVisible.value = true
   const transformedData: GroupedData[] = []
@@ -155,109 +146,9 @@ const getMealGroup = (order: Order) => {
     }
   })
 
-  console.log(transformedData)
   groupedData.value = transformedData
 }
 
-//----------------------------------------------------------------------
-// const getMealGroup = (order: Order) => {
-//   console.log('///////////////////', order)
-//   orderPendingVisible.value = true
-//   groupedData.value = order.orderDetails.reduce(
-//     (acc: GroupedData[], item: OrderDetail) => {
-//       const existingItem = acc.find(
-//         (el) =>
-//           el.productId === item.productId &&
-//           el.productName === item.productName &&
-//           el.item.every((e) => e.remark === '' || item.remark === ''),
-//       )
-//       if (existingItem) {
-//         const index = acc.findIndex(
-//           (el) =>
-//             el.productId === item.productId &&
-//             el.productName === item.productName &&
-//             el.item.every((e) => e.remark === '' || item.remark === ''),
-//         )
-//         existingItem.productTotalQty += item.qty
-//         if (item.remark === '') {
-//           acc[index].item = acc[index].item.map((i) =>
-//             i.remark === '' ? { ...i, qty: i.qty + item.qty } : i,
-//           )
-//         } else {
-//           existingItem.item.push(item)
-//         }
-//       } else {
-//         acc.push({
-//           productId: item.productId,
-//           productName: item.productName,
-//           productTotalQty: item.qty,
-//           item: [item],
-//         })
-//       }
-//       return acc
-//     },
-//     [],
-//   )
-
-//   // console.log(transformedData)
-// }
-
-// const getMealGroup = (order: Order) => {
-//   orderPendingVisible.value = true
-//   const data: Record<string, OrderDetail[]> = order.orderDetails.reduce(
-//     (acc: { [key: number]: OrderDetail[] }, meal: OrderDetail) => {
-//       const item = JSON.parse(JSON.stringify(meal))
-//       if (!acc[item.productId]) {
-//         acc[item.productId] = []
-//       }
-//       if (acc[item.productId].length === 0 || item.remark !== '') {
-//         // console.log('item.remark !==', item.remark)
-//         acc[item.productId].push(item)
-//       } else {
-//         const foundItem = acc[item.productId].findIndex((v) => v.remark === '')
-//         // console.log("foundItem",foundItem )
-//         if (foundItem < 0) {
-//           // console.log("foundItem",foundItem )
-//           acc[item.productId].push(item)
-//         } else {
-//           acc[item.productId][foundItem].qty =
-//             acc[item.productId][foundItem].qty + item.qty
-//         }
-//       }
-//       return acc
-//     },
-//     {},
-//   )
-
-//   // console.log("aaaaaaaaaaa",a)
-//   //   let b=Object.values(a);
-
-//   //   // console.log("aaaaaaaaaaaObject.values(a);",Object.values(a))
-
-//   //   b.forEach(group => {
-//   //     group.sort((a, b) => a.productId - b.productId);
-//   // });
-
-//   //   console.log("aaaaaaaaaaaObject.values(a);",b)
-
-//   // groupedData.value= Object.keys(a)
-//   //   .sort((a, b) => parseInt(a) - parseInt(b))
-//   //   .reduce((acc, key) => {
-//   //     return acc.concat(a[key].map((item) => ({ ...item, productId: parseInt(key) })));
-//   //   }, []);
-
-//   console.log('aaaaaaaaaaaObject.values(a);', data)
-//   groupedData.value = Object.keys(data)
-//     .sort((a, b) => parseInt(a) - parseInt(b))
-//     .reduce((acc: OrderDetail[], key: string) => {
-//       const currentData = data[key].map((item) => ({
-//         ...item,
-//         productId: parseInt(key),
-//       }))
-//       return acc.concat(currentData)
-//     }, [])
-//   console.log('aaaaaaaaaaaObject.values(a);', groupedData.value )
-// }
 import moment from 'moment'
 import { ResultResponse } from '@/api/type'
 import { GroupedData } from './orderPending'
@@ -411,15 +302,6 @@ const formatDate = (row: any, column: any) => {
 </template>
 
 <style lang="scss" scoped>
-.el-card {
-  // background-color: #ff85855e;
-}
 
-// .expand-row {
-//   background-color: rgba(155, 155, 155, 0.05);
-// }
 
-// .expand-table {
-//   background-color: rgba(155, 155, 155, 0.05);
-// }
 </style>

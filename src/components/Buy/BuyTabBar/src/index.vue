@@ -31,7 +31,6 @@ const getItem = async () => {
 onMounted(() => {
   getItem()
 })
-// let sellShopStore = useSellShopStore()
 
 
 defineProps(['scene'])
@@ -57,11 +56,7 @@ defineProps(['scene'])
   }
 
   .toolbar_order {
-    // width: 100px;
     display: inline-block;
-    // display: inline-flex;
-
-    // margin: auto;淤ㄝ
   }
   .toolbar_right {
     display: flex;

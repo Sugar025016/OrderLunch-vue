@@ -205,14 +205,9 @@ myModal?.addEventListener('shown.bs.modal', () => {
     }
   }
   .tabs-content {
-    // font-size: 30px;
-    // margin: 10px;
-    // border-bottom: #636262;
-    // display: flex;
-    // align-items: center;
+
     .content {
       margin: 25px 0;
-      // background-color: aqua;
     }
   }
 }

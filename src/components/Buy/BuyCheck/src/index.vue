@@ -12,7 +12,6 @@ import { ElMessage, ElMessageBox } from 'element-plus/lib/components/index.js'
 import { reqGetUserAddresses, reqPutUserAddresses } from '@/api/user'
 import { Plus } from '@element-plus/icons-vue'
 import { reqAddOrder } from '@/api/order'
-// import { OrderResponseData, ReqAddOrder } from '@/api/order/type'
 import rwdBody from '@/components/layout/rwdBody/index.vue'
 import ChooseAddressModel from '@/components/Buy/BuyShops/src/ChooseAddressModel/index.vue'
 
@@ -30,6 +29,7 @@ const carts = ref<CartsData>({
   cartResponses: [],
   schedules: [],
   deliveryKm: 0,
+  deliveryPrice: 0,
 })
 
 const link = () => {
@@ -42,7 +42,6 @@ const link = () => {
 
 const remark = ref('')
 
-// 计算日期选项
 const startOptionDay = new Date()
 const oneWeekLater = new Date()
 oneWeekLater.setDate(startOptionDay.getDate() + 7)
@@ -68,17 +67,13 @@ const getCart = async () => {
         0,
       )
     } else {
-      // 在需要弹出消息框的地方调用以下代码
-      // timer()
       ElMessageBox.alert('購物車空的，購物去', '購物車', {
         callback: () => {
-          // 关闭弹窗的回调函数
           ElMessageBox.close()
           $router.push('/')
         },
       })
 
-      // 设置定时器，在 10 秒后关闭消息框
       timer = setTimeout(() => {
         const messageBoxInstance = ElMessageBox
         if (messageBoxInstance) {
@@ -117,8 +112,7 @@ const getUserAddress = async () => {
 }
 
 const chooseAddressRefOpen = async () => {
-  chooseAddressRef.value?.open();
-
+  chooseAddressRef.value?.open()
 }
 
 const addAddresses = async () => {
@@ -192,11 +186,9 @@ const sendOrder = async () => {
   await TimeSelectRef.value?.save()
   const order = ref<ReqAddOrder>({
     takeTime: aaa,
-    // addressId: addresses.value[radio1.value].id as number,
     addressId: userStore.address?.id,
     remark: remark.value,
   })
-  // reqAddOrder()
   let res: OrderResponseData = await reqAddOrder(order.value)
 
   if (res.code === 200) {
@@ -293,7 +285,8 @@ onBeforeUnmount(() => {
                   </div> -->
 
                   <div class="address-edit">
-                    <span>             {{
+                    <span>
+                      {{
                         userStore.address?.city +
                         '&nbsp-&nbsp' +
                         userStore.address?.area +
@@ -301,14 +294,15 @@ onBeforeUnmount(() => {
                         userStore.address?.street +
                         '&nbsp-&nbsp' +
                         userStore.address?.detail
-                      }}</span>
+                      }}
+                    </span>
                   </div>
                   <div class="address-edit">
                     <el-button
                       type="primary"
                       size="large"
                       class="button-wight"
-                      @click="chooseAddressRefOpen() "
+                      @click="chooseAddressRefOpen()"
                       round
                       plain
                     >
@@ -428,15 +422,13 @@ onBeforeUnmount(() => {
     </rwdBody>
   </div>
 
-  <ChooseAddressModel
-    ref="chooseAddressRef"
-  ></ChooseAddressModel>
+  <ChooseAddressModel ref="chooseAddressRef"></ChooseAddressModel>
 </template>
 
 <style lang="scss" scoped>
 @import '@/styles/bootstrap.scss';
-$table-cell-padding-y: 1.5rem; //
-$table-border-color: rgb(155, 155, 155); //
+$table-cell-padding-y: 1.5rem; 
+$table-border-color: rgb(155, 155, 155); 
 @import 'node_modules/bootstrap/scss/_tables.scss';
 
 .is-disabled {
@@ -465,40 +457,23 @@ $table-border-color: rgb(155, 155, 155); //
     }
     .date-time-item {
       display: grid;
-      // .date-time {
-      //   margin: 10px 0px 0px 10px;
-        
 
-      //   margin: 10px 0;
-      // }
     }
     .address {
       .address-radio {
-        //   margin: 10px;
-        // margin: 100px;
         display: flex;
         flex-direction: column;
 
         .el-select {
-          // margin: 0 0 10px 0;
-          // display: flex;
-          // align-items: flex-start;
-          // flex-direction: column;
-          // justify-content: center;
           max-width: 600px;
-          // .el-radio {
-          //   display: flex;
-          //   flex-direction: center;
-          //   justify-content: center;
-          // max-width: 600px;
-          // }
+
         }
         .address-edit {
           width: 100%;
           position: relative;
           display: flex;
           flex-direction: center;
-          margin:0 0 20px 0;
+          margin: 0 0 20px 0;
         }
       }
       .address-add {
@@ -527,7 +502,6 @@ $table-border-color: rgb(155, 155, 155); //
     .textarea {
       .el-form-item {
         width: 500px;
-        // margin: 10px;
 
         div {
           caret-color: white;
@@ -567,11 +541,9 @@ $table-border-color: rgb(155, 155, 155); //
       }
     }
 
-
     .order_check {
       margin: 20px;
       margin: 0 calc(20% - 80px);
-      
     }
   }
   @media (max-width: $breakpoint-xs) {

@@ -47,8 +47,6 @@ const reviseAddress = async (address: Address) => {
         AddressRefs.value?.updateShop(address)
       })
       .catch(() => {
-        console.log('用户点击了取消按钮')
-        // 这里执行取消操作的逻辑
         return
       })
   } else {
@@ -170,7 +168,6 @@ const chooseAddress = async () => {
     userStore.address = addresses.value?.find(
       (t) => t.id === addressId.value,
     ) as Address
-    // handleClose()
     chooseAddressModelOpen.value = false
     $router.push('/')
   } else {
@@ -226,7 +223,6 @@ const changeRedis = (addressId: number) => {
 
 const AddressRefs = ref<typeof EditAddressModal>()
 const handleChildClosed = () => {
-  console.log('Child component has been closed')
   getUserAddress()
 }
 defineExpose({
@@ -318,8 +314,6 @@ defineExpose({
     border-radius: 20px;
     width: 550px;
     max-height: 80%;
-
-    // width: ;
     .el-dialog__header {
       margin: 0px;
       border-bottom: 1px;

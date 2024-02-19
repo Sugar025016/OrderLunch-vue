@@ -125,21 +125,12 @@ let $route = useRoute()
 let id: number = parseInt($route.params.id as string)
 
 let shopData = ref<ShopData>()
-// let isFavorite = ref<boolean>()
 let favorite = ref('')
 
 import useUserStore from '@/store/modules/user'
 let userStore = useUserStore()
 
-// const isLove = (v: ShopList) => {
-//   isFavorite.value = v?.some((value: ShopData) => value.id === id)
 
-//   if (isFavorite.value) {
-//     favorite.value = '#fd7e14'
-//   } else {
-//     favorite.value = 'rgb(139, 139, 139)'
-//   }
-// }
 
 const changeFavorite = async () => {
   await userStore.changeFavoriteStore(id)
@@ -200,10 +191,7 @@ $b-color: $color;
     .shop-content {
       box-shadow: 0px 4px 3px 2px rgba(0, 0, 0, 0.1);
       background-color: rgb(255, 255, 254);
-      // .shop-content-row {
-      // margin: 30px;
       padding: 30px;
-      // height:calc(440px - 60px) ;
       height: 340px;
       .shop-title {
         display: flex;
@@ -217,8 +205,6 @@ $b-color: $color;
           align-items: center; /* 垂直置中 */
         }
         .favorite:hover {
-          // background-color: #f0f0f0;
-          // border: 1px solid #ccc;
           cursor: pointer; /* 添加手型光标效果 */
         }
         img {

@@ -39,8 +39,6 @@ const setTab = () => {
     shelve: tapProduct.value?.shelve as boolean,
     productIds: [],
   })
-  // Object.assign(tabParams, tapProduct.value)
-  console.log(tabParams)
 }
 
 const getChooses = () => {
@@ -306,9 +304,7 @@ defineExpose({
           width: 50px;
           height: 25px;
           margin: 0 10px;
-          // background-color: $color;
           border-color: $color;
-          // border: red;
           user-select: none; /* 防止文字被滑鼠選取反白 */
           background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23ccc'/%3e%3c/svg%3e");
           caret-color: transparent;
@@ -330,8 +326,6 @@ defineExpose({
 .form-check {
   display: flex;
   align-items: center;
-  // justify-content: center;
-  // position: relative;
 
   .checkbox {
     height: 18px;

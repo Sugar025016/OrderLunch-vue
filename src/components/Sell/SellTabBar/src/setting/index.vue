@@ -81,7 +81,6 @@ const updateRefsh = () => {
   layoutSettingStore.refsh = !layoutSettingStore.refsh
 }
 const toLogin = () => {
-  // $router.push('/login')
 
   if (
     !userStore.token ||
@@ -157,8 +156,6 @@ img {
 }
 
 .car {
-  // margin: 0 30px 0 0;
-  // background-color: aqua;
 
   .icon {
     margin: 0;
@@ -167,7 +164,6 @@ img {
     border-radius: 50%;
     background: $color;
     background-color: $color;
-    // background-color: brown;
   }
 }
 

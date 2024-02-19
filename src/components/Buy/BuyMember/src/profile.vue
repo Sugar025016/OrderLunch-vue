@@ -55,16 +55,11 @@ let userStore = useUserStore()
 </script>
 <style lang="scss" scoped>
 .member {
-  // margin: auto 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  // height: auto;
   .member-context {
-    // h3 {
-    //   font-size: 20px;
-    //   margin: 30px 0;
-    // }
+   
     h1 {
       font-size: 36px;
 

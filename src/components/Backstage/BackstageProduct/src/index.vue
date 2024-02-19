@@ -28,7 +28,7 @@ import {
 import debounce from 'lodash/debounce'
 import { ElMessageBox } from 'element-plus/lib/components/message-box/index.js'
 import { ElMessage } from 'element-plus/lib/components/index.js'
-// import useLayOutSettingStore from '@/store/modules/setting'
+
 let userStore = useUserStore()
 
 let pageNo = ref<number>(1)
@@ -60,11 +60,7 @@ onMounted(() => {
 })
 
 let formRef = ref<any>()
-// let keyword = ref<string>('')
 
-// let settingStore = useLayOutSettingStore()
-
-// let productSearch: ProductSearch = {}
 let shopId: number
 const getHasProduct = async (pager = 1) => {
   pageNo.value = pager
@@ -110,15 +106,7 @@ const addProduct = () => {
 }
 
 const updateProduct = async (row: ProductData) => {
-  // let res: SearchShopRequestData = await reqTab(row.shopId)
-  // if (res.code === 200) {
-  //   searchTabsData.value = res.data.tabs
-  // } else {
-  //   ElMessage({
-  //     type: 'error',
-  //     message: '空標籤',
-  //   })
-  // }
+
   Object.assign(productParams, row)
 
   drawer.value = true
@@ -155,11 +143,7 @@ const setOrderable = async (row: ProductData) => {
 
 const save = async () => {
   await formRef.value.validate()
-  // if (!productParams.id ) {
-  //   productParams.tabId = searchTabsData.value.find(
-  //     (v) => v.name === productParams.tabName,
-  //   )?.id
-  // }
+
   let res: any = await reqAddOrUpdateProduct(productParams)
   if (res.code === 200) {
     drawer.value = false
@@ -236,20 +220,6 @@ const rules = {
   ],
 }
 
-// const checkAll = ref<boolean>(false)
-// const isIndeterminate = ref<boolean>(true)
-
-// const handleCheckAllChange = (val: boolean) => {
-//   ProductRole.value = val ? allRole.value : []
-//   isIndeterminate.value = false
-// }
-
-// const handleCheckedProductsChange = (value: string[]) => {
-//   const checkedCount = value.length
-//   checkAll.value = checkedCount === allRole.value.length
-//   isIndeterminate.value =
-//     checkedCount > 0 && checkedCount < allRole.value.length
-// }
 
 const deleteProduct = async (ProductId: number) => {
   let res: any = await reqDeleteProduct(ProductId)
@@ -263,25 +233,7 @@ const selectChange = (value: any) => {
   selectIdArr.value = value
 }
 
-// const deleteSelectProduct = async () => {
-//   let idList: any = selectIdArr.value.map((item) => {
-//     return item.id
-//   })
-//   let res: any = await reqSelectProduct(idList)
-//   if (res.code === 200) {
-//     ElMessage({ type: 'success', message: '删除成功' })
-//     getHasProduct(ProductArr.value.length > 1 ? pageNo.value : pageNo.value - 1)
-//   }
-// }
 
-// const search = () => {
-//   getHasProduct()
-//   keyword.value = ''
-// }
-
-// const reset = () => {
-//   settingStore.refsh = !settingStore.refsh
-// }
 
 const city: string[] = Object.keys(cityAreas)
 
@@ -335,7 +287,6 @@ const search = async (query: string) => {
 const searchShopsData = ref<SearchShopsData>([])
 
 const remoteMethod = debounce((query) => {
-  // 在这里执行搜索操作
 
   if (query) {
     loading.value = true
@@ -344,7 +295,6 @@ const remoteMethod = debounce((query) => {
   } else {
     searchShopsData.value = []
   }
-  // 这只是一个示例，您需要根据实际情况实现搜索逻辑
 }, 500) // 1000 毫秒的防抖延迟
 
 const searchTabsData = ref<SearchTabsData>([])
@@ -415,7 +365,6 @@ const handleClose = (done) => {
       loading.value = true
       timer = setTimeout(() => {
         done()
-        // 动画关闭需要一定的时间
         setTimeout(() => {
           loading.value = false
         }, 400)

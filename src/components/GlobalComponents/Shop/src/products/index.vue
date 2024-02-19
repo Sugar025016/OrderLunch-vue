@@ -76,6 +76,7 @@ let productData = ref<ProductModalData>({
   department: '',
   orderUsername: '',
   remark: '',
+  shopId: 0,
 })
 
 const openModal = (v: ProductData) => {
@@ -88,8 +89,6 @@ const openModal = (v: ProductData) => {
   productData.value.department = ''
   productData.value.orderUsername = userStore.username
   productData.value.remark = ''
-
-  // isProductModalVisible.value = true
 }
 
 const getProductsData = async (id: number) => {
@@ -97,15 +96,9 @@ const getProductsData = async (id: number) => {
   TabProductsData.value = res.data
 }
 
-// const openModal = (v: ProductData) => {
-//   productData.value = v
-// }
-
 import { ElScrollbar } from 'element-plus'
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
-//   const inputSlider = (value: number) => {
-//   scrollbarRef.value!.setScrollTop(value)
-// }
+
 const scrollToSection = (sectionId: number) => {
   const element = document.getElementById(sectionId)
   if (element) {
@@ -123,32 +116,10 @@ onMounted(() => {
   getProductsData(id)
 })
 
-const showModal = ref(false)
-
-interface Tab {
-  label: string
-  content: string
-}
 
 const activeTab = ref(0)
 
-const changeTab = (index: number) => {
-  activeTab.value = index
-}
 
-// const dialogFormVisible = ref(false)
-// const formLabelWidth = '140px'
-
-// const form = reactive({
-//   name: '',
-//   region: '',
-//   date1: '',
-//   date2: '',
-//   delivery: false,
-//   type: [],
-//   resource: '',
-//   desc: '',
-// })
 const myModal = document.getElementById('myModal')
 const myInput = document.getElementById('myInput')
 
@@ -237,14 +208,8 @@ myModal?.addEventListener('shown.bs.modal', () => {
     }
   }
   .tabs-content {
-    // font-size: 30px;
-    // margin: 10px;
-    // border-bottom: #636262;
-    // display: flex;
-    // align-items: center;
     .content {
       margin: 25px 0;
-      // background-color: aqua;
     }
   }
 }
