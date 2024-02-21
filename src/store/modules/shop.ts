@@ -65,12 +65,9 @@ const useShopStore = defineStore('Category', {
     async getShopPage(page: number = 0) {
       if (page === 0) {
         await this.shopArr.clear();
-        console.log("this.shopArr----------", this.shopArr)
       }
       const userStore = useUserStore();
-      console.log("userStore.address?.id----------", userStore.address?.id)
       this.shopSearch.userAddressId = userStore.address?.id
-      console.log("this.shopSearch----------", this.shopSearch)
 
       const res: GetShopPageResponse = await reqGetShopPage(this.shopSearch, page)
       if (res.code === 200) {

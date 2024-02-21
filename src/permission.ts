@@ -7,7 +7,7 @@ import pinia from './store'
 import useUserStore from './store/modules/user'
 nprogress.configure({ showSpinner: false })
 const userStore = useUserStore(pinia)
-// 全局前置守卫
+// 全域前置守衛
 router.beforeEach(async (to, from, next) => {
   document.title = to.meta.title + ` | ${setting.title}`
   document.title = `${setting.title}`
@@ -45,7 +45,7 @@ router.beforeEach(async (to, from, next) => {
     next()
   }
 })
-// 全局后置守卫
+// 全域後置守衛
 
 router.afterEach((route) => {
   nprogress.done()

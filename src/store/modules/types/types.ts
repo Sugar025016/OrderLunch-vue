@@ -38,16 +38,7 @@ export interface UserState {
   isCheckAddress:boolean
 }
 
-// export interface CategoryState {
-//   c1Id: string | number
-//   c2Id: string | number
-//   c3Id: string | number
-//   c1Arr: Shop[]
-//   c2Arr: CategoryObj[]
-//   c3Arr: CategoryObj[]
-//   c4Arr: Category[]
-//   c5Arr: Shop
-// }
+
 export interface ShopState {
   shop: ShopDetailData
   shopNames: ShopNames

@@ -81,12 +81,7 @@ export interface ShopNamesResponse extends ResponseData {
   data: ShopNames
 }
 
-// export interface Address {
-//   id?: number
-//   city: string
-//   area: string
-//   detail: string
-// }
+
 
 export interface ShopDetailData {
   id: number

@@ -65,19 +65,7 @@ const useSellShopStore = defineStore('sellShopStore', {
     }
   },
   actions: {
-    // async setShopList() {
-    //   const res: ShopsResponseData = await getShopList()
-    //   if (res.code === 200) {
-    //     this.shopArr = res.data
-    //   } else {
-    //     return Promise.reject(new Error(res.message))
-    //   }
-    // },
-    // async getShopList() {
-    //   if(this.shopArr.length===0){
-    //     this.setShopList
-    //   }
-    // },
+
     async getSellShop(shopId: number) {
       if (isNaN(shopId)) {
         if (this.shopNames.length === 0) {
@@ -87,7 +75,6 @@ const useSellShopStore = defineStore('sellShopStore', {
       }
       let res: ShopDetailsResponse = await reqGetSellShop(shopId)
 
-      console.log("**********let res: ShopDetailsResponse*******111", res.data)
       if (res.code === 200) {
         this.shop = res.data
       } else {
@@ -148,19 +135,7 @@ const useSellShopStore = defineStore('sellShopStore', {
 
     },
 
-    // async goRoute() {
-    //   if(this.shopId===0){
-    //     if(this.shopNames.length===0){
-    //       let a=await this.getShopItem()
-    //       if( !a || a.length===0){
-    //          $router.push("/")
-    //       }
-    //     }else{
-    //       this.shopId=this.shopNames[0].id
-    //     }
-    //   }
-    //   // $router.push()
-    // },
+
   },
   getters: {},
 })

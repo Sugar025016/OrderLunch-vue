@@ -29,9 +29,7 @@ export interface UserResponseData extends ResponseData {
   data: Users
 }
 
-// export interface UserResponseData extends ResponseData{
-//   data:UserPage
-// }
+
 
 export interface User {
   id?: number

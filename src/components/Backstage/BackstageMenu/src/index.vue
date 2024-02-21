@@ -1,5 +1,5 @@
 <template>
-  <template v-for="(item, index) in menuList" :key="item.path">
+  <template v-for="(item, index) in props.menuList" :key="item.path">
     <!-- 没有子路由 -->
     <template v-if="!item.children">
       <el-menu-item v-if="!item.meta.hidden" :index="item.path">
@@ -55,11 +55,14 @@
 </template>
 <script setup lang="ts" name="Menu">
 
+
 import { useRouter, useRoute, Router } from 'vue-router'
 
 import useSellShopStore from '@/store/modules/sellShop'
 
 let sellShopStore = useSellShopStore()
+
+let props = defineProps(['menuList'])
 
 let $router = useRouter()
 let $route = useRoute()
@@ -68,7 +71,6 @@ let $route = useRoute()
 function computedClass(value: string) {
   switch (value) {
     case 'orderNew':
-      // return getComputedStyle(document.documentElement).getPropertyValue('--color-order-new').trim();
       return window.getComputedStyle(document.documentElement).getPropertyValue('--color-order-new');
     case 'orderHandle':
       return getComputedStyle(document.documentElement).getPropertyValue('--color-order-handle').trim();
@@ -79,22 +81,6 @@ function computedClass(value: string) {
   }
 }
 
-
-const goRoute = async (item: any) => {
-  const pattern = /^\/sell\/.*\/:shopId$/
-  let path = item.path
-
-  if (pattern.test(item.path)) {
-    path = item.path.replace(/:shopId/g, sellShopStore.shopId)
-  }
-  $router.push(path)
-}
-const getPath = async (item: Router) => {
-  if (!sellShopStore.shopId) {
-  }
-
-  $route.params.id = sellShopStore.shopId.toString()
-}
 
 </script>
 <script lang="ts">
@@ -107,7 +93,6 @@ export default {
   margin-left: 5px;
   font-size: 16px;
 }
-
 
 
 .icon {

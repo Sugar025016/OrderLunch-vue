@@ -128,7 +128,6 @@ let $route = useRoute()
         left: 200px;
         top: 60px;
         transition: all 0.3s;
-        // width: calc(100% - $base-menu-width);
         height: calc(100vh - 60px);
       }
       .el-header {

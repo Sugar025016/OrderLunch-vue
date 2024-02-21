@@ -16,7 +16,6 @@ import type {
   UserProfileChangeResponse,
   UserPwd,
   UserInfoResponseData,
-  Address,
   ChangeLovesResponseData,
 } from '@/api/user/type'
 import type { UserState } from './types/types'
@@ -26,19 +25,12 @@ import {
   asyncRoute,
   anyRoute,
   menuRoutes,
-  menuSellRoutes,
   sellShop,
 } from '@/router/routes'
 
 // @ts-expect-error
 import cloneDeep from 'lodash/cloneDeep'
-import { useRouter } from 'vue-router'
 import { ShopData } from '@/api/shop/type'
-import { GetOrderNewResponse } from '@/api/order/type'
-// import { ElMessage } from 'element-plus/es/components/index.js'
-// import { ElMessage } from 'element-plus/lib/components/index.js'
-import { reqGetOrderNew } from '@/api/order'
-import ElMessage from 'element-plus/lib/components/message/index.js'
 import useSellShopStore from '@/store/modules/sellShop'
 import { ResponseData } from '@/api/type'
 
@@ -82,9 +74,8 @@ const useUserStore = defineStore('User', {
       isCheckAddress: false,
     }
   },
-  // 异步|逻辑的地方
+  // 異步|邏輯的地方
   actions: {
-    //用户登录方法
     async userLogin(data: LoginFormData) {
       const formData = new FormData()
       if (data.username !== undefined) {
@@ -99,36 +90,17 @@ const useUserStore = defineStore('User', {
 
       const res: LoginResponseData = await reqLogin(formData)
 
-      // console.log("*********",res)
-      // success=>token
-      // error=>error.message
-
-      console.log("登入：：：", res)
       const loginResponse: ResponseData = res.data as ResponseData
       if (loginResponse.code === 200) {
         this.token = GET_TOKEN()
         await this.userInfo()
       }
       return loginResponse;
-      // return loginResponse;
 
-      // if (loginResponse.code === 200) {
-      //   // console.log("*********",res)
-      //   this.token = GET_TOKEN()
-      //   await this.userInfo()
-      //   return 'ok'
-      // } else {
-      //   console.log("**********//////登入：：：//////**********")
-      //   // Promise.reject(new Error(loginResponse.message as string))
-      //   return loginResponse.code;
-      // }
     },
     async userInfo() {
       const res: UserInfoResponseData = await reqUserInfo()
-      console.log("**********//////UserInfoResponseData：：：//////**********", res)
       if (res.code === 200) {
-        // const userStore = useUserStore();
-        // userStore.clearData()
         this.username = res.data.name
         this.account = res.data.account
         this.phone = res.data.phone
@@ -142,13 +114,6 @@ const useUserStore = defineStore('User', {
         this.orderCount = res.data.orderCount
         this.shopOrderCount = res.data.shopOrderCount
         this.address = res.data.address as Address
-
-
-        // const userAsyncRoute = filterAsyncRoute(
-        //   cloneDeep(asyncRoute),
-        //   this.token,
-        // )
-
 
         return 'ok'
       } else {
@@ -214,7 +179,6 @@ const useUserStore = defineStore('User', {
       const res = await reqLogOut()
       if (res.code === 200) {
         await window.location.reload();
-        console.log("///////////*************///////////")
         this.userClear()
 
         return res
@@ -251,25 +215,6 @@ const useUserStore = defineStore('User', {
       }
     },
 
-    //沒用到
-    // async getOrderNew() {
-    //   if (this.token != '') {
-    //     let res: GetOrderNewResponse = await reqGetOrderNew()
-    //     if (res.code === 200) {
-    //       this.orderNew = res.data
-    //     } else {
-    //       ElMessage({
-    //         type: 'error',
-    //         message: '搜尋失败',
-    //       })
-    //     }
-    //   }
-    // },
-    // startTimer() {
-    //   this.getNewOrderTimer = setInterval(() => {
-    //     this.getOrderNew()
-    //   }, 1000); // 1000 毫秒，即 1 秒
-    // },
 
     // 停止計時器
     stopTimer() {

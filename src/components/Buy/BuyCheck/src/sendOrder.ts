@@ -5,7 +5,6 @@ import { AddOrder } from '@/api/order/type'
 import { TimeSelectRef, d, t, radio1, remark } from './index.vue'
 
 export const sendOrder = async () => {
-  console.log('------------', TimeSelectRef.value)
   await TimeSelectRef.value?.save()
   let takeTime = new Date(d.value)
   const [hours, minutes] = t.value.split(':').map(Number)

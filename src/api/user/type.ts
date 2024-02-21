@@ -53,12 +53,7 @@ export interface UserInfoResponseData extends ResponseData {
   }
 }
 
-// export interface Address {
-//   id?: number
-//   city: string
-//   area: string
-//   detail: string
-// }
+
 export type Addresses = Address[]
 
 export interface UserAddressResponseData extends ResponseData {
@@ -92,10 +87,6 @@ export interface LovesResponseData extends ResponseData {
 export interface ChangeLovesResponseData extends ResponseData {
   data: boolean
 }
-
-// export interface UserAddressResponseData extends ResponseData {
-//   data: ShopList
-// }
 
 
 

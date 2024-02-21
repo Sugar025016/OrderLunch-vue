@@ -17,8 +17,6 @@ const useLoadingStore = defineStore('LoadingStore', {
     },
     open(message: string) {
       ElMessageBox.alert(message, 'Title', {
-        // if you want to disable its autofocus
-        // autofocus: false,
         confirmButtonText: 'OK',
         callback: (action: Action) => {
           ElMessage({
