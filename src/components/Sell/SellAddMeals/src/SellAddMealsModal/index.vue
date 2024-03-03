@@ -1,53 +1,56 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { PutTabData, TabData } from '@/api/tab/type'
+import { PutAddMealsData, AddMealsData } from '@/api/addMeals/type'
 import useUserStore from '@/store/modules/user'
 import useSellShopStore from '@/store/modules/sellShop'
 import { ProductData } from '@/api/product/type'
-import { reqAddOrUpdateTab } from '@/api/tab'
+import {
+  reqAddOrUpdateAddMeals,
+  reqGetAddMealsProducts,
+} from '@/api/addMeals/index'
 import Search from '@/components/SharedComponents/search.vue'
-import SellAddMealsChooseCard from '../SellAddMealsChooseCard/index.vue'
+import SellAddMealsChooseCardSet from '../SellAddMealsChooseCardSet/index.vue'
+import ElMessage from 'element-plus/lib/components/message/index.js'
 
 let sellShopStore = useSellShopStore()
 
 let userStore = useUserStore()
-const chooses = ref<ChooseProduct[]>([])
-interface ChooseProduct extends ProductData {
-  isChoose: boolean
-}
 
-const choosesAll = ref<Boolean>()
-const tapProduct = ref<TabData>()
-const discount = ref<number>()
+interface ProductSetChoose extends ProductData {
+  isChoose: boolean
+  isSearch: boolean
+  addMealsPrice: number
+}
+const productSetChooses = ref<ProductSetChoose[]>([])
+
+const addMealsProduct = ref<AddMealsData>()
 
 const inputUserName = ref('')
 inputUserName.value = userStore.username
-const count = ref(1)
-count.value = 1
 
-let tabParams = reactive<PutTabData>({
-  id: 0,
+let addMealsParams = reactive<PutAddMealsData>({
   name: '',
   shopId: 0,
   shelve: false,
-  productIds: [],
+  products: [{ id: 0, price: 0 }],
 })
 
-const setTab = () => {
-  tabParams = reactive<PutTabData>({
-    id: tapProduct.value?.id,
-    name: tapProduct.value?.name as string,
+const setAddMeals = () => {
+  addMealsParams = reactive<PutAddMealsData>({
+    name: '',
     shopId: 0,
-    shelve: tapProduct.value?.shelve as boolean,
-    productIds: [],
+    shelve: false,
+    products: [{ id: 0, price: 0 }],
   })
 }
 
 const getChooses = () => {
-  chooses.value = []
+  productSetChooses.value = []
   sellShopStore.shop.products.forEach((p) => {
-    const selectedTab = tapProduct.value?.products.find((t) => t.id === p.id)
-    const choose = reactive<ChooseProduct>({
+    const selectedAddMeals = addMealsProduct.value?.products.find(
+      (t) => t.id === p.id,
+    )
+    const productSetChoose = reactive<ProductSetChoose>({
       isChoose: false,
       id: 0,
       name: '',
@@ -56,47 +59,94 @@ const getChooses = () => {
       prise: 0,
       isOrderable: false,
       shopId: 0,
+      isSearch: false,
+      addMealsPrice: 0,
     })
-    Object.assign(choose, p)
-
-    choose.isOrderable = p.isOrderable
-    if (selectedTab) {
-      choose.isChoose = true
+    Object.assign(productSetChoose, p)
+    productSetChoose.addMealsPrice = productSetChoose.prise
+    productSetChoose.isOrderable = p.isOrderable
+    if (selectedAddMeals) {
+      productSetChoose.isChoose = true
     } else {
-      choose.isChoose = false
+      productSetChoose.isChoose = false
     }
-    chooses.value.push(choose)
+    productSetChooses.value.push(productSetChoose)
   })
 }
 
 const save = async () => {
-  tabParams.shopId = sellShopStore.shop.id
-  tabParams.productIds = chooses.value
+  addMealsParams.shopId = sellShopStore.shop.id
+  addMealsParams.products = productSetChooses.value
     .filter((v) => v.isChoose)
-    .map((choose) => choose.id)
-  let res = await reqAddOrUpdateTab(tabParams)
+    .map((choose) => {
+      return { id: choose.id, price: choose.addMealsPrice }
+    }) as [{ id: number; price: number }]
+  let res = await reqAddOrUpdateAddMeals(addMealsParams)
   if (res.code === 200 && res.data) {
-    await sellShopStore.getSellShop(sellShopStore.shop.id)
+    // await sellShopStore.getSellShop(sellShopStore.shop.id)
+    await reqGetAddMealsProducts(sellShopStore.shop.id)
   }
+
+  AddMealsChooseModalOpen.value = true
 }
 
-const getData = (t: TabData) => {
-  tapProduct.value = t
+const getData = (t: AddMealsData) => {
+  addMealsProduct.value = t
   getChooses()
-  setTab()
+  setAddMeals()
 }
 
-const getSearchResult = (sellProductList: any) => {
-  chooses.value = sellProductList
-}
+// const getSearchResult = (sellProductList: any) => {
+//   console.log('沒有搜尋到', sellProductList.length)
+//   if (sellProductList.length === 0) {
+//     console.log('沒有搜尋到-----2', sellProductList.length)
+//     ElMessage({
+//       showClose: true,
+//       message: '沒有搜尋到',
+//       type: 'warning',
+//       style: 'z-index: 3000',
+//     })
+//     console.log('沒有搜尋到-----3', sellProductList.length)
+//   }
+//   productSetChooses.value = sellProductList
+// }
 
 const AddMealsChooseModalOpen = ref<boolean>(false)
 const handleOpen = () => {
   AddMealsChooseModalOpen.value = true
+  getChooses()
 }
 
 const handleClose = () => {
   AddMealsChooseModalOpen.value = false
+}
+
+const searchProductIds = ref<number[]>([])
+
+const getSearch = (sellProductList: ProductSetChoose[]) => {
+  searchProductIds.value = sellProductList.map((item: any) => item.id) || []
+
+  getSearchResult()
+}
+
+const getSearchResult = () => {
+  if (searchProductIds.value.length > 0) {
+    productSetChooses.value.forEach((item) => {
+      if (searchProductIds.value.includes(item.id)) {
+        item.isSearch = true
+      } else {
+        item.isSearch = false
+      }
+    })
+  } else {
+    ElMessage({
+      showClose: true,
+      message: '沒有搜尋到',
+      type: 'warning',
+      style: 'z-index: 3000',
+    })
+    productSetChooses.value.forEach((item) => (item.isSearch = false))
+  }
 }
 
 defineExpose({
@@ -108,66 +158,13 @@ defineExpose({
 
 <template>
   <div class="dialog">
-    <!-- <el-dialog
-      v-model="AddMealsChooseModalOpen"
-      :before-close="handleClose"
-      width="50%"
-    >
-      <div class="modal-body">
-        <Search
-          v-if="sellShopStore.shop.products.length > 0"
-          class="search"
-          v-on:search-result="getSearchResult"
-          :products="sellShopStore.shop.products"
-        ></Search>
-        <el-scrollbar max-height="50vw">
-          <div
-            class="products-card"
-            v-for="product in sellShopStore.shop.products"
-            :key="product.id"
-          >
-            <def-product-card
-              :product="product"
-              :setting="true"
-              :choose="true"
-            ></def-product-card>
-          </div>
-          <router-link
-            class="box-item"
-            :to="`/sell/${sellShopStore.shop.id}/product`"
-          >
-            <el-tooltip
-              class="box-item"
-              effect="dark"
-              content="新增餐點"
-              placement="bottom-end"
-            >
-              <def-product-card :setting="true"></def-product-card>
-            </el-tooltip>
-          </router-link>
-        </el-scrollbar>
-      </div>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="dialogVisible = false">
-            Confirm
-          </el-button>
-        </div>
-      </template>
-    </el-dialog> -->
-
-    <!-- <el-dialog
-      v-model="AddMealsChooseModalOpen"
-      :before-close="handleClose"
-      width="50%"
-    > -->
     <el-dialog
       v-model="AddMealsChooseModalOpen"
       :before-close="handleClose"
       width="50%"
       height="100%"
       top="2vh"
+      z-index="2000"
     >
       <div class="add-meals-choose">
         <div class="modal-header">
@@ -175,19 +172,45 @@ defineExpose({
             type="text"
             class="rounded-input"
             placeholder="輸入加購分類名稱"
-            v-model="tabParams.name"
+            v-model="addMealsParams.name"
           />
         </div>
         <div class="item">
           <!-- <el-radio-group v-model="radio1" class="radio"> -->
-
           <el-scrollbar max-height="700px">
             <Search
               v-if="sellShopStore.shop.products.length > 0"
-              class="search"
-              v-on:search-result="getSearchResult"
+              class="productSetChooses"
+              v-on:search-result="getSearch"
               :products="sellShopStore.shop.products"
             ></Search>
+            <div
+              v-if="productSetChooses.length > 0"
+              class="products-card"
+              v-for="product in productSetChooses"
+              :key="product.id"
+            >
+              <!-- <hr v-if="i > 0" /> -->
+              <SellAddMealsChooseCardSet
+                v-if="product.isSearch"
+                :product="product"
+                :setting="true"
+                :choose="true"
+              ></SellAddMealsChooseCardSet>
+            </div>
+            <hr v-if="productSetChooses.length > 0" />
+            <div
+              class="products-card"
+              v-for="(product, i) in productSetChooses"
+              :key="product.id"
+            >
+              <SellAddMealsChooseCardSet
+                v-if="!product.isSearch"
+                :product="product"
+                :setting="true"
+                :choose="true"
+              ></SellAddMealsChooseCardSet>
+            </div>
             <router-link
               class="box-item"
               :to="`/sell/${sellShopStore.shop.id}/product`"
@@ -202,27 +225,13 @@ defineExpose({
                 <def-product-card :setting="true"></def-product-card>
               </el-tooltip>
             </router-link>
-            <div
-              class="products-card"
-              v-for="(product, i) in sellShopStore.shop.products"
-              :key="product.id"
-            >
-              <hr v-if="i > 0" />
-              <SellAddMealsChooseCard
-                :product="product"
-                :setting="true"
-                :choose="true"
-              ></SellAddMealsChooseCard>
-            </div>
           </el-scrollbar>
         </div>
       </div>
       <template #footer>
         <div class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="dialogVisible = false">
-            Confirm
-          </el-button>
+          <!-- <el-button @click="dialogVisible = false">Cancel</el-button> -->
+          <el-button type="primary" @click="save()">Confirm</el-button>
         </div>
       </template>
     </el-dialog>
@@ -236,7 +245,7 @@ defineExpose({
     min-width: 350px;
     max-width: 450px;
     .el-dialog__body {
-      padding: 10px 20px ;
+      padding: 10px 20px;
     }
     .add-meals-choose {
       .modal-header {
@@ -260,25 +269,30 @@ defineExpose({
         }
       }
 
-      .search {
+      .productSetChooses {
         padding: 0px;
       }
-      .el-scrollbar__view {
-        padding: 10px 0px 0 0px;
-        .el-form {
-          margin: 0px 10px 10px 10px;
-          // display: flex;
-          grid-template-columns: none;
+      .item {
+        // background-color: rgb(41, 41, 41);
+        .el-scrollbar__view {
+          padding: 10px 0px 0 0px;
+          .el-form {
+            background-color: rgb(255, 230, 199);
+            padding: 12px 16px 6px 16px;
+            // display: flex;
+            grid-template-columns: none;
+            border-radius: 20px;
 
-          .asterisk-left {
-            min-width: 200px;
+            .asterisk-left {
+              min-width: 200px;
+            }
           }
-        }
-        .el-form-item {
-          margin-bottom: 8px;
-          .el-form-item__content {
-            justify-content: flex-end;
-            flex-direction: row;
+          .el-form-item {
+            margin-bottom: 8px;
+            .el-form-item__content {
+              justify-content: flex-end;
+              flex-direction: row;
+            }
           }
         }
       }

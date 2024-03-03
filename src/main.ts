@@ -28,7 +28,10 @@ app.use(globeComponent)
 app.use(router)
 app.use(pinia)
 app.use(ElementPlus, {
-  locale: zhCn,
+  zIndex: 3000 ,
 })
+
+
+
 
 app.mount('#app')

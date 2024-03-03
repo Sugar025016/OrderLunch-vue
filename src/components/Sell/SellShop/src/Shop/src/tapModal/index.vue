@@ -10,18 +10,17 @@ import Search from '@/components/SharedComponents/search.vue'
 let sellShopStore = useSellShopStore()
 
 let userStore = useUserStore()
-const chooses = ref<ChooseProduct[]>([])
-interface ChooseProduct extends ProductData {
-  isChoose: boolean
-}
 
-const choosesAll = ref<Boolean>()
+interface ProductSetChoose extends ProductData {
+  isChoose: boolean
+  isSearch: boolean
+}
+const productSetChooses = ref<ProductSetChoose[]>([])
+
 const tapProduct = ref<TabData>()
 
 const inputUserName = ref('')
 inputUserName.value = userStore.username
-const count = ref(1)
-count.value = 1
 
 let tabParams = reactive<PutTabData>({
   id: 0,
@@ -42,34 +41,35 @@ const setTab = () => {
 }
 
 const getChooses = () => {
-  chooses.value = []
+  productSetChooses.value = []
   sellShopStore.shop.products.forEach((p) => {
     const selectedTab = tapProduct.value?.products.find((t) => t.id === p.id)
-    const choose = reactive<ChooseProduct>({
-    isChoose: false,
-    id: 0,
-    name: '',
-    description: '',
-    imgUrl: '',
-    prise: 0,
-    isOrderable: false,
-    shopId: 0
-})
-    Object.assign(choose, p)
+    const productSetChoose = reactive<ProductSetChoose>({
+      isChoose: false,
+      id: 0,
+      name: '',
+      description: '',
+      imgUrl: '',
+      prise: 0,
+      isOrderable: false,
+      shopId: 0,
+      isSearch: false,
+    })
+    Object.assign(productSetChoose, p)
 
-    choose.isOrderable = p.isOrderable
+    productSetChoose.isOrderable = p.isOrderable
     if (selectedTab) {
-      choose.isChoose = true
+      productSetChoose.isChoose = true
     } else {
-      choose.isChoose = false
+      productSetChoose.isChoose = false
     }
-    chooses.value.push(choose)
+    productSetChooses.value.push(productSetChoose)
   })
 }
 
 const save = async () => {
   tabParams.shopId = sellShopStore.shop.id
-  tabParams.productIds = chooses.value
+  tabParams.productIds = productSetChooses.value
     .filter((v) => v.isChoose)
     .map((choose) => choose.id)
   let res = await reqAddOrUpdateTab(tabParams)
@@ -82,10 +82,28 @@ const getData = (t: TabData) => {
   tapProduct.value = t
   getChooses()
   setTab()
+  getSearchResult()
 }
 
-const getSearchResult = (sellProductList: any) => {
-  chooses.value = sellProductList
+const searchProductIds = ref<number[]>([])
+
+const getSearch = (sellProductList: ProductSetChoose[]) => {
+  searchProductIds.value = sellProductList.map((item: any) => item.id) || []
+  getSearchResult()
+}
+
+const getSearchResult = () => {
+  if (searchProductIds.value.length > 0) {
+    productSetChooses.value.forEach((item) => {
+      if (searchProductIds.value.includes(item.id)) {
+        item.isSearch = true
+      } else {
+        item.isSearch = false
+      }
+    })
+  } else {
+    productSetChooses.value.forEach((item) => (item.isSearch = false))
+  }
 }
 
 defineExpose({
@@ -129,26 +147,43 @@ defineExpose({
         <hr class="divider" />
         <div class="modal-body">
           <Search
-            v-if="sellShopStore.shop.products.length>0"
+            v-if="sellShopStore.shop.products.length > 0"
             class="search"
-            v-on:search-result="getSearchResult"
+            v-on:search-result="getSearch"
             :products="sellShopStore.shop.products"
           ></Search>
 
           <div
-            v-if="chooses.length > 0"
+            v-if="productSetChooses.length > 0"
             class="products-card"
-            v-for="product in chooses"
+            v-for="product in productSetChooses"
             :key="product.id"
           >
             <def-product-card
+              v-if="product.isSearch"
               :product="product"
               :setting="true"
               :choose="true"
             ></def-product-card>
           </div>
+
+          <hr v-if="productSetChooses.length > 0" class="hr-chooses" />
+          <div
+            v-if="productSetChooses.length > 0"
+            class="products-card"
+            v-for="product in productSetChooses"
+            :key="product.id"
+          >
+            <def-product-card
+              v-if="!product.isSearch"
+              :product="product"
+              :setting="true"
+              :choose="true"
+            ></def-product-card>
+          </div>
+
           <router-link
-            v-else
+            v-if="sellShopStore.shop.products.length === 0"
             class="box-item"
             :to="`/sell/${sellShopStore.shop.id}/product`"
           >
@@ -246,6 +281,13 @@ defineExpose({
 
     .search {
       margin: 0 0 0 5px;
+    }
+
+    .hr-chooses {
+      margin: 30px 0;
+      // border-color:red;
+      // border-radius:2px red;
+      border: 1px solid $color;
     }
     .modal-body {
       .products-card {

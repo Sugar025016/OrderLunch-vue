@@ -10,11 +10,33 @@ import { ElMessageBox } from 'element-plus/lib/components/message-box/index.js'
 
 defineProps(['product', 'setting', 'choose', 'add', 'change'])
 
+const deleteProduct = async (productId: number) => {
+  ElMessageBox.confirm('是否確認要刪除?', 'Warning', {
+    confirmButtonText: '刪除',
+    cancelButtonText: '取消',
+    type: 'warning',
+    icon: markRaw(Delete),
+  })
+    .then(() => {
+      reqDeleteSellProducts(productId)
+      window.location.reload()
+      ElMessage({
+        type: 'success',
+        message: 'Delete completed',
+      })
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: 'Delete canceled',
+      })
+    })
+}
 </script>
 <template>
   <div class="add-meals-modal">
     <div>
-      <el-checkbox class="checkbox" size="large" disabled/>
+      <el-checkbox class="checkbox" v-model="product.isChoose" size="large" />
     </div>
     <div
       class="productCard"
@@ -35,13 +57,20 @@ defineProps(['product', 'setting', 'choose', 'add', 'change'])
             {{ product.name }}
           </span>
         </div>
-        <span class="content-price">{{ product.description }}</span>
+        <span class="content-price">{{ product.prise }}$</span>
       </div>
       <img :src="product.imgUrl" v-if="product.imgUrl" alt="AA" />
     </div>
     <div class="add-meals-prise">
       <span>加購價：</span>
-      <span class="content-price">{{ product.prise }}$</span>
+      <el-input
+        v-model="product.addMealsPrice"
+        placeholder="Please input"
+        :formatter="
+          (value: string) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        "
+        :parser="(value: string) => value.replace(/\$\s?|(,*)/g, '')"
+      />
     </div>
   </div>
 </template>
