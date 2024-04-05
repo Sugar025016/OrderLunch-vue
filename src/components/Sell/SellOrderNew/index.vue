@@ -31,7 +31,7 @@ const getOrder = async () => {
     pageSize.value,
     pageNo.value,
   )
-  if (res.code === 200) {
+  if (res.status === 200) {
     total.value = res.data.totalElements
     orderPageResponse.value = res.data
     order.value = res.data.content
@@ -54,7 +54,7 @@ const putOrderByShop = async (
     orderIdList,
   )
 
-  if (res.code === 200) {
+  if (res.status === 200) {
     orderIds.value = []
     getOrder()
   } else {
@@ -113,7 +113,7 @@ import { formatDate } from '@/utils/time'
 </script>
 
 <template>
-  <el-card style="margin: 0px m-20px">
+  <!-- <el-card style="margin: 0px m-20px"> -->
     <el-button
       type="primary"
       size="default"
@@ -195,11 +195,12 @@ import { formatDate } from '@/utils/time'
       <el-table-column
         prop="takeTime"
         label="取餐日期"
-        width="90"
+        width="110"
         max-width="180"
         align="center"
         column-key="date"
         :formatter="formatDate"
+        sortable
       />
       <el-table-column
         prop="takeTime"
@@ -258,7 +259,7 @@ import { formatDate } from '@/utils/time'
       @current-change="getOrder"
       @size-change="getOrder"
     />
-  </el-card>
+  <!-- </el-card> -->
 </template>
 
 <style lang="scss" scoped>

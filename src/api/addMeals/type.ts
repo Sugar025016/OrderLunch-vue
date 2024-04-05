@@ -1,21 +1,20 @@
 import { ProductData } from '../product/type'
-export interface ResponseData {
-  code: number
-  message: string
-  ok: boolean
-}
+import { ResponseData } from '../type'
+
 
 export type ProductList = ProductData[]
 
 export interface AddMealsData {
   id: number
   name: string
-  shelve: boolean  
-  products: [{
-    id: number
-    price: number
-    product:ProductData
-  }]
+  shelve: boolean
+  products: [
+    {
+      id: number
+      price: number
+      product: ProductData
+    },
+  ]
 }
 
 export type AddMealsListData = AddMealsData[]
@@ -41,8 +40,10 @@ export interface PutAddMealsData {
   name: string
   shopId: number
   shelve: boolean
-  products: [{
-    id: number
-    price: number
-  }]
+  products: [
+    {
+      id: number
+      price: number
+    },
+  ]
 }

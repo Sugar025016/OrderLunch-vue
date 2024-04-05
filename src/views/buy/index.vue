@@ -65,6 +65,28 @@ watch(
       box-shadow:
         3px 3px 5px #dbdbdb,
         -3px -3px 5px #e2e2e2;
+
+      @media (max-width: $breakpoint-md) {
+        padding: 0;
+        height: 60px;
+        .container {
+          padding: 0 0px 0 10px;
+          :deep(.toolbar_right) {
+            // svg {
+            //   width: 20px;
+            //   height: 20px;
+            // }
+            // :deep(.order-text) {
+            //   background-color: red;
+            //   .svg-icon {
+            //     width: 20px;
+            //     height: 20px;
+            //   }
+            // }
+            height: 100%;
+          }
+        }
+      }
     }
     .buy-message {
       margin: 0;
@@ -78,15 +100,15 @@ watch(
     }
     .buy-el-footer {
       background-color: black;
-      height: 200px;
-      padding: 35px 0;
-      z-index: 1;
+      height: auto;
+      padding: 35px 10px;
+      // z-index: 1;
 
       position: relative;
-      @media (min-width: $breakpoint-xs) {
-        padding-left: 5px;
-        padding-right: 5px;
-      }
+      // @media (min-width: $breakpoint-xs) {
+      //   padding-left: 15px;
+      //   padding-right: 15px;
+      // }
       @media (min-width: $breakpoint-sm) {
         padding-left: 10px;
         padding-right: 10px;
@@ -122,7 +144,7 @@ watch(
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 100;
 }
 
 .loading-icon {

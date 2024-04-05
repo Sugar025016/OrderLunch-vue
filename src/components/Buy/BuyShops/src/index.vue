@@ -17,15 +17,14 @@ const isExpanded = ref(false)
 
 onMounted(() => {
   // 在元件掛載後新增滾動事件監聽器
-  window.addEventListener('scroll', handleScroll), 
-  chooseAddress()
+  window.addEventListener('scroll', handleScroll), chooseAddress()
 })
 
 const chooseAddress = async () => {
-  let isCheckChooseAddress =await userStore.isCheckChooseAddress()
+  let isCheckChooseAddress = await userStore.isCheckChooseAddress()
 
-  if ( isCheckChooseAddress) {
-    chooseAddressRef.value?.open();
+  if (isCheckChooseAddress) {
+    chooseAddressRef.value?.open()
   }
 }
 const chooseAddressRef = ref<typeof ChooseAddressModel>()
@@ -60,7 +59,7 @@ const registerShop = () => {
 
 const loading = ref(false)
 let timer: any
-let loadingMore = false 
+let loadingMore = false
 let aaa = 0
 const handleScroll = async () => {
   const scrollTop = window.scrollY || document.documentElement.scrollTop
@@ -75,13 +74,13 @@ const handleScroll = async () => {
       shopStore.shopPage.number < shopStore.shopPage.totalPages - 1 &&
       !loadingMore
     ) {
-      loadingMore = true 
+      loadingMore = true
       requestAnimationFrame(async () => {
         let to = window.innerHeight + window.scrollY
         await shopStore.getShopPage(shopStore.shopPage.number + 1)
 
         window.scrollTo({ top: to, behavior: 'instant' })
-        loadingMore = false 
+        loadingMore = false
       })
     }
   }
@@ -95,8 +94,8 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="buyShops">
-    <el-row class="row1">
-      <el-col
+    <div class="row1">
+      <div
         class="buyCard"
         :span="24"
         :class="{ 'buyCard-height': isExpanded }"
@@ -109,15 +108,6 @@ onBeforeUnmount(() => {
             </span>
           </div>
           <div class="title-shop">
-            <!-- <div class="title-shop-img">121</div> -->
-
-            <!-- <img
-              @click="openShop()"
-              src="@/assets/images/openShop3.png"
-              class="w-8 h-8 rounded-full"
-              loading="lazy"
-            /> -->
-
             <el-tooltip
               class="box-item"
               effect="light"
@@ -133,12 +123,12 @@ onBeforeUnmount(() => {
             </el-tooltip>
           </div>
         </div>
-      </el-col>
-    </el-row>
+      </div>
+    </div>
     <div class="body">
       <rwdBody>
         <template #slotName>
-          <div class="overlay"></div>
+          <!-- <div class="overlay"></div> -->
           <div class="body-in">
             <el-row class="row2">
               <el-col :span="24">
@@ -157,9 +147,7 @@ onBeforeUnmount(() => {
     </div>
   </div>
 
-  <ChooseAddressModel
-    ref="chooseAddressRef"
-  ></ChooseAddressModel>
+  <ChooseAddressModel ref="chooseAddressRef"></ChooseAddressModel>
 </template>
 
 <style lang="scss" scoped>
@@ -173,25 +161,26 @@ onBeforeUnmount(() => {
   border-radius: 40px;
   // background-color: rgba(0, 255, 255, 0.753);
   .row1 {
-    height: calc(60vh - 0px);
+    // height: calc(60vh - 0px);
+    // height:auto;
     // height: 60vh ;
     // margin-bottom:-40px ;
     width: 100%;
     // border-radius: 40px;
     top: 1px;
     .buyCard {
-      position: fixed;
+      // position: fixed;
       // z-index: -1000;
       top: 1280;
       width: 100%;
       // height: calc(100vh - 80px);
-      height: 60vh;
+      // height: 60vh;
       transition: height 0.5s ease; /* 添加动画效果 */
 
       background: url('@/assets/images/food-home.jpg') no-repeat;
       background-size: cover;
       // border-radius: 40px;
-      padding: 5px 5px 5px 5px;
+      padding: 5px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       .title-border {
         vertical-align: middle;
@@ -203,6 +192,13 @@ onBeforeUnmount(() => {
         border-radius: 0 600px;
         border: white 3px solid;
         display: flex;
+
+        display: grid; /* 使用CSS Grid布局 */
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+        // margin: 10px 0;
+        padding: 0 5px;
+
         .title-div {
           display: flex;
           flex-direction: column;
@@ -229,7 +225,6 @@ onBeforeUnmount(() => {
           align-items: center;
           justify-content: center;
           padding: 0 8% 0 0;
-
 
           img {
             width: auto; /* Ensure image does not exceed container width */
@@ -262,18 +257,31 @@ onBeforeUnmount(() => {
             }
           }
         }
+        @media (max-width: $breakpoint-sm) {
+          grid-template-columns: repeat(1, 1fr);
+
+          .title-div {
+            padding: 20px calc(20% - 80px) 0 calc(20% - 80px);
+          }
+          .title-shop {
+            padding: 0 20px;
+          }
+        }
       }
     }
-    .buyCard-height {
-      height: calc(100vh - 80px);
-    }
+    // .buyCard-height {
+    //   height: calc(100vh - 80px);
+    // }
   }
 
   .body {
-    position: relative;
     margin: 0px 0;
 
     padding: 10px 0;
+    
+    background-color: rgba(253, 237, 213, 0.589);
+    background-color: rgb(255, 242, 224);
+    
     .overlay {
       /* 遮罩 */
       position: absolute;
@@ -299,6 +307,7 @@ onBeforeUnmount(() => {
         padding: 0 5px;
         @media (min-width: $breakpoint-xs) {
           grid-template-columns: repeat(1, 1fr);
+          // margin: 15px 0;
         }
 
         @media (min-width: $breakpoint-sm) {
@@ -325,3 +334,4 @@ onBeforeUnmount(() => {
   }
 }
 </style>
+

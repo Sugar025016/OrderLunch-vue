@@ -55,7 +55,7 @@ let timer: any
 const getCart = async () => {
   let res: CartResponseData = await reqGetCart()
 
-  if (res.code === 200) {
+  if (res.status === 200) {
     carts.value = res.data
     userStore.cartCount = getCartCount(res.data.cartResponses)
     sum.value = 0
@@ -90,7 +90,7 @@ const getElMessageBox = () => {
 
 const deleteCart = async (cartId: number) => {
   let res: CartResponseData = await reqDeleteCart(cartId)
-  if (res.code === 200) {
+  if (res.status === 200) {
     carts.value = res.data
     if (res.data.cartResponses) {
       userStore.cartCount = getCartCount(res.data.cartResponses)
@@ -114,7 +114,7 @@ const getCartCount = (cartResponses: CartList) => {
 
 const updateCart = async (cartId: number, qty: number) => {
   let res: CartResponseData = await reqPutCart(cartId, qty)
-  if (res.code === 200) {
+  if (res.status === 200) {
     carts.value = res.data
     userStore.cartCount = getCartCount(res.data.cartResponses)
   }
@@ -135,16 +135,17 @@ onBeforeUnmount(() => {
           <h1>購物車</h1>
         </div>
         <div class="shopCart-body">
-          <el-row class="shopCart-body" :gutter="20">
-            <el-col :span="16">
+          <el-row class="" :gutter="20">
+            <!-- <el-col :span="16"> -->
+            <div class="el-col">
               <span>
                 訂購店家:{{ carts.shopName }}，滿{{ carts.deliveryPrice }}可外送
               </span>
+
               <table class="table">
                 <thead>
                   <tr>
                     <th scope="col" class="table-title">商品名稱</th>
-                    <th scope="col" class="table-title">部門/單位</th>
                     <th scope="col" class="table-title">訂購人</th>
                     <th scope="col" class="table-title">備註</th>
                     <th scope="col" class="table-title">單價</th>
@@ -159,12 +160,8 @@ onBeforeUnmount(() => {
                       {{ cart.productResponse.productName }}
                     </th>
                     <td class="table-content table-width">
-                      {{ cart.department }}
-                    </td>
-                    <td class="table-content table-width">
                       {{ cart.orderUsername }}
                     </td>
-                    <!-- <td class="remark">{{ cart.remark }}</td> -->
                     <td class="table-content remark">
                       <el-popover
                         placement="top-start"
@@ -201,8 +198,9 @@ onBeforeUnmount(() => {
                   </tr>
                 </tbody>
               </table>
-            </el-col>
-            <el-col :span="8">
+            </div>
+            <!-- <el-col :span="8"> -->
+            <div class="el-col">
               <div class="body-right">
                 <span class="total">總金額:</span>
                 <span class="total-data">NT${{ sum }}</span>
@@ -234,7 +232,7 @@ onBeforeUnmount(() => {
                   糾團
                 </el-button>
               </div>
-            </el-col>
+            </div>
           </el-row>
         </div>
       </template>
@@ -243,10 +241,9 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss" scoped>
-
 @import '@/styles/bootstrap.scss';
-$table-cell-padding-y: 1.5rem; 
-$table-border-color: rgb(155, 155, 155); 
+$table-cell-padding-y: 1.5rem;
+$table-border-color: rgb(155, 155, 155);
 @import 'node_modules/bootstrap/scss/_tables.scss';
 
 .shopCart {
@@ -267,60 +264,77 @@ $table-border-color: rgb(155, 155, 155);
     }
   }
   .shopCart-body {
-    .table {
-      tr {
-        .table-title {
-          text-align: center;
-        }
-        .el-icon {
-          cursor: pointer; /* 添加手型光标效果 */
-        }
-        .table-content {
-          text-align: center;
-        }
-        .table-width {
-          max-width: 100px;
-        }
-        .remark {
-          white-space: nowrap; /* 让文字不换行 */
-          overflow: hidden; /* 隐藏溢出部分 */
-          text-overflow: ellipsis; /* 显示省略号 */
-          max-width: 200px;
-        }
-      }
-    }
-    .body-left {
-      //   vertical-align: baseline;
-    }
-    .body-right {
-      margin: 10px;
+    .el-row {
+      display: grid; /* 使用CSS Grid布局 */
+      grid-template-columns: minmax(760px, 9fr) minmax(180px, 3fr);
 
-      display: flex;
-      flex-direction: column;
-      .total {
-        font-size: 20px;
-        margin: 0 0 5px 10px;
-        color: #818181;
+      .table {
+        // width: 800px;
+        overflow: auto;
+        tr {
+          .table-title {
+            text-align: center;
+            min-width: 80px;
+          }
+          .el-icon {
+            cursor: pointer; /* 添加手型光标效果 */
+          }
+          .table-content {
+            text-align: center;
+          }
+          .table-width {
+            max-width: 100px;
+          }
+          .remark {
+            white-space: nowrap; /* 让文字不换行 */
+            overflow: hidden; /* 隐藏溢出部分 */
+            text-overflow: ellipsis; /* 显示省略号 */
+            max-width: 200px;
+          }
+        }
       }
-      .total-data {
-        font-size: 30px;
-        margin: 0 0 0 10px;
+
+      .body-right {
+        margin: 10px;
+
+        display: flex;
+        flex-direction: column;
+        .total {
+          font-size: 20px;
+          margin: 0 0 5px 10px;
+          color: #818181;
+        }
+        .total-data {
+          font-size: 30px;
+          margin: 0 0 0 10px;
+        }
+        button {
+          margin: 5px 0;
+          background-color: $color;
+          border: 0;
+        }
+        .button-wight {
+          background-color: white;
+          color: #000;
+        }
+        .button-orange:hover {
+          background-color: rgb(253, 102, 20);
+        }
+        .button-wight:hover {
+          background-color: rgba(253, 114, 1, 0.247);
+          color: #000;
+        }
       }
-      button {
-        margin: 5px 0;
-        background-color: $color;
-        border: 0;
-      }
-      .button-wight {
-        background-color: white;
-        color: #000;
-      }
-      .button-orange:hover {
-        background-color: rgb(253, 102, 20);
-      }
-      .button-wight:hover {
-        background-color: rgba(253, 114, 1, 0.247);
-        color: #000;
+
+      @media (max-width: $breakpoint-md) {
+        grid-template-columns: repeat(1, 1fr);
+        .el-col {
+          width: 100%;
+          overflow: auto;
+        }
+        .el-col:first-child {
+          margin: 10px;
+        }
       }
     }
   }

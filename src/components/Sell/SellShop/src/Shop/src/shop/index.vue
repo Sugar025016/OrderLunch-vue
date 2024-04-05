@@ -120,7 +120,7 @@ const dayOfWeek = currentDate.getDay()
               <span>今日營業時間：</span>
               <div
                 v-if="
-                  shopData?.schedules[dayOfWeek]?.timePeriods &&
+                  shopData?.schedules &&
                   shopData?.schedules[dayOfWeek]?.timePeriods.length > 0
                 "
                 v-for="(timePeriod, i) in shopData?.schedules[dayOfWeek]
@@ -138,7 +138,7 @@ const dayOfWeek = currentDate.getDay()
                   }}
                 </span>
               </div>
-              <span v-else>{{ shopData?.schedules[dayOfWeek] }}</span>
+              <!-- <span v-else>{{ shopData?.schedules[dayOfWeek] }}</span> -->
               <span v-else>非營業日</span>
             </div>
             <div class="information"></div>

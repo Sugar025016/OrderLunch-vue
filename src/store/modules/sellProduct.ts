@@ -1,15 +1,7 @@
-import {
-  reqAddOrUpdateSellProduct,
-  reqDeleteSellProducts,
-  reqGetSellProducts,
-} from '@/api/sellProduct'
+import { reqGetSellProducts } from '@/api/sellProduct'
 import { defineStore } from 'pinia'
-import type {
-  ResponseBoolean,
-  ResponseProductList,
-  SellProduct,
-} from '@/api/sellProduct/type'
-import { SellProductState, SellShopState } from './types/types'
+import type { ResponseProductList } from '@/api/sellProduct/type'
+import { SellProductState } from './types/types'
 
 const useSellProductStore = defineStore('sellProductStore', {
   state: (): SellProductState => {
@@ -24,8 +16,8 @@ const useSellProductStore = defineStore('sellProductStore', {
     },
 
     async getSellProduct() {
-      let res: ResponseProductList = await reqGetSellProducts(this.shopId)
-      if (res.code === 200) {
+      const res: ResponseProductList = await reqGetSellProducts(this.shopId)
+      if (res.status === 200) {
         this.products = res.data
         return this.products
       } else {

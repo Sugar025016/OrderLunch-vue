@@ -1,8 +1,5 @@
-export interface ResponseData {
-  code: number
-  message: string
-  ok: boolean
-}
+import { ResponseData } from "@/api/type"
+
 
 export interface User {
   id?: number

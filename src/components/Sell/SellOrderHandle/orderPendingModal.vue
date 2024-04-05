@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, defineProps } from 'vue'
+import {  ref } from 'vue'
 import { GroupedData } from './orderPending'
 
 const props = defineProps({

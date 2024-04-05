@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, defineProps, defineExpose, computed, nextTick } from 'vue'
+import { ref, nextTick } from 'vue'
 import { Plus, Delete } from '@element-plus/icons-vue'
 
-import { Schedule, TimePeriods } from '@/api/shop/type'
+import { TimePeriods } from '@/api/shop/type'
 const props = defineProps({
   scheduleSetModal: Boolean,
   title: String,

@@ -1,26 +1,17 @@
 <script setup lang="ts">
-import { Watch, Phone } from '@element-plus/icons-vue'
-import scheduleSetModal from '../scheduleSetModal/index.vue'
+// import { Watch, Phone } from '@element-plus/icons-vue'
+// import scheduleSetModal from '../scheduleSetModal/index.vue'
 import 'bootstrap/dist/js/bootstrap.bundle'
-import { ref, reactive, defineProps } from 'vue'
+// import { ref, reactive, defineProps } from 'vue'
 
 // const scheduleModelSwitch = ref(false)
-const startTime = ref('')
-const endTime = ref('')
 // const props =defineProps(['schedules', 'phone', 'name' ,'scheduleModelSwitch'])
 // const props = defineProps({
 //   scheduleModelSwitch: Boolean,
 // })
-const props = defineProps({
-  visible: Boolean,
-  title: String,
-})
 
-const { emit } = defineEmits()
+// const { emit } = defineEmits()
 
-const closeDialog = () => {
-  emit('update:visible', false)
-}
 
 // const props = defineProps({
 //   dialogVisible: Boolean,
@@ -34,25 +25,7 @@ const closeDialog = () => {
 //     modal.style.display = 'block'
 //   }
 // }
-const form = reactive({
-  name: '',
-  region: '',
-  date1: '',
-  date2: '',
-  delivery: false,
-  type: [],
-  resource: '',
-  desc: '',
-})
-const closeModal = (modalId: string) => {
-  const modal = document.getElementById(modalId)
-  if (modal) {
-    modal.classList.remove('show')
-    modal.style.display = 'none'
-  }
-}
 
-const formLabelWidth = '140px'
 // const openModal = (modalId: string) => {
 //   const modal = document.getElementById(modalId);
 //   if (modal) {

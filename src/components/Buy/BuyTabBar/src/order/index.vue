@@ -18,10 +18,14 @@ let $route = useRoute()
 
 let orderNew = ref<Orders>([])
 
+const props = defineProps({
+  isToolbarVisibleAll: Boolean,
+})
+
 const getOrderNew = async () => {
   if (userStore.token != '') {
     let res: GetOrderNewResponse = await reqGetOrderNew()
-    if (res.code === 200) {
+    if (res.status === 200) {
       orderNew.value = res.data
     } else {
       ElMessage({
@@ -79,7 +83,6 @@ const getSellShop = async () => {
   await sellShopStore.getSellShop(shopId)
   $route.meta.title = sellShopStore.shop.name
 }
-
 </script>
 <template>
   <div class="order">
@@ -94,7 +97,9 @@ const getSellShop = async () => {
           </span>
         </el-link>
       </div>
-      <el-dropdown v-if="sellShopStore.shopNames.length > 1">
+      <el-dropdown
+        v-if="sellShopStore.shopNames.length > 1 && isToolbarVisibleAll"
+      >
         <span class="el-dropdown-link" style="cursor: pointer">
           商店
           <el-icon class="el-icon--right">
@@ -113,7 +118,7 @@ const getSellShop = async () => {
           <el-dropdown-menu>
             <el-dropdown-item @click="addShop">
               <!-- <router-link :to="'/Register/shop'" class="router-link"> -->
-                新增餐廳
+              新增餐廳
               <!-- </router-link> -->
             </el-dropdown-item>
           </el-dropdown-menu>
@@ -136,29 +141,55 @@ const getSellShop = async () => {
 <style lang="scss" scoped>
 .order {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
   .order-text {
-    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // margin: 11px 10px 7px 10px;
+    // margin: 0 10px;
     font-size: 15px;
+    height: 100%;
+    width: auto;
+    min-width: 60px;
+
     a {
-      color: #000;
+      color: #333333;
       text-decoration: none;
     }
     .link {
+      height: 100%;
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       text-decoration: none;
-      .cartQuantity {
-        position: relative;
-        width: 22px;
-        height: 22px;
-        border-radius: 50%;
-        border: 0px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        right: 10px;
-        top: -10px;
+      min-width: 60px;
+
+      .el-link {
+        height: 100%;
+        width: 100%;
+
+        .el-link__inner {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+        }
+        .cartQuantity {
+          position: absolute;
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          border: 0px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          right: 5px;
+          top: 8px;
+        }
       }
 
       .shopOrder {
@@ -183,25 +214,17 @@ const getSellShop = async () => {
         font-weight: 800;
       }
     }
-  }
-
-  .order-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    // margin: 11px 10px 7px 10px;
-    margin: 0 10px;
-    font-size: 15px;
-
-    a {
-      color: #333333;
-      text-decoration: none;
-    }
     .el-dropdown-link {
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 15px;
+    }
+    .el-dropdown {
+      min-width: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

@@ -23,6 +23,10 @@ const chooseAddressRef = ref<typeof ChooseAddressModel>()
 const path = window.location.hash
 $router.getRoutes()
 
+const props = defineProps({
+  isToolbarVisibleAll: Boolean,
+})
+
 const toLogin = () => {
   if (
     !userStore.token ||
@@ -36,7 +40,7 @@ const toLogin = () => {
 const logout = async () => {
   let res: any = await userStore.userLogout()
 
-  if (res.code === 200) {
+  if (res.status === 200) {
     $router.push({ path: '/', query: { redirect: $route.path } })
   }
 }
@@ -54,6 +58,7 @@ const chooseAddressOpen = async () => {
 <template>
   <div class="order-text">
     <def-svg-icon
+      v-if="isToolbarVisibleAll || !userStore.username"
       @click="toLogin"
       name="person"
       color="#fd7e14"
@@ -61,7 +66,7 @@ const chooseAddressOpen = async () => {
       height="35px"
       class="svg-icon"
     ></def-svg-icon>
-    <el-dropdown class="list" v-if="userStore.username">
+    <el-dropdown class="list" v-if="userStore.username && isToolbarVisibleAll">
       <span class="el-dropdown-link" style="cursor: pointer">
         {{ userStore.username }}
         <el-icon class="el-icon--right">
@@ -104,13 +109,17 @@ const chooseAddressOpen = async () => {
 
   <div class="list" :class="{ shopCar: userStore.account != '' }">
     <router-link :to="'/BuyShopCart'" class="link">
-      <ShoppingBag class="icon list" />
+      <ShoppingBag class="icon" />
       <span class="cartQuantity text-white bg-warning count">
         {{ userStore.cartCount }}
       </span>
     </router-link>
-    <router-link :to="'/BuyOrder'" class="link" v-if="userStore.account != ''">
-      <Document class="icon list order" />
+    <router-link
+      :to="'/BuyOrder'"
+      class="link"
+      v-if="userStore.account != '' && isToolbarVisibleAll"
+    >
+      <Document class="icon order" />
       <span class="cartQuantity text-white bg-warning count order-count">
         {{ userStore.orderCount }}
       </span>
@@ -143,12 +152,14 @@ img {
 }
 
 .list {
-  margin: 0 10px;
+  // margin: 0 10px;
   // background-color: aqua;
 
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  // width: none;
 
   .icon {
     margin: 0;
@@ -171,7 +182,7 @@ img {
   align-items: center;
   justify-content: center;
   // margin: 11px 10px 7px 10px;
-  margin: 0 10px;
+  // margin: 0 10px;
   font-size: 15px;
 
   a {
@@ -185,9 +196,9 @@ img {
     font-size: 15px;
   }
 }
-.shopCar {
-  margin: 0 0 0 20px;
-}
+// .shopCar {
+//   // margin: 0 0 0 20px;
+// }
 
 .position {
   &-relative {
@@ -202,8 +213,13 @@ img {
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  .cartQuantity {
+  width: 100%;
+  height: 100%;
     position: relative;
+
+  width: 60px;
+  .cartQuantity {
+    position: absolute;
     width: 22px;
     height: 22px;
     border-radius: 50%;
@@ -211,8 +227,8 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-    right: 10px;
-    top: -10px;
+    right: 6px;
+    top: 8px;
   }
 }
 

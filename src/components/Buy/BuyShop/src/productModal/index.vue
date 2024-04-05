@@ -93,7 +93,7 @@ const addCart = async () => {
   })
   let res = await reqAddCart(cartReq.value)
 
-  if (res.code === 200) {
+  if (res.status === 200) {
     userStore.userInfo()
   }
 }
@@ -155,14 +155,14 @@ onBeforeUnmount(() => {
               v-model="product!.orderUsername"
             />
             <!-- <span>部門/單位</span> -->
-            <label for="department">部門/單位:</label>
+            <!-- <label for="department">部門/單位1111111:</label>
             <input
               id="department"
               type="text"
               class="rounded-input"
               placeholder="输入文本"
               v-model="product!.department"
-            />
+            /> -->
             <!-- <span>備註</span> -->
             <label for="remark">備註:</label>
             <input

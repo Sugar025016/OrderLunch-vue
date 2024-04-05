@@ -82,7 +82,7 @@ const save = async () => {
       return { id: choose.id, price: choose.addMealsPrice }
     }) as [{ id: number; price: number }]
   let res = await reqAddOrUpdateAddMeals(addMealsParams)
-  if (res.code === 200 && res.data) {
+  if (res.status === 200 && res.data) {
     // await sellShopStore.getSellShop(sellShopStore.shop.id)
     await reqGetAddMealsProducts(sellShopStore.shop.id)
   }

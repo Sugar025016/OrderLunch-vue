@@ -63,7 +63,7 @@ let shopStore = useShopStore()
 
 let $route = useRoute()
 
-let id: number = $route.params.id 
+let id: number = Number($route.params.id);
 
 let TabProductsData = ref<TabData[]>([])
 

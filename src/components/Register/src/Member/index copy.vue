@@ -31,7 +31,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-let title = document.title
+// let title = document.title
 const checked1 = ref(true)
 
 </script>

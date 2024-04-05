@@ -16,8 +16,8 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "./", // 解析非相對模塊的基地址，默認是當前目錄
     "paths": {

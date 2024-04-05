@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineProps, watch } from 'vue'
+import { ref,  watch } from 'vue'
 import { Orders, Order } from '@/api/order/type'
 
 const props = defineProps({
@@ -102,7 +102,7 @@ const cancel = () => {
 const confirm = async () => {
   orderIds.value = multipleSelection.value.map((order) => order.orderId)
   let res: ResultResponse = await reqPutOrderStatus(12, orderIds.value)
-  if (res.code === 200) {
+  if (res.status === 200) {
     ElMessage({
       type: 'success',
       message: '接收' + multipleSelection.value.length + '張訂單',

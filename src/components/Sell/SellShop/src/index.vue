@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, reactive, nextTick, watch, computed } from 'vue'
+import { ref, onMounted, reactive, nextTick } from 'vue'
 
-import type { ShopList, ShopData } from '@/api/backstage/Shop/type'
-import { ElMessage } from 'element-plus'
-import { UploadProps } from 'element-plus/es/components/upload/src/upload'
 import cityAreas from '@/utils/areaData.js'
 import { reqSearchUser } from '@/api/backstage/user'
 import debounce from 'lodash/debounce'
@@ -13,6 +10,8 @@ import useUserStore from '@/store/modules/user'
 import { PutShopData } from '@/api/shop/type'
 import { reqAddOrUpdateShop } from '@/api/shop'
 import { useRoute } from 'vue-router'
+import { ElMessage, UploadProps } from 'element-plus/lib/components/index.js'
+import { Address } from '@/api/type'
 
 let $route = useRoute()
 
@@ -20,13 +19,6 @@ let sellShopStore = useSellShopStore()
 
 let userStore = useUserStore()
 
-let pageNo = ref<number>(1)
-
-let pageSize = ref<number>(5)
-
-let total = ref<number>(0)
-
-let shopArr = ref<ShopList>([])
 let shopParams = reactive<PutShopData>({
   id: 0,
   name: '',
@@ -37,27 +29,33 @@ let shopParams = reactive<PutShopData>({
     city: '',
     area: '',
     detail: '',
+    street: '',
+    lat: undefined,
+    lng: undefined,
   },
   imgId: 0,
   imgUrl: '',
   orderable: false,
-  isDisable: false,
+  disable: false,
+  deliveryKm: 0,
+  deliveryPrice: 0,
 })
 
-
 let formRef = ref<any>()
-
 
 const updateShop = () => {
   sellShopStore.shopDrawer = true
   Object.assign(shopParams, sellShopStore.shop)
 
   // 创建一个临时的地址对象，以免影响到 row 对象
-  const tempAddress = {
+  const tempAddress:Address = {
     id: sellShopStore.shop.address.id,
     city: sellShopStore.shop.address.city,
     area: sellShopStore.shop.address.area,
+    street: sellShopStore.shop.address.street,
     detail: sellShopStore.shop.address.detail,
+    lat: undefined,
+    lng: undefined
   }
 
   shopParams.address = tempAddress
@@ -79,7 +77,7 @@ const save = async () => {
 
   let res: any = await reqAddOrUpdateShop(shopParams)
 
-  if (res.code === 200) {
+  if (res.status === 200) {
     sellShopStore.shopDrawer = false
     ElMessage({
       message: shopParams.id ? '更新成功' : '添加成功',
@@ -165,7 +163,7 @@ function validateNotEmptyString(rule: any, value: any, callback: any) {
 const loading = ref(false)
 const search = async (query: string) => {
   let res: SearchUserResponseData = await reqSearchUser(query)
-  if (res.code === 200) {
+  if (res.status === 200) {
     searchUsers.value = res.data
   } else {
     sellShopStore.shopDrawer = false
@@ -189,7 +187,7 @@ const remoteMethod = debounce((query) => {
 
 const city: string[] = Object.keys(cityAreas)
 
-const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile:any) => {
   if (
     rawFile.type === 'image/png' ||
     rawFile.type === 'image/jpeg' ||
@@ -216,8 +214,7 @@ const uploadHeaders = {
   'X-CSRF-Token': userStore.token, // 初始为空
 }
 const handleAvatarSuccess: UploadProps['onSuccess'] = (
-  response,
-  uploadFile,
+  response:any,
 ) => {
   shopParams.imgUrl = response.url
   shopParams.imgId = response.id
@@ -351,3 +348,4 @@ h3 {
   }
 }
 </style>
+

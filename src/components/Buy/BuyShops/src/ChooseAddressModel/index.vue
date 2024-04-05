@@ -74,7 +74,7 @@ const checkDeleteAddress = async (address: Address) => {
 
 const deleteAddress = async (address: Address) => {
   let res: ResponseData = await reqDeleteUserAddresses(address.id as number)
-  if (res.code === 200) {
+  if (res.status === 200) {
     userStore.userInfo()
     getUserAddress()
   } else {
@@ -97,7 +97,7 @@ const checkAddress = async () => {
       userStore.cartLng,
     )
 
-    if (mk > userStore.cartDeliveryKm &&userStore.cartCount > 0) {
+    if (mk > userStore.cartDeliveryKm && userStore.cartCount > 0) {
       await ElMessageBox.confirm(
         '外送地址變更，需要清空購物車，你確定要變更嗎？',
         '外送地址變更',
@@ -156,12 +156,8 @@ function calculateDistance(
 }
 
 const chooseAddress = async () => {
-
-
-  let res: UserAddressResponseData = await reqPutUserAddressDelivery(
-    addressId.value,
-  )
-  if (res.code === 200) {
+  let res: ResponseData = await reqPutUserAddressDelivery(addressId.value)
+  if (res.status === 200) {
     await shopStore.getShopPage()
     await userStore.userInfo()
     userStore.setCheckAddress(true)
@@ -187,7 +183,7 @@ const open = async () => {
 
 const getUserAddress = async () => {
   let res: UserAddressResponseData = await reqGetUserAddresses()
-  if (res.code === 200) {
+  if (res.status === 200) {
     addresses.value = res.data
     addressParams.value = JSON.parse(JSON.stringify(addresses.value))
 
@@ -209,17 +205,13 @@ const getUserAddress = async () => {
   }
 }
 
-
 const handleClose = () => {
-
   chooseAddressModelOpen.value = false
-
 }
 
 const changeRedis = (addressId: number) => {
   console.log('handleClose-addressId:' + addressId)
 }
-
 
 const AddressRefs = ref<typeof EditAddressModal>()
 const handleChildClosed = () => {
@@ -242,7 +234,6 @@ defineExpose({
         <span class="address-introduce">選擇外送地址：</span>
         <div v-if="isChangeAddress" class="item">
           <el-scrollbar max-height="400px">
-
             <el-radio-group
               v-model="addressId"
               class="radio"
@@ -260,23 +251,25 @@ defineExpose({
                   address.detail
                 }}
               </el-radio>
-              <el-button
-                class="btn btn-primary"
-                @click="reviseAddress(address)"
-                type="primary"
-                round
-                plain
-                :icon="EditPen"
-                circle
-              ></el-button>
-              <el-button
-                class="btn btn-primary"
-                @click="checkDeleteAddress(address)"
-                type="danger"
-                round 
-                :icon="Delete"
-                circle
-              ></el-button>
+              <div>
+                <el-button
+                  class="btn btn-primary"
+                  @click="reviseAddress(address)"
+                  type="primary"
+                  round
+                  plain
+                  :icon="EditPen"
+                  circle
+                ></el-button>
+                <el-button
+                  class="btn btn-primary"
+                  @click="checkDeleteAddress(address)"
+                  type="danger"
+                  round
+                  :icon="Delete"
+                  circle
+                ></el-button>
+              </div>
             </el-radio-group>
           </el-scrollbar>
           <div class="address-edit">
@@ -309,11 +302,10 @@ defineExpose({
 
 <style lang="scss" scoped>
 .dialog {
-
   :deep(.el-dialog) {
     border-radius: 20px;
     width: 550px;
-    max-height: 80%;
+    // max-height: 80%;
     .el-dialog__header {
       margin: 0px;
       border-bottom: 1px;
@@ -363,6 +355,33 @@ defineExpose({
           .address {
             margin: 10px 0;
           }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .dialog {
+    :deep(.el-dialog) {
+      width: 100%;
+      height: auto;
+
+      .radio {
+        margin: 10px 0;
+        .el-radio {
+          margin-right: 0px;
+          // height: 36px;
+          span {
+            font-size: 16px;
+            white-space: pre-wrap;
+            line-height: 20px;
+          }
+        }
+
+        .el-button:first-child {
+          margin: 0 0 0 20px;
+          // width: 32px;
         }
       }
     }

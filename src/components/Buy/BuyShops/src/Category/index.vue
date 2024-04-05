@@ -356,7 +356,7 @@ const changeCategory = () => {
     margin: 0 10px;
     display: grid;
     grid-template-columns:  minmax(150px, 4fr) minmax(
-        200px,
+        150px,
         12fr
       );
     .search-container {

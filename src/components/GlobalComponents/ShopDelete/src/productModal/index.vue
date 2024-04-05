@@ -13,7 +13,7 @@
         <!-- <div class="modal-header" style="background-image: url(product.img);"> -->
         <div
           class="modal-header"
-          :style="{ backgroundImage: 'url(' + product!.img + ')' }"
+          :style="{ backgroundImage: 'url(' + product!.imgUrl + ')' }"
         >
           <el-button
             type="button"
@@ -107,6 +107,7 @@ import { ProductModalData } from '@/api/tab/type'
 import useUserStore from '@/store/modules/user'
 import { reqAddCart } from '@/api/cart'
 import { CartRequest } from '@/api/cart/type'
+import { ShopData } from '@/api/shop/type'
 
 let userStore = useUserStore()
 
@@ -138,7 +139,7 @@ const addCart = async () => {
 
   let res = await reqAddCart(cartReq.value)
 
-  if (res.code === 200) {
+  if (res.status === 200) {
     userStore.cartCount = res.data
   }
 }

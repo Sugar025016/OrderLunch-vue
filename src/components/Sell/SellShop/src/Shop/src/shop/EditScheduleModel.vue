@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineProps, onMounted, computed, watchEffect } from 'vue'
+import { ref,  watchEffect } from 'vue'
 
 import { PutSchedule, Schedule, Schedules, TimePeriods } from '@/api/shop/type'
 

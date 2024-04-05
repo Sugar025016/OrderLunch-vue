@@ -73,7 +73,7 @@ const save = async () => {
     .filter((v) => v.isChoose)
     .map((choose) => choose.id)
   let res = await reqAddOrUpdateTab(tabParams)
-  if (res.code === 200 && res.data) {
+  if (res.status === 200 && res.data) {
     await sellShopStore.getSellShop(sellShopStore.shop.id)
   }
 }

@@ -1,17 +1,15 @@
 import { TabsData, ProductList } from '../tab/type'
 import { ResponseData, Page, Address } from '../type'
 
-export interface ResponseData {
-  code: number
-  message: string
-  ok: boolean
-}
+// export interface ResponseData {
+//   code: number
+//   message: string
+//   ok: boolean
+// }
 
 export interface ShopIDResponseData extends ResponseData {
   data: number
 }
-
-
 
 export interface CategoryObj {
   id: number | string
@@ -81,8 +79,6 @@ export interface ShopNamesResponse extends ResponseData {
   data: ShopNames
 }
 
-
-
 export interface ShopDetailData {
   id: number
   name: string
@@ -138,12 +134,12 @@ export interface ReqShopData {
   captcha: string
 }
 
-
 export interface RegisterShop {
   captcha: string
   shopName: string
   phone: string
   description: string
   addressId: number
-  addressDetail:string
+  addressDetail: string
 }
+

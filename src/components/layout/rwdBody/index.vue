@@ -10,10 +10,10 @@
 
 <style lang="scss" scoped>
 .rwdBody {
-  margin:40px 0; 
+  margin:40px 10px; 
   @media (min-width: $breakpoint-xs) {
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
   @media (min-width: $breakpoint-sm) {
     margin-left: 10px;

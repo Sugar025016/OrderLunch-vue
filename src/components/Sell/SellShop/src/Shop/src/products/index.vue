@@ -13,7 +13,7 @@ let sellShopStore = useSellShopStore()
 
 let $route = useRoute()
 
-let id: number = $route.params.id
+// let id: number = Number($route.params.id);
 
 let tabProductsData = ref<TabData[]>([])
 
@@ -70,7 +70,7 @@ const scrollToSection = (sectionId: number) => {
 
 const deleteTab = async (tabId: number) => {
   let res = await reqDeleteTab(tabId)
-  if (res.code === 200 && res.data) {
+  if (res.status === 200 && res.data) {
     await sellShopStore.getSellShop(sellShopStore.shop.id)
   }
 }

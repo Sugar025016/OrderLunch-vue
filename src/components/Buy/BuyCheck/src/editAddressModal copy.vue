@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import cityAreas from '@/utils/areaData.js'
-import { Address } from '@/api/user/type'
+import { Address } from '@/api/type'
 
 const props = defineProps({
   address: {
@@ -22,14 +22,14 @@ const changeCity = () => {
   props.address.area = ''
 }
 
-const validatorShopAddressDetail = (rule: any, value: any, callBack: any) => {
+const validatorShopAddressDetail = (  value: any, callBack: any) => {
   if (value.trim().length <= 255) {
     callBack()
   } else {
     callBack(new Error('地址不可超過255個字'))
   }
 }
-const validateNotEmptyString = (rule: any, value: any, callback: any) => {
+const validateNotEmptyString = (  value: any, callback: any) => {
   if (value.trim() === '') {
     callback(new Error('請輸入地址'))
   } else {
@@ -117,10 +117,18 @@ defineExpose({
         placeholder="请您输入外送地址"
       ></el-input>
     </el-form-item>
-    <el-button
+    <!-- <el-button
       type="primary"
       size="large"
       @click="deleteAddress(props.index)"
+      round
+      plain
+    >
+      刪除
+    </el-button> -->
+    <el-button
+      type="primary"
+      size="large"
       round
       plain
     >

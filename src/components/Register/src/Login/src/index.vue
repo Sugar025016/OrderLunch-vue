@@ -76,14 +76,14 @@
 
 <script setup lang="ts">
 import { User, Lock, Warning } from '@element-plus/icons-vue'
-import { Ref, computed, nextTick, reactive, ref } from 'vue'
+import { Ref, reactive, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { ElNotification } from 'element-plus'
+import { ElNotification } from 'element-plus/lib/components/index.js'
 import { getTime } from '@/utils/time'
 import useUserStore from '@/store/modules/user'
 // import Identify from '@/components/VerifyCode/index.vue'
 // VerifyCode import
-import Captcha from '../Captcha/index.vue'
+// import Captcha from '../Captcha/index.vue'
 
 let title = document.title
 

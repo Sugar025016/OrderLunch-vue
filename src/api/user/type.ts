@@ -1,5 +1,5 @@
 import { ShopList } from '../shop/type'
-import { Address } from '../type'
+import { Address, ResponseData } from '../type'
 
 export interface RegisterMember {
   verifyCode: string
@@ -10,18 +10,14 @@ export interface RegisterMember {
   phone: string
 }
 
-
 export interface LoginFormData {
   username?: string
   password?: string
   verifyCode?: string
+  rememberMe: boolean,
 }
 
-export interface ResponseData {
-  code?: number
-  message?: string
-  ok?: boolean
-}
+
 
 export interface LoginResponseData extends ResponseData {
   data?: LoginResponseData
@@ -52,7 +48,6 @@ export interface UserInfoResponseData extends ResponseData {
     address?: Address
   }
 }
-
 
 export type Addresses = Address[]
 
@@ -87,6 +82,3 @@ export interface LovesResponseData extends ResponseData {
 export interface ChangeLovesResponseData extends ResponseData {
   data: boolean
 }
-
-
-

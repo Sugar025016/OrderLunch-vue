@@ -30,7 +30,7 @@ const getOrder = async () => {
     pageSize.value,
     pageNo.value,
   )
-  if (res.code === 200) {
+  if (res.status === 200) {
     total.value = res.data.totalElements
     orderPageResponse.value = res.data
     order.value = res.data.content
@@ -65,7 +65,7 @@ const childBorder = ref(false)
 </script>
 
 <template>
-  <el-card style="margin: 0px m-20px">
+  <!-- <el-card style="margin: 0px m-20px"> -->
     <el-table
       height="760"
       style="margin: 0 0 10px 0; width: 100%"
@@ -115,6 +115,7 @@ const childBorder = ref(false)
         width="180"
         max-width="100"
         align="center"
+        sortable
       />
       <el-table-column
         prop="totalPrise"
@@ -146,7 +147,7 @@ const childBorder = ref(false)
       @current-change="getOrder"
       @size-change="getOrder"
     />
-  </el-card>
+  <!-- </el-card> -->
   <SellProductDrawer ref="SellProductDrawerRef" />
 </template>
 

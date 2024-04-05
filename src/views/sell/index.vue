@@ -76,9 +76,8 @@ const shopNameItem = ref<ShopNames>([])
 const getItem = async () => {
   drawer.value = true
 
-  let res: ShopNames = await sellShopStore.getShopItem()
-
-  shopNameItem.value = res
+  
+  shopNameItem.value = await sellShopStore.getShopItem() as ShopNames
 
 }
 
@@ -159,7 +158,7 @@ onMounted(() => {
         transition: all 0.3s;
         height: calc(100vh - 60px);
         .scroll-container {
-          padding: 20px;
+          padding: 0 20px;
           scroll-behavior: smooth;
           height: 100%; /* 设置容器高度 */
           overflow: auto; /* 让容器产生滚动条 */

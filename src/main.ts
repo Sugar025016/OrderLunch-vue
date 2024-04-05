@@ -28,10 +28,7 @@ app.use(globeComponent)
 app.use(router)
 app.use(pinia)
 app.use(ElementPlus, {
-  zIndex: 3000 ,
+  zIndex: 3000,
 })
-
-
-
 
 app.mount('#app')

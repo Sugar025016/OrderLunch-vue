@@ -1,9 +1,6 @@
-import {  reqGetSellShop, getShop,  getShopNames } from '@/api/shop'
+import { reqGetSellShop, getShopNames } from '@/api/shop'
 import { defineStore } from 'pinia'
 import type {
-  ShopsResponseData,
-  ShopSearch,
-  ShopResponseData,
   ShopNamesResponse,
   ShopDetailsResponse,
   ShopDetailData,
@@ -14,7 +11,7 @@ import ElMessage from 'element-plus/lib/components/message/index.js'
 import { useRouter } from 'vue-router'
 import useUserStore from '@/store/modules/user'
 
-let $router = useRouter()
+const $router = useRouter()
 
 const useSellShopStore = defineStore('sellShopStore', {
   state: (): SellShopState => {
@@ -30,7 +27,7 @@ const useSellShopStore = defineStore('sellShopStore', {
           street: '',
           detail: '',
           lat: undefined,
-          lng: undefined
+          lng: undefined,
         },
         phone: '',
         imgId: 0,
@@ -58,14 +55,13 @@ const useSellShopStore = defineStore('sellShopStore', {
         totalElements: 0,
         size: 0,
         number: 0,
-        totalPages: 0
+        totalPages: 0,
       },
       scrollTop: 0,
       shopDrawer: false,
     }
   },
   actions: {
-
     async getSellShop(shopId: number) {
       if (isNaN(shopId)) {
         if (this.shopNames.length === 0) {
@@ -73,9 +69,9 @@ const useSellShopStore = defineStore('sellShopStore', {
         }
         shopId = this.shopNames[0].id
       }
-      let res: ShopDetailsResponse = await reqGetSellShop(shopId)
+      const res: ShopDetailsResponse = await reqGetSellShop(shopId)
 
-      if (res.code === 200) {
+      if (res.status === 200) {
         this.shop = res.data
       } else {
         ElMessage({
@@ -84,7 +80,7 @@ const useSellShopStore = defineStore('sellShopStore', {
         })
       }
     },
-    async deleteSellProduct(shopId: number) { },
+    // async deleteSellProduct(shopId: number) {},
     async getSellShopThisId() {
       if (this.shopId === 0) {
         if (this.shopNames.length === 0) {
@@ -92,9 +88,9 @@ const useSellShopStore = defineStore('sellShopStore', {
         }
         this.shopId = this.shopNames[0].id
       }
-      let res: ShopDetailsResponse = await reqGetSellShop(this.shopId)
+      const res: ShopDetailsResponse = await reqGetSellShop(this.shopId)
 
-      if (res.code === 200) {
+      if (res.status === 200) {
         this.shop = res.data
       } else {
         ElMessage({
@@ -104,10 +100,10 @@ const useSellShopStore = defineStore('sellShopStore', {
       }
     },
     async getShopItem() {
-      let userStore = useUserStore()
+      const userStore = useUserStore()
       if (userStore.account) {
-        let res: ShopNamesResponse = await getShopNames()
-        if (res.code === 200) {
+        const res: ShopNamesResponse = await getShopNames()
+        if (res.status === 200) {
           if (res.data.length === 0) {
             $router.push('/')
             return
@@ -124,7 +120,6 @@ const useSellShopStore = defineStore('sellShopStore', {
           })
         }
       }
-
     },
 
     async clearSellShopData() {
@@ -132,10 +127,7 @@ const useSellShopStore = defineStore('sellShopStore', {
       this.shopNames = []
       this.shopId = 0
       this.shopPage = {} as ShopPageResponse
-
     },
-
-
   },
   getters: {},
 })

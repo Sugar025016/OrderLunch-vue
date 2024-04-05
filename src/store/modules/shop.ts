@@ -9,8 +9,8 @@ import type {
 import { ShopState } from './types/types'
 import ElMessage from 'element-plus/lib/components/message/index.js'
 import { useRouter } from 'vue-router'
-import useUserStore from './user';
-let $router = useRouter()
+import useUserStore from './user'
+const $router = useRouter()
 
 const useShopStore = defineStore('Category', {
   state: (): ShopState => {
@@ -43,9 +43,9 @@ const useShopStore = defineStore('Category', {
             ],
           },
         ],
-        isOrderable: false,
+        orderable: false,
         tabProducts: [],
-        products: []
+        products: [],
       },
       shopNames: [],
       shopId: 0,
@@ -54,36 +54,42 @@ const useShopStore = defineStore('Category', {
         totalElements: 0,
         size: 0,
         number: -1,
-        totalPages: 0
+        totalPages: 0,
       },
-      shopArr: new Set<ShopData>,
+      shopArr: new Set<ShopData>(),
       scrollTop: 0,
       shopSearch: {},
     }
   },
   actions: {
-    async getShopPage(page: number = 0) {
+    async getShopPage(page = 0) {
+      console.log("res.data.content")
       if (page === 0) {
-        await this.shopArr.clear();
+        await this.shopArr.clear()
       }
-      const userStore = useUserStore();
+      const userStore = useUserStore()
       this.shopSearch.userAddressId = userStore.address?.id
 
-      const res: GetShopPageResponse = await reqGetShopPage(this.shopSearch, page)
-      if (res.code === 200) {
+      const res: GetShopPageResponse = await reqGetShopPage(
+        this.shopSearch,
+        page,
+      )
+      console.log("res.data.content",res)
+      if (res.status === 200) {
+        console.log("res.data.content",res.data.content)
         this.shopPage = res.data
         res.data.content.forEach((shopData) => {
-          this.shopArr.add(shopData);
-        });
-        await console.log("this.shopArr-----200-----", this.shopArr)
+          this.shopArr.add(shopData)
+        })
+        // await console.log('this.shopArr-----200-----', this.shopArr)
       } else {
         return Promise.reject(new Error(res.message))
       }
     },
     async getShop(shopId: number) {
-      let res: ShopResponseData = await getShop(shopId)
+      const res: ShopResponseData = await getShop(shopId)
 
-      if (res.code === 200) {
+      if (res.status === 200) {
         this.shop = res.data
       } else {
         ElMessage({
@@ -93,8 +99,8 @@ const useShopStore = defineStore('Category', {
       }
     },
     async getShopItem() {
-      let res: ShopNamesResponse = await getShopNames()
-      if (res.code === 200) {
+      const res: ShopNamesResponse = await getShopNames()
+      if (res.status === 200) {
         if (res.data.length === 0) {
           $router.push('/')
         }

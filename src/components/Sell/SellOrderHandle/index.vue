@@ -36,7 +36,7 @@ const getOrder = async () => {
     pageSize.value,
     pageNo.value,
   )
-  if (res.code === 200) {
+  if (res.status === 200) {
     total.value = res.data.totalElements
     orderPageResponse.value = res.data
     order.value = res.data.content
@@ -59,7 +59,7 @@ const putOrderByShop = async (
     orderIdList,
   )
 
-  if (res.code === 200) {
+  if (res.status === 200) {
     orderIds.value = []
     getOrder()
   } else {
@@ -119,7 +119,7 @@ const getMealGroup = (order: Order) => {
   const transformedData: GroupedData[] = []
 
   let jsonData = JSON.parse(JSON.stringify(order))
-  jsonData.orderDetails.forEach((item) => {
+  jsonData.orderDetails.forEach((item: OrderDetail) => {
     const existingItem = transformedData.find(
       (el) =>
         el.productId === item.productId && el.productName === item.productName,
@@ -167,7 +167,7 @@ const formatDate = (row: any, column: any) => {
 </script>
 
 <template>
-  <el-card style="margin: 0px m-20px">
+  <!-- <el-card style="margin: 0px m-20px"> -->
     <el-button
       type="success"
       size="default"
@@ -236,11 +236,12 @@ const formatDate = (row: any, column: any) => {
       <el-table-column
         prop="takeTime"
         label="取餐日期"
-        width="90"
+        width="110"
         max-width="180"
         align="center"
         column-key="date"
         :formatter="formatDate"
+        sortable
       />
       <el-table-column
         prop="takeTime"
@@ -294,7 +295,7 @@ const formatDate = (row: any, column: any) => {
       @current-change="getOrder"
       @size-change="getOrder"
     />
-  </el-card>
+  <!-- </el-card> -->
   <orderPendingModal
     v-model:orderPendingVisible="orderPendingVisible"
     :groupedData="groupedData"

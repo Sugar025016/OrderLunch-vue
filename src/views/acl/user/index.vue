@@ -8,7 +8,6 @@ import {
   reqSelectUser,
 } from '@/api/acl/user'
 import type {
-  UserResponseData,
   Records,
   User,
   AllRoleResponseData,
@@ -53,7 +52,7 @@ const getHasUser = async (pager = 1) => {
   //   pageSize.value,
   //   keyword.value,
   // )
-  // if (res.code === 200) {
+  // if (res.status === 200) {
   //   total.value = res.data.total
   //   userArr.value = res.data.records
   // }
@@ -90,7 +89,7 @@ const updateUser = (row: User) => {
 const save = async () => {
   await formRef.value.validate()
   let res: any = await reqAddOrUpdateUser(userParams)
-  if (res.code === 200) {
+  if (res.status === 200) {
     drawer.value = false
     ElMessage({
       type: 'success',
@@ -144,7 +143,7 @@ const setRole = async (row: User) => {
   drawer1.value = true
   Object.assign(userParams, row)
   let res: AllRoleResponseData = await reqAllRole(userParams.id as number)
-  if (res.code === 200) {
+  if (res.status === 200) {
     allRole.value = res.data.allRolesList
     userRole.value = res.data.assignRoles
     drawer1.value = true
@@ -174,7 +173,7 @@ const confirmClick = async () => {
     }),
   }
   let res: any = await reqSetUserRole(data)
-  if (res.code === 200) {
+  if (res.status === 200) {
     ElMessage({
       type: 'success',
       message: '分配职务成功',
@@ -186,7 +185,7 @@ const confirmClick = async () => {
 
 const deleteUser = async (userId: number) => {
   let res: any = await reqRemoveUser(userId)
-  if (res.code === 200) {
+  if (res.status === 200) {
     ElMessage({ type: 'success', message: '删除成功' })
     getHasUser(userArr.value.length > 1 ? pageNo.value : pageNo.value - 1)
   }
@@ -201,7 +200,7 @@ const deleteSelectUser = async () => {
     return item.id
   })
   let res: any = await reqSelectUser(idList)
-  if (res.code === 200) {
+  if (res.status === 200) {
     ElMessage({ type: 'success', message: '删除成功' })
     getHasUser(userArr.value.length > 1 ? pageNo.value : pageNo.value - 1)
   }
@@ -287,7 +286,7 @@ const reset = () => {
         show-overflow-tooltip
       ></el-table-column>
       <el-table-column label="操作" width="300px" align="center">
-        <template #="{ row, $index }">
+        <template #="{ row }">
           <el-button size="small" icon="User" @click="setRole(row)">
             分配角色
           </el-button>

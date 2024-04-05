@@ -6,17 +6,13 @@ import type {
   ShopNamesResponse,
   ShopDetailsResponse,
   PutSchedule,
-  ShopData,
   PutShopData,
   PutShopResponse,
   GetShopPageResponse,
-  ReqShopData,
   RegisterShop,
+  ShopIDResponseData,
 } from './type'
 
-import type {
-  ResponseData
-} from '../type'
 
 enum API {
   SHOPS = '/api/shop',
@@ -25,7 +21,6 @@ enum API {
   SELL_SHOP = '/sell/shop',
   SCHEDULE = '/api/schedule',
   REGISTER_SHOP = '/api/register/shop',
-
 }
 
 export const getShop = (data: number) =>
@@ -49,7 +44,7 @@ export const getShop = (data: number) =>
 // export const reqGetShopPage = (data: ShopSearch, page: number, limit: number = 5) =>{
 //   if (data.userAddressId) {
 //     return   request.get<any, GetShopPageResponse>(
-//       API.SHOP + data.userAddressId + 
+//       API.SHOP + data.userAddressId +
 //       `?name=${data.other}&page=${page}&size=${limit}` +
 //       `&${data.categoryId !== undefined ? 'categoryId=' + data.categoryId : null
 //       }` +
@@ -64,19 +59,22 @@ export const getShop = (data: number) =>
 //       `&${data.other !== undefined ? 'other=' + data.other : null}`,)
 //   }
 // }
-export const reqGetShopPage = (data: ShopSearch, page: number, limit: number = 5) =>
+export const reqGetShopPage = (data: ShopSearch, page: number, limit = 5) =>
   request.get<any, GetShopPageResponse>(
-    API.SHOP + `?name=${data.other}&page=${page}&size=${limit}` +
-    `&${data.userAddressId !== undefined ? 'userAddressId=' + data.userAddressId : null}` +
-    `&${data.city !== undefined ? 'city=' + data.city : null}` +
-    `&${data.area !== undefined ? 'area=' + data.area : null}` +
-    `&${data.categoryId !== undefined ? 'categoryId=' + data.categoryId : null
-    }` +
-    `&${data.other !== undefined ? 'other=' + data.other : null}`,)
-
-
-
-
+    API.SHOP +
+      `?name=${data.other}&page=${page}&size=${limit}` +
+      `&${
+        data.userAddressId !== undefined
+          ? 'userAddressId=' + data.userAddressId
+          : null
+      }` +
+      `&${data.city !== undefined ? 'city=' + data.city : null}` +
+      `&${data.area !== undefined ? 'area=' + data.area : null}` +
+      `&${
+        data.categoryId !== undefined ? 'categoryId=' + data.categoryId : null
+      }` +
+      `&${data.other !== undefined ? 'other=' + data.other : null}`,
+  )
 
 export const getRecommendShops = (data: ShopSearch) =>
   request.get<any, ShopsResponseData>(API.SHOPS_RECOMMEND, { params: data })
@@ -102,5 +100,4 @@ export const reqAddOrUpdateShop = (data: PutShopData) => {
 }
 
 export const reqAddShop = (data: RegisterShop) =>
-  request.post<any, ResponseData>(API.REGISTER_SHOP, data)
-
+  request.post<any, ShopIDResponseData>(API.REGISTER_SHOP, data)

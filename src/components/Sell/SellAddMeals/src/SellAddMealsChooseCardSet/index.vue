@@ -10,28 +10,28 @@ import { ElMessageBox } from 'element-plus/lib/components/message-box/index.js'
 
 defineProps(['product', 'setting', 'choose', 'add', 'change'])
 
-const deleteProduct = async (productId: number) => {
-  ElMessageBox.confirm('是否確認要刪除?', 'Warning', {
-    confirmButtonText: '刪除',
-    cancelButtonText: '取消',
-    type: 'warning',
-    icon: markRaw(Delete),
-  })
-    .then(() => {
-      reqDeleteSellProducts(productId)
-      window.location.reload()
-      ElMessage({
-        type: 'success',
-        message: 'Delete completed',
-      })
-    })
-    .catch(() => {
-      ElMessage({
-        type: 'info',
-        message: 'Delete canceled',
-      })
-    })
-}
+// const deleteProduct = async (productId: number) => {
+//   ElMessageBox.confirm('是否確認要刪除?', 'Warning', {
+//     confirmButtonText: '刪除',
+//     cancelButtonText: '取消',
+//     type: 'warning',
+//     icon: markRaw(Delete),
+//   })
+//     .then(() => {
+//       reqDeleteSellProducts(productId)
+//       window.location.reload()
+//       ElMessage({
+//         type: 'success',
+//         message: 'Delete completed',
+//       })
+//     })
+//     .catch(() => {
+//       ElMessage({
+//         type: 'info',
+//         message: 'Delete canceled',
+//       })
+//     })
+// }
 </script>
 <template>
   <div class="add-meals-modal">

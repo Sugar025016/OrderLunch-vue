@@ -1,9 +1,5 @@
 import request from '@/utils/request'
-import type {
-  SearchShopData,
-  SearchShopRequestData,
-  SearchShopsRequestData,
-} from './type'
+import type { SearchShopRequestData, SearchShopsRequestData } from './type'
 enum API {
   TAB = '/backstage/tab',
   TAB_NAME = '/backstage/tab/name',

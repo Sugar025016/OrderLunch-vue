@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, reactive, ref, defineEmits } from 'vue'
+import { nextTick, reactive, ref } from 'vue'
 import { Address } from '@/api/type'
 
 import address from '@/utils/address.js'
@@ -26,6 +26,7 @@ const changeArea = () => {
 }
 
 const validatorShopAddressDetail = (rule: any, value: any, callBack: any) => {
+
   if (value.trim().length <= 255) {
     callBack()
   } else {
@@ -33,6 +34,7 @@ const validatorShopAddressDetail = (rule: any, value: any, callBack: any) => {
   }
 }
 const validateNotEmptyString = (rule: any, value: any, callback: any) => {
+  
   if (value.trim() === '') {
     callback(new Error('請輸入地址'))
   } else {
@@ -72,7 +74,7 @@ const emits = defineEmits(['childClosed'])
 const saveAddress = async () => {
   await formRef.value.validate()
   let res: AddressResponseData = await reqAddUserAddresses(addressData)
-  if (res.code === 200) {
+  if (res.status === 200) {
     await userStore.userInfo()
     addAddressModalOpen.value = false
     emits('childClosed') 

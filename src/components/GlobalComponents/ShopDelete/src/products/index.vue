@@ -55,12 +55,13 @@ import {
 
 import { ProductData } from '@/api/product/type'
 import useUserStore from '@/store/modules/user'
+import { ElScrollbar } from 'element-plus/lib/components/index.js'
 
 let userStore = useUserStore()
 
 let $route = useRoute()
 
-let id: number = $route.params.id
+let id: number = Number($route.params.id);
 
 let TabProductsData = ref<TabData[]>([])
 const isProductModalVisible = ref(false) // 控制是否显示 product-modal
@@ -96,11 +97,10 @@ const getProductsData = async (id: number) => {
   TabProductsData.value = res.data
 }
 
-import { ElScrollbar } from 'element-plus'
 const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>()
 
 const scrollToSection = (sectionId: number) => {
-  const element = document.getElementById(sectionId)
+  const element = document.getElementById(sectionId.toString())
   if (element) {
     const headerHeight = 100
     const targetPosition =

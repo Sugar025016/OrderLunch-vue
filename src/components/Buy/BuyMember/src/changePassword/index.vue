@@ -6,7 +6,7 @@
         type="password"
         class="rounded-input"
         placeholder="输入文本"
-        v-model="pwd"
+        v-model="userProfile.password"
       />
     </div>
     <div>
@@ -15,7 +15,7 @@
         type="password"
         class="rounded-input"
         placeholder="输入文本"
-        v-model="newPwd"
+        v-model="userProfile.NewPassword"
       />
     </div>
     <div>
@@ -41,6 +41,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import { UserPwd } from '@/api/user/type'
 import useLoadingStore from '@/store/modules/loading'
 import useUserStore from '@/store/modules/user'
 import { ref } from 'vue'
@@ -50,12 +51,19 @@ const loadingStore = useLoadingStore()
 const pwd = ref('')
 const newPwd = ref('')
 const checkPwd = ref('')
-
+const userProfile = ref<UserPwd>({
+  password: '',
+  NewPassword: '',
+})
 const changeUserPassword = async () => {
-  loadingStore.startLoading()
-  const response = await userStore.changeUserPwd(userProfile.value)
-  loadingStore.stopLoading()
-  loadingStore.open(response)
+  if (userProfile.value.NewPassword === checkPwd.value) {
+    // userProfile.value.password=pwd.value
+    // userProfile.value.NewPassword=newPwd.value
+    loadingStore.startLoading()
+    const response = await userStore.changeUserPwd(userProfile.value)
+    loadingStore.stopLoading()
+    loadingStore.open(response)
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -97,3 +105,4 @@ const changeUserPassword = async () => {
   }
 }
 </style>
+{ password: '', NewPassword: '' }

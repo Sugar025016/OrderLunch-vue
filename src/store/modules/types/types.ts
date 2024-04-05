@@ -1,7 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-import type { CategoryObj, ProductList } from '@/api/product/type'
 import {
-  Category,
   ShopList,
   ShopData,
   ShopNames,
@@ -35,9 +33,8 @@ export interface UserState {
   address: Address | undefined
   getNewOrderTimer: ReturnType<typeof setInterval> | null
   orderNew: Orders
-  isCheckAddress:boolean
+  isCheckAddress: boolean
 }
-
 
 export interface ShopState {
   shop: ShopDetailData
@@ -47,17 +44,16 @@ export interface ShopState {
   shopArr: Set<ShopData>
   scrollTop: number
   shopSearch: ShopSearch
-  userAddress: Address | undefined
 }
 export interface SellShopState {
   shop: ShopDetailData
   shopNames: ShopNames
   shopId: number
   shopPage: ShopPageResponse
-  shopArr: Set<ShopData>
+  // shopArr: Set<ShopData>
   scrollTop: number
   shopDrawer: boolean
-  shopSearch: ShopSearch
+  // shopSearch: ShopSearch
 }
 export interface SellProductState {
   products: SellProductList

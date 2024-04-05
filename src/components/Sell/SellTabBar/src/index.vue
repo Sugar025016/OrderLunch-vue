@@ -6,14 +6,15 @@ import Setting from '@/components/Buy/BuyTabBar/src/setting/index.vue'
 
 
 defineProps(['scene'])
+
+
 </script>
 
 <template>
   <el-header style="text-align: right; font-size: 12px">
-    <div class="toolbar">
+    <div class="toolbar" >
       <div class="toolbar_left">
         <BreadCrumb />
-        444
       </div>
       <div class="toolbar_order">
         <order></order>

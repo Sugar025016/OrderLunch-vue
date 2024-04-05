@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { User, Lock, Warning } from '@element-plus/icons-vue'
+import { User, Lock } from '@element-plus/icons-vue'
 import { RegisterMember } from '@/api/user/type'
 import { reqAddMember } from '@/api/user'
 import ElMessage from 'element-plus/lib/components/message/index.js'
@@ -111,7 +111,7 @@ const save = async () => {
 
   let res: any = await reqAddMember(registerMember.value)
 
-  if (res.code === 200) {
+  if (res.status === 200) {
     // sellShopStore.shopDrawer = false
     ElMessage({
       message: '註冊成功',

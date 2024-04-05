@@ -36,7 +36,7 @@ import reactive from '@/components/Register/src/index.vue'
     }
     .buy-el-footer {
       background-color: black;
-      height: 200px;
+      height: auto;
       padding: 35px 0;
       @media (min-width: $breakpoint-xs) {
         padding-left: 5px;

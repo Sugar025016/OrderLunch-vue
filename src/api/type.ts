@@ -1,5 +1,5 @@
 export interface ResponseData {
-  code?: number
+  status?: number
   message?: string
   ok?: boolean
 }
@@ -25,12 +25,22 @@ export interface Page {
 //   area: string
 //   detail: string
 // }
+// export interface Address {
+//   id?: number
+//   city: string | undefined
+//   area: string | undefined
+//   street: string | undefined
+//   detail: string | undefined
+//   lat: number | undefined
+//   lng: number | undefined
+// }
+
 export interface Address {
   id?: number
-  city: string | undefined
-  area: string | undefined
-  street: string | undefined
-  detail: string | undefined
+  city: string
+  area: string
+  street: string
+  detail: string
   lat: number | undefined
   lng: number | undefined
 }

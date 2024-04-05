@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, nextTick, defineExpose } from 'vue'
+import { ref, reactive, nextTick } from 'vue'
 
 import { ResponseBoolean, SellProduct } from '@/api/sellProduct/type'
 import ElMessage from 'element-plus/lib/components/message/index.js'
@@ -93,7 +93,7 @@ const save = async () => {
     productParams,
   )
   drawer.value = false
-  if (res.code === 200) {
+  if (res.status === 200) {
     ElMessage({
       type: 'success',
       message: productParams.id ? '更新成功' : '添加成功',
@@ -112,14 +112,14 @@ const cancel = () => {
 }
 
 const handleAvatarSuccess: UploadProps['onSuccess'] = (
-  response,
-  uploadFile,
+  response:any,
+  uploadFile:any,
 ) => {
   productParams.imgUrl = response.url
   productParams.imgId = response.id
   formRef.value.clearValidate('img')
 }
-const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile: { type: string; size: number }) => {
   if (
     rawFile.type === 'image/png' ||
     rawFile.type === 'image/jpeg' ||

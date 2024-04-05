@@ -3,7 +3,7 @@ import { House, ChatRound, User, Watch } from '@element-plus/icons-vue'
 import { useRoute } from 'vue-router'
 import { onMounted, ref, computed } from 'vue'
 import { getShop } from '@/api/shop'
-import { ShopData, ShopResponseData } from '@/api/shop/type'
+import { ShopData, ShopDetailData, ShopResponseData } from '@/api/shop/type'
 // import 'bootstrap/dist/css/bootstrap.css' // Import Bootstrap CSS
 import shopInfoModal from '../shopInfoModal/index.vue'
 import useUserStore from '@/store/modules/user'
@@ -15,7 +15,25 @@ let $route = useRoute()
 
 let id: number = parseInt($route.params.id as string)
 
-let shopData = ref<ShopData>()
+let shopData = ref<ShopDetailData>({
+  id: 0,
+  name: '',
+  description: '',
+  address: {
+    city: '',
+    area: '',
+    street: '',
+    detail: '',
+    lat: undefined,
+    lng: undefined,
+  },
+  imgId: 0,
+  imgUrl: '',
+  tabProducts: [],
+  products: [],
+  orderable: false,
+  schedules: [],
+})
 let favorite = ref('')
 
 let userStore = useUserStore()
@@ -51,16 +69,16 @@ const dayOfWeek = currentDate.getDay()
   <div class="">
     <div class="shop">
       <div class="shop-card">
-        <div :span="12" class="shop-img" :style="shopImageStyle" v-if="shopData?.imgUrl">
-          <div class="overlay" v-if="shopData?.orderable">
-            <!-- <span class="overlay-text">可線上AA</span>
-            <span class="overlay-text">訂購</span> -->
+        <div
+          :span="12"
+          class="shop-img"
+          :style="shopImageStyle"
+          v-if="shopData?.imgUrl"
+        >
+          <div class="shop-border">
+            <div class="overlay" v-if="shopData?.orderable"></div>
           </div>
-          <div class="shop-border"></div>
         </div>
-        <!-- <div class="overlay" v-if="shop.orderable">
-          <div class="overlay-text">可線上訂購</div>
-        </div> -->
         <div class="shop-content">
           <div class="shop-title">
             <span>{{ shopData?.name }}</span>
@@ -98,7 +116,7 @@ const dayOfWeek = currentDate.getDay()
               <span>今日營業時間：</span>
               <div
                 v-if="
-                  shopData?.schedules[dayOfWeek]?.timePeriods &&
+                  shopData?.schedules &&
                   shopData?.schedules[dayOfWeek]?.timePeriods.length > 0
                 "
                 v-for="(timePeriod, i) in shopData?.schedules[dayOfWeek]
@@ -116,7 +134,7 @@ const dayOfWeek = currentDate.getDay()
                   }}
                 </span>
               </div>
-              <span v-else>{{ shopData?.schedules[dayOfWeek] }}</span>
+              <!-- <span v-else>{{ shopData?.schedules[dayOfWeek] }}</span> -->
               <span v-else>非營業日</span>
               <el-link
                 class="more"
@@ -179,42 +197,29 @@ $b-color: $color;
         width: 100%;
         border-radius: 20px;
         border: white 1px solid;
-        overflow: hidden;
+        // overflow: hidden;
         display: flex;
       }
       .overlay {
         position: absolute;
-        top: -50px;
-        left: -50px;
-        padding: 10px;
-        width: 160px; /* 這裡修改為 100% */
-        height: 160px; /* 這裡修改為 100% */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        z-index: 1;
-        background-size: cover;
+        top: -10%;
+        left: -8%;
+        // padding: 10px;
+        height: 35%; /* 這裡修改為 100% */
+        width: 200px;
+        background-size: contain;
         background-repeat: no-repeat;
-
         background-image: url('@/assets/images/plateOrder.png');
-        background-position: center center;
-        object-fit: contain;
-        transition: opacity 0.3s ease;
-        font-size: 16px;
-        .overlay-text {
-          color: $color;
-          font-weight: bold;
-          z-index: 100;
-          width: 100%;
-          height: auto;
-
-          margin: 2px 10px;
-          text-align: center;
-
-          white-space: nowrap;
-          font-size: 1.5rem;
+        background-position: top left;
+        @media (max-width: $breakpoint-md) {
+          top: -40px;
+          left: -30px;
         }
+        @media (max-width: $breakpoint-xs) {
+          top: -30px;
+          left: -20px;
+        }
+
       }
     }
 
@@ -290,7 +295,7 @@ $b-color: $color;
 
       .shop-content {
         padding: 20px;
-        margin: 0 ;
+        margin: 0;
         .shop-title {
           span {
             font-size: 30px;
@@ -327,3 +332,4 @@ $b-color: $color;
   z-index: 50;
 }
 </style>
+

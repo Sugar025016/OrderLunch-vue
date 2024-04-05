@@ -1,8 +1,4 @@
-export interface ResponseData {
-  code: number
-  message: string
-  ok: boolean
-}
+import { ResponseData } from "../type"
 
 export interface SellProduct {
   id: number

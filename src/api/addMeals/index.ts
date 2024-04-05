@@ -10,8 +10,10 @@ export const reqGetAddMealsProducts = (data: number) =>
 export const reqDeleteAddMeals = (data: number) =>
   request.delete<any, AddMealsProductsResponseData>(API.AddMeals + '/' + data)
 
-
-export const reqAddOrUpdateAddMeals = (data: PutAddMealsData, addMealsId: number = 0) => {
+export const reqAddOrUpdateAddMeals = (
+  data: PutAddMealsData,
+  addMealsId = 0,
+) => {
   if (addMealsId != 0) {
     return request.put<any, any>(API.AddMeals + '/' + addMealsId, data)
   } else {

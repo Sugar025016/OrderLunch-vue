@@ -1,7 +1,6 @@
 import request from '@/utils/request'
 import type {
   AddOrder,
-  GetOrderFinishPageResponse,
   GetOrderNewResponse,
   GetOrderPageResponse,
 } from './type'
@@ -15,24 +14,24 @@ enum API {
 export const reqAddOrder = (data: AddOrder) =>
   request.post<any, ResultResponse>(API.ORDER_URL, data)
 
-export const reqGetOrder = (page: number = 1) =>
+export const reqGetOrder = (page = 1) =>
   request.get<any, GetOrderPageResponse>(API.ORDER_URL + '/' + page)
 
 export const reqGetOrderByShop = (
-  shopId: number = 1,
+  shopId = 1,
   classify: number,
   limit: number,
   page: number,
 ) =>
   request.get<any, GetOrderPageResponse>(
     API.SELL_ORDER_URL +
-    '/' +
-    shopId +
-    `?classify=${classify}&page=${page - 1}&size=${limit}`,
+      '/' +
+      shopId +
+      `?classify=${classify}&page=${page - 1}&size=${limit}`,
   )
 
 export const reqPutOrderByShop = (
-  shopId: number = 1,
+  shopId = 1,
   status: number,
   orderIds: number[],
 ) =>
@@ -41,16 +40,8 @@ export const reqPutOrderByShop = (
     orderIds,
   )
 
-export const reqPutOrderStatus = (
-  status: number,
-  orderIds: number[]
-) =>
-  request.put<any, ResultResponse>(
-    API.SELL_ORDER_URL + '/' + status,
-    orderIds
-  )
+export const reqPutOrderStatus = (status: number, orderIds: number[]) =>
+  request.put<any, ResultResponse>(API.SELL_ORDER_URL + '/' + status, orderIds)
 
 export const reqGetOrderNew = () =>
-  request.get<any, GetOrderNewResponse>(
-    API.SELL_ORDER_URL_NEW
-  )
+  request.get<any, GetOrderNewResponse>(API.SELL_ORDER_URL_NEW)

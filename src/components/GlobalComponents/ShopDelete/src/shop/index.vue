@@ -42,14 +42,14 @@
 
               <component
                 v-if="
-                  shopData?.schedules[dayOfWeek].timePeriods &&
+                  shopData?.schedules &&
                   shopData?.schedules[dayOfWeek].timePeriods?.length > 0
                 "
                 v-for="timePeriod in shopData?.schedules[dayOfWeek].timePeriods"
               >
                 <span>{{ timePeriod.startTime }}~{{ timePeriod.endTime }}</span>
               </component>
-              <span v-else>{{ shopData?.schedules[dayOfWeek] }}</span>
+              <!-- <span v-else>{{ shopData?.schedules[dayOfWeek] }}</span> -->
               <span v-else>非營業日</span>
             </div>
           </div>
@@ -115,7 +115,7 @@ import { House, ChatRound, User, Watch } from '@element-plus/icons-vue'
 import { useRoute } from 'vue-router'
 import { onMounted, ref, computed } from 'vue'
 import { getShop } from '@/api/shop'
-import { ShopData, ShopResponseData } from '@/api/shop/type'
+import { ShopData, ShopDetailData, ShopResponseData } from '@/api/shop/type'
 // import 'bootstrap/dist/css/bootstrap.css' // Import Bootstrap CSS
 
 import shopInfoModal from '../shopInfoModal/index.vue'
@@ -124,7 +124,7 @@ let $route = useRoute()
 
 let id: number = parseInt($route.params.id as string)
 
-let shopData = ref<ShopData>()
+let shopData = ref<ShopDetailData>()
 let favorite = ref('')
 
 import useUserStore from '@/store/modules/user'
@@ -148,9 +148,9 @@ const getShopData = async (id: number) => {
 }
 
 const shopImageStyle = computed(() => {
-  if (shopData.value && shopData.value.img) {
+  if (shopData.value && shopData.value.imgUrl) {
     return {
-      backgroundImage: `url(${shopData.value.img})`,
+      backgroundImage: `url(${shopData.value.imgUrl})`,
     }
   }
   return {}

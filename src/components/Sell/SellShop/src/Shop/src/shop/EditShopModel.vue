@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive, nextTick, watch, computed } from 'vue'
 
-import { ElMessage } from 'element-plus'
-import { UploadProps } from 'element-plus/es/components/upload/src/upload'
+import { ElMessage, UploadProps } from 'element-plus/lib/components/index.js'
+// import { UploadProps } from 'element-plus/es/components/upload/src/upload'
 import { reqSearchUser } from '@/api/backstage/user'
-import debounce from 'lodash/debounce'
+// import debounce from 'lodash/debounce'
 import { SearchUserResponseData, SearchUsers } from '@/api/backstage/user/type'
 import useSellShopStore from '@/store/modules/sellShop'
 import useUserStore from '@/store/modules/user'
@@ -92,7 +92,7 @@ const save = async () => {
 
   if (JSON.stringify(shopParams) !== shopParamsCheck) {
     let res: any = await reqAddOrUpdateShop(shopParams)
-    if (res.code === 200) {
+    if (res.status === 200) {
       sellShopStore.shopDrawer = false
       ElMessage({
         message: shopParams.id ? '更新成功' : '添加成功',
@@ -185,7 +185,7 @@ function validateNotEmptyString(rule: any, value: any, callback: any) {
 const loading = ref(false)
 const search = async (query: string) => {
   let res: SearchUserResponseData = await reqSearchUser(query)
-  if (res.code === 200) {
+  if (res.status === 200) {
     searchUsers.value = res.data
   } else {
     sellShopStore.shopDrawer = false
@@ -197,17 +197,17 @@ const search = async (query: string) => {
 }
 const searchUsers = ref<SearchUsers>([])
 
-const remoteMethod = debounce((query) => {
-  if (query) {
-    loading.value = true
-    search(query.toLowerCase())
-    loading.value = false
-  } else {
-    searchUsers.value = []
-  }
-}, 1000) // 1000 毫秒的防抖延迟
+// const remoteMethod = debounce((query) => {
+//   if (query) {
+//     loading.value = true
+//     search(query.toLowerCase())
+//     loading.value = false
+//   } else {
+//     searchUsers.value = []
+//   }
+// }, 1000) // 1000 毫秒的防抖延迟
 
-const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile:any) => {
   if (
     rawFile.type === 'image/png' ||
     rawFile.type === 'image/jpeg' ||
@@ -234,8 +234,7 @@ const uploadHeaders = {
   'X-CSRF-Token': userStore.token, // 初始为空
 }
 const handleAvatarSuccess: UploadProps['onSuccess'] = (
-  response,
-  uploadFile,
+  response:any
 ) => {
   shopParams.imgUrl = response.url
   shopParams.imgId = response.id

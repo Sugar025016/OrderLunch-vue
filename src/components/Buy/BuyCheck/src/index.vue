@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted, reactive, onBeforeUnmount } from 'vue'
+import { ref, onMounted, reactive, onBeforeUnmount, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { reqGetCart } from '@/api/cart'
 import { CartResponseData, CartsData } from '@/api/cart/type'
 import useUserStore from '@/store/modules/user'
-import { Address, UserAddressResponseData } from '@/api/user/type'
+import { UserAddressResponseData } from '@/api/user/type'
+import { Address, ResultResponse } from '@/api/type'
 
 import EditAddressModal from './editAddressModal.vue'
 import TimeSelect from './timeSelect.vue'
@@ -14,6 +15,7 @@ import { Plus } from '@element-plus/icons-vue'
 import { reqAddOrder } from '@/api/order'
 import rwdBody from '@/components/layout/rwdBody/index.vue'
 import ChooseAddressModel from '@/components/Buy/BuyShops/src/ChooseAddressModel/index.vue'
+import { AddOrder } from '@/api/order/type'
 
 const chooseAddressRef = ref<typeof ChooseAddressModel>()
 
@@ -49,7 +51,7 @@ let timer: any
 const getCart = async () => {
   radio1.value = userStore.address?.id as number
   let res: CartResponseData = await reqGetCart()
-  if (res.code === 200) {
+  if (res.status === 200) {
     if (res.data.cartResponses && res.data.cartResponses?.length !== 0) {
       clearTimeout(timer)
       await getUserAddress()
@@ -95,7 +97,7 @@ const addresses = ref<Address[]>([])
 let addressParams = ref<Address[]>([])
 const getUserAddress = async () => {
   let res: UserAddressResponseData = await reqGetUserAddresses()
-  if (res.code === 200) {
+  if (res.status === 200) {
     addresses.value = res.data
     addressParams.value = JSON.parse(JSON.stringify(addresses.value))
 
@@ -120,6 +122,9 @@ const addAddresses = async () => {
     city: '',
     area: '',
     detail: '',
+    street: '',
+    lat: undefined,
+    lng: undefined,
   })
   addressParams.value.push(address)
 }
@@ -129,7 +134,7 @@ const saveAddresses = async () => {
     let res: UserAddressResponseData = await reqPutUserAddresses(
       addressParams.value,
     )
-    if (res.code === 200) {
+    if (res.status === 200) {
       addresses.value = res.data
       addressParams.value = JSON.parse(JSON.stringify(addresses.value))
 
@@ -184,14 +189,14 @@ const TimeSelectRef = ref<typeof TimeSelect>()
 
 const sendOrder = async () => {
   await TimeSelectRef.value?.save()
-  const order = ref<ReqAddOrder>({
+  const order = ref<AddOrder>({
     takeTime: aaa,
-    addressId: userStore.address?.id,
+    addressId: userStore.address?.id as number,
     remark: remark.value,
   })
-  let res: OrderResponseData = await reqAddOrder(order.value)
+  let res: ResultResponse = await reqAddOrder(order.value)
 
-  if (res.code === 200) {
+  if (res.status === 200) {
     userStore.cartCount = 0
     $router.push('/BuyOrder')
   } else {
@@ -214,8 +219,8 @@ onBeforeUnmount(() => {
           <h1>訂單資料確認</h1>
         </div>
         <div class="shopCart-body">
-          <el-row class="shopCart-body" :gutter="20">
-            <el-col :span="16">
+          <el-row :gutter="20">
+            <div class="el-col">
               <div class="order_check date-time-item">
                 <span>外送時間：</span>
                 <div class="item date-time">
@@ -233,57 +238,6 @@ onBeforeUnmount(() => {
               <div class="order_check address">
                 <span>外送地址：</span>
                 <div v-if="isChangeAddress" class="item address-radio">
-                  <!-- <el-radio-group v-model="radio1" class="radio">
-                    <el-radio
-                      v-for="(address, index) in addresses"
-                      :label="index"
-                      size="large"
-                    >
-                      {{
-                        address.city +
-                        '&nbsp-&nbsp' +
-                        address.area +
-                        '&nbsp-&nbsp' +
-                        address.street +
-                        '&nbsp-&nbsp' +
-                        address.detail
-                      }}
-                    </el-radio>
-                  </el-radio-group> -->
-
-                  <!-- <el-select
-                    v-model="radio1"
-                    placeholder="请选择外送地址"
-                    size="large"
-                    value-key="date"
-                  >
-                    <el-option
-                      v-for="(address, index) in addresses"
-                      :key="index + 1"
-                      :label="
-                        address.city +
-                        '&nbsp-&nbsp' +
-                        address.area +
-                        '&nbsp-&nbsp' +
-                        address.street +
-                        '&nbsp-&nbsp' +
-                        address.detail
-                      "
-                      :value="address.id"
-                      :disabled="address.disabled"
-                    />
-                  </el-select> -->
-                  <!-- <div class="address-edit">
-                    <el-button
-                      class="button-icon button-left"
-                      type="primary"
-                      size="large"
-                      :icon="Plus"
-                      circle
-                      @click="addAddress()"
-                    />
-                  </div> -->
-
                   <div class="address-edit">
                     <span>
                       {{
@@ -310,61 +264,6 @@ onBeforeUnmount(() => {
                     </el-button>
                   </div>
                 </div>
-
-                <div v-else class="item address-add">
-                  <div
-                    v-for="(address, index) in addressParams"
-                    :key="index"
-                    class="address"
-                  >
-                    <EditAddressModal
-                      :ref="
-                        (el: typeof EditAddressModal) =>
-                          (AddressRefs[index] = el)
-                      "
-                      :address="address"
-                      :deleteAddress="deleteAddress"
-                      :index="index"
-                      @updateAddress="
-                        (newAddress) => {
-                          addressParams[index] = newAddress
-                        }
-                      "
-                    ></EditAddressModal>
-                  </div>
-                  <div class="button">
-                    <el-button
-                      class="button-icon button-left"
-                      type="primary"
-                      size="large"
-                      :icon="Plus"
-                      circle
-                      @click="addAddresses()"
-                      v-if="addressParams.length < 5"
-                    />
-                    <div class="button-right">
-                      <el-button
-                        class="button-icon"
-                        type="primary"
-                        size="large"
-                        round
-                        plain
-                        @click="close"
-                      >
-                        取消
-                      </el-button>
-                      <el-button
-                        class="button-icon"
-                        type="primary"
-                        size="large"
-                        round
-                        @click="saveAddresses()"
-                      >
-                        確認
-                      </el-button>
-                    </div>
-                  </div>
-                </div>
               </div>
 
               <hr />
@@ -377,13 +276,13 @@ onBeforeUnmount(() => {
                       type="textarea"
                       :minRows="2"
                       :maxRows="6"
-                      :Rows="4"
+                      :Rows="6"
                     />
                   </el-form-item>
                 </div>
               </div>
-            </el-col>
-            <el-col :span="8">
+            </div>
+            <div class="el-col">
               <div class="body-right">
                 <span class="total">總金額:</span>
                 <span class="total-data">NT${{ sum }}</span>
@@ -415,7 +314,7 @@ onBeforeUnmount(() => {
                   糾團
                 </el-button>
               </div>
-            </el-col>
+            </div>
           </el-row>
         </div>
       </template>
@@ -427,8 +326,8 @@ onBeforeUnmount(() => {
 
 <style lang="scss" scoped>
 @import '@/styles/bootstrap.scss';
-$table-cell-padding-y: 1.5rem; 
-$table-border-color: rgb(155, 155, 155); 
+$table-cell-padding-y: 1.5rem;
+$table-border-color: rgb(155, 155, 155);
 @import 'node_modules/bootstrap/scss/_tables.scss';
 
 .is-disabled {
@@ -437,13 +336,14 @@ $table-border-color: rgb(155, 155, 155);
 .shopCart {
   display: block;
   overflow: hidden;
+  padding: 0 5%;
 
   .shopCart-header {
     display: flex;
     flex-direction: column;
     h1 {
       font-size: 40px;
-      margin: 20px 0;
+      margin: 0 0 30px 20px;
     }
     span {
       font-size: 18px;
@@ -452,12 +352,19 @@ $table-border-color: rgb(155, 155, 155);
     }
   }
   .shopCart-body {
+    .el-row {
+      display: grid; /* 使用CSS Grid布局 */
+      grid-template-columns: minmax(620px, 9fr) minmax(200px, 3fr);
+    }
+    .el-col:first-child {
+      margin: 0 calc(8vw - 60px) 0 0;
+    }
+
     .item {
       margin: 20px 50px;
     }
     .date-time-item {
       display: grid;
-
     }
     .address {
       .address-radio {
@@ -466,7 +373,6 @@ $table-border-color: rgb(155, 155, 155);
 
         .el-select {
           max-width: 600px;
-
         }
         .address-edit {
           width: 100%;
@@ -542,12 +448,96 @@ $table-border-color: rgb(155, 155, 155);
     }
 
     .order_check {
-      margin: 20px;
-      margin: 0 calc(20% - 80px);
+      margin: 40px;
+      // margin: 0 calc(20% - 80px);
+    }
+  }
+  // @media (max-width: $breakpoint-xs) {
+  //   margin: 10px;
+  // }
+}
+.shopCart {
+  @media (max-width: $breakpoint-md) {
+    margin: 10px;
+
+    padding: 0;
+    .rwdBody {
+      margin: 0;
+      width: 100%;
+    }
+    .shopCart-body {
+      .el-row {
+        // grid-template-columns: repeat(1, 1fr);
+        display: grid; /* 使用CSS Grid布局 */
+        // grid-template-columns: minmax(760px, 9fr) minmax(180px, 3fr);
+        grid-template-columns: repeat(1, 1fr);
+        .el-col {
+          width: 100%;
+          .order_check {
+            // margin: 0 calc(10% - 40px);
+            margin: 0;
+            .item {
+              margin: 20px 30px;
+
+              @media (max-width: $breakpoint-xs) {
+                margin: 20px 20px;
+              }
+            }
+
+            @media (max-width: $breakpoint-xs) {
+              margin: 20px 20px;
+            }
+          }
+          .textarea {
+            .el-form-item {
+              width: 100%;
+            }
+            .item {
+              .el-textarea {
+                // background-color: aquamarine;
+                width: 50px;
+                width: auto;
+                width: 100%;
+                // width: 250px;
+                .el-textarea__inner {
+                  width: 100%;
+                  // width: 250px;
+                  background-color: aquamarine;
+
+                  // width: 80%;
+                }
+                // @media (max-width: $breakpoint-xs) {
+                //   // .el-textarea__inner {
+                //     width: 100%;
+                //     width: 250px;
+                //     background-color: aquamarine;
+                //     // width: 80%;
+                //   // }
+                // }
+              }
+            }
+          }
+          
+        }
+        .el-col:first-child {
+          margin: 10px;
+          .order_check {
+            margin:0 10px 0 0;
+            .el-form {
+              flex-wrap: wrap;
+            }
+          }
+        }
+      }
     }
   }
   @media (max-width: $breakpoint-xs) {
-    margin: 10px;
+    .el-textarea__inner {
+      width: 100%;
+      width: 250px;
+      background-color: aquamarine;
+      // width: 80%;
+    }
   }
 }
 </style>

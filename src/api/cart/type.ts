@@ -1,10 +1,7 @@
-import { Schedule, Schedules } from '@/api/shop/type'
+import { Schedules } from '@/api/shop/type'
+import { ResponseData } from '../type'
 
-export interface ResponseData {
-  code: number
-  message: string
-  ok: boolean
-}
+
 
 export interface CartsData {
   shopId?: number

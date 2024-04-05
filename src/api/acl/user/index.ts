@@ -16,27 +16,27 @@ enum API {
   DELETEALLUSER_URL = '/admin/acl/user/batchRemove',
 }
 
-export const reqUserInfo2 = (page: number, limit: number, username: string) =>
+export const reqUserInfo2 = (page: number, limit: number) =>
   request.get<any, UserResponseData>(
     API.ALLUSER_URL + `?page=${page}&limit=${limit}`,
   )
 
-// export const reqAddOrUpdateUser = (data: User) => {
-//   if (data.id) {
-//     return request.put<any, any>(API.UPDATEUSER_URL, data)
-//   } else {
-//     return request.post<any, any>(API.ADDUSER_URL, data)
-//   }
-// }
+export const reqAddOrUpdateUser = (data: User) => {
+  if (data.id) {
+    return request.put<any, any>(API.UPDATEUSER_URL, data)
+  } else {
+    return request.post<any, any>(API.ADDUSER_URL, data)
+  }
+}
 
-// export const reqAllRole = (userId: number) =>
-//   request.get<any, AllRoleResponseData>(API.ALLROLEURL + userId)
+export const reqAllRole = (userId: number) =>
+  request.get<any, AllRoleResponseData>(API.ALLROLEURL + userId)
 
-// export const reqSetUserRole = (data: SetRoleData) =>
-//   request.post<any, any>(API.SETROLE_url, data)
+export const reqSetUserRole = (data: SetRoleData) =>
+  request.post<any, any>(API.SETROLE_url, data)
 
-// export const reqRemoveUser = (userId: number) =>
-//   request.delete<any, any>(API.DELETEUSER_URL + userId)
+export const reqRemoveUser = (userId: number) =>
+  request.delete<any, any>(API.DELETEUSER_URL + userId)
 
-// export const reqSelectUser = (idList: number[]) =>
-//   request.delete(API.DELETEALLUSER_URL, { data: idList })
+export const reqSelectUser = (idList: number[]) =>
+  request.delete(API.DELETEALLUSER_URL, { data: idList })

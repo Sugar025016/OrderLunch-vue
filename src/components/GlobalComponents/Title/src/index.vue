@@ -17,6 +17,10 @@ let title = document.title
     // font-size: 56px;
     font-size: auto;
     white-space: nowrap;
+    @media (max-width: $breakpoint-xs) {
+      font-size: 28px;
+      font-weight: 600;
+    }
   }
 }
 </style>

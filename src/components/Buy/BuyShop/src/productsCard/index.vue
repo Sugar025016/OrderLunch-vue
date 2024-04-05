@@ -50,5 +50,10 @@ defineProps(['product'])
     height: 150px;
     width: 150px;
   }
+
+  @media (min-width: $breakpoint-xs) {
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

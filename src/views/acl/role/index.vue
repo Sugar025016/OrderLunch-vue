@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { ref, onMounted, reactive, nextTick } from 'vue'
 import {
   reqRemoveRole,
@@ -15,6 +15,8 @@ import type {
   MenuList,
 } from '@/api/acl/role/type'
 import useLayOutSettingStore from '@/store/modules/setting'
+import { ElMessage } from 'element-plus/lib/components/index.js'
+
 let pageNo = ref<number>(1)
 
 let pageSize = ref<number>(10)
@@ -52,7 +54,7 @@ const getHasRole = async (pager = 1) => {
     pageSize.value,
     keyword.value,
   )
-  if (res.code === 200) {
+  if (res.status === 200) {
     total.value = res.data.total
     allRole.value = res.data.records
   }
@@ -105,7 +107,7 @@ const rules = {
 const save = async () => {
   await form.value.validate()
   let res: any = await reqAddOrUpdateRole(RoleParams)
-  if (res.code === 200) {
+  if (res.status === 200) {
     ElMessage({
       type: 'success',
       message: RoleParams.id ? '更新成功' : '添加成功',
@@ -119,7 +121,7 @@ const setPermission = async (row: RoleData) => {
   drawer.value = true
   Object.assign(RoleParams, row)
   let res: MenuResponseData = await reqAllMenuList(RoleParams.id as number)
-  if (res.code === 200) {
+  if (res.status === 200) {
     menuArr.value = res.data
     selectArr.value = filterSelectArr(menuArr.value, [])
   }
@@ -148,7 +150,7 @@ const handler = async () => {
   let arr1 = tree.value.getHalfCheckedKeys()
   let permissionId = arr.concat(arr1)
   let res: any = await reqSetPermission(roleId, permissionId)
-  if (res.code === 200) {
+  if (res.status === 200) {
     drawer.value = false
     ElMessage({
       type: 'success',
@@ -160,7 +162,7 @@ const handler = async () => {
 
 const removeRole = async (id: number) => {
   let res: any = await reqRemoveRole(id)
-  if (res.code === 200) {
+  if (res.status === 200) {
     ElMessage({
       type: 'success',
       message: '删除成功',
@@ -217,7 +219,7 @@ const removeRole = async (id: number) => {
         prop="updateTime"
       ></el-table-column>
       <el-table-column label="操作" width="280px" align="center">
-        <template #="{ row, $index }">
+        <template #="{ row }">
           <el-button size="small" icon="User" @click="setPermission(row)">
             分配权限
           </el-button>
@@ -300,4 +302,4 @@ const removeRole = async (id: number) => {
   justify-content: space-between;
   align-items: center;
 }
-</style>
+</style> -->

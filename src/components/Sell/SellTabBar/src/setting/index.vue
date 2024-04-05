@@ -38,7 +38,7 @@
         </el-dropdown-item>
       </el-dropdown-menu>
       <el-dropdown-menu>
-        <el-dropdown-item @click="logout('BuyShops')">登出</el-dropdown-item>
+        <el-dropdown-item @click="logout()">登出</el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>
@@ -55,9 +55,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import {
-  Refresh,
-  Setting,
-  FullScreen,
   ArrowDown,
 } from '@element-plus/icons-vue'
 import useLayOutSettingStore from '@/store/modules/setting'
@@ -90,18 +87,18 @@ const toLogin = () => {
     $router.push({ path: '/login', query: { redirect: path } })
   }
 }
-const fullScreen = () => {
-  let full = document.fullscreenElement
-  if (!full) {
-    document.documentElement.requestFullscreen()
-  } else {
-    document.exitFullscreen()
-  }
-}
+// const fullScreen = () => {
+//   let full = document.fullscreenElement
+//   if (!full) {
+//     document.documentElement.requestFullscreen()
+//   } else {
+//     document.exitFullscreen()
+//   }
+// }
 
 const logout = async () => {
   let res: any = await userStore.userLogout()
-  if (res.code === 200) {
+  if (res.status === 200) {
     if ($route.meta.mustToken) {
       $router.push({ path: '/', query: { redirect: $route.path } })
     }

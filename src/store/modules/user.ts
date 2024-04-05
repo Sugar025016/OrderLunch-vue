@@ -28,24 +28,20 @@ import {
   sellShop,
 } from '@/router/routes'
 
-// @ts-expect-error
-import cloneDeep from 'lodash/cloneDeep'
 import { ShopData } from '@/api/shop/type'
 import useSellShopStore from '@/store/modules/sellShop'
-import { ResponseData } from '@/api/type'
+import { Address, ResponseData } from '@/api/type'
 
-
-
-function filterAsyncRoute(asyncRoute: any, routes: any) {
-  return asyncRoute.filter((item: any) => {
-    if (routes.includes(item.name)) {
-      if (item.children && item.children.length > 0) {
-        item.children = filterAsyncRoute(item.children, routes)
-      }
-      return true
-    }
-  })
-}
+// function filterAsyncRoute(asyncRoute: any, routes: any) {
+//   return asyncRoute.filter((item: any) => {
+//     if (routes.includes(item.name)) {
+//       if (item.children && item.children.length > 0) {
+//         item.children = filterAsyncRoute(item.children, routes)
+//       }
+//       return true
+//     }
+//   })
+// }
 
 const useUserStore = defineStore('User', {
   state: (): UserState => {
@@ -87,20 +83,25 @@ const useUserStore = defineStore('User', {
       if (data.verifyCode !== undefined) {
         formData.append('captcha', data.verifyCode)
       }
+      if (data.rememberMe !== undefined) {
+        formData.append('rememberMe', data.rememberMe.toString())
+      }
 
       const res: LoginResponseData = await reqLogin(formData)
 
       const loginResponse: ResponseData = res.data as ResponseData
-      if (loginResponse.code === 200) {
+      console.log("loginResponse.status", loginResponse)
+      if (loginResponse.status === 200) {
+        console.log("loginResponse.status", loginResponse.status)
         this.token = GET_TOKEN()
+        console.log("this.token", this.token)
         await this.userInfo()
       }
-      return loginResponse;
-
+      return loginResponse
     },
     async userInfo() {
       const res: UserInfoResponseData = await reqUserInfo()
-      if (res.code === 200) {
+      if (res.status === 200) {
         this.username = res.data.name
         this.account = res.data.account
         this.phone = res.data.phone
@@ -109,7 +110,7 @@ const useUserStore = defineStore('User', {
         this.cartShopId = res.data.cartShopId
         this.cartCount = res.data.cartCount
         this.cartLat = res.data.cartLat
-        this.cartLng = res.data.cartLng 
+        this.cartLng = res.data.cartLng
         this.cartDeliveryKm = res.data.cartDeliveryKm
         this.orderCount = res.data.orderCount
         this.shopOrderCount = res.data.shopOrderCount
@@ -131,7 +132,7 @@ const useUserStore = defineStore('User', {
 
     async changeUserInfo(v: UserProfile) {
       const res: UserInfoResponseData = await reqChangeUserInfo(v)
-      if (res.code === 200) {
+      if (res.status === 200) {
         return await this.userInfo()
       } else {
         return Promise.reject(new Error(res.message))
@@ -139,7 +140,7 @@ const useUserStore = defineStore('User', {
     },
     async changeUserPwd(v: UserPwd) {
       const res: UserProfileChangeResponse = await reqChangeUserPwd(v)
-      if (res.code === 200) {
+      if (res.status === 200) {
         return 'ok'
       } else {
         return Promise.reject(new Error(res.message))
@@ -147,7 +148,7 @@ const useUserStore = defineStore('User', {
     },
     async getLove() {
       const res: LovesResponseData = await reqFavorites()
-      if (res.code === 200) {
+      if (res.status === 200) {
         this.favoriteShop = res.data
         return res.data
       } else {
@@ -157,7 +158,7 @@ const useUserStore = defineStore('User', {
     async changeFavoriteStore(id: number) {
       const res: ChangeLovesResponseData = await reqChangeFavorite(id)
 
-      if (res.code === 200 && res.data) {
+      if (res.status === 200 && res.data) {
         await this.getLove()
         return this.favoriteShop
       } else {
@@ -177,8 +178,8 @@ const useUserStore = defineStore('User', {
 
     async userLogout() {
       const res = await reqLogOut()
-      if (res.code === 200) {
-        await window.location.reload();
+      if (res.status === 200) {
+        await window.location.reload()
         this.userClear()
 
         return res
@@ -203,37 +204,38 @@ const useUserStore = defineStore('User', {
       REMOVE_TOKEN()
       this.stopTimer()
 
-      let sellShopStore = useSellShopStore()
-      sellShopStore.clearSellShopData();
+      const sellShopStore = useSellShopStore()
+      sellShopStore.clearSellShopData()
     },
-    async getUserAddress() {
-      const res: UserInfoResponseData = await reqChangeUserInfo(v)
-      if (res.code === 200) {
-        return await this.userInfo()
-      } else {
-        return Promise.reject(new Error(res.message))
-      }
-    },
-
+    // async getUserAddress() {
+    //   const res: UserInfoResponseData = await reqChangeUserInfo(v)
+    //   if (res.status === 200) {
+    //     return await this.userInfo()
+    //   } else {
+    //     return Promise.reject(new Error(res.message))
+    //   }
+    // },
 
     // 停止計時器
     stopTimer() {
       if (this.getNewOrderTimer != null) {
-        clearInterval(this.getNewOrderTimer);
-        this.getNewOrderTimer = null;
+        clearInterval(this.getNewOrderTimer)
+        this.getNewOrderTimer = null
       }
     },
 
     async isCheckChooseAddress() {
-      if(this.account!=""&& (this.address===undefined || !this.isCheckAddress)){
-
+      if (
+        this.account != '' &&
+        (this.address === undefined || !this.isCheckAddress)
+      ) {
         return true
       }
-        return false
+      return false
     },
 
-    async setCheckAddress(is:boolean) {
-      this.isCheckAddress=is;
+    async setCheckAddress(is: boolean) {
+      this.isCheckAddress = is
     },
   },
   getters: {},

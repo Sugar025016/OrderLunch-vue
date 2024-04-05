@@ -1,8 +1,5 @@
-export interface ResponseData {
-  code: number
-  message: string
-  ok: boolean
-}
+import { ResponseData } from "@/api/type"
+
 
 export interface content {
   id?: number
@@ -28,8 +25,6 @@ export interface Users {
 export interface UserResponseData extends ResponseData {
   data: Users
 }
-
-
 
 export interface User {
   id?: number

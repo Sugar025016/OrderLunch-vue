@@ -55,7 +55,7 @@ const timer = setTimeout(() => {
 }, 5000) // 10000 毫秒即为 10 秒
 const getCart = async () => {
   let res: CartResponseData = await reqGetCart()
-  if (res.code === 200) {
+  if (res.status === 200) {
     if (res.data.cartResponses && res.data.cartResponses?.length !== 0) {
       carts.value = res.data
       userStore.cartCount =

@@ -1,21 +1,24 @@
 // 二次封裝axios
 import axios from 'axios'
-import { ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus/lib/components/index.js'
 import useUserStore from '@/store/modules/user'
-import { SET_TOKEN } from '@/utils/token'
+import { GET_TOKEN, SET_TOKEN } from '@/utils/token'
 import router from '@/router'
 
 const request = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
-  timeout: 5000,
+  timeout: 500000,
 })
 
 request.interceptors.request.use(
   (config) => {
-    const userStore = useUserStore()
-    if (userStore.token) {
-      config.headers.token = userStore.token
+    let tokenValue=GET_TOKEN()
+    if(tokenValue){
+      config.headers['X-CSRF-TOKEN']= tokenValue
+      config.headers['X-XSRF-TOKEN']= tokenValue
+      config.headers['token']= tokenValue
     }
+    
 
     return config
   },
@@ -24,17 +27,19 @@ request.interceptors.request.use(
   },
 )
 
+
 request.interceptors.response.use(
+
   (response) => {
+    console.log("response-----------", response)
     if (response.status === 200) {
       if (response.config.url === '/login') {
-        SET_TOKEN(response.config.headers['X-XSRF-TOKEN'])
-        // userStore.token=response.config.headers['X-XSRF-TOKEN'];
+        let cookieValue=document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        SET_TOKEN(cookieValue)
+        
       }
-      return Promise.resolve({
-        data: response.data,
-        code: response.status,
-      })
+
+      return Promise.resolve(response);
 
       // return Promise.resolve(response)
     } else {

@@ -60,7 +60,7 @@ const cellStyle = ({ row }: any) => {
 
 const getOrder = async (page: number) => {
   let res: GetOrderPageResponse = await reqGetOrder(page)
-  if (res.code === 200) {
+  if (res.status === 200) {
     orderPageResponse.value = res.data
     order.value.push(...res.data.content)
   } else {

@@ -3,7 +3,7 @@ import { ref, watch } from 'vue'
 
 import { Schedule, Schedules, TimePeriod, TimePeriods } from '@/api/shop/type'
 
-let $emit = defineEmits(['date', 'time'])
+let $emit = defineEmits(['date', 'time','deliveryTime'])
 
 type DeliveryTime = {
   date: MyDateDisabled

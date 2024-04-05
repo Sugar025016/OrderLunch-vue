@@ -1,9 +1,6 @@
 import { ProductData } from '../product/type'
-export interface ResponseData {
-  code: number
-  message: string
-  ok: boolean
-}
+import { ResponseData } from '../type'
+
 
 export type ProductList = ProductData[]
 
@@ -38,5 +35,5 @@ export interface PutTabData {
   name: string
   shopId: number
   shelve: boolean
-  productIds: Number[]
+  productIds: number[]
 }

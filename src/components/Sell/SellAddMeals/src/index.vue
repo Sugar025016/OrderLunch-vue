@@ -20,7 +20,7 @@ let addMealsDatas = ref<AddMealsListData>([])
 const getAddMeals = async () => {
   let res = await reqGetAddMealsProducts(sellShopStore.shop.id)
 
-  if (res.code === 200 && res.data) {
+  if (res.status === 200 && res.data) {
     addMealsDatas.value = res.data
 
     // await addMealsDatas.value.forEach((item) => {

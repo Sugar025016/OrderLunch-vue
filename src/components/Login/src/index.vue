@@ -75,10 +75,10 @@
 </template>
 
 <script setup lang="ts">
-import { User, Lock, Warning } from '@element-plus/icons-vue'
-import { Ref, computed, nextTick, reactive, ref } from 'vue'
+import { User, Lock } from '@element-plus/icons-vue'
+import { Ref,   reactive, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { ElNotification } from 'element-plus'
+// import { ElNotification } from 'element-plus'
 import { getTime } from '@/utils/time'
 import useUserStore from '@/store/modules/user'
 import Captcha from '@/components/Register/src/Captcha/index.vue'
@@ -151,13 +151,14 @@ const validatorVerifyCode = (rule: any, value: any, callback: any) => {
   }
 }
 import { ResponseData } from '@/api/type'
+import { ElNotification } from 'element-plus/lib/components/index.js'
 const login = async () => {
   await loginForms.value.validate()
   loading.value = true
   try {
     const loginResponse: ResponseData = await useStore.userLogin(loginForm)
 
-    if (loginResponse?.code === 411) {
+    if (loginResponse?.status === 411) {
       captchaRef.value?.refreshCaptcha()
 
       ElNotification({
@@ -165,7 +166,7 @@ const login = async () => {
         message: '驗證碼過期，更新驗證碼',
         title: '驗證碼錯誤',
       })
-    } else if(loginResponse?.code === 401){
+    } else if(loginResponse?.status === 401){
 
       // $router.push('/')
       ElNotification({
