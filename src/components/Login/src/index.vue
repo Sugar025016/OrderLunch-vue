@@ -76,7 +76,7 @@
 
 <script setup lang="ts">
 import { User, Lock } from '@element-plus/icons-vue'
-import { Ref,   reactive, ref } from 'vue'
+import { Ref,   computed,   reactive, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 // import { ElNotification } from 'element-plus'
 import { getTime } from '@/utils/time'
@@ -87,7 +87,6 @@ import Captcha from '@/components/Register/src/Captcha/index.vue'
 // VerifyCode import
 const captchaRef = ref<typeof Captcha | null>(null)
 
-let title = document.title
 
 let $router = useRouter()
 let $route = useRoute()
@@ -97,10 +96,6 @@ const identifyCode = ref('1234')
 const identifyCodes = ref('1234567890abcdefjhijklinopqrsduvwxyz')
 
 // 重置验证码
-const refreshCode = () => {
-  identifyCode.value = ''
-  makeCode(identifyCode, 4)
-}
 
 const makeCode = (o: Ref<any>, l: number) => {
   for (let i = 0; i < l; i++) {
@@ -217,6 +212,7 @@ const rules = {
   ],
 }
 
+
 // ../../assets/images/0050.png
 </script>
 <style lang="scss" scoped>
@@ -224,15 +220,19 @@ const rules = {
   display: flex;
   align-items: center;
   justify-content: center;
+      width: 100%;
   .el-card {
     border: 0px;
     box-shadow: none;
     border-radius: 40px;
+      width: 100%;
   }
   .login_form {
     position: relative;
     padding: 10px;
     background: transparent;
+      width: 100%;
+
     h1 {
       background: $color;
       -webkit-background-clip: text;
@@ -280,6 +280,9 @@ const rules = {
 
     @import '@/styles/form.scss';
   }
+
+
+
 }
 .custom-checkbox {
   color: red; /* 设置文字颜色为红色 */

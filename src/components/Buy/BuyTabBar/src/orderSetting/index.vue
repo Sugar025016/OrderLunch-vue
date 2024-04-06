@@ -16,8 +16,10 @@ import {
 } from '@element-plus/icons-vue'
 import useSellShopStore from '@/store/modules/sellShop'
 import { useRouter, useRoute } from 'vue-router'
+import ChooseAddressModel from '@/components/Buy/BuyShops/src/ChooseAddressModel/index.vue'
 
 let $router = useRouter()
+let $route = useRoute()
 
 let sellShopStore = useSellShopStore()
 
@@ -29,8 +31,38 @@ const handleClose = (key: string, keyPath: string[]) => {
 }
 
 const changeLink = async (to: string) => {
-  // $router.push('/BuyMember/' + path + '/' + page)
   $router.push(to)
+  drawer.value = false
+}
+
+const chooseAddressRef = ref<typeof ChooseAddressModel>()
+const chooseAddressOpen = async () => {
+  chooseAddressRef.value?.open()
+
+  drawer.value = false
+}
+
+const logout = async () => {
+  let res: any = await userStore.userLogout()
+
+  if (res.status === 200) {
+    $router.push({ path: '/', query: { redirect: $route.path } })
+  }
+  drawer.value = false
+}
+const addShop = async () => {
+  $router.push('/Register/shop')
+  drawer.value = false
+}
+
+const goRoute = async (shopId: number, shopName: string) => {
+  $route.meta.shopId = shopId.toString()
+  sellShopStore.shopId = shopId
+  $route.meta.title = shopName
+
+  $router.push(`/sell/${shopId}/Shop`)
+
+  drawer.value = false
 }
 </script>
 <template>
@@ -40,14 +72,18 @@ const changeLink = async (to: string) => {
         <Grid class="icon icon-white" />
       </div>
     </el-button>
-    <el-drawer v-model="drawer" title="開發中...." direction="rtl" size="100%">
-      開發中....
+    <el-drawer
+      v-model="drawer"
+      :title="userStore.username"
+      direction="rtl"
+      size="100%"
+    >
       <el-menu
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
       >
-        <el-menu-item index="1" class="link"  @click="changeLink('/profile')">
+        <el-menu-item index="1" class="link" @click="changeLink('/profile')">
           <def-svg-icon
             name="person"
             color="#fd7e14"
@@ -57,11 +93,11 @@ const changeLink = async (to: string) => {
           ></def-svg-icon>
           <span>會員資料</span>
         </el-menu-item>
-        <el-menu-item index="2" class="link">
+        <el-menu-item index="2" class="link" @click="changeLink('/BuyOrder')">
           <DocumentCopy class="icon list order" />
           <span>歷史訂單</span>
         </el-menu-item>
-        <el-menu-item index="3" class="link">
+        <el-menu-item index="3" class="link" @click="changeLink('/favorite')">
           <def-svg-icon
             name="favorite"
             color="#fd7e14"
@@ -71,7 +107,7 @@ const changeLink = async (to: string) => {
           ></def-svg-icon>
           <span>收藏店家</span>
         </el-menu-item>
-        <el-menu-item index="4" class="link">
+        <el-menu-item index="4" class="link" @click="chooseAddressOpen()">
           <Location class="icon list order" />
           <span>設定外送地點</span>
         </el-menu-item>
@@ -87,13 +123,17 @@ const changeLink = async (to: string) => {
             <span>商店</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="1-1" v-for="item in sellShopStore.shopNames">
+            <el-menu-item
+              index="1-1"
+              v-for="item in sellShopStore.shopNames"
+              @click="goRoute(item.id, item.name)"
+            >
               {{ item.name }}
             </el-menu-item>
-            <el-menu-item index="2-1">開店</el-menu-item>
+            <el-menu-item index="2-1" @click="addShop">開店</el-menu-item>
           </el-menu-item-group>
         </el-sub-menu>
-        <el-menu-item index="6">
+        <el-menu-item index="6" @click="logout()">
           <router-link
             :to="'/BuyOrder'"
             class="link"
@@ -106,6 +146,7 @@ const changeLink = async (to: string) => {
       </el-menu>
     </el-drawer>
   </div>
+  <ChooseAddressModel ref="chooseAddressRef"></ChooseAddressModel>
 </template>
 
 <style lang="scss" scoped>
@@ -167,6 +208,14 @@ const changeLink = async (to: string) => {
 
   display: flex;
   ::v-deep .el-drawer {
+    .el-drawer__header {
+      span {
+        font-size: 1.6rem;
+        color: #030303;
+        margin:0 10px
+      }
+    }
+
     .el-menu {
       .el-menu-item,
       .el-sub-menu .el-sub-menu__title {

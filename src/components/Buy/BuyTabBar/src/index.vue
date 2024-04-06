@@ -6,12 +6,12 @@
         <BreadCrumb />
       </div>
       <div class="toolbar_order" v-if="sellShopStore.shopNames.length > 0">
-        <Order :isToolbarVisibleAll="isToolbarVisibleAll"></Order>
+        <Order :isToolbarVisibleAll="isBreakpointSM"></Order>
       </div>
       <div class="toolbar_right">
-        <Setting :isToolbarVisibleAll="isToolbarVisibleAll" />
+        <Setting :isToolbarVisibleAll="isBreakpointSM" />
       </div>
-      <div class="" v-if="!isToolbarVisibleAll">
+      <div class="" v-if="!isBreakpointSM && userStore.username">
         <OrderSetting />
       </div>
     </div>
@@ -24,7 +24,10 @@ import Setting from './setting/index.vue'
 import OrderSetting from './orderSetting/index.vue'
 import Order from './order/index.vue'
 import useSellShopStore from '@/store/modules/sellShop'
-import { computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
+import useUserStore from '@/store/modules/user'
+
+let userStore = useUserStore()
 
 // import useSellShopStore from '@/store/modules/sellShop'
 let sellShopStore = useSellShopStore()
@@ -38,16 +41,7 @@ onMounted(() => {
 
 defineProps(['scene'])
 
-import { useWindowSize } from '@vueuse/core'
-
-// 使用 VueUse 的 useWindowSize 来获取窗口大小
-const { width } = useWindowSize()
-
-// 根据窗口宽度决定是否显示工具栏
-const isToolbarVisibleAll = computed(() => {
-  // 这里可以根据实际情况调整断点的值
-  return width.value >= 720 // 例如，当窗口宽度大于等于 600px 时显示工具栏
-})
+import { isBreakpointSM } from '@/utils/windowSize'
 </script>
 <style lang="scss" scoped>
 .toolbar {
@@ -91,7 +85,6 @@ const isToolbarVisibleAll = computed(() => {
     .toolbar_right {
       margin-right: 10px;
     }
-    
   }
 
   @media (max-width: $breakpoint-xs) {

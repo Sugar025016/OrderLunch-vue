@@ -1,6 +1,8 @@
 <template>
   <el-breadcrumb separator="/" :separator-icon="ArrowRight">
-    <span class="title">{{ title }}</span>
+    <router-link :to="{ path: '/BuyShops' }">
+      <span class="title">{{ title }}</span>
+    </router-link>
   </el-breadcrumb>
 </template>
 <script setup lang="ts">
@@ -14,6 +16,9 @@ let title = document.title
 </script>
 
 <style lang="scss" scoped>
+a{
+  text-decoration: none;
+}
 .title {
   vertical-align: middle;
   font-size: 30px;

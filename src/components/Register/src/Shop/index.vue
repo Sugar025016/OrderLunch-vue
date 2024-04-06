@@ -329,7 +329,7 @@ const save = async () => {
 
   .table {
     margin: 20px auto;
-    min-width: 350px;
+    // min-width: 350px;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     .table-title {
