@@ -145,7 +145,7 @@ const validatorVerifyCode = (rule: any, value: any, callback: any) => {
     callback()
   }
 }
-import { ResponseData } from '@/api/type'
+import { Response, ResponseData } from '@/api/type'
 import { ElNotification } from 'element-plus/lib/components/index.js'
 const login = async () => {
   await loginForms.value.validate()
@@ -153,23 +153,9 @@ const login = async () => {
   try {
     const loginResponse: ResponseData = await useStore.userLogin(loginForm)
 
-    if (loginResponse?.status === 411) {
-      captchaRef.value?.refreshCaptcha()
+    console.log("登陆成功",loginResponse)
 
-      ElNotification({
-        type: 'error',
-        message: '驗證碼過期，更新驗證碼',
-        title: '驗證碼錯誤',
-      })
-    } else if(loginResponse?.status === 401){
-
-      // $router.push('/')
-      ElNotification({
-        type: 'error',
-        message: '帳號或密碼錯，請輸入正確的帳號或密碼',
-        title: '帳號或密碼錯',
-      })
-    } else {
+    if (loginResponse?.status === 200) {
       let redirect: string = $route.query.redirect as string
 
       $router.push({ path: redirect || '/' })
@@ -179,7 +165,59 @@ const login = async () => {
         message: '登陆成功',
         title: `Hi, ${getTime()}好`,
       })
+    } else if(loginResponse?.status === 401){
+
+      // $router.push('/')
+      ElNotification({
+        type: 'error',
+        message: '帳號或密碼錯，請輸入正確的帳號或密碼',
+        title: '帳號或密碼錯',
+      })
+    } else if(loginResponse?.status === 411) {
+      captchaRef.value?.refreshCaptcha()
+
+      ElNotification({
+        type: 'error',
+        message: loginResponse.message,
+        title: '驗證碼錯誤',
+      })
+    } else {
+      captchaRef.value?.refreshCaptcha()
+
+      ElNotification({
+        type: 'error',
+        message: '驗證碼過期，更新驗證碼',
+        title: '驗證碼錯誤',
+      })
     }
+
+    // if (loginResponse?.status === 411) {
+    //   captchaRef.value?.refreshCaptcha()
+
+    //   ElNotification({
+    //     type: 'error',
+    //     message: '驗證碼過期，更新驗證碼',
+    //     title: '驗證碼錯誤',
+    //   })
+    // } else if(loginResponse?.status === 401){
+
+    //   // $router.push('/')
+    //   ElNotification({
+    //     type: 'error',
+    //     message: '帳號或密碼錯，請輸入正確的帳號或密碼',
+    //     title: '帳號或密碼錯',
+    //   })
+    // } else {
+    //   let redirect: string = $route.query.redirect as string
+
+    //   $router.push({ path: redirect || '/' })
+    //   // $router.push('/')
+    //   ElNotification({
+    //     type: 'success',
+    //     message: '登陆成功',
+    //     title: `Hi, ${getTime()}好`,
+    //   })
+    // }
 
     loading.value = false
   } catch (error) {

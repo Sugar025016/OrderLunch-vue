@@ -1,4 +1,4 @@
-import { ResponseData } from "@/api/type"
+import { Response } from "@/api/type"
 
 
 export interface User {
@@ -14,7 +14,7 @@ export interface User {
 
 export type Records = User[]
 
-export interface UserResponseData extends ResponseData {
+export interface UserResponseData extends Response {
   data: {
     records: Records
     total: number
@@ -33,7 +33,7 @@ export interface RoleData {
 }
 
 export type AllRole = RoleData[]
-export interface AllRoleResponseData extends ResponseData {
+export interface AllRoleResponseData extends Response {
   data: {
     assignRoles: AllRole
     allRolesList: AllRole

@@ -30,7 +30,7 @@ import {
 
 import { ShopData } from '@/api/shop/type'
 import useSellShopStore from '@/store/modules/sellShop'
-import { Address, ResponseData } from '@/api/type'
+import { Address, Response, ResponseData } from '@/api/type'
 
 // function filterAsyncRoute(asyncRoute: any, routes: any) {
 //   return asyncRoute.filter((item: any) => {
@@ -73,6 +73,7 @@ const useUserStore = defineStore('User', {
   // 異步|邏輯的地方
   actions: {
     async userLogin(data: LoginFormData) {
+
       const formData = new FormData()
       if (data.username !== undefined) {
         formData.append('username', data.username)
@@ -89,7 +90,8 @@ const useUserStore = defineStore('User', {
 
       const res: LoginResponseData = await reqLogin(formData)
 
-      const loginResponse: ResponseData = res.data as ResponseData
+      console.log("loginResponse-----------1")
+      const loginResponse: Response = res as Response
       console.log("loginResponse.status", loginResponse)
       if (loginResponse.status === 200) {
         console.log("loginResponse.status", loginResponse.status)

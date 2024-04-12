@@ -355,8 +355,8 @@ const changeCategory = () => {
   @media (max-width: $breakpoint-md) {
     margin: 0 10px;
     display: grid;
-    grid-template-columns:  minmax(150px, 4fr) minmax(
-        150px,
+    grid-template-columns:  minmax(100px, 4fr) minmax(
+        120px,
         12fr
       );
     .search-container {

@@ -2,7 +2,7 @@
   <div class="common-layout">
     <el-container class="buy">
       <el-header class="buy-header">
-        <def-buy-tabBar class="container"></def-buy-tabBar>
+        <!-- <def-buy-tabBar class="container"></def-buy-tabBar> -->
       </el-header>
       <el-message class="buy-message">
         <SellTabBar class="container"></SellTabBar>
@@ -25,7 +25,8 @@
 <script setup lang="ts">
 import useLoadingStore from '@/store/modules/loading'
 import { ref, watch } from 'vue'
-import SellTabBar from './SellTabBar/src/index.vue'
+// import SellTabBar from '@/C/src/index.vue'
+import SellTabBar from '@/components/TabBar/index'
 
 const loadingStore = useLoadingStore()
 

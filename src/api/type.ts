@@ -1,10 +1,14 @@
-export interface ResponseData {
+export interface Response {
   status?: number
   message?: string
   ok?: boolean
 }
 
-export interface ResultResponse extends ResponseData {
+export interface ResponseData extends Response {
+  code?: number
+}
+
+export interface ResultResponse extends Response {
   data: boolean
 }
 

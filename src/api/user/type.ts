@@ -1,5 +1,5 @@
 import { ShopList } from '../shop/type'
-import { Address, ResponseData } from '../type'
+import { Address, Response } from '../type'
 
 export interface RegisterMember {
   verifyCode: string
@@ -19,7 +19,7 @@ export interface LoginFormData {
 
 
 
-export interface LoginResponseData extends ResponseData {
+export interface LoginResponseData extends Response {
   data?: LoginResponseData
 }
 export interface LoginResponseData {
@@ -27,7 +27,7 @@ export interface LoginResponseData {
   message?: string
   ok?: boolean
 }
-export interface UserInfoResponseData extends ResponseData {
+export interface UserInfoResponseData extends Response {
   data: {
     routes: string[]
     buttons: string[]
@@ -51,11 +51,11 @@ export interface UserInfoResponseData extends ResponseData {
 
 export type Addresses = Address[]
 
-export interface UserAddressResponseData extends ResponseData {
+export interface UserAddressResponseData extends Response {
   data: Addresses
 }
 
-export interface AddressResponseData extends ResponseData {
+export interface AddressResponseData extends Response {
   data: Address
 }
 
@@ -71,14 +71,14 @@ export interface UserPwd {
   NewPassword: string
 }
 
-export interface UserProfileChangeResponse extends ResponseData {
+export interface UserProfileChangeResponse extends Response {
   data: string
 }
 
-export interface LovesResponseData extends ResponseData {
+export interface LovesResponseData extends Response {
   data: ShopList
 }
 
-export interface ChangeLovesResponseData extends ResponseData {
+export interface ChangeLovesResponseData extends Response {
   data: boolean
 }

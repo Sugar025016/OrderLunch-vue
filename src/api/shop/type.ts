@@ -1,5 +1,5 @@
 import { TabsData, ProductList } from '../tab/type'
-import { ResponseData, Page, Address } from '../type'
+import { Response, Page, Address } from '../type'
 
 // export interface ResponseData {
 //   code: number
@@ -7,7 +7,7 @@ import { ResponseData, Page, Address } from '../type'
 //   ok: boolean
 // }
 
-export interface ShopIDResponseData extends ResponseData {
+export interface ShopIDResponseData extends Response {
   data: number
 }
 
@@ -18,7 +18,7 @@ export interface CategoryObj {
   category2Id?: number
 }
 
-export interface CategoryResponseData extends ResponseData {
+export interface CategoryResponseData extends Response {
   data: CategoryObj[]
 }
 
@@ -42,17 +42,17 @@ export interface TimePeriod {
   endTime: string
 }
 
-export interface ShopsResponseData extends ResponseData {
+export interface ShopsResponseData extends Response {
   data: ShopList
 }
 
 export interface ShopPageResponse extends Page {
   content: ShopList
 }
-export interface GetShopPageResponse extends ResponseData {
+export interface GetShopPageResponse extends Response {
   data: ShopPageResponse
 }
-export interface ShopResponseData extends ResponseData {
+export interface ShopResponseData extends Response {
   data: ShopDetailData
 }
 
@@ -75,7 +75,7 @@ export interface ShopName {
 }
 
 export type ShopNames = ShopName[]
-export interface ShopNamesResponse extends ResponseData {
+export interface ShopNamesResponse extends Response {
   data: ShopNames
 }
 
@@ -118,11 +118,11 @@ export interface PutShopData {
   deliveryPrice: number
 }
 
-export interface ShopDetailsResponse extends ResponseData {
+export interface ShopDetailsResponse extends Response {
   data: ShopDetailData
 }
 
-export interface PutShopResponse extends ResponseData {
+export interface PutShopResponse extends Response {
   data: boolean
 }
 

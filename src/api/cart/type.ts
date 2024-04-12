@@ -1,5 +1,5 @@
 import { Schedules } from '@/api/shop/type'
-import { ResponseData } from '../type'
+import { Response } from '../type'
 
 
 
@@ -31,7 +31,7 @@ export interface ProductResponse {
   isOrderable: boolean
 }
 
-export interface CartResponseData extends ResponseData {
+export interface CartResponseData extends Response {
   data: CartsData
 }
 

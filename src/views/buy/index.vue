@@ -2,7 +2,7 @@
   <div class="common-layout">
     <el-container class="buy">
       <el-header class="buy-header">
-        <def-buy-tabBar class="container"></def-buy-tabBar>
+        <TabBar class="container"></TabBar>
       </el-header>
       <el-main class="buy-body">
         <Router-view></Router-view>
@@ -22,6 +22,7 @@
 <script setup lang="ts">
 import useLoadingStore from '@/store/modules/loading'
 import { ref, watch } from 'vue'
+import TabBar from '@/components/TabBar/index'
 const loadingStore = useLoadingStore()
 
 const isLoading = ref(loadingStore.isLoading)
@@ -70,19 +71,18 @@ watch(
         padding: 0;
         height: 60px;
         .container {
-          padding: 0 0px 0 10px;
+          // padding: 0 0px 0 10px;
           :deep(.toolbar_right) {
-            // svg {
-            //   width: 20px;
-            //   height: 20px;
-            // }
-            // :deep(.order-text) {
-            //   background-color: red;
-            //   .svg-icon {
-            //     width: 20px;
-            //     height: 20px;
-            //   }
-            // }
+            height: 100%;
+          }
+        }
+      }
+
+      @media (max-width: $breakpoint-xs) {
+        height: 50px;
+        .container {
+          padding: 0 0px 0 0px;
+          :deep(.toolbar_right) {
             height: 100%;
           }
         }

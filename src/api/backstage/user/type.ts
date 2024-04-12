@@ -1,4 +1,4 @@
-import { ResponseData } from "@/api/type"
+import { Response } from "@/api/type"
 
 
 export interface content {
@@ -22,7 +22,7 @@ export interface Users {
   totalPages: number
 }
 
-export interface UserResponseData extends ResponseData {
+export interface UserResponseData extends Response {
   data: Users
 }
 
@@ -43,6 +43,6 @@ export interface SearchUser {
 
 export type SearchUsers = SearchUser[]
 
-export interface SearchUserResponseData extends ResponseData {
+export interface SearchUserResponseData extends Response {
   data: SearchUsers
 }

@@ -10,7 +10,7 @@ import {
 import ElMessage from 'element-plus/lib/components/message/index.js'
 
 import EditAddressModal from '@/components/Buy/BuyCheck/src/editAddressModal.vue'
-import { Address, ResponseData } from '@/api/type'
+import { Address, Response } from '@/api/type'
 import { Plus, EditPen, Delete, CaretTop } from '@element-plus/icons-vue'
 
 import useShopStore from '@/store/modules/shop'
@@ -73,7 +73,7 @@ const checkDeleteAddress = async (address: Address) => {
 }
 
 const deleteAddress = async (address: Address) => {
-  let res: ResponseData = await reqDeleteUserAddresses(address.id as number)
+  let res: Response = await reqDeleteUserAddresses(address.id as number)
   if (res.status === 200) {
     userStore.userInfo()
     getUserAddress()
@@ -156,7 +156,7 @@ function calculateDistance(
 }
 
 const chooseAddress = async () => {
-  let res: ResponseData = await reqPutUserAddressDelivery(addressId.value)
+  let res: Response = await reqPutUserAddressDelivery(addressId.value)
   if (res.status === 200) {
     await shopStore.getShopPage()
     await userStore.userInfo()
@@ -305,6 +305,8 @@ defineExpose({
   :deep(.el-dialog) {
     border-radius: 20px;
     width: 550px;
+
+
     // max-height: 80%;
     .el-dialog__header {
       margin: 0px;
@@ -364,9 +366,14 @@ defineExpose({
 @media (max-width: $breakpoint-sm) {
   .dialog {
     :deep(.el-dialog) {
+
       width: 100%;
       height: auto;
-
+  // position: fixed;
+  // bottom: 0;
+  // right: 0;
+  // top:0;
+  // left: 0;
       .radio {
         margin: 10px 0;
         .el-radio {

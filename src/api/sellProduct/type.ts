@@ -1,4 +1,4 @@
-import { ResponseData } from "../type"
+import { Response } from "../type"
 
 export interface SellProduct {
   id: number
@@ -12,10 +12,10 @@ export interface SellProduct {
 
 export type SellProductList = SellProduct[]
 
-export interface ResponseProductList extends ResponseData {
+export interface ResponseProductList extends Response {
   data: SellProductList
 }
 
-export interface ResponseBoolean extends ResponseData {
+export interface ResponseBoolean extends Response {
   data: boolean
 }

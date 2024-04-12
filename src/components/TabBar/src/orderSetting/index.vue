@@ -202,8 +202,15 @@ const goRoute = async (shopId: number, shopName: string) => {
   height: 100%;
   .el-button {
     height: 60px;
-    // width: 60px;
+    width: 60px;
     margin-left: 0px;
+
+    @media (max-width: $breakpoint-xs) {
+      // padding: 0;
+
+    height: 50px;
+    width: 50px;
+    }
   }
 
   display: flex;
@@ -212,7 +219,7 @@ const goRoute = async (shopId: number, shopName: string) => {
       span {
         font-size: 1.6rem;
         color: #030303;
-        margin:0 10px
+        margin: 0 10px;
       }
     }
 

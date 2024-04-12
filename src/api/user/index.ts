@@ -12,7 +12,7 @@ import type {
   RegisterMember,
   AddressResponseData,
 } from './type'
-import { ResultResponse, Address, ResponseData } from '../type'
+import { ResultResponse, Address, Response } from '../type'
 
 enum API {
   LOGIN_URL = '/login',
@@ -73,9 +73,9 @@ export const reqAddUserAddresses = (data: Address) => {
 }
 
 export const reqDeleteUserAddresses = (addressId: number) =>
-  request.delete<any, ResponseData>(API.USER_ADDRESS_URL + '/' + addressId)
+  request.delete<any, Response>(API.USER_ADDRESS_URL + '/' + addressId)
 
 export const reqPutUserAddressDelivery = (addressId: number) =>
-  request.put<any, ResponseData>(
+  request.put<any, Response>(
     API.USER_ADDRESS_DELIVERY_URL + '/' + addressId,
   )

@@ -1,5 +1,5 @@
 import { ProductData } from '../product/type'
-import { ResponseData } from '../type'
+import { Response } from '../type'
 
 
 export type ProductList = ProductData[]
@@ -13,7 +13,7 @@ export interface TabData {
 
 export type TabsData = TabData[]
 
-export interface TabProductsResponseData extends ResponseData {
+export interface TabProductsResponseData extends Response {
   data: TabsData
 }
 

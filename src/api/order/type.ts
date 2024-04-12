@@ -1,6 +1,6 @@
-import { ResponseData, Page, Address } from '../type'
+import { Response, Page, Address } from '../type'
 
-export interface OrderResponse extends ResponseData {
+export interface OrderResponse extends Response {
   data: boolean
 }
 
@@ -14,7 +14,7 @@ export interface OrderPageResponse extends Page {
   content: Orders
 }
 
-export interface GetOrderPageResponse extends ResponseData {
+export interface GetOrderPageResponse extends Response {
   data: OrderPageResponse
 }
 
@@ -69,10 +69,10 @@ export interface OrderFinishPage extends Page {
   content: OrderFinish
 }
 
-export interface GetOrderFinishPageResponse extends ResponseData {
+export interface GetOrderFinishPageResponse extends Response {
   data: OrderFinishPage
 }
 
-export interface GetOrderNewResponse extends ResponseData {
+export interface GetOrderNewResponse extends Response {
   data: Orders
 }

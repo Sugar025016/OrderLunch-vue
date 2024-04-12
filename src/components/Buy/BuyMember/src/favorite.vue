@@ -83,14 +83,14 @@ const changeTab = (name: string, number: string = userData) => {
       margin: 0 10px;
     }
     .favorites {
-      width: 100%;
-      margin: 20px 10px 10px 10px;
+      width: auto;
+      margin: 20px 10px ;
       .row3 {
         display: grid; /* 使用CSS Grid布局 */
         grid-template-columns: repeat(1, 1fr);
         grid-gap: 10px;
         margin: 10px 0;
-        padding: 0 5px;
+        // padding: 0 5px;
         @media (min-width: $breakpoint-xs) {
           grid-template-columns: repeat(1, 1fr);
         }

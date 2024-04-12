@@ -1,11 +1,35 @@
 <template>
   <div class="common-layout">
     <el-container style="height: 100vh">
+
+      <div  v-if="!isBreakpointMD"
+      :class="{ overlay: !LayOutSettingStore.isCollapse }" ></div>
       <el-aside
         width="200px"
         :class="{ isCollapse: LayOutSettingStore.isCollapse ? true : false }"
       >
         <el-scrollbar>
+          <div class="common-layout-close" v-if="!isBreakpointMD">
+            <el-button
+              aria-label="Close this dialog"
+              class="el-drawer__close-btn"
+              type="button"
+              circle
+              @click="
+                LayOutSettingStore.isCollapse = !LayOutSettingStore.isCollapse
+              "
+            >
+              <i class="el-icon el-drawer__close">
+                <def-svg-icon
+                  name="close"
+                  color="#f8f9fa"
+                  width="30px"
+                  height="30px"
+                  class="icon list"
+                ></def-svg-icon>
+              </i>
+            </el-button>
+          </div>
           <el-menu
             :default-active="$route.path"
             active-text-color="#fff"
@@ -25,22 +49,49 @@
           </el-menu>
         </el-scrollbar>
       </el-aside>
-
+      <!-- <el-container
+        :style="{
+          left: !isBreakpointMD
+            ? '0px'
+            : !LayOutSettingStore.isCollapse
+            ? '100px'
+            : '56px',
+          width: !isBreakpointMD
+            ? 'calc(100% - 0px)'
+            : LayOutSettingStore.isCollapse
+            ? 'calc(100% - 56px)'
+            : 'calc(100% - 100px)',
+          //background: !isBreakpointMD ? 'red' : 'blue',
+        }"
+      > -->
       <el-container
         :style="{
-          left: !LayOutSettingStore.isCollapse ? '200px' : '56px',
-          width: LayOutSettingStore.isCollapse
+          left: !isBreakpointMD
+            ? '0px'
+            : !LayOutSettingStore.isCollapse
+            ? '100px'
+            : '56px',
+          width: !isBreakpointMD
+            ? 'calc(100% - 0px)'
+            : LayOutSettingStore.isCollapse
             ? 'calc(100% - 56px)'
-            : 'calc(100% - 200px)',
+            : 'calc(100% - 100px)',
+          //background: !isBreakpointMD ? 'red' : 'blue',
         }"
       >
         <el-header>
-          <SellTabBar class="container"></SellTabBar>
+          <SellTabBar class="sellTabBar"></SellTabBar>
         </el-header>
         <el-main
           :style="{
-            left: !LayOutSettingStore.isCollapse ? '200px' : '56px',
-            width: LayOutSettingStore.isCollapse
+            left: !isBreakpointMD
+              ? '0px'
+              : !LayOutSettingStore.isCollapse
+              ? '200px'
+              : '56px',
+            width: !isBreakpointMD
+              ? 'calc(100% - 0px)'
+              : LayOutSettingStore.isCollapse
               ? 'calc(100% - 56px)'
               : 'calc(100% - 200px)',
           }"
@@ -59,13 +110,12 @@ import setting from '@/setting'
 import useLayOutSettingStore from '@/store/modules/setting'
 import useUserStore from '@/store/modules/user'
 import { useRoute } from 'vue-router'
-import {
-  ShopNames,
-} from '@/api/shop/type'
+import { ShopNames } from '@/api/shop/type'
 import { onMounted, ref } from 'vue'
 import drawer from 'element-plus/lib/components/drawer/index.js'
 import useSellShopStore from '@/store/modules/sellShop'
-import SellTabBar from '@/components/Sell/SellTabBar/src/index.vue'
+import SellTabBar from '@/components/TabBar/src/index.vue'
+import { isBreakpointMD } from '@/utils/windowSize'
 
 let LayOutSettingStore = useLayOutSettingStore()
 let userStore = useUserStore()
@@ -76,19 +126,17 @@ const shopNameItem = ref<ShopNames>([])
 const getItem = async () => {
   drawer.value = true
 
-  
-  shopNameItem.value = await sellShopStore.getShopItem() as ShopNames
-
+  shopNameItem.value = (await sellShopStore.getShopItem()) as ShopNames
 }
 
 onMounted(() => {
   getItem()
 })
-
 </script>
 
 <style lang="scss" scoped>
 .common-layout {
+    position: relative;
   width: auto;
   height: 100%;
   font-size: 10px;
@@ -98,13 +146,32 @@ onMounted(() => {
   }
   .isCollapse {
     width: 56px;
+    @media (max-width: $breakpoint-md) {
+      width: 0px;
+    }
   }
   .el-container {
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色 */
+      z-index: 999; /* 确保遮罩层在侧边栏之上 */
+    }
     .el-aside {
+      z-index: 1000;
       background-color: #001529 !important;
       height: 100%;
       transition: all 0.3s;
+      @media (max-width: $breakpoint-md) {
+        position: absolute;
+      }
+
       .el-scrollbar {
+        position: relative;
         .el-scrollbar__view {
           height: 100%;
           .el-menu {
@@ -147,6 +214,13 @@ onMounted(() => {
             }
           }
         }
+        .common-layout-close {
+          width: auto;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          margin: 10px 10px 0 0;
+        }
       }
     }
     .el-container {
@@ -166,6 +240,12 @@ onMounted(() => {
       }
       .el-header {
         width: 100%;
+        @media (max-width: $breakpoint-md) {
+          padding: 0;
+        }
+        @media (max-width: $breakpoint-xs) {
+          height: 50px;
+        }
       }
     }
   }
