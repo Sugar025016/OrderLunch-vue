@@ -306,7 +306,6 @@ defineExpose({
     border-radius: 20px;
     width: 550px;
 
-
     // max-height: 80%;
     .el-dialog__header {
       margin: 0px;
@@ -366,14 +365,13 @@ defineExpose({
 @media (max-width: $breakpoint-sm) {
   .dialog {
     :deep(.el-dialog) {
-
       width: 100%;
       height: auto;
-  // position: fixed;
-  // bottom: 0;
-  // right: 0;
-  // top:0;
-  // left: 0;
+      // position: fixed;
+      // bottom: 0;
+      // right: 0;
+      // top:0;
+      // left: 0;
       .radio {
         margin: 10px 0;
         .el-radio {

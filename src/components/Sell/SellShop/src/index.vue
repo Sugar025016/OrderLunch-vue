@@ -48,14 +48,14 @@ const updateShop = () => {
   Object.assign(shopParams, sellShopStore.shop)
 
   // 创建一个临时的地址对象，以免影响到 row 对象
-  const tempAddress:Address = {
+  const tempAddress: Address = {
     id: sellShopStore.shop.address.id,
     city: sellShopStore.shop.address.city,
     area: sellShopStore.shop.address.area,
     street: sellShopStore.shop.address.street,
     detail: sellShopStore.shop.address.detail,
     lat: undefined,
-    lng: undefined
+    lng: undefined,
   }
 
   shopParams.address = tempAddress
@@ -187,7 +187,7 @@ const remoteMethod = debounce((query) => {
 
 const city: string[] = Object.keys(cityAreas)
 
-const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile:any) => {
+const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile: any) => {
   if (
     rawFile.type === 'image/png' ||
     rawFile.type === 'image/jpeg' ||
@@ -213,9 +213,7 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile:any) => {
 const uploadHeaders = {
   'X-CSRF-Token': userStore.token, // 初始为空
 }
-const handleAvatarSuccess: UploadProps['onSuccess'] = (
-  response:any,
-) => {
+const handleAvatarSuccess: UploadProps['onSuccess'] = (response: any) => {
   shopParams.imgUrl = response.url
   shopParams.imgId = response.id
   formRef.value.clearValidate('img')
@@ -348,4 +346,3 @@ h3 {
   }
 }
 </style>
-

@@ -76,6 +76,4 @@ export const reqDeleteUserAddresses = (addressId: number) =>
   request.delete<any, Response>(API.USER_ADDRESS_URL + '/' + addressId)
 
 export const reqPutUserAddressDelivery = (addressId: number) =>
-  request.put<any, Response>(
-    API.USER_ADDRESS_DELIVERY_URL + '/' + addressId,
-  )
+  request.put<any, Response>(API.USER_ADDRESS_DELIVERY_URL + '/' + addressId)

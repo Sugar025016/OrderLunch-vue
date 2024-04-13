@@ -4,8 +4,6 @@ import useUserStore from '@/store/modules/user'
 let userStore = useUserStore()
 const dialogVisible = ref(false)
 
-
-
 const props = defineProps({
   memberModelOpen: Boolean,
 })
@@ -61,8 +59,6 @@ const handleClose = () => {
 </template>
 
 <style lang="scss" scoped>
-
-
 .dialog {
   ::v-deep .el-dialog {
     border-radius: 20px;

@@ -54,8 +54,6 @@
   </template>
 </template>
 <script setup lang="ts" name="Menu">
-
-
 import { useRouter, useRoute, Router } from 'vue-router'
 
 import useSellShopStore from '@/store/modules/sellShop'
@@ -67,21 +65,26 @@ let props = defineProps(['menuList'])
 let $router = useRouter()
 let $route = useRoute()
 
-
 function computedClass(value: string) {
   switch (value) {
     case 'orderNew':
-      return window.getComputedStyle(document.documentElement).getPropertyValue('--color-order-new');
+      return window
+        .getComputedStyle(document.documentElement)
+        .getPropertyValue('--color-order-new')
     case 'orderHandle':
-      return getComputedStyle(document.documentElement).getPropertyValue('--color-order-handle').trim();
+      return getComputedStyle(document.documentElement)
+        .getPropertyValue('--color-order-handle')
+        .trim()
     case 'orderFinish':
-      return getComputedStyle(document.documentElement).getPropertyValue('--color-order-finish').trim();
+      return getComputedStyle(document.documentElement)
+        .getPropertyValue('--color-order-finish')
+        .trim()
     default:
-      return getComputedStyle(document.documentElement).getPropertyValue('--el-color-primary').trim();
+      return getComputedStyle(document.documentElement)
+        .getPropertyValue('--el-color-primary')
+        .trim()
   }
 }
-
-
 </script>
 <script lang="ts">
 export default {
@@ -93,7 +96,6 @@ export default {
   margin-left: 5px;
   font-size: 16px;
 }
-
 
 .icon {
   color: $color;

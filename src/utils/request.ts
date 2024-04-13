@@ -19,7 +19,6 @@ request.interceptors.request.use(
       config.headers['token'] = tokenValue
     }
 
-
     return config
   },
   (error) => {
@@ -27,19 +26,19 @@ request.interceptors.request.use(
   },
 )
 
-
 request.interceptors.response.use(
-
   (response) => {
-    console.log("response-----------", response)
+    console.log('response-----------', response)
     if (response.status === 200) {
       if (response.config.url === '/login') {
-        let cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        let cookieValue = document.cookie.replace(
+          /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
+          '$1',
+        )
         SET_TOKEN(cookieValue)
-
       }
 
-      return Promise.resolve(response);
+      return Promise.resolve(response)
 
       // return Promise.resolve(response)
     } else {
@@ -48,7 +47,7 @@ request.interceptors.response.use(
       //   status: response.status,
       // })
 
-      return Promise.resolve(response);
+      return Promise.resolve(response)
     }
   },
   (error) => {
@@ -56,7 +55,6 @@ request.interceptors.response.use(
     let message = ''
 
     if (error.response) {
-
       const status = error.response.status
 
       switch (status) {
@@ -91,8 +89,7 @@ request.interceptors.response.use(
       //   message,
       // })
 
-
-      return Promise.resolve(error);
+      return Promise.resolve(error)
     }
   },
 )

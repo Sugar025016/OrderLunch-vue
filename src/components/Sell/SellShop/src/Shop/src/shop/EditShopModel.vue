@@ -42,7 +42,6 @@ let shopParams = reactive<PutShopData>({
 
 let shopParamsCheck: string
 
-
 let formRef = ref<any>()
 
 const props = defineProps({
@@ -56,7 +55,6 @@ const $emit = defineEmits(['update:shopDrawer'])
 const handleClose = () => {
   $emit('update:shopDrawer', (visible.value = false))
 }
-
 
 const updateShop = () => {
   sellShopStore.shopDrawer = true
@@ -207,7 +205,7 @@ const searchUsers = ref<SearchUsers>([])
 //   }
 // }, 1000) // 1000 毫秒的防抖延迟
 
-const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile:any) => {
+const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile: any) => {
   if (
     rawFile.type === 'image/png' ||
     rawFile.type === 'image/jpeg' ||
@@ -233,9 +231,7 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile:any) => {
 const uploadHeaders = {
   'X-CSRF-Token': userStore.token, // 初始为空
 }
-const handleAvatarSuccess: UploadProps['onSuccess'] = (
-  response:any
-) => {
+const handleAvatarSuccess: UploadProps['onSuccess'] = (response: any) => {
   shopParams.imgUrl = response.url
   shopParams.imgId = response.id
   formRef.value.clearValidate('img')

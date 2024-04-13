@@ -13,7 +13,6 @@ import type {
   ShopIDResponseData,
 } from './type'
 
-
 enum API {
   SHOPS = '/api/shop',
   SHOPS_RECOMMEND = '/api/shop/recommend',

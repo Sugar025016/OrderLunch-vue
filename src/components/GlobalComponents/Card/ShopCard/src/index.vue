@@ -123,7 +123,6 @@ onMounted(async () => {
     display: none; /* 設置缺圖片時隱藏（缺圖圖標） */
   }
 
-
   .overlay {
     position: absolute;
     top: -14px;

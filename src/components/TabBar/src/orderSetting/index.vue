@@ -208,8 +208,8 @@ const goRoute = async (shopId: number, shopName: string) => {
     @media (max-width: $breakpoint-xs) {
       // padding: 0;
 
-    height: 50px;
-    width: 50px;
+      height: 50px;
+      width: 50px;
     }
   }
 

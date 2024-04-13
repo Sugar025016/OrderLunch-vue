@@ -13,7 +13,6 @@ const props = defineProps({
 })
 let $emit = defineEmits(['updateAddress'])
 
-
 const city: string[] = Object.keys(cityAreas)
 
 const formSize = ref('default')
@@ -22,14 +21,14 @@ const changeCity = () => {
   props.address.area = ''
 }
 
-const validatorShopAddressDetail = (  value: any, callBack: any) => {
+const validatorShopAddressDetail = (value: any, callBack: any) => {
   if (value.trim().length <= 255) {
     callBack()
   } else {
     callBack(new Error('地址不可超過255個字'))
   }
 }
-const validateNotEmptyString = (  value: any, callback: any) => {
+const validateNotEmptyString = (value: any, callback: any) => {
   if (value.trim() === '') {
     callback(new Error('請輸入地址'))
   } else {
@@ -126,14 +125,7 @@ defineExpose({
     >
       刪除
     </el-button> -->
-    <el-button
-      type="primary"
-      size="large"
-      round
-      plain
-    >
-      刪除
-    </el-button>
+    <el-button type="primary" size="large" round plain>刪除</el-button>
   </el-form>
 </template>
 

@@ -219,7 +219,6 @@ $b-color: $color;
           top: -30px;
           left: -20px;
         }
-
       }
     }
 
@@ -332,4 +331,3 @@ $b-color: $color;
   z-index: 50;
 }
 </style>
-

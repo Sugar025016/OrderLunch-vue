@@ -11,13 +11,17 @@
             <span>{{ userStore.account }}</span>
             <!-- <span class="change-password">修改密碼</span>
             <el-button class="text-button" round>修改密碼</el-button> -->
-            <el-link type="primary" class="change" :underline="false">變更密碼</el-link>
+            <el-link type="primary" class="change" :underline="false">
+              變更密碼
+            </el-link>
           </div>
           <div class="text">
             <span>名稱：</span>
             <span>{{ userStore.username }}</span>
             <!-- <el-button class="text-button" round>修改名稱</el-button> -->
-            <el-link type="primary" class="change" :underline="false">更改名稱</el-link>
+            <el-link type="primary" class="change" :underline="false">
+              更改名稱
+            </el-link>
           </div>
           <!-- <div class="text">
             <span>E-mail：</span>
@@ -59,7 +63,6 @@ let userStore = useUserStore()
   align-items: center;
   justify-content: center;
   .member-context {
-   
     h1 {
       font-size: 36px;
 

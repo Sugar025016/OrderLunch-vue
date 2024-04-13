@@ -1,7 +1,11 @@
 import { defineStore } from 'pinia'
 // import { ElMessage, ElMessageBox } from 'element-plus'
 // import type { Action } from 'element-plus'
-import { Action, ElMessage, ElMessageBox } from 'element-plus/lib/components/index.js'
+import {
+  Action,
+  ElMessage,
+  ElMessageBox,
+} from 'element-plus/lib/components/index.js'
 
 const useLoadingStore = defineStore('LoadingStore', {
   state: () => {

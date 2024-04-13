@@ -10,7 +10,7 @@ const captchaUrl = ref<string>(
 )
 
 const refreshCaptcha = async () => {
-  captchaUrl.value =  await '/api/api/register/captcha?timestamp=' + Date.now()
+  captchaUrl.value = (await '/api/api/register/captcha?timestamp=') + Date.now()
 }
 
 defineExpose({

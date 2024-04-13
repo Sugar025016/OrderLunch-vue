@@ -3,7 +3,7 @@ import { ref, watch } from 'vue'
 
 import { Schedule, Schedules, TimePeriod, TimePeriods } from '@/api/shop/type'
 
-let $emit = defineEmits(['date', 'time','deliveryTime'])
+let $emit = defineEmits(['date', 'time', 'deliveryTime'])
 
 type DeliveryTime = {
   date: MyDateDisabled
@@ -133,8 +133,7 @@ const setOptionDate = async () => {
       (startOptionDay.getMonth() + 1) +
       ' - ' +
       startOptionDay.getDate() +
-      (disabled ? (timePeriods.length>0?' 已打烊':' 休息') : '')
-
+      (disabled ? (timePeriods.length > 0 ? ' 已打烊' : ' 休息') : '')
 
     const dateData = ref<MyDateDisabled>({
       year: startOptionDay.getFullYear(),
@@ -153,7 +152,6 @@ const setOptionDate = async () => {
   deliveryTime.value.date = dateOptions.value.find(
     (v) => !v.disabled,
   ) as MyDateDisabled
-
 
   deliveryTime.value.date = dateOptions.value[0]
   if (deliveryTime.value.date.times.length > 0) {

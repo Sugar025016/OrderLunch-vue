@@ -84,7 +84,7 @@ const changeTab = (name: string, number: string = userData) => {
     }
     .favorites {
       width: auto;
-      margin: 20px 10px ;
+      margin: 20px 10px;
       .row3 {
         display: grid; /* 使用CSS Grid布局 */
         grid-template-columns: repeat(1, 1fr);

@@ -18,16 +18,16 @@ let $route = useRoute()
 let tabProductsData = ref<TabData[]>([])
 
 let productData = ref<ProductModalData>({
-productId: 0,
-name: '',
-description: '',
-qty: 1,
-imgUrl: '',
-prise: 0,
-department: '',
-orderUsername: '',
-remark: '',
-shopId: 0
+  productId: 0,
+  name: '',
+  description: '',
+  qty: 1,
+  imgUrl: '',
+  prise: 0,
+  department: '',
+  orderUsername: '',
+  remark: '',
+  shopId: 0,
 })
 
 const openModal = (v: ProductData) => {
@@ -137,7 +137,7 @@ const tapModalRef = ref<typeof TapModal | null>(null)
         <div class="tab-title">
           <div class="tab-setting">
             <!-- <h3 :class="{ label_name: !tab.shelve }">{{ tab.name }}</h3> -->
-            <h3 >{{ tab.name }}</h3>
+            <h3>{{ tab.name }}</h3>
 
             <div class="form-check form-switch">
               <!-- <input
@@ -349,8 +349,7 @@ const tapModalRef = ref<typeof TapModal | null>(null)
               margin: 14px 0;
             }
           }
-          .label_name{
-
+          .label_name {
             color: rgb(112, 112, 112);
           }
         }
@@ -372,7 +371,7 @@ const tapModalRef = ref<typeof TapModal | null>(null)
     grid-template-columns: repeat(1, 1fr);
   }
 
-  @media (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-sm) {
     grid-template-columns: repeat(2, 1fr);
   }
   @media (min-width: $breakpoint-xxl) {

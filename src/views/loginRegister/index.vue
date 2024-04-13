@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-
 import reactive from '@/components/Register/src/index.vue'
 </script>
 

@@ -62,7 +62,7 @@ import { isBreakpointSM } from '@/utils/windowSize'
     display: flex;
     align-items: center;
     // margin-left: 10px;
-      height: 100%;
+    height: 100%;
   }
 
   .toolbar_order {

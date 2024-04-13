@@ -169,50 +169,50 @@ export const constantRoute = [
     },
     redirect: '/Backstage/shops',
     children: [
-    //   {
-    //     path: '/Backstage/shops',
-    //     component: () =>
-    //       import('@/components/Backstage/BackstageShops/src/index.vue'),
-    //     meta: {
-    //       title: 'Shops',
-    //       hidden: false,
-    //       icon: 'HomeFilled',
-    //       mustToken: true,
-    //     },
-    //   },
-    //   {
-    //     path: '/Backstage/users',
-    //     component: () =>
-    //       import('@/components/Backstage/BackstageUser/src/index.vue'),
-    //     meta: {
-    //       title: 'users',
-    //       hidden: false,
-    //       icon: 'HomeFilled',
-    //       mustToken: true,
-    //     },
-    //   },
-    //   {
-    //     path: 'product',
-    //     component: () =>
-    //       import('@/components/Backstage/BackstageProduct/src/index.vue'),
-    //     meta: {
-    //       title: 'product',
-    //       hidden: false,
-    //       icon: 'HomeFilled',
-    //       mustToken: true,
-    //     },
-    //   },
-    //   {
-    //     path: 'category',
-    //     component: () =>
-    //       import('@/components/Backstage/BackstageCategory/src/index.vue'),
-    //     meta: {
-    //       title: 'ategory',
-    //       hidden: false,
-    //       icon: 'HomeFilled',
-    //       mustToken: true,
-    //     },
-    //   },
+      //   {
+      //     path: '/Backstage/shops',
+      //     component: () =>
+      //       import('@/components/Backstage/BackstageShops/src/index.vue'),
+      //     meta: {
+      //       title: 'Shops',
+      //       hidden: false,
+      //       icon: 'HomeFilled',
+      //       mustToken: true,
+      //     },
+      //   },
+      //   {
+      //     path: '/Backstage/users',
+      //     component: () =>
+      //       import('@/components/Backstage/BackstageUser/src/index.vue'),
+      //     meta: {
+      //       title: 'users',
+      //       hidden: false,
+      //       icon: 'HomeFilled',
+      //       mustToken: true,
+      //     },
+      //   },
+      //   {
+      //     path: 'product',
+      //     component: () =>
+      //       import('@/components/Backstage/BackstageProduct/src/index.vue'),
+      //     meta: {
+      //       title: 'product',
+      //       hidden: false,
+      //       icon: 'HomeFilled',
+      //       mustToken: true,
+      //     },
+      //   },
+      //   {
+      //     path: 'category',
+      //     component: () =>
+      //       import('@/components/Backstage/BackstageCategory/src/index.vue'),
+      //     meta: {
+      //       title: 'ategory',
+      //       hidden: false,
+      //       icon: 'HomeFilled',
+      //       mustToken: true,
+      //     },
+      //   },
     ],
   },
 
@@ -239,7 +239,8 @@ export const constantRoute = [
     children: [
       {
         path: '/sell/Shop/:id',
-        component: () => import('@/components/Sell/SellShop/src/Shop/src/index.vue'),
+        component: () =>
+          import('@/components/Sell/SellShop/src/Shop/src/index.vue'),
         meta: {
           title: 'Register',
           hidden: false,
@@ -400,39 +401,39 @@ export const asyncRoute = [
     },
     redirect: '/Register/member',
     children: [
-    //   {
-    //     path: 'member',
-    //     component: () =>
-    //       import('@/components/Backstage/BackstageShops/src/index.vue'),
-    //     meta: {
-    //       title: 'Shops',
-    //       hidden: false,
-    //       icon: 'HomeFilled',
-    //       mustToken: true,
-    //     },
-    //   },
-    //   {
-    //     path: 'shop',
-    //     component: () =>
-    //       import('@/components/Backstage/BackstageUser/src/index.vue'),
-    //     meta: {
-    //       title: 'users',
-    //       hidden: false,
-    //       icon: 'HomeFilled',
-    //       mustToken: true,
-    //     },
-    //   },
-    //   {
-    //     path: 'category',
-    //     component: () =>
-    //       import('@/components/Backstage/BackstageCategory/src/index.vue'),
-    //     meta: {
-    //       title: 'ategory',
-    //       hidden: false,
-    //       icon: 'HomeFilled',
-    //       mustToken: true,
-    //     },
-    //   },
+      //   {
+      //     path: 'member',
+      //     component: () =>
+      //       import('@/components/Backstage/BackstageShops/src/index.vue'),
+      //     meta: {
+      //       title: 'Shops',
+      //       hidden: false,
+      //       icon: 'HomeFilled',
+      //       mustToken: true,
+      //     },
+      //   },
+      //   {
+      //     path: 'shop',
+      //     component: () =>
+      //       import('@/components/Backstage/BackstageUser/src/index.vue'),
+      //     meta: {
+      //       title: 'users',
+      //       hidden: false,
+      //       icon: 'HomeFilled',
+      //       mustToken: true,
+      //     },
+      //   },
+      //   {
+      //     path: 'category',
+      //     component: () =>
+      //       import('@/components/Backstage/BackstageCategory/src/index.vue'),
+      //     meta: {
+      //       title: 'ategory',
+      //       hidden: false,
+      //       icon: 'HomeFilled',
+      //       mustToken: true,
+      //     },
+      //   },
     ],
   },
 ]
@@ -449,50 +450,50 @@ export const menuRoutes = [
     },
     redirect: 'shops',
     children: [
-    //   {
-    //     path: 'shops',
-    //     component: () =>
-    //       import('@/components/Backstage/BackstageShops/src/index.vue'),
-    //     meta: {
-    //       title: 'Shops',
-    //       hidden: false,
-    //       icon: 'HomeFilled',
-    //       mustToken: true,
-    //     },
-    //   },
-    //   {
-    //     path: 'users',
-    //     component: () =>
-    //       import('@/components/Backstage/BackstageUser/src/index.vue'),
-    //     meta: {
-    //       title: 'Users',
-    //       hidden: false,
-    //       icon: 'HomeFilled',
-    //       mustToken: true,
-    //     },
-    //   },
-    //   {
-    //     path: 'product',
-    //     component: () =>
-    //       import('@/components/Backstage/BackstageProduct/src/index.vue'),
-    //     meta: {
-    //       title: 'Product',
-    //       hidden: false,
-    //       icon: 'HomeFilled',
-    //       mustToken: true,
-    //     },
-    //   },
-    //   {
-    //     path: 'category',
-    //     component: () =>
-    //       import('@/components/Backstage/BackstageCategory/src/index.vue'),
-    //     meta: {
-    //       title: 'Category',
-    //       hidden: false,
-    //       icon: 'HomeFilled',
-    //       mustToken: true,
-    //     },
-    //   },
+      //   {
+      //     path: 'shops',
+      //     component: () =>
+      //       import('@/components/Backstage/BackstageShops/src/index.vue'),
+      //     meta: {
+      //       title: 'Shops',
+      //       hidden: false,
+      //       icon: 'HomeFilled',
+      //       mustToken: true,
+      //     },
+      //   },
+      //   {
+      //     path: 'users',
+      //     component: () =>
+      //       import('@/components/Backstage/BackstageUser/src/index.vue'),
+      //     meta: {
+      //       title: 'Users',
+      //       hidden: false,
+      //       icon: 'HomeFilled',
+      //       mustToken: true,
+      //     },
+      //   },
+      //   {
+      //     path: 'product',
+      //     component: () =>
+      //       import('@/components/Backstage/BackstageProduct/src/index.vue'),
+      //     meta: {
+      //       title: 'Product',
+      //       hidden: false,
+      //       icon: 'HomeFilled',
+      //       mustToken: true,
+      //     },
+      //   },
+      //   {
+      //     path: 'category',
+      //     component: () =>
+      //       import('@/components/Backstage/BackstageCategory/src/index.vue'),
+      //     meta: {
+      //       title: 'Category',
+      //       hidden: false,
+      //       icon: 'HomeFilled',
+      //       mustToken: true,
+      //     },
+      //   },
     ],
   },
 ]

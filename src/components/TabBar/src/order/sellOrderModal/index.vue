@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref,  watch } from 'vue'
+import { ref, watch } from 'vue'
 import { Orders, Order } from '@/api/order/type'
 
 const props = defineProps({
@@ -120,9 +120,8 @@ const confirm = async () => {
   }
 }
 
-import { useRouter , useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import useSellShopStore from '@/store/modules/sellShop'
-
 
 let sellShopStore = useSellShopStore()
 let $router = useRouter()
@@ -130,10 +129,8 @@ let $route = useRoute()
 const goTo = (id: number) => {
   sellShopStore.shopId = id
   $route.meta.shopId = id
-  $router.push(`/Sell/${id}/orderNew`);
-
+  $router.push(`/Sell/${id}/orderNew`)
 }
-
 </script>
 
 <template>

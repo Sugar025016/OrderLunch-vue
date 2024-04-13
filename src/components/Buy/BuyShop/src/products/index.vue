@@ -57,27 +57,26 @@ import { ProductData } from '@/api/product/type'
 import useUserStore from '@/store/modules/user'
 import useShopStore from '@/store/modules/shop'
 
-
 let userStore = useUserStore()
 let shopStore = useShopStore()
 
 let $route = useRoute()
 
-let id: number = Number($route.params.id);
+let id: number = Number($route.params.id)
 
 let TabProductsData = ref<TabData[]>([])
 
 let productData = ref<ProductModalData>({
-productId: 0,
-name: '',
-description: '',
-qty: 1,
-imgUrl: '',
-prise: 0,
-department: '',
-orderUsername: '',
-remark: '',
-shopId: 0
+  productId: 0,
+  name: '',
+  description: '',
+  qty: 1,
+  imgUrl: '',
+  prise: 0,
+  department: '',
+  orderUsername: '',
+  remark: '',
+  shopId: 0,
 })
 
 const openModal = (v: ProductData) => {
@@ -133,7 +132,6 @@ myModal?.addEventListener('shown.bs.modal', () => {
 }
 
 .el-dialog {
-  
   background-image: url('@/assets/images/product001.jpeg') !important; /* 設置背景圖片 */
   border-radius: 10px !important;
 
@@ -205,7 +203,6 @@ myModal?.addEventListener('shown.bs.modal', () => {
     }
   }
   .tabs-content {
-
     .content {
       margin: 25px 0;
     }

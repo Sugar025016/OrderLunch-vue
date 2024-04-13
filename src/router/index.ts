@@ -1,4 +1,8 @@
-import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+import {
+  createRouter,
+  createWebHashHistory,
+  createWebHistory,
+} from 'vue-router'
 import { constantRoute, anyRoute, sellShop } from './routes'
 
 const router = createRouter({

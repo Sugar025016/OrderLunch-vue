@@ -346,19 +346,15 @@ const changeCategory = () => {
     }
   }
 }
-.haveAddress{
-
+.haveAddress {
   display: grid;
-  grid-template-columns:  5fr 12fr;
+  grid-template-columns: 5fr 12fr;
   grid-column-gap: 10px;
 
   @media (max-width: $breakpoint-md) {
     margin: 0 10px;
     display: grid;
-    grid-template-columns:  minmax(100px, 4fr) minmax(
-        120px,
-        12fr
-      );
+    grid-template-columns: minmax(100px, 4fr) minmax(120px, 12fr);
     .search-container {
       display: grid;
       grid-column: span 1;

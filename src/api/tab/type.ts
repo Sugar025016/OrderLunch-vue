@@ -1,7 +1,6 @@
 import { ProductData } from '../product/type'
 import { Response } from '../type'
 
-
 export type ProductList = ProductData[]
 
 export interface TabData {

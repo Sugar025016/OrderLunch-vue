@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, watch } from 'vue';
+import { ref, watch } from 'vue'
 // import {isBreakpointMD } from '@/utils/windowSize'
 
 const useLayOutSettingStore = defineStore('SettingStore', {
@@ -9,7 +9,6 @@ const useLayOutSettingStore = defineStore('SettingStore', {
       refsh: false,
     }
   },
-
 })
 
 export default useLayOutSettingStore

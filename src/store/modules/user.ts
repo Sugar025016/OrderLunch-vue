@@ -73,7 +73,6 @@ const useUserStore = defineStore('User', {
   // 異步|邏輯的地方
   actions: {
     async userLogin(data: LoginFormData) {
-
       const formData = new FormData()
       if (data.username !== undefined) {
         formData.append('username', data.username)
@@ -90,13 +89,13 @@ const useUserStore = defineStore('User', {
 
       const res: LoginResponseData = await reqLogin(formData)
 
-      console.log("loginResponse-----------1")
+      console.log('loginResponse-----------1')
       const loginResponse: Response = res as Response
-      console.log("loginResponse.status", loginResponse)
+      console.log('loginResponse.status', loginResponse)
       if (loginResponse.status === 200) {
-        console.log("loginResponse.status", loginResponse.status)
+        console.log('loginResponse.status', loginResponse.status)
         this.token = GET_TOKEN()
-        console.log("this.token", this.token)
+        console.log('this.token', this.token)
         await this.userInfo()
       }
       return loginResponse

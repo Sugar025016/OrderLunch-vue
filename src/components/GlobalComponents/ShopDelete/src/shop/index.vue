@@ -130,8 +130,6 @@ let favorite = ref('')
 import useUserStore from '@/store/modules/user'
 let userStore = useUserStore()
 
-
-
 const changeFavorite = async () => {
   await userStore.changeFavoriteStore(id)
   favorite.value = await userStore.isLove(id)

@@ -74,7 +74,6 @@ watch(
     }
 
     .buy-body {
-      
       overflow: visible;
       padding: 0px;
       margin: 40px 0;

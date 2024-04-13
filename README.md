@@ -24,4 +24,5 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
 ## npm run fix //代碼檢查
 
 ## console .log.\*$ //清除console.log
+
 # OrderLunch-vue

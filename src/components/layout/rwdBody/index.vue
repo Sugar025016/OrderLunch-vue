@@ -1,16 +1,13 @@
-
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 <template>
   <div class="rwdBody">
-    <slot name="slotName" class="slot-content" ></slot>
+    <slot name="slotName" class="slot-content"></slot>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .rwdBody {
-  margin:40px 10px; 
+  margin: 40px 10px;
   @media (min-width: $breakpoint-xs) {
     margin-left: 10px;
     margin-right: 10px;

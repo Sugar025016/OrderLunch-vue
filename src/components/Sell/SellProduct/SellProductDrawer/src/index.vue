@@ -112,14 +112,17 @@ const cancel = () => {
 }
 
 const handleAvatarSuccess: UploadProps['onSuccess'] = (
-  response:any,
-  uploadFile:any,
+  response: any,
+  uploadFile: any,
 ) => {
   productParams.imgUrl = response.url
   productParams.imgId = response.id
   formRef.value.clearValidate('img')
 }
-const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile: { type: string; size: number }) => {
+const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile: {
+  type: string
+  size: number
+}) => {
   if (
     rawFile.type === 'image/png' ||
     rawFile.type === 'image/jpeg' ||

@@ -76,7 +76,7 @@
 
 <script setup lang="ts">
 import { User, Lock } from '@element-plus/icons-vue'
-import { Ref,   computed,   reactive, ref } from 'vue'
+import { Ref, computed, reactive, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 // import { ElNotification } from 'element-plus'
 import { getTime } from '@/utils/time'
@@ -86,7 +86,6 @@ import Captcha from '@/components/Register/src/Captcha/index.vue'
 // import Identify from '@/components/VerifyCode/index.vue'
 // VerifyCode import
 const captchaRef = ref<typeof Captcha | null>(null)
-
 
 let $router = useRouter()
 let $route = useRoute()
@@ -153,7 +152,7 @@ const login = async () => {
   try {
     const loginResponse: ResponseData = await useStore.userLogin(loginForm)
 
-    console.log("登陆成功",loginResponse)
+    console.log('登陆成功', loginResponse)
 
     if (loginResponse?.status === 200) {
       let redirect: string = $route.query.redirect as string
@@ -165,15 +164,14 @@ const login = async () => {
         message: '登陆成功',
         title: `Hi, ${getTime()}好`,
       })
-    } else if(loginResponse?.status === 401){
-
+    } else if (loginResponse?.status === 401) {
       // $router.push('/')
       ElNotification({
         type: 'error',
         message: '帳號或密碼錯，請輸入正確的帳號或密碼',
         title: '帳號或密碼錯',
       })
-    } else if(loginResponse?.status === 411) {
+    } else if (loginResponse?.status === 411) {
       captchaRef.value?.refreshCaptcha()
 
       ElNotification({
@@ -250,7 +248,6 @@ const rules = {
   ],
 }
 
-
 // ../../assets/images/0050.png
 </script>
 <style lang="scss" scoped>
@@ -258,18 +255,18 @@ const rules = {
   display: flex;
   align-items: center;
   justify-content: center;
-      width: 100%;
+  width: 100%;
   .el-card {
     border: 0px;
     box-shadow: none;
     border-radius: 40px;
-      width: 100%;
+    width: 100%;
   }
   .login_form {
     position: relative;
     padding: 10px;
     background: transparent;
-      width: 100%;
+    width: 100%;
 
     h1 {
       background: $color;
@@ -318,9 +315,6 @@ const rules = {
 
     @import '@/styles/form.scss';
   }
-
-
-
 }
 .custom-checkbox {
   color: red; /* 设置文字颜色为红色 */

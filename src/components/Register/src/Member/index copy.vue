@@ -33,10 +33,8 @@ import { ref } from 'vue'
 
 // let title = document.title
 const checked1 = ref(true)
-
 </script>
 <style lang="scss" scoped>
-
 .register-member {
   display: flex;
   // align-items:center;

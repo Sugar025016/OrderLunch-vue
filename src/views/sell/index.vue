@@ -1,9 +1,10 @@
 <template>
   <div class="common-layout">
     <el-container style="height: 100vh">
-
-      <div  v-if="!isBreakpointMD"
-      :class="{ overlay: !LayOutSettingStore.isCollapse }" ></div>
+      <div
+        v-if="!isBreakpointMD"
+        :class="{ overlay: !LayOutSettingStore.isCollapse }"
+      ></div>
       <el-aside
         width="200px"
         :class="{ isCollapse: LayOutSettingStore.isCollapse ? true : false }"
@@ -136,7 +137,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .common-layout {
-    position: relative;
+  position: relative;
   width: auto;
   height: 100%;
   font-size: 10px;
@@ -151,7 +152,6 @@ onMounted(() => {
     }
   }
   .el-container {
-
     .overlay {
       position: fixed;
       top: 0;

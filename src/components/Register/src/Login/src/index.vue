@@ -32,9 +32,7 @@
             placeholder="VerifyCode"
             size="large"
             maxlength="4"
-          >
-
-          </el-input>
+          ></el-input>
         </el-form-item>
         <el-form-item prop="verifyCode">
           <el-checkbox

@@ -97,7 +97,7 @@ onMounted(() => {
           <!-- <hr/> -->
 
           <div class="products-content">
-          <div class="title">{{ item.name }}</div>
+            <div class="title">{{ item.name }}</div>
             <div
               class="products-card"
               v-for="(v, i) in item.products"
@@ -172,33 +172,32 @@ $breakpoint-xxl-adjusted: calc(#{$breakpoint-xxl} + 200px);
 
     :deep(.el-card__body) {
       width: 100%;
-    display: flex;
-    justify-content: center;
+      display: flex;
+      justify-content: center;
       .products-content {
-    max-width: 500px;
-      .title {
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
+        max-width: 500px;
+        .title {
+          // display: flex;
+          // justify-content: center;
+          // align-items: center;
 
-        font-size: 30px;
-        color: $color;
-        height: 36px;
-        width: 100%;
-        // background-color: aqua;
-        border: 1px solid #ccc;
-        border-radius: 20px;
-        padding: 0 20px;
-        margin-bottom: 8px;
-      }
+          font-size: 30px;
+          color: $color;
+          height: 36px;
+          width: 100%;
+          // background-color: aqua;
+          border: 1px solid #ccc;
+          border-radius: 20px;
+          padding: 0 20px;
+          margin-bottom: 8px;
+        }
 
-      .products-card {
-        margin: 10px 0;
-        pointer-events: none;
+        .products-card {
+          margin: 10px 0;
+          pointer-events: none;
+        }
       }
     }
-    }
-
   }
 
   .productCard:hover {

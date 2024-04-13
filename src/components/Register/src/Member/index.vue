@@ -15,8 +15,6 @@ const registerMember = ref<RegisterMember>({
   verifyCode: '',
 })
 
-
-
 let formRef = ref<any>()
 
 const validatorName = (rule: any, value: any, callback: any) => {

@@ -9,12 +9,11 @@ import { ElMessageBox } from 'element-plus/lib/components/message-box/index.js'
 // import { ResponseBoolean } from '@/api/sellProduct/type'
 
 defineProps(['product', 'setting', 'choose', 'add', 'change'])
-
 </script>
 <template>
   <div class="add-meals-modal">
     <div>
-      <el-checkbox class="checkbox" size="large" disabled/>
+      <el-checkbox class="checkbox" size="large" disabled />
     </div>
     <div
       class="productCard"

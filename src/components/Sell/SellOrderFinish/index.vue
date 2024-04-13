@@ -66,87 +66,82 @@ const childBorder = ref(false)
 
 <template>
   <!-- <el-card style="margin: 0px m-20px"> -->
-    <el-table
-      height="760"
-      style="margin: 0 0 10px 0; width: 100%"
-      :data="order"
-      :border="parentBorder"
-      :row-style="cellStyle()"
-    >
-      <el-table-column label="#" align="center" type="index"></el-table-column>
-      <el-table-column type="expand">
-        <template #default="props">
-          <div m="4" style="margin: 10px 40px" class="expand-row">
-            <el-table
-              :data="props.row.orderDetails"
-              :border="childBorder"
-              class="expand-table"
-            >
-              <el-table-column label="餐點" prop="productName" align="center" />
-              <el-table-column label="數量" prop="qty" align="center" />
-              <el-table-column label="備註" prop="remark" align="center" />
-            </el-table>
-          </div>
-        </template>
-      </el-table-column>
+  <el-table
+    height="760"
+    style="margin: 0 0 10px 0; width: 100%"
+    :data="order"
+    :border="parentBorder"
+    :row-style="cellStyle()"
+  >
+    <el-table-column label="#" align="center" type="index"></el-table-column>
+    <el-table-column type="expand">
+      <template #default="props">
+        <div m="4" style="margin: 10px 40px" class="expand-row">
+          <el-table
+            :data="props.row.orderDetails"
+            :border="childBorder"
+            class="expand-table"
+          >
+            <el-table-column label="餐點" prop="productName" align="center" />
+            <el-table-column label="數量" prop="qty" align="center" />
+            <el-table-column label="備註" prop="remark" align="center" />
+          </el-table>
+        </div>
+      </template>
+    </el-table-column>
 
-      <el-table-column
-        prop="statusChinese"
-        label="狀態"
-        width="100"
-        align="center"
-      />
-      <el-table-column
-        prop="userName"
-        label="訂購人"
-        width="100"
-        align="center"
-      />
-      <el-table-column
-        prop="orderId"
-        label="訂單編號"
-        width="110"
-        align="center"
-        sortable
-      />
-      <el-table-column
-        prop="takeTime"
-        label="取餐時間"
-        width="180"
-        max-width="100"
-        align="center"
-        sortable
-      />
-      <el-table-column
-        prop="totalPrise"
-        label="評價"
-        width="160"
-        align="center"
-      />
-      <el-table-column
-        prop="totalPrise"
-        label="金額"
-        width="60"
-        align="center"
-      />
-      <el-table-column label="地址">
-        <template #default="{ row }">
-          {{ row.address.city }} - {{ row.address.area }} -
-          {{ row.address.detail }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="remark" label="備註" />
-    </el-table>
-    <el-pagination
-      v-model:current-page="pageNo"
-      v-model:page-size="pageSize"
-      :page-sizes="[5, 10, 15, 20]"
-      :background="true"
-      layout="prev, pager, next, jumper, -> , sizes, total"
-      :total="total"
-      @current-change="getOrder"
-      @size-change="getOrder"
+    <el-table-column
+      prop="statusChinese"
+      label="狀態"
+      width="100"
+      align="center"
     />
+    <el-table-column
+      prop="userName"
+      label="訂購人"
+      width="100"
+      align="center"
+    />
+    <el-table-column
+      prop="orderId"
+      label="訂單編號"
+      width="110"
+      align="center"
+      sortable
+    />
+    <el-table-column
+      prop="takeTime"
+      label="取餐時間"
+      width="180"
+      max-width="100"
+      align="center"
+      sortable
+    />
+    <el-table-column
+      prop="totalPrise"
+      label="評價"
+      width="160"
+      align="center"
+    />
+    <el-table-column prop="totalPrise" label="金額" width="60" align="center" />
+    <el-table-column label="地址">
+      <template #default="{ row }">
+        {{ row.address.city }} - {{ row.address.area }} -
+        {{ row.address.detail }}
+      </template>
+    </el-table-column>
+    <el-table-column prop="remark" label="備註" />
+  </el-table>
+  <el-pagination
+    v-model:current-page="pageNo"
+    v-model:page-size="pageSize"
+    :page-sizes="[5, 10, 15, 20]"
+    :background="true"
+    layout="prev, pager, next, jumper, -> , sizes, total"
+    :total="total"
+    @current-change="getOrder"
+    @size-change="getOrder"
+  />
   <!-- </el-card> -->
   <SellProductDrawer ref="SellProductDrawerRef" />
 </template>

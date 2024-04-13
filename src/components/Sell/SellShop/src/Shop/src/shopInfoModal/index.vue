@@ -93,7 +93,6 @@ defineProps(['schedules', 'phone', 'name'])
     border-color: rgb(155, 155, 155);
   }
   .modal-body {
-
     .item {
       margin: 10px 10px 30px 10px;
       .title {

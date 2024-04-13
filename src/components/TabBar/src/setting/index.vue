@@ -215,7 +215,7 @@ img {
   text-decoration: none;
   width: 100%;
   height: 100%;
-    position: relative;
+  position: relative;
 
   width: 60px;
   .cartQuantity {

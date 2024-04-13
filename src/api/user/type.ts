@@ -14,10 +14,8 @@ export interface LoginFormData {
   username?: string
   password?: string
   verifyCode?: string
-  rememberMe: boolean,
+  rememberMe: boolean
 }
-
-
 
 export interface LoginResponseData extends Response {
   data?: LoginResponseData

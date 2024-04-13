@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref,  watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 
 import { PutSchedule, Schedule, Schedules, TimePeriods } from '@/api/shop/type'
 
@@ -60,7 +60,6 @@ const deleteTimePeriods = (i: number) => {
     schedulesChange.value[i].timePeriods = []
   }
 }
-
 
 const visible = ref(props.scheduleVisible)
 
@@ -294,7 +293,6 @@ import { reqPutSchedule } from '@/api/shop'
         }
       }
       .modal-body {
-
         .item {
           .title {
             display: flex;

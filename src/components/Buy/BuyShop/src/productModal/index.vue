@@ -80,7 +80,6 @@ const checkAddCart = async () => {
       addCart()
     }
   }
-
 }
 
 const addCart = async () => {
@@ -97,7 +96,6 @@ const addCart = async () => {
     userStore.userInfo()
   }
 }
-
 
 onBeforeUnmount(() => {
   clearTimeout(timer)

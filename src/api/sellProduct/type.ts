@@ -1,4 +1,4 @@
-import { Response } from "../type"
+import { Response } from '../type'
 
 export interface SellProduct {
   id: number

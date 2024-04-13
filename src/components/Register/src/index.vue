@@ -27,7 +27,7 @@
 </template>
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import {isBreakpointMD} from '@/utils/windowSize'
+import { isBreakpointMD } from '@/utils/windowSize'
 let $route = useRoute()
 $route.path
 </script>
@@ -40,10 +40,10 @@ $route.path
     display: flex;
     justify-content: center;
     flex-direction: column;
-    margin-left:  calc(11vw - 40px) ;
+    margin-left: calc(11vw - 40px);
     .title {
       display: flex;
-    justify-content: center;
+      justify-content: center;
       margin: 0 0;
       vertical-align: middle;
       color: $color;
@@ -68,17 +68,13 @@ $route.path
         object-fit: contain;
       }
     }
-
   }
 
   .register-content {
-    margin: 0 calc(11vw - 40px) ;
+    margin: 0 calc(11vw - 40px);
     @media (max-width: $breakpoint-md) {
       margin: 0;
     }
   }
 }
-
-
-
 </style>

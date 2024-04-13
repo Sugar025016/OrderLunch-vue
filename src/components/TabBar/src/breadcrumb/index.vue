@@ -43,7 +43,6 @@
   <div class="title" v-else>
     <def-title></def-title>
   </div>
-
 </template>
 <script setup lang="ts">
 import useLayOutSettingStore from '@/store/modules/setting'

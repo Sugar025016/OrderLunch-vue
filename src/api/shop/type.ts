@@ -142,4 +142,3 @@ export interface RegisterShop {
   addressId: number
   addressDetail: string
 }
-

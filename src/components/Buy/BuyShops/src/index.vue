@@ -95,11 +95,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="buyShops">
     <div class="row1">
-      <div
-        class="buyCard"
-        :span="24"
-        :class="{ 'buyCard-height': isExpanded }"
-      >
+      <div class="buyCard" :span="24" :class="{ 'buyCard-height': isExpanded }">
         <div class="title-border">
           <div class="title-div">
             <span class="title-span">餓了就來找美食</span>
@@ -278,10 +274,10 @@ onBeforeUnmount(() => {
     margin: 0px 0;
 
     padding: 10px 0;
-    
+
     background-color: rgba(253, 237, 213, 0.589);
     background-color: rgb(255, 242, 224);
-    
+
     .overlay {
       /* 遮罩 */
       position: absolute;
@@ -334,4 +330,3 @@ onBeforeUnmount(() => {
   }
 }
 </style>
-

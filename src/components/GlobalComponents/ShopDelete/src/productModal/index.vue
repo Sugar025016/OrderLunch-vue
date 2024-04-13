@@ -126,8 +126,6 @@ const changeCount = (v: number) => {
   totalPrice.value = count.value * props.product!.prise
 }
 
-
-
 const addCart = async () => {
   let cartReq = ref<CartRequest>({
     productId: props.product!.productId,

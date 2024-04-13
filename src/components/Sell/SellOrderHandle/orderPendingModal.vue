@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {  ref } from 'vue'
+import { ref } from 'vue'
 import { GroupedData } from './orderPending'
 
 const props = defineProps({
@@ -21,7 +21,6 @@ const accordion = ref(true)
 </script>
 
 <template>
-  
   <el-dialog
     v-model="props.orderPendingVisible"
     title="餐點分類"

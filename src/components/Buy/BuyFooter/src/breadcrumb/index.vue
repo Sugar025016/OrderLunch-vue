@@ -16,7 +16,7 @@ let title = document.title
 </script>
 
 <style lang="scss" scoped>
-a{
+a {
   text-decoration: none;
 }
 .title {

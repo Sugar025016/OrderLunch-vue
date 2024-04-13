@@ -61,7 +61,7 @@ let userStore = useUserStore()
 
 let $route = useRoute()
 
-let id: number = Number($route.params.id);
+let id: number = Number($route.params.id)
 
 let TabProductsData = ref<TabData[]>([])
 const isProductModalVisible = ref(false) // 控制是否显示 product-modal
@@ -116,9 +116,7 @@ onMounted(() => {
   getProductsData(id)
 })
 
-
 const activeTab = ref(0)
-
 
 const myModal = document.getElementById('myModal')
 const myInput = document.getElementById('myInput')

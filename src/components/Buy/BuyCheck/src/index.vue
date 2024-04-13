@@ -517,12 +517,11 @@ $table-border-color: rgb(155, 155, 155);
               }
             }
           }
-          
         }
         .el-col:first-child {
           margin: 10px;
           .order_check {
-            margin:0 10px 0 0;
+            margin: 0 10px 0 0;
             .el-form {
               flex-wrap: wrap;
             }

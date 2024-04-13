@@ -17,7 +17,6 @@
 import products from './products/index.vue'
 import socialMedia from './socialMedia/index.vue'
 import shop from './shop/index.vue'
-
 </script>
 <style lang="scss" scoped>
 .buyShop {

@@ -21,9 +21,13 @@ import SellOrderFinish from '../SellOrderFinish/index.vue'
       </el-tab-pane> -->
 
       <el-tab-pane label="新訂單"><SellOrderNew></SellOrderNew></el-tab-pane>
-      <el-tab-pane label="待處理訂單"><SellOrderHandle></SellOrderHandle></el-tab-pane>
+      <el-tab-pane label="待處理訂單">
+        <SellOrderHandle></SellOrderHandle>
+      </el-tab-pane>
       <el-tab-pane label="待外送訂單">Task</el-tab-pane>
-      <el-tab-pane label="已完成訂單"><SellOrderFinish></SellOrderFinish></el-tab-pane>
+      <el-tab-pane label="已完成訂單">
+        <SellOrderFinish></SellOrderFinish>
+      </el-tab-pane>
 
       <!-- <template v-for="(item, index) in props.menuList" :key="item.path">
         <el-tab-pane label="Task">Task</el-tab-pane>
@@ -54,6 +58,4 @@ import SellOrderFinish from '../SellOrderFinish/index.vue'
   vertical-align: middle;
   margin-left: 4px;
 }
-
 </style>
-

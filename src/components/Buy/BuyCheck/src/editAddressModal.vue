@@ -26,7 +26,6 @@ const changeArea = () => {
 }
 
 const validatorShopAddressDetail = (rule: any, value: any, callBack: any) => {
-
   if (value.trim().length <= 255) {
     callBack()
   } else {
@@ -34,7 +33,6 @@ const validatorShopAddressDetail = (rule: any, value: any, callBack: any) => {
   }
 }
 const validateNotEmptyString = (rule: any, value: any, callback: any) => {
-  
   if (value.trim() === '') {
     callback(new Error('請輸入地址'))
   } else {
@@ -77,7 +75,7 @@ const saveAddress = async () => {
   if (res.status === 200) {
     await userStore.userInfo()
     addAddressModalOpen.value = false
-    emits('childClosed') 
+    emits('childClosed')
   } else {
     ElMessage({
       type: 'error',

@@ -109,159 +109,151 @@ const setOrder = (orderId: number, status: number) => {
 
 import { ResultResponse } from '@/api/type'
 import { formatDate } from '@/utils/time'
-
 </script>
 
 <template>
   <!-- <el-card style="margin: 0px m-20px"> -->
-    <el-button
-      type="primary"
-      size="default"
-      @click="setRejectOrders(12)"
-      :disabled="multipleSelection.length ? false : true"
-    >
-      批量接單
-    </el-button>
-    <el-popconfirm
-      :title="`你确定拒接這些訂單嗎？`"
-      width="260px"
-      @confirm="setRejectOrders(93)"
-    >
-      <template #reference>
-        <el-button
-          type="danger"
-          size="default"
-          :disabled="multipleSelection.length ? false : true"
-        >
-          批量拒接
-        </el-button>
+  <el-button
+    type="primary"
+    size="default"
+    @click="setRejectOrders(12)"
+    :disabled="multipleSelection.length ? false : true"
+  >
+    批量接單
+  </el-button>
+  <el-popconfirm
+    :title="`你确定拒接這些訂單嗎？`"
+    width="260px"
+    @confirm="setRejectOrders(93)"
+  >
+    <template #reference>
+      <el-button
+        type="danger"
+        size="default"
+        :disabled="multipleSelection.length ? false : true"
+      >
+        批量拒接
+      </el-button>
+    </template>
+  </el-popconfirm>
+  <el-table
+    height="718"
+    ref="multipleTableRef"
+    style="margin: 10px 0; width: 100%"
+    :data="order"
+    :border="parentBorder"
+    :row-style="cellStyle()"
+    @selection-change="handleSelectionChange"
+  >
+    <el-table-column type="selection" width="40" />
+    <el-table-column
+      label="#"
+      align="center"
+      type="index"
+      width="40"
+    ></el-table-column>
+    <el-table-column type="expand" width="40">
+      <template #default="props">
+        <div m="4" style="margin: 10px 40px" class="expand-row">
+          <el-table
+            :data="props.row.orderDetails"
+            :border="childBorder"
+            class="expand-table"
+          >
+            <el-table-column
+              label="#"
+              align="center"
+              type="index"
+            ></el-table-column>
+            <el-table-column label="餐點" prop="productName" align="center" />
+            <el-table-column label="數量" prop="qty" align="center" />
+            <el-table-column label="備註" prop="remark" align="center" />
+          </el-table>
+        </div>
       </template>
-    </el-popconfirm>
-    <el-table
-      height="718"
-      ref="multipleTableRef"
-      style="margin: 10px 0; width: 100%"
-      :data="order"
-      :border="parentBorder"
-      :row-style="cellStyle()"
-      @selection-change="handleSelectionChange"
-    >
-      <el-table-column type="selection" width="40" />
-      <el-table-column
-        label="#"
-        align="center"
-        type="index"
-        width="40"
-      ></el-table-column>
-      <el-table-column type="expand" width="40">
-        <template #default="props">
-          <div m="4" style="margin: 10px 40px" class="expand-row">
-            <el-table
-              :data="props.row.orderDetails"
-              :border="childBorder"
-              class="expand-table"
-            >
-              <el-table-column
-                label="#"
-                align="center"
-                type="index"
-              ></el-table-column>
-              <el-table-column label="餐點" prop="productName" align="center" />
-              <el-table-column label="數量" prop="qty" align="center" />
-              <el-table-column label="備註" prop="remark" align="center" />
-            </el-table>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="statusChinese"
-        label="狀態"
-        width="100"
-        align="center"
-      />
-      <el-table-column
-        prop="userName"
-        label="訂購人"
-        width="100"
-        align="center"
-      />
-      <el-table-column
-        prop="orderId"
-        label="訂單編號"
-        width="110"
-        align="center"
-        sortable
-      />
-      <el-table-column
-        prop="takeTime"
-        label="取餐日期"
-        width="110"
-        max-width="180"
-        align="center"
-        column-key="date"
-        :formatter="formatDate"
-        sortable
-      />
-      <el-table-column
-        prop="takeTime"
-        label="取餐時間"
-        width="90"
-        max-width="180"
-        align="center"
-        column-key="time"
-        :formatter="formatDate"
-      />
-      <el-table-column
-        prop="totalPrise"
-        label="金額"
-        width="60"
-        align="center"
-      />
-      <el-table-column label="地址">
-        <template #default="{ row }">
-          {{ row.address.city }} - {{ row.address.area }} -
-          {{ row.address.detail }}
-        </template>
-      </el-table-column>
-      <el-table-column prop="remark" label="備註" />
-      <el-table-column label="操作" width="180px" align="center">
-        <template #="{ row, $index }">
-          <el-button
-            type="primary"
-            size="small"
-            icon="CircleCheckFilled"
-            @click="setOrder(row.orderId, 12)"
-          >
-            接單
-          </el-button>
-          <el-popconfirm
-            :title="`你确定拒接${row.userName}的訂單嗎？`"
-            width="260px"
-            @confirm="setOrder(row.orderId, 93)"
-          >
-            <template #reference>
-              <!-- <el-button type="danger" size="small" icon="Delete" @click="deleteProduct(row.id)"  > -->
-              <el-button type="danger" size="small" icon="CircleCloseFilled">
-                拒接
-              </el-button>
-            </template>
-          </el-popconfirm>
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-pagination
-      v-model:current-page="pageNo"
-      v-model:page-size="pageSize"
-      :page-sizes="[5, 10, 20]"
-      :background="true"
-      layout="prev, pager, next, jumper, -> , sizes, total"
-      :total="total"
-      @current-change="getOrder"
-      @size-change="getOrder"
+    </el-table-column>
+    <el-table-column
+      prop="statusChinese"
+      label="狀態"
+      width="100"
+      align="center"
     />
+    <el-table-column
+      prop="userName"
+      label="訂購人"
+      width="100"
+      align="center"
+    />
+    <el-table-column
+      prop="orderId"
+      label="訂單編號"
+      width="110"
+      align="center"
+      sortable
+    />
+    <el-table-column
+      prop="takeTime"
+      label="取餐日期"
+      width="110"
+      max-width="180"
+      align="center"
+      column-key="date"
+      :formatter="formatDate"
+      sortable
+    />
+    <el-table-column
+      prop="takeTime"
+      label="取餐時間"
+      width="90"
+      max-width="180"
+      align="center"
+      column-key="time"
+      :formatter="formatDate"
+    />
+    <el-table-column prop="totalPrise" label="金額" width="60" align="center" />
+    <el-table-column label="地址">
+      <template #default="{ row }">
+        {{ row.address.city }} - {{ row.address.area }} -
+        {{ row.address.detail }}
+      </template>
+    </el-table-column>
+    <el-table-column prop="remark" label="備註" />
+    <el-table-column label="操作" width="180px" align="center">
+      <template #="{ row, $index }">
+        <el-button
+          type="primary"
+          size="small"
+          icon="CircleCheckFilled"
+          @click="setOrder(row.orderId, 12)"
+        >
+          接單
+        </el-button>
+        <el-popconfirm
+          :title="`你确定拒接${row.userName}的訂單嗎？`"
+          width="260px"
+          @confirm="setOrder(row.orderId, 93)"
+        >
+          <template #reference>
+            <!-- <el-button type="danger" size="small" icon="Delete" @click="deleteProduct(row.id)"  > -->
+            <el-button type="danger" size="small" icon="CircleCloseFilled">
+              拒接
+            </el-button>
+          </template>
+        </el-popconfirm>
+      </template>
+    </el-table-column>
+  </el-table>
+  <el-pagination
+    v-model:current-page="pageNo"
+    v-model:page-size="pageSize"
+    :page-sizes="[5, 10, 20]"
+    :background="true"
+    layout="prev, pager, next, jumper, -> , sizes, total"
+    :total="total"
+    @current-change="getOrder"
+    @size-change="getOrder"
+  />
   <!-- </el-card> -->
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
