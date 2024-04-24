@@ -30,7 +30,7 @@ import {
 
 import { ShopData } from '@/api/shop/type'
 import useSellShopStore from '@/store/modules/sellShop'
-import { Address, Response, ResponseData } from '@/api/type'
+import { Address, Response } from '@/api/type'
 
 // function filterAsyncRoute(asyncRoute: any, routes: any) {
 //   return asyncRoute.filter((item: any) => {
@@ -157,6 +157,7 @@ const useUserStore = defineStore('User', {
       }
     },
     async changeFavoriteStore(id: number) {
+
       const res: ChangeLovesResponseData = await reqChangeFavorite(id)
 
       if (res.status === 200 && res.data) {
@@ -167,7 +168,8 @@ const useUserStore = defineStore('User', {
       }
     },
     async isLove(id: number) {
-      const isFavorite = this.favoriteShop.some(
+
+      const isFavorite = await this.favoriteShop.some(
         (value: ShopData) => value.id === id,
       )
       if (isFavorite) {

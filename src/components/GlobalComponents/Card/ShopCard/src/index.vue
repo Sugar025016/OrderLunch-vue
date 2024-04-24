@@ -8,6 +8,7 @@ let userStore = useUserStore()
 // defineProps(['shop'])
 const props = defineProps<{
   shop: ShopData
+  isFavoriteShop: false
 }>()
 
 let $router = useRouter()
@@ -53,12 +54,12 @@ onMounted(async () => {
     <div style="padding: 14px">
       <div class="bottom">
         <div class="title_favorite">
-          <span class="title">{{ shop.name }}</span>
+          <span class="title">{{ shop.name }}{{ isFavoriteShop }}</span>
           <div @click.stop="changeFavorite(shop.id)" class="favorite">
             <def-svg-icon
               class="buy-svg-icon"
               name="favorite"
-              :color="favorite"
+              :color="isFavoriteShop ? '#fd7e14' : favorite"
               width="30px"
               height="30px"
             ></def-svg-icon>

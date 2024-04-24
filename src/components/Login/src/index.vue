@@ -1,78 +1,4 @@
-<template>
-  <div class="login_container">
-    <el-card class="login_form">
-      <!-- <h1>{{ title }}</h1> -->
-      <h3>會員登入</h3>
-      <el-form
-        label-position="top"
-        :model="loginForm"
-        :rules="rules"
-        ref="loginForms"
-      >
-        <el-form-item prop="username" label="帳號(信箱)：">
-          <el-input
-            :prefix-icon="User"
-            v-model="loginForm.username"
-            clearable
-            placeholder="請輸入帳號"
-            size="large"
-          ></el-input>
-        </el-form-item>
-        <el-form-item prop="password" label="密碼：">
-          <el-input
-            type="password"
-            :prefix-icon="Lock"
-            show-password
-            v-model="loginForm.password"
-            size="large"
-            placeholder="請輸入密碼"
-            clearable
-          ></el-input>
-        </el-form-item>
-        <el-form-item
-          label="驗證碼："
-          prop="verifyCode"
-          class="custom-form-item"
-        >
-          <Captcha v-model="loginForm.verifyCode" ref="captchaRef"></Captcha>
-        </el-form-item>
-        <el-form-item prop="verifyCode">
-          <el-checkbox
-            class="custom-checkbox"
-            v-model="loginForm.rememberMe"
-            label="記住我"
-            size="large"
-            text-color="#F56C6C"
-          />
-        </el-form-item>
-      </el-form>
-      <el-form-item>
-        <el-button
-          :loading="loading"
-          class="login_btn"
-          type="primary"
-          size="default"
-          @click="login"
-          round
-        >
-          登入
-        </el-button>
-        <!-- <el-button type="primary" round>Primary</el-button> -->
-      </el-form-item>
-      <div class="forget">
-        <router-link :to="'/Login/forgetPassword'" class="link">
-          忘記密碼
-        </router-link>
-      </div>
-      <hr />
-      <div class="forget">
-        <router-link :to="'/Register'" class="link">
-          沒有帳號這邊可以註冊
-        </router-link>
-      </div>
-    </el-card>
-  </div>
-</template>
+
 
 <script setup lang="ts">
 import { User, Lock } from '@element-plus/icons-vue'
@@ -149,6 +75,7 @@ import { ElNotification } from 'element-plus/lib/components/index.js'
 const login = async () => {
   await loginForms.value.validate()
   loading.value = true
+  loginForm.verifyCode=captchaRef.value?.verifyCode
   try {
     const loginResponse: ResponseData = await useStore.userLogin(loginForm)
 
@@ -250,6 +177,84 @@ const rules = {
 
 // ../../assets/images/0050.png
 </script>
+
+
+
+<template>
+  <div class="login_container">
+    <el-card class="login_form">
+      <!-- <h1>{{ title }}</h1> -->
+      <h3>會員登入</h3>
+      <el-form
+        label-position="top"
+        :model="loginForm"
+        :rules="rules"
+        ref="loginForms"
+      >
+        <el-form-item prop="username" label="帳號(信箱)：">
+          <el-input
+            :prefix-icon="User"
+            v-model="loginForm.username"
+            clearable
+            placeholder="請輸入帳號"
+            size="large"
+          ></el-input>
+        </el-form-item>
+        <el-form-item prop="password" label="密碼：">
+          <el-input
+            type="password"
+            :prefix-icon="Lock"
+            show-password
+            v-model="loginForm.password"
+            size="large"
+            placeholder="請輸入密碼"
+            clearable
+          ></el-input>
+        </el-form-item>
+        <el-form-item
+          label="驗證碼："
+          prop="verifyCode"
+          class="custom-form-item"
+        >
+          <Captcha v-model="verifyCode" ref="captchaRef"></Captcha>
+        </el-form-item>
+        <el-form-item prop="rememberMe">
+          <el-checkbox
+            class="custom-checkbox"
+            v-model="loginForm.rememberMe"
+            label="記住我"
+            size="large"
+            text-color="#F56C6C"
+          />
+        </el-form-item>
+      </el-form>
+      <el-form-item>
+        <el-button
+          :loading="loading"
+          class="login_btn"
+          type="primary"
+          size="default"
+          @click="login"
+          round
+        >
+          登入
+        </el-button>
+        <!-- <el-button type="primary" round>Primary</el-button> -->
+      </el-form-item>
+      <div class="forget">
+        <router-link :to="'/Login/forgetPassword'" class="link">
+          忘記密碼
+        </router-link>
+      </div>
+      <hr />
+      <div class="forget">
+        <router-link :to="'/Register'" class="link">
+          沒有帳號這邊可以註冊
+        </router-link>
+      </div>
+    </el-card>
+  </div>
+</template>
 <style lang="scss" scoped>
 .login_container {
   display: flex;

@@ -1,6 +1,5 @@
 // 二次封裝axios
 import axios from 'axios'
-import { ElMessage } from 'element-plus/lib/components/index.js'
 import useUserStore from '@/store/modules/user'
 import { GET_TOKEN, SET_TOKEN } from '@/utils/token'
 import router from '@/router'
@@ -12,7 +11,7 @@ const request = axios.create({
 
 request.interceptors.request.use(
   (config) => {
-    let tokenValue = GET_TOKEN()
+    const tokenValue = GET_TOKEN()
     if (tokenValue) {
       config.headers['X-CSRF-TOKEN'] = tokenValue
       config.headers['X-XSRF-TOKEN'] = tokenValue
@@ -31,7 +30,7 @@ request.interceptors.response.use(
     console.log('response-----------', response)
     if (response.status === 200) {
       if (response.config.url === '/login') {
-        let cookieValue = document.cookie.replace(
+        const cookieValue = document.cookie.replace(
           /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
           '$1',
         )
