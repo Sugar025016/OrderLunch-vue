@@ -216,7 +216,7 @@ const rules = {
           prop="verifyCode"
           class="custom-form-item"
         >
-          <Captcha v-model="verifyCode" ref="captchaRef"></Captcha>
+          <Captcha  ref="captchaRef"></Captcha>
         </el-form-item>
         <el-form-item prop="rememberMe">
           <el-checkbox
