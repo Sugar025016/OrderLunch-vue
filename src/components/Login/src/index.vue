@@ -39,7 +39,7 @@ let loginForms = ref()
 const loginForm = reactive({
   username: 'admin@gmail.com',
   password: 'password',
-  verifyCode: '1234',
+  verifyCode: '',
   rememberMe: true,
 })
 
@@ -73,9 +73,9 @@ const validatorVerifyCode = (rule: any, value: any, callback: any) => {
 import { Response, ResponseData } from '@/api/type'
 import { ElNotification } from 'element-plus/lib/components/index.js'
 const login = async () => {
+  loginForm.verifyCode=captchaRef.value?.verifyCode
   await loginForms.value.validate()
   loading.value = true
-  loginForm.verifyCode=captchaRef.value?.verifyCode
   try {
     const loginResponse: ResponseData = await useStore.userLogin(loginForm)
 

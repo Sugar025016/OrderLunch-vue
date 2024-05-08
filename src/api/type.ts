@@ -5,7 +5,12 @@ export interface Response {
 }
 
 export interface ResponseData extends Response {
-  code?: number
+  data:{
+    code?: number
+    message?: string
+    ok?: boolean
+  }
+
 }
 
 export interface ResultResponse extends Response {

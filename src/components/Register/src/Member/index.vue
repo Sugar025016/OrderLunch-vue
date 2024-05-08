@@ -5,6 +5,7 @@ import { RegisterMember } from '@/api/user/type'
 import { reqAddMember } from '@/api/user'
 import ElMessage from 'element-plus/lib/components/message/index.js'
 import Captcha from '../Captcha/index.vue'
+import { ResponseData } from '@/api/type'
 
 const registerMember = ref<RegisterMember>({
   name: 'jjj',
@@ -57,6 +58,7 @@ const validatorPasswordCheck = (rule: any, value: any, callback: any) => {
   }
 }
 const validatorVerifyCode = (rule: any, value: any, callback: any) => {
+  console.log('value-----------', value)
   if (value.length === 0) {
     callback(new Error('请输入验证码'))
   } else if (value.length < 4) {
@@ -104,10 +106,13 @@ const rules = {
   ],
 }
 
+const captchaRef = ref<typeof Captcha | null>(null)
 const save = async () => {
+  registerMember.value.verifyCode = captchaRef.value?.verifyCode
+
   await formRef.value.validate()
 
-  let res: any = await reqAddMember(registerMember.value)
+  let res: ResponseData = await reqAddMember(registerMember.value)
 
   if (res.status === 200) {
     // sellShopStore.shopDrawer = false
@@ -118,10 +123,14 @@ const save = async () => {
     window.location.reload()
   } else {
     // sellShopStore.shopDrawer = false
-    ElMessage({
+    
+    if(res.data.code === 411){
+      ElMessage({
       type: 'error',
-      message: '註冊失敗',
+      message: '驗證碼錯誤',
     })
+    }
+
   }
 }
 </script>
@@ -185,8 +194,9 @@ const save = async () => {
         class="custom-form-item"
         label="驗證碼："
         size="large"
+        v-model="registerMember.verifyCode"
       >
-        <Captcha v-model="registerMember.verifyCode"></Captcha>
+        <Captcha ref="captchaRef"></Captcha>
       </el-form-item>
     </el-form>
     <!-- <el-checkbox v-model="checked1" label="Option 1" size="large" /> -->
