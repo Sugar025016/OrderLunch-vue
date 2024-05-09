@@ -5,12 +5,13 @@ export interface Response {
 }
 
 export interface ResponseData extends Response {
-  data:{
-    code?: number
-    message?: string
-    ok?: boolean
-  }
+  data:Code
+}
 
+export interface Code {
+  code?: number
+  message?: string
+  ok?: boolean
 }
 
 export interface ResultResponse extends Response {

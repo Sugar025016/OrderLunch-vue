@@ -61,8 +61,13 @@ const cellStyle = ({ row }: any) => {
 const getOrder = async (page: number) => {
   let res: GetOrderPageResponse = await reqGetOrder(page)
   if (res.status === 200) {
-    orderPageResponse.value = res.data
-    order.value.push(...res.data.content)
+    orderPageResponse.value = await res.data
+    const to = window.scrollY
+    await order.value.push(...res.data.content)
+
+    window.scrollTo({ top: to, behavior: 'instant' })
+
+    loading.value = false
   } else {
     ElMessage({
       type: 'error',
@@ -72,26 +77,24 @@ const getOrder = async (page: number) => {
 }
 
 const loading = ref(false)
-
+let a = 0
 const handleScroll = async () => {
   if (
     window.innerHeight + window.scrollY >=
-    document.documentElement.scrollHeight - 200
+    document.documentElement.scrollHeight-200
   ) {
-    console.log('頁面滾動到了底部')
     // 觸發加載更多數據的方法
     if (
       orderPageResponse.value?.totalPages &&
       page.value < orderPageResponse.value?.totalPages &&
       !loading.value
     ) {
-      let to = window.innerHeight + window.scrollY
       loading.value = true
+
       page.value = page.value + 1
+
       await setTimeout(() => {
         getOrder(page.value)
-        window.scrollTo({ top: to, behavior: 'instant' })
-        loading.value = false
       }, 1400)
     }
   }

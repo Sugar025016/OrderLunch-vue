@@ -3,14 +3,31 @@ import axios from 'axios'
 import useUserStore from '@/store/modules/user'
 import { GET_TOKEN, SET_TOKEN } from '@/utils/token'
 import router from '@/router'
-
+// import { Loading } from '@element-plus/icons-vue'
+import { ElLoading } from 'element-plus'
 const request = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 500000,
 })
+let loading: any;
+function starLoading() {
+  loading = ElLoading.service({
+    lock: true,
+    text: '拼命加載中.....',
+    background: 'rgba(255,255,255,0.6)'
+  })
+}
+
+function endLoading() {
+  loading.close()
+}
 
 request.interceptors.request.use(
   (config) => {
+    if(config.url && config.url!== "/sell/order/new" && !/^\/api\/order\/\d+$/.test(config.url)){
+
+      starLoading()
+    }
     const tokenValue = GET_TOKEN()
     if (tokenValue) {
       config.headers['X-CSRF-TOKEN'] = tokenValue
@@ -27,29 +44,21 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   (response) => {
+    endLoading()
     console.log('response-----------', response)
-    if (response.status === 200) {
-      if (response.config.url === '/login') {
-        const cookieValue = document.cookie.replace(
-          /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
-          '$1',
-        )
-        SET_TOKEN(cookieValue)
-      }
-
-      return Promise.resolve(response)
-
-      // return Promise.resolve(response)
-    } else {
-      // return Promise.reject({
-      //   data: response.data,
-      //   status: response.status,
-      // })
-
-      return Promise.resolve(response)
+    if (response.config.url === '/login') {
+      const cookieValue = document.cookie.replace(
+        /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
+        '$1',
+      )
+      SET_TOKEN(cookieValue)
     }
+
+    return response
+
   },
   (error) => {
+    endLoading()
     const userStore = useUserStore()
     let message = ''
 
@@ -88,7 +97,7 @@ request.interceptors.response.use(
       //   message,
       // })
 
-      return Promise.resolve(error)
+      return error.response
     }
   },
 )

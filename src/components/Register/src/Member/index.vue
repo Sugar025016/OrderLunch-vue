@@ -7,6 +7,10 @@ import ElMessage from 'element-plus/lib/components/message/index.js'
 import Captcha from '../Captcha/index.vue'
 import { ResponseData } from '@/api/type'
 
+import { useRouter } from 'vue-router'
+import TimeSelect from '@/components/Buy/BuyCheck/src/timeSelect.vue'
+
+let $router = useRouter()
 const registerMember = ref<RegisterMember>({
   name: 'jjj',
   account: 'ruby028016@gmail.com',
@@ -115,22 +119,22 @@ const save = async () => {
   let res: ResponseData = await reqAddMember(registerMember.value)
 
   if (res.status === 200) {
-    // sellShopStore.shopDrawer = false
     ElMessage({
-      message: '註冊成功',
+      message: '註冊成功，請登入',
       type: 'success',
     })
-    window.location.reload()
-  } else {
-    // sellShopStore.shopDrawer = false
-    
-    if(res.data.code === 411){
-      ElMessage({
-      type: 'error',
-      message: '驗證碼錯誤',
-    })
-    }
+    // window.location.reload()
 
+    $router.push('/login')
+  } else {
+
+    if (res.data.code === 411) {
+      ElMessage({
+        type: 'error',
+        message: res.data.message,
+      })
+    }
+    captchaRef.value?.refreshCaptcha()
   }
 }
 </script>

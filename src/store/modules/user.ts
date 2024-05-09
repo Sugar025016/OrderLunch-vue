@@ -89,16 +89,17 @@ const useUserStore = defineStore('User', {
 
       const res: LoginResponseData = await reqLogin(formData)
 
+      console.log(res)
       console.log('loginResponse-----------1')
-      const loginResponse: Response = res as Response
-      console.log('loginResponse.status', loginResponse)
-      if (loginResponse.status === 200) {
-        console.log('loginResponse.status', loginResponse.status)
+      // const loginResponse: Response = res as Response
+      // console.log('loginResponse.status', loginResponse)
+      if (res.status === 200) {
+        // console.log('loginResponse.status', loginResponse.status)
         this.token = GET_TOKEN()
         console.log('this.token', this.token)
         await this.userInfo()
       }
-      return loginResponse
+      return res
     },
     async userInfo() {
       const res: UserInfoResponseData = await reqUserInfo()

@@ -1,5 +1,3 @@
-
-
 <script setup lang="ts">
 import { User, Lock } from '@element-plus/icons-vue'
 import { Ref, computed, reactive, ref } from 'vue'
@@ -72,12 +70,13 @@ const validatorVerifyCode = (rule: any, value: any, callback: any) => {
 }
 import { Response, ResponseData } from '@/api/type'
 import { ElNotification } from 'element-plus/lib/components/index.js'
+import { LoginResponseData } from '@/api/user/type'
 const login = async () => {
-  loginForm.verifyCode=captchaRef.value?.verifyCode
+  loginForm.verifyCode = captchaRef.value?.verifyCode
   await loginForms.value.validate()
   loading.value = true
   try {
-    const loginResponse: ResponseData = await useStore.userLogin(loginForm)
+    const loginResponse: LoginResponseData = await useStore.userLogin(loginForm)
 
     console.log('登陆成功', loginResponse)
 
@@ -91,29 +90,33 @@ const login = async () => {
         message: '登陆成功',
         title: `Hi, ${getTime()}好`,
       })
-    } else if (loginResponse?.status === 401) {
-      // $router.push('/')
-      ElNotification({
-        type: 'error',
-        message: '帳號或密碼錯，請輸入正確的帳號或密碼',
-        title: '帳號或密碼錯',
-      })
-    } else if (loginResponse?.status === 411) {
-      captchaRef.value?.refreshCaptcha()
-
-      ElNotification({
-        type: 'error',
-        message: loginResponse.message,
-        title: '驗證碼錯誤',
-      })
     } else {
-      captchaRef.value?.refreshCaptcha()
+      if (loginResponse?.status === 401) {
+        // $router.push('/')
+        ElNotification({
+          type: 'error',
+          message: '帳號或密碼錯，請輸入正確的帳號或密碼',
+          title: '帳號或密碼錯',
+        })
+      } else if (loginResponse?.status === 411) {
+        captchaRef.value?.refreshCaptcha()
 
-      ElNotification({
-        type: 'error',
-        message: '驗證碼過期，更新驗證碼',
-        title: '驗證碼錯誤',
-      })
+        ElNotification({
+          type: 'error',
+          message: loginResponse.message,
+          title: '驗證碼錯誤',
+        })
+      } else {
+        captchaRef.value?.refreshCaptcha()
+
+        ElNotification({
+          type: 'error',
+          message: '驗證碼過期，更新驗證碼',
+          title: '驗證碼錯誤',
+        })
+      }
+
+      captchaRef.value?.refreshCaptcha()
     }
 
     // if (loginResponse?.status === 411) {
@@ -178,8 +181,6 @@ const rules = {
 // ../../assets/images/0050.png
 </script>
 
-
-
 <template>
   <div class="login_container">
     <el-card class="login_form">
@@ -216,7 +217,7 @@ const rules = {
           prop="verifyCode"
           class="custom-form-item"
         >
-          <Captcha  ref="captchaRef"></Captcha>
+          <Captcha ref="captchaRef"></Captcha>
         </el-form-item>
         <el-form-item prop="rememberMe">
           <el-checkbox

@@ -12,7 +12,7 @@ import type {
   RegisterMember,
   AddressResponseData,
 } from './type'
-import { ResultResponse, Address, Response } from '../type'
+import { ResultResponse, Address, Response, ResponseData } from '../type'
 
 enum API {
   LOGIN_URL = '/login',
@@ -59,7 +59,7 @@ export const reqPutUserAddresses = (date: Addresses) =>
 //   request.get<any, UserAddressResponseData>(API.REGISTER_CAPTCHA + '?timestamp=' + Date.now())
 
 export const reqAddMember = (data: RegisterMember) =>
-  request.post<any, ResultResponse>(API.REGISTER_MEMBER, data)
+  request.post<any, ResponseData>(API.REGISTER_MEMBER, data)
 
 // export const reqAddUserAddresses = (date: Address) =>
 //   request.put<any, AddressResponseData>(API.USER_ADDRESS_URL, date)
