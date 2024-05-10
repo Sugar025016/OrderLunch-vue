@@ -78,7 +78,7 @@ const login = async () => {
   try {
     const loginResponse: LoginResponseData = await useStore.userLogin(loginForm)
 
-    console.log('登陆成功', loginResponse)
+    
 
     if (loginResponse?.status === 200) {
       let redirect: string = $route.query.redirect as string

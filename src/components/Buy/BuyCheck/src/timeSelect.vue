@@ -192,7 +192,7 @@ const setEmit = () => {
   setDeliveryTime.setHours(hours, minutes, 0, 0)
 
   const formattedDate = moment(setDeliveryTime).format('YYYY-MM-DDTHH:mm:ss')
-  console.log('-----------', formattedDate)
+  
 
   $emit('deliveryTime', formattedDate)
 }

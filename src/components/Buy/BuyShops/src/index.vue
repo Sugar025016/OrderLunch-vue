@@ -69,7 +69,7 @@ const handleScroll = async () => {
     window.innerHeight + window.scrollY >=
     document.documentElement.scrollHeight - 200
   ) {
-    console.log('頁面滾動到了底部', aaa++)
+    
     if (
       shopStore.shopPage.number < shopStore.shopPage.totalPages - 1 &&
       !loadingMore

@@ -69,12 +69,12 @@ const checkAddCart = async () => {
         },
       )
         .then(() => {
-          console.log('清空購物車，加入新商品')
+          
           addCart()
         })
         .catch(() => {
           // 使用者點擊了 "取消" 按鈕或關閉了訊息框
-          console.log('用户点击了取消按钮或关闭了消息框')
+          
         })
     } else {
       addCart()

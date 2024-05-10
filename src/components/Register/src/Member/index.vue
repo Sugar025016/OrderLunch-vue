@@ -62,7 +62,7 @@ const validatorPasswordCheck = (rule: any, value: any, callback: any) => {
   }
 }
 const validatorVerifyCode = (rule: any, value: any, callback: any) => {
-  console.log('value-----------', value)
+  
   if (value.length === 0) {
     callback(new Error('请输入验证码'))
   } else if (value.length < 4) {

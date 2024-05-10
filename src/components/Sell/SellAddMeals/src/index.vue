@@ -35,8 +35,8 @@ const getAddMeals = async () => {
     //   }
     // })
 
-    // console.log('sellShopStore.shop.products:', sellShopStore.shop.products)
-    // console.log('addMealsDatas', addMealsDatas)
+    // 
+    // 
   } else {
   }
 }

@@ -97,16 +97,16 @@ const getData = (t: AddMealsData) => {
 }
 
 // const getSearchResult = (sellProductList: any) => {
-//   console.log('沒有搜尋到', sellProductList.length)
+//   
 //   if (sellProductList.length === 0) {
-//     console.log('沒有搜尋到-----2', sellProductList.length)
+//     
 //     ElMessage({
 //       showClose: true,
 //       message: '沒有搜尋到',
 //       type: 'warning',
 //       style: 'z-index: 3000',
 //     })
-//     console.log('沒有搜尋到-----3', sellProductList.length)
+//     
 //   }
 //   productSetChooses.value = sellProductList
 // }

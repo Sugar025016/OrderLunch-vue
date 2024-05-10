@@ -210,7 +210,7 @@ const handleClose = () => {
 }
 
 const changeRedis = (addressId: number) => {
-  console.log('handleClose-addressId:' + addressId)
+  
 }
 
 const AddressRefs = ref<typeof EditAddressModal>()

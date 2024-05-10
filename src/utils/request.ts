@@ -45,7 +45,7 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response) => {
     endLoading()
-    console.log('response-----------', response)
+    
     if (response.config.url === '/login') {
       const cookieValue = document.cookie.replace(
         /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,

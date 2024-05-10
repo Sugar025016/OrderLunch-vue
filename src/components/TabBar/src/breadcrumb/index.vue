@@ -58,7 +58,7 @@ let $route = useRoute()
 const paths = $route.path.split('/')
 
 let isSell: boolean = paths.includes('sell')
-console.log('isSell', isSell)
+
 
 const changeIcon = () => {
   LayOutSettingStore.isCollapse = !LayOutSettingStore.isCollapse

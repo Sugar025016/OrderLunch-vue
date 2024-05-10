@@ -24,10 +24,10 @@ let $route = useRoute()
 let sellShopStore = useSellShopStore()
 
 const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
+  
 }
 const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
+  
 }
 
 const changeLink = async (to: string) => {
