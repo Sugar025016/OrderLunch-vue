@@ -3,7 +3,7 @@ import { constantRoute, anyRoute, sellShop } from './routes'
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: [...constantRoute, ...sellShop, anyRoute],
+  routes: [...constantRoute, anyRoute],
   // 滾動行為
   scrollBehavior() {
     return {

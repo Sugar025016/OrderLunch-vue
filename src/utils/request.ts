@@ -4,7 +4,8 @@ import useUserStore from '@/store/modules/user'
 import { GET_TOKEN, SET_TOKEN } from '@/utils/token'
 import router from '@/router'
 // import { Loading } from '@element-plus/icons-vue'
-import { ElLoading } from 'element-plus'
+
+import ElLoading from 'element-plus/lib/components/loading/index.js'
 const request = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 500000,

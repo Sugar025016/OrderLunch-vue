@@ -103,11 +103,15 @@ const useSellShopStore = defineStore('sellShopStore', {
       const userStore = useUserStore()
       if (userStore.account) {
         const res: ShopNamesResponse = await getShopNames()
+        console.log('取sellShop:',res)
         if (res.status === 200) {
+          userStore.setRouteHaveSell(res.data.length !== 0)
           if (res.data.length === 0) {
-            $router.push('/')
+            // $router.push('/')ㄘ
             return
           }
+
+
           this.shopNames = res.data
           if (this.shopId === 0) {
             this.shopId = this.shopNames[0].id

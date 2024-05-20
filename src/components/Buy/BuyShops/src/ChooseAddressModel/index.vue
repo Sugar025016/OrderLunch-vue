@@ -30,7 +30,7 @@ let $router = useRouter()
 const chooseAddressModelOpen = ref<boolean>(false)
 
 const addAddress = async () => {
-  AddressRefs.value?.addShop()
+  addressRefs.value?.addShop()
 }
 const reviseAddress = async (address: Address) => {
   if (address.id === userStore.address?.id && userStore.cartCount > 0) {
@@ -44,13 +44,13 @@ const reviseAddress = async (address: Address) => {
       },
     )
       .then(() => {
-        AddressRefs.value?.updateShop(address)
+        addressRefs.value?.updateShop(address)
       })
       .catch(() => {
         return
       })
   } else {
-    AddressRefs.value?.updateShop(address)
+    addressRefs.value?.updateShop(address)
   }
 }
 
@@ -173,7 +173,7 @@ const chooseAddress = async () => {
     })
   }
 }
-let isChangeAddress = ref<boolean>(true)
+// let isChangeAddress = ref<boolean>(true)
 let addressParams = ref<Address[]>([])
 
 const open = async () => {
@@ -186,9 +186,9 @@ const getUserAddress = async () => {
   if (res.status === 200) {
     addresses.value = res.data
     addressParams.value = JSON.parse(JSON.stringify(addresses.value))
-
+    console.log('www  res.data:', res.data)
     if (res.data.length === 0) {
-      isChangeAddress.value = false
+      // isChangeAddress.value = false
       addAddress()
     }
 
@@ -209,12 +209,11 @@ const handleClose = () => {
   chooseAddressModelOpen.value = false
 }
 
-const changeRedis = (addressId: number) => {
-  
-}
+const changeRedis = (addressId: number) => {}
 
-const AddressRefs = ref<typeof EditAddressModal>()
+const addressRefs = ref<typeof EditAddressModal>()
 const handleChildClosed = () => {
+  addressRefs.value?.handleClose()
   getUserAddress()
 }
 defineExpose({
@@ -232,7 +231,7 @@ defineExpose({
     >
       <div class="address">
         <span class="address-introduce">選擇外送地址：</span>
-        <div v-if="isChangeAddress" class="item">
+        <div class="item">
           <el-scrollbar max-height="400px">
             <el-radio-group
               v-model="addressId"
@@ -295,7 +294,7 @@ defineExpose({
   </div>
 
   <EditAddressModal
-    ref="AddressRefs"
+    ref="addressRefs"
     @childClosed="handleChildClosed"
   ></EditAddressModal>
 </template>

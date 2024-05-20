@@ -226,68 +226,129 @@ export const constantRoute = [
       mustToken: false,
     },
   },
-  {
-    path: '/sell',
-    component: () => import('@/views/sell/index.vue'),
-    meta: {
-      title: '餐廳設定',
-      hidden: false,
-      icon: 'HomeFilled',
-      mustToken: false,
-    },
-    redirect: '/sell/Shop/:id',
-    children: [
-      {
-        path: '/sell/Shop/:id',
-        component: () =>
-          import('@/components/Sell/SellShop/src/Shop/src/index.vue'),
-        meta: {
-          title: 'Register',
-          hidden: false,
-          icon: 'HomeFilled',
-          mustToken: false,
-          id: 0,
-        },
-        // children: [
-        //   {
-        //     path: '/sell/Shop/:id',
-        //     component: () => import('@/components/Sell/SellShop/src/Shop/src/index.vue'),
-        //     meta: {
-        //       title: 'Register',
-        //       hidden: false,
-        //       icon: 'HomeFilled',
-        //       mustToken: false,
-        //     },
-        //   },
-        // ],
-      },
+  // {
+  //   path: '/sell',
+  //   component: () => import('@/views/sell/index.vue'),
+  //   meta: {
+  //     title: '餐廳設定',
+  //     hidden: false,
+  //     icon: 'HomeFilled',
+  //     mustToken: false,
+  //   },
+  //   redirect: '/sell/Shop/:id',
+  //   children: [
+  //     {
+  //       path: '/sell/Shop/:id',
+  //       component: () =>
+  //         import('@/components/Sell/SellShop/src/Shop/src/index.vue'),
+  //       meta: {
+  //         title: 'Register',
+  //         hidden: false,
+  //         icon: 'HomeFilled',
+  //         mustToken: false,
+  //         id: 0,
+  //       },
+  //       // children: [
+  //       //   {
+  //       //     path: '/sell/Shop/:id',
+  //       //     component: () => import('@/components/Sell/SellShop/src/Shop/src/index.vue'),
+  //       //     meta: {
+  //       //       title: 'Register',
+  //       //       hidden: false,
+  //       //       icon: 'HomeFilled',
+  //       //       mustToken: false,
+  //       //     },
+  //       //   },
+  //       // ],
+  //     },
 
-      // {
-      //   path: '/sell/product/:id',
-      //   component: () => import('@/components/Sell/SellProduct/src/index.vue'),
-      //   meta: {
-      //     title: 'Register',
-      //     hidden: false,
-      //     icon: 'HomeFilled',
-      //     mustToken: false,
-      //   },
+  //     // {
+  //     //   path: '/sell/product/:id',
+  //     //   component: () => import('@/components/Sell/SellProduct/src/index.vue'),
+  //     //   meta: {
+  //     //     title: 'Register',
+  //     //     hidden: false,
+  //     //     icon: 'HomeFilled',
+  //     //     mustToken: false,
+  //     //   },
 
-      // },
-      {
-        path: '/sell/shop',
-        component: () => import('@/components/Sell/SellShop/src/index.vue'),
-        meta: {
-          title: 'Register',
-          hidden: false,
-          icon: 'HomeFilled',
-          mustToken: false,
-        },
-      },
-    ],
-  },
+  //     // },
+  //     {
+  //       path: '/sell/shop',
+  //       component: () => import('@/components/Sell/SellShop/src/index.vue'),
+  //       meta: {
+  //         title: 'Register',
+  //         hidden: false,
+  //         icon: 'HomeFilled',
+  //         mustToken: false,
+  //       },
+  //     },
+  //   ],
+  // },
 ]
 
-export const sellShop = [
+export const sellShop = 
+
+
+  // {
+  //   path: '/sell',
+  //   component: () => import('@/views/sell/index.vue'),
+  //   meta: {
+  //     title: '餐廳設定',
+  //     hidden: false,
+  //     icon: 'HomeFilled',
+  //     mustToken: false,
+  //   },
+  //   redirect: '/sell/Shop/:id',
+  //   children: [
+  //     {
+  //       path: '/sell/Shop/:id',
+  //       component: () =>
+  //         import('@/components/Sell/SellShop/src/Shop/src/index.vue'),
+  //       meta: {
+  //         title: 'Register',
+  //         hidden: false,
+  //         icon: 'HomeFilled',
+  //         mustToken: false,
+  //         id: 0,
+  //       },
+  //       // children: [
+  //       //   {
+  //       //     path: '/sell/Shop/:id',
+  //       //     component: () => import('@/components/Sell/SellShop/src/Shop/src/index.vue'),
+  //       //     meta: {
+  //       //       title: 'Register',
+  //       //       hidden: false,
+  //       //       icon: 'HomeFilled',
+  //       //       mustToken: false,
+  //       //     },
+  //       //   },
+  //       // ],
+  //     },
+
+  //     // {
+  //     //   path: '/sell/product/:id',
+  //     //   component: () => import('@/components/Sell/SellProduct/src/index.vue'),
+  //     //   meta: {
+  //     //     title: 'Register',
+  //     //     hidden: false,
+  //     //     icon: 'HomeFilled',
+  //     //     mustToken: false,
+  //     //   },
+
+  //     // },
+  //     {
+  //       path: '/sell/shop',
+  //       component: () => import('@/components/Sell/SellShop/src/index.vue'),
+  //       meta: {
+  //         title: 'Register',
+  //         hidden: false,
+  //         icon: 'HomeFilled',
+  //         mustToken: false,
+  //       },
+  //     },
+  //   ],
+  // },
   {
     path: '/sell/:shopId',
     component: () => import('@/views/sell/index.vue'),
@@ -386,8 +447,8 @@ export const sellShop = [
         },
       },
     ],
-  },
-]
+  }
+
 
 export const asyncRoute = [
   {

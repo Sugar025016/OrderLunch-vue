@@ -74,7 +74,6 @@ const saveAddress = async () => {
   let res: AddressResponseData = await reqAddUserAddresses(addressData)
   if (res.status === 200) {
     await userStore.userInfo()
-    addAddressModalOpen.value = false
     emits('childClosed')
   } else {
     ElMessage({
@@ -93,7 +92,7 @@ const addShop = () => {
     street: '',
     detail: '',
   })
-  title.value = '新增地址'
+  title.value = '新增外送地址'
   nextTick(() => {
     formRef.value.clearValidate('city')
     formRef.value.clearValidate('area')
@@ -120,6 +119,7 @@ const title = ref<string>()
 defineExpose({
   updateShop,
   addShop,
+  handleClose,
 })
 </script>
 <template>

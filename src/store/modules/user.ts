@@ -19,6 +19,7 @@ import type {
   ChangeLovesResponseData,
 } from '@/api/user/type'
 import type { UserState } from './types/types'
+import router from '@/router'
 import { GET_TOKEN, REMOVE_TOKEN } from '@/utils/token'
 import {
   constantRoute,
@@ -48,8 +49,8 @@ const useUserStore = defineStore('User', {
     return {
       token: GET_TOKEN()!,
       menuRoutes: menuRoutes,
-      menuSellRoutes: sellShop[0].children,
-      asyncRoute: [...constantRoute, ...asyncRoute, anyRoute],
+      menuSellRoutes: sellShop.children,
+      asyncRoute: [...constantRoute, anyRoute],
       username: '',
       account: '',
       email: '',
@@ -89,14 +90,14 @@ const useUserStore = defineStore('User', {
 
       const res: LoginResponseData = await reqLogin(formData)
 
-      
-      
+
+
       // const loginResponse: Response = res as Response
       // 
       if (res.status === 200) {
         // 
         this.token = GET_TOKEN()
-        
+
         await this.userInfo()
       }
       return res
@@ -122,14 +123,7 @@ const useUserStore = defineStore('User', {
       } else {
         return Promise.reject(new Error(res.message))
       }
-      // this.menuRoutes = [...constantRoute, ...userAsyncRoute, anyRoute]
-      // ;[...userAsyncRoute, anyRoute].forEach((route: any) => {
-      //   router.addRoute(route)
-      // })
-      // } else {
-      //
-      //   return Promise.reject(new Error(res.message))
-      // }
+
     },
 
     async changeUserInfo(v: UserProfile) {
@@ -240,6 +234,25 @@ const useUserStore = defineStore('User', {
 
     async setCheckAddress(is: boolean) {
       this.isCheckAddress = is
+    },
+    async setRouteHaveSell(is: boolean) {
+      console.log('有sellShop:',is)
+      if (is) {
+        
+        this.asyncRoute = [...constantRoute, sellShop, anyRoute];
+
+        [...constantRoute, sellShop, anyRoute].forEach((route: any) => {
+          router.addRoute(route)
+        })
+      } else {
+
+        this.asyncRoute = [...constantRoute, anyRoute];
+
+        [...constantRoute, anyRoute].forEach((route: any) => {
+          router.addRoute(route)
+        })
+      }
+      
     },
   },
   getters: {},

@@ -269,7 +269,7 @@ const changeCategory = () => {
       button {
         height: 100%;
         left: 0;
-        padding: 10px 15px;
+        padding: auto 15px;
         // background-color: #007bff;
         color: #fff;
         border: none;
@@ -277,6 +277,7 @@ const changeCategory = () => {
         outline: none;
         border-radius: 40px;
         width: 20%;
+        font-size: 20px;
       }
     }
 
