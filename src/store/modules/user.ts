@@ -177,7 +177,8 @@ const useUserStore = defineStore('User', {
     async userLogout() {
       const res = await reqLogOut()
       if (res.status === 200) {
-        await window.location.reload()
+        router.push('/')
+        // await window.location.reload()
         this.userClear()
 
         return res
