@@ -117,6 +117,7 @@ const updateCart = async (cartId: number, qty: number) => {
   if (res.status === 200) {
     carts.value = res.data
     userStore.cartCount = getCartCount(res.data.cartResponses)
+    getCart()
   }
 }
 

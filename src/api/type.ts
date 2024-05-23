@@ -15,7 +15,7 @@ export interface Code {
 }
 
 export interface ResultResponse extends Response {
-  data: boolean
+  data: Code
 }
 
 export interface Page {

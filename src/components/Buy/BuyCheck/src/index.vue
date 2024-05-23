@@ -185,7 +185,11 @@ const deleteAddress = (index: number) => {
 
 const radio1 = ref(0)
 
-const TimeSelectRef = ref<typeof TimeSelect>()
+let TimeSelectRef: any = ref<typeof TimeSelect>()
+const reloadTimeSelect = () => {
+  TimeSelectRef = null
+  TimeSelectRef = ref<typeof TimeSelect>()
+}
 
 const sendOrder = async () => {
   await TimeSelectRef.value?.save()
@@ -198,12 +202,22 @@ const sendOrder = async () => {
 
   if (res.status === 200) {
     userStore.cartCount = 0
+    userStore.userInfo()
     $router.push('/BuyOrder')
   } else {
-    ElMessage({
-      type: 'error',
-      message: '建立訂單失敗',
-    })
+    console.log(res)
+    if (res.data.code == 501) {
+      reloadTimeSelect()
+      ElMessage({
+        type: 'error',
+        message: '時間錯誤，更新時間',
+      })
+    } else {
+      ElMessage({
+        type: 'error',
+        message: '建立訂單失敗',
+      })
+    }
   }
 }
 
