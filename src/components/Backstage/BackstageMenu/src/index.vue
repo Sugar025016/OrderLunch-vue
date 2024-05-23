@@ -6,7 +6,7 @@
   >
     <!-- 没有子路由 -->
     <template v-if="!item.children">
-      <el-menu-item v-if="!item.meta.hidden" :index="item.path" @click="LayOutSettingStore.isCollapse = !LayOutSettingStore.isCollapse">
+      <el-menu-item v-if="!item.meta.hidden" :index="item.path" @click="!isBreakpointMD?LayOutSettingStore.isCollapse = true:LayOutSettingStore.isCollapse">
         <!-- <el-menu-item v-if="!item.meta.hidden" @click="goRoute(item)"> -->
         <!-- <el-icon>
           <component :is="item.meta.icon"></component>
