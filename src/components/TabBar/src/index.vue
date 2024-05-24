@@ -8,8 +8,11 @@
       <div class="toolbar_order" v-if="sellShopStore.shopNames.length > 0">
         <Order :isToolbarVisibleAll="isBreakpointSM"></Order>
       </div>
-      <div class="toolbar_right">
+      <div class="toolbar_right" v-if=" userStore.username">
         <Setting :isToolbarVisibleAll="isBreakpointSM" />
+      </div>
+      <div class="toolbar_right" v-if="isBreakpointSM && !userStore.username">
+        <LoginRegisterBar />
       </div>
       <div class="" v-if="!isBreakpointSM && userStore.username">
         <OrderSetting />
@@ -21,6 +24,7 @@
 <script setup lang="ts">
 import BreadCrumb from './breadcrumb/index.vue'
 import Setting from './setting/index.vue'
+import LoginRegisterBar from './loginRegisterBar/index.vue'
 import OrderSetting from './orderSetting/index.vue'
 import Order from './order/index.vue'
 import useSellShopStore from '@/store/modules/sellShop'
