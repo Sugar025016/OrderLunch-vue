@@ -11,7 +11,7 @@
       <div class="toolbar_right" v-if=" userStore.username">
         <Setting :isToolbarVisibleAll="isBreakpointSM" />
       </div>
-      <div class="toolbar_right" v-if="isBreakpointSM && !userStore.username">
+      <div class="toolbar_right" v-if="!userStore.username">
         <LoginRegisterBar />
       </div>
       <div class="" v-if="!isBreakpointSM && userStore.username">

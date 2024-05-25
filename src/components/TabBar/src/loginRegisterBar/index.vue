@@ -13,10 +13,15 @@ const router = (to: string) => {
       登入
     </el-button>
 
-    <el-button type="primary" @click="router('/Register')" round size="large" link>
+    <el-button
+      type="primary"
+      @click="router('/Register')"
+      round
+      size="large"
+      link
+    >
       註冊
     </el-button>
-
   </div>
 </template>
 
@@ -30,7 +35,15 @@ const router = (to: string) => {
   .el-button {
     font-size: 20px;
     font-weight: 600;
-    // margin: 0 20px;
+  }
+
+  @media (max-width: $breakpoint-xs) {
+    margin: 0;
+    .el-button {
+      font-size: 16px;
+      margin: 10px;
+      padding: 0;
+    }
   }
 }
 </style>
