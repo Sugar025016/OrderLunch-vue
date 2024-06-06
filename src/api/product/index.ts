@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import type { ProductsResponseData } from './type'
 enum API {
-  PRODUCT = '/api/product/',
+  PRODUCT = '/product/',
 }
 
 export const getProducts = (data: number) =>

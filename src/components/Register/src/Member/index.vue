@@ -133,7 +133,18 @@ const save = async () => {
         type: 'error',
         message: res.data.message,
       })
+
+      formRef.value?.resetFields(['account']);
+        formRef.value?.validateField('account', (isValid:any, invalidFields:any) => {
+          if (!isValid && invalidFields) {
+            const field = invalidFields['account'];
+            if (field) {
+              field[0].message = res.data.message;
+            }
+          }
+        });
     }
+    
     captchaRef.value?.refreshCaptcha()
   }
 }

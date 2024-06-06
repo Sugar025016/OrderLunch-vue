@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import type { PutAddMealsData, AddMealsProductsResponseData } from './type'
 enum API {
-  AddMeals = '/api/addMeals',
+  AddMeals = '/addMeals',
 }
 
 export const reqGetAddMealsProducts = (data: number) =>

@@ -7,7 +7,7 @@ import type {
 import { ResultResponse } from '../type'
 
 enum API {
-  ORDER_URL = '/api/order',
+  ORDER_URL = '/order',
   SELL_ORDER_URL = '/sell/order',
   SELL_ORDER_URL_NEW = '/sell/order/new',
 }

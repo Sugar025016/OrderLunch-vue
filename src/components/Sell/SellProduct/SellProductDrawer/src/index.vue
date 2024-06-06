@@ -193,7 +193,7 @@ const uploadHeaders = {
           <el-form-item label="產品圖：">
             <el-upload
               class="avatar-uploader"
-              action="/api/api/upload"
+              action="/api/upload"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload"
@@ -255,7 +255,7 @@ const uploadHeaders = {
           <el-form-item label="產品圖：" class="img">
             <el-upload
               class="avatar-uploader"
-              action="/api/api/upload"
+              action="/api/upload"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload"

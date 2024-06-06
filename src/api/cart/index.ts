@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import type { CartResponseData, CartRequest } from './type'
 enum API {
-  cart = '/api/cart',
+  cart = '/cart',
 }
 
 export const reqGetCart = () => request.get<any, CartResponseData>(API.cart)

@@ -14,12 +14,12 @@ import type {
 } from './type'
 
 enum API {
-  SHOPS = '/api/shop',
-  SHOPS_RECOMMEND = '/api/shop/recommend',
-  SHOP = '/api/shop/',
+  SHOPS = '/shop',
+  SHOPS_RECOMMEND = '/shop/recommend',
+  SHOP = '/shop/',
   SELL_SHOP = '/sell/shop',
-  SCHEDULE = '/api/schedule',
-  REGISTER_SHOP = '/api/register/shop',
+  SCHEDULE = '/schedule',
+  SELL_SHOP_REGISTER = '/sell/shop/register',
 }
 
 export const getShop = (data: number) =>
@@ -99,4 +99,4 @@ export const reqAddOrUpdateShop = (data: PutShopData) => {
 }
 
 export const reqAddShop = (data: RegisterShop) =>
-  request.post<any, ShopIDResponseData>(API.REGISTER_SHOP, data)
+  request.post<any, ShopIDResponseData>(API.SELL_SHOP_REGISTER, data)

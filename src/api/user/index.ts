@@ -16,14 +16,14 @@ import { ResultResponse, Address, Response, ResponseData } from '../type'
 
 enum API {
   LOGIN_URL = '/login',
-  USERINFO_URL = '/api/user',
+  USERINFO_URL = '/user',
   LOGOUT_URL = '/logout',
-  USER_PWD_URL = '/api/user/pwd',
-  USER_ADDRESS_URL = '/api/user/address',
-  USER_FAVORITE_URL = '/api/user/favorite',
-  REGISTER_CAPTCHA = '/api/register/captcha',
-  REGISTER_MEMBER = '/api/register/member',
-  USER_ADDRESS_DELIVERY_URL = '/api/user/address/delivery',
+  USER_PWD_URL = '/user/pwd',
+  USER_ADDRESS_URL = '/user/address',
+  USER_FAVORITE_URL = '/user/favorite',
+  REGISTER_CAPTCHA = '/register/captcha',
+  USER_REGISTER = '/user/register',
+  USER_ADDRESS_DELIVERY_URL = '/user/address/delivery',
 }
 
 export const reqLogin = (data: FormData) =>
@@ -59,7 +59,7 @@ export const reqPutUserAddresses = (date: Addresses) =>
 //   request.get<any, UserAddressResponseData>(API.REGISTER_CAPTCHA + '?timestamp=' + Date.now())
 
 export const reqAddMember = (data: RegisterMember) =>
-  request.post<any, ResponseData>(API.REGISTER_MEMBER, data)
+  request.post<any, ResponseData>(API.USER_REGISTER, data)
 
 // export const reqAddUserAddresses = (date: Address) =>
 //   request.put<any, AddressResponseData>(API.USER_ADDRESS_URL, date)

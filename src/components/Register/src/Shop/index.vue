@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onBeforeUnmount, onMounted } from 'vue'
 import address from '@/utils/address.js'
 import { Address } from '@/api/type'
 import { RegisterShop, ShopIDResponseData } from '@/api/shop/type'
@@ -7,6 +7,7 @@ import Captcha from '../Captcha/index.vue'
 
 import { useRouter } from 'vue-router'
 import { reqAddShop } from '@/api/shop'
+import useUserStore from '@/store/modules/user'
 
 let $router = useRouter()
 
@@ -36,7 +37,7 @@ export interface AddRegisterShop {
   address: Address
 }
 const addRegisterShop = ref<AddRegisterShop>({
-  captcha: '1234',
+  captcha: '',
   name: 'NN小店',
   phone: '1234567890',
   description: 'NNNN',
@@ -147,13 +148,17 @@ function validateNotEmptyString(rule: any, value: any, callback: any) {
 let formRef = ref<any>()
 
 import useSellShopStore from '@/store/modules/sellShop'
-import { ElMessage } from 'element-plus/lib/components/index.js'
+import { ElMessage, ElMessageBox } from 'element-plus/lib/components/index.js'
 let sellShopStore = useSellShopStore()
+
+const captchaRef = ref<typeof Captcha | null>(null)
+
 const save = async () => {
+  addRegisterShop.value.captcha = captchaRef.value?.verifyCode
   await formRef.value.validate()
 
   const registerShop = ref<RegisterShop>({
-    captcha: addRegisterShop.value.captcha,
+    captcha: captchaRef.value?.verifyCode,
     shopName: addRegisterShop.value.name,
     phone: addRegisterShop.value.phone,
     description: addRegisterShop.value.description,
@@ -163,18 +168,56 @@ const save = async () => {
       ].streetKey,
     addressDetail: addRegisterShop.value.address.detail as string,
   })
+  let res: any = await reqAddShop(registerShop.value)
 
-  let res: ShopIDResponseData = await reqAddShop(registerShop.value)
   if (res.status === 200) {
     sellShopStore.shopId = res.data
     $router.push(`/sell/${res.data}/Shop`)
   } else {
-    ElMessage({
-      type: 'error',
-      message: '搜尋失败',
-    })
+    if (res.data.code === 0) {
+      getElMessageBox()
+    } else {
+      ElMessage({
+        type: 'error',
+        message: res.data.message,
+      })
+      captchaRef.value?.refreshCaptcha()
+    }
   }
 }
+let timer: any
+const getElMessageBox = () => {
+  ElMessageBox.alert('未登入，前往登入', '登入去', {
+    callback: () => {
+      // 關閉彈跳窗的回調函數
+      ElMessageBox.close()
+      $router.push('/login')
+    },
+  })
+
+  timer = setTimeout(() => {
+    const messageBoxInstance = ElMessageBox
+    if (messageBoxInstance) {
+      messageBoxInstance.close()
+
+      $router.push('/login')
+    }
+  }, 5000) // 10000 毫秒即为 10 秒
+}
+const getUser = () => {
+  let userStore = useUserStore()
+  console.log('userStore.account', userStore.account)
+  if (userStore.account === '') {
+    getElMessageBox()
+  }
+}
+
+onMounted(() => {
+  getUser()
+})
+onBeforeUnmount(() => {
+  clearTimeout(timer)
+})
 </script>
 <template>
   <div class="register-member">
@@ -298,7 +341,8 @@ const save = async () => {
           label="驗證碼："
           size="large"
         >
-          <Captcha v-model="addRegisterShop.captcha"></Captcha>
+          <!-- <Captcha v-model="addRegisterShop.captcha"></Captcha> -->
+          <Captcha ref="captchaRef"></Captcha>
         </el-form-item>
       </el-form>
       <!-- <el-checkbox v-model="checked1" label="Option 1" size="large" /> -->

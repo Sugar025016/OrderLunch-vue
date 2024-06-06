@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import type { CategoryListResponse } from './type'
 enum API {
-  CATEGORY = '/api/category',
+  CATEGORY = '/category',
 }
 
 export const getCategoryList = () =>

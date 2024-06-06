@@ -25,7 +25,7 @@ function endLoading() {
 
 request.interceptors.request.use(
   (config) => {
-    if(config.url && config.url!== "/sell/order/new" && !/^\/api\/order\/\d+$/.test(config.url)){
+    if(config.url && config.url!== "/sell/order/new" && !/^\/order\/\d+$/.test(config.url)){
 
       starLoading()
     }

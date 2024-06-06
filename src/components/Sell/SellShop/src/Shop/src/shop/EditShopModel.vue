@@ -385,7 +385,7 @@ const changeArea = () => {
         <el-form-item label="商店圖" class="img">
           <el-upload
             class="avatar-uploader"
-            action="/api/api/upload"
+            action="/api/upload"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
