@@ -62,7 +62,6 @@ const validatorPasswordCheck = (rule: any, value: any, callback: any) => {
   }
 }
 const validatorVerifyCode = (rule: any, value: any, callback: any) => {
-  
   if (value.length === 0) {
     callback(new Error('请输入验证码'))
   } else if (value.length < 4) {
@@ -127,24 +126,25 @@ const save = async () => {
 
     $router.push('/login')
   } else {
-
+    ElMessage({
+      type: 'error',
+      message: res.data.message,
+    })
     if (res.data.code === 411) {
-      ElMessage({
-        type: 'error',
-        message: res.data.message,
-      })
-
-      formRef.value?.resetFields(['account']);
-        formRef.value?.validateField('account', (isValid:any, invalidFields:any) => {
+      formRef.value?.resetFields(['account'])
+      formRef.value?.validateField(
+        'account',
+        (isValid: any, invalidFields: any) => {
           if (!isValid && invalidFields) {
-            const field = invalidFields['account'];
+            const field = invalidFields['account']
             if (field) {
-              field[0].message = res.data.message;
+              field[0].message = res.data.message
             }
           }
-        });
+        },
+      )
     }
-    
+
     captchaRef.value?.refreshCaptcha()
   }
 }
