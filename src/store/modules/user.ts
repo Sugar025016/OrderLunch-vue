@@ -235,13 +235,11 @@ const useUserStore = defineStore('User', {
       console.log('有sellShop:', is)
       if (is) {
         this.asyncRoute = [...constantRoute, sellShop, anyRoute]
-
         ;[...constantRoute, sellShop, anyRoute].forEach((route: any) => {
           router.addRoute(route)
         })
       } else {
         this.asyncRoute = [...constantRoute, anyRoute]
-
         ;[...constantRoute, anyRoute].forEach((route: any) => {
           router.addRoute(route)
         })
