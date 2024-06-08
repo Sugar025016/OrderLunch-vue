@@ -1,4 +1,4 @@
-import { Schedules } from '@/shop/type'
+import { Schedules } from '@/api/shop/type'
 import { Response } from '../type'
 
 export interface CartsData {

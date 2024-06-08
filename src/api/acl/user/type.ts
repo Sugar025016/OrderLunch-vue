@@ -1,4 +1,4 @@
-import { Response } from '@/type'
+import { Response } from '@/api/type'
 
 export interface User {
   id?: number
