@@ -78,8 +78,6 @@ const login = async () => {
   try {
     const loginResponse: LoginResponseData = await useStore.userLogin(loginForm)
 
-    
-
     if (loginResponse?.status === 200) {
       let redirect: string = $route.query.redirect as string
 

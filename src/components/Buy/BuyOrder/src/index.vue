@@ -81,7 +81,7 @@ let a = 0
 const handleScroll = async () => {
   if (
     window.innerHeight + window.scrollY >=
-    document.documentElement.scrollHeight-200
+    document.documentElement.scrollHeight - 200
   ) {
     // 觸發加載更多數據的方法
     if (

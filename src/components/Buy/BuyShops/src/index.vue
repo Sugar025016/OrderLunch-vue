@@ -69,7 +69,6 @@ const handleScroll = async () => {
     window.innerHeight + window.scrollY >=
     document.documentElement.scrollHeight - 200
   ) {
-    
     if (
       shopStore.shopPage.number < shopStore.shopPage.totalPages - 1 &&
       !loadingMore

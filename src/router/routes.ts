@@ -287,9 +287,7 @@ export const constantRoute = [
   // },
 ]
 
-export const sellShop = 
-
-
+export const sellShop =
   // {
   //   path: '/sell',
   //   component: () => import('@/views/sell/index.vue'),
@@ -448,7 +446,6 @@ export const sellShop =
       },
     ],
   }
-
 
 export const asyncRoute = [
   {

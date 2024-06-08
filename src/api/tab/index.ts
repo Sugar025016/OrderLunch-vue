@@ -9,7 +9,7 @@ export const reqGetTabProducts = (data: number) =>
   request.get<any, TabProductsResponseData>(API.TAB + data)
 
 export const reqDeleteTab = (data: number) =>
-  request.delete<any, TabProductsResponseData>(API.TAB  + data)
+  request.delete<any, TabProductsResponseData>(API.TAB + data)
 
 export const reqAddOrUpdateTab = (data: PutTabData) => {
   if (data.id) {

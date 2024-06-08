@@ -5,7 +5,7 @@ export interface Response {
 }
 
 export interface ResponseData extends Response {
-  data:Code
+  data: Code
 }
 
 export interface Code {

@@ -7,7 +7,10 @@
           <div class="favorites">
             <el-row class="row3">
               <template v-for="c1 in userStore.favoriteShop">
-                <def-shop-card :shop="c1" :isFavoriteShop="true"></def-shop-card>
+                <def-shop-card
+                  :shop="c1"
+                  :isFavoriteShop="true"
+                ></def-shop-card>
               </template>
             </el-row>
           </div>

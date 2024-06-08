@@ -69,12 +69,10 @@ const checkAddCart = async () => {
         },
       )
         .then(() => {
-          
           addCart()
         })
         .catch(() => {
           // 使用者點擊了 "取消" 按鈕或關閉了訊息框
-          
         })
     } else {
       addCart()

@@ -59,7 +59,6 @@ const paths = $route.path.split('/')
 
 let isSell: boolean = paths.includes('sell')
 
-
 const changeIcon = () => {
   LayOutSettingStore.isCollapse = !LayOutSettingStore.isCollapse
 }

@@ -5,9 +5,7 @@ import { Warning } from '@element-plus/icons-vue'
 
 const emits = defineEmits(['update:verifyCode'])
 
-const captchaUrl = ref<string>(
-  '/api/register/captcha?timestamp=' + Date.now(),
-)
+const captchaUrl = ref<string>('/api/register/captcha?timestamp=' + Date.now())
 
 const refreshCaptcha = async () => {
   captchaUrl.value = (await '/api/register/captcha?timestamp=') + Date.now()
@@ -16,7 +14,7 @@ const refreshCaptcha = async () => {
 const verifyCode = ref<string>('')
 defineExpose({
   refreshCaptcha,
-  verifyCode
+  verifyCode,
 })
 </script>
 <template>

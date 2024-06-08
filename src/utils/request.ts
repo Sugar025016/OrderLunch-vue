@@ -10,12 +10,12 @@ const request = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 500000,
 })
-let loading: any;
+let loading: any
 function starLoading() {
   loading = ElLoading.service({
     lock: true,
     text: '拼命加載中.....',
-    background: 'rgba(255,255,255,0.6)'
+    background: 'rgba(255,255,255,0.6)',
   })
 }
 
@@ -25,8 +25,11 @@ function endLoading() {
 
 request.interceptors.request.use(
   (config) => {
-    if(config.url && config.url!== "/sell/order/new" && !/^\/order\/\d+$/.test(config.url)){
-
+    if (
+      config.url &&
+      config.url !== '/sell/order/new' &&
+      !/^\/order\/\d+$/.test(config.url)
+    ) {
       starLoading()
     }
     const tokenValue = GET_TOKEN()
@@ -46,7 +49,7 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response) => {
     endLoading()
-    
+
     if (response.config.url === '/login') {
       const cookieValue = document.cookie.replace(
         /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
@@ -56,7 +59,6 @@ request.interceptors.response.use(
     }
 
     return response
-
   },
   (error) => {
     endLoading()

@@ -63,7 +63,6 @@ const useShopStore = defineStore('Category', {
   },
   actions: {
     async getShopPage(page = 0) {
-      
       if (page === 0) {
         await this.shopArr.clear()
       }
@@ -74,14 +73,13 @@ const useShopStore = defineStore('Category', {
         this.shopSearch,
         page,
       )
-      
+
       if (res.status === 200) {
-        
         this.shopPage = res.data
         res.data.content.forEach((shopData) => {
           this.shopArr.add(shopData)
         })
-        // await 
+        // await
       } else {
         return Promise.reject(new Error(res.message))
       }

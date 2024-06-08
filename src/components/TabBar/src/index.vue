@@ -8,7 +8,7 @@
       <div class="toolbar_order" v-if="sellShopStore.shopNames.length > 0">
         <Order :isToolbarVisibleAll="isBreakpointSM"></Order>
       </div>
-      <div class="toolbar_right" v-if=" userStore.username">
+      <div class="toolbar_right" v-if="userStore.username">
         <Setting :isToolbarVisibleAll="isBreakpointSM" />
       </div>
       <div class="toolbar_right" v-if="!userStore.username">
