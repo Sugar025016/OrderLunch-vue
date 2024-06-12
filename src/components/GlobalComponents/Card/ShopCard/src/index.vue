@@ -54,7 +54,7 @@ onMounted(async () => {
     <div style="padding: 14px">
       <div class="bottom">
         <div class="title_favorite">
-          <span class="title">{{ shop.name }}{{ isFavoriteShop }}</span>
+          <span class="title">{{ shop.name }}</span>
           <div @click.stop="changeFavorite(shop.id)" class="favorite">
             <def-svg-icon
               class="buy-svg-icon"

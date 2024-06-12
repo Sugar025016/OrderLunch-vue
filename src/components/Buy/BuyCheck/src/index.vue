@@ -206,7 +206,7 @@ const sendOrder = async () => {
     $router.push('/BuyOrder')
   } else {
     console.log(res)
-    if (res.data.code == 501) {
+    if (res.data.code == 613) {
       reloadTimeSelect()
       ElMessage({
         type: 'error',
@@ -215,7 +215,7 @@ const sendOrder = async () => {
     } else {
       ElMessage({
         type: 'error',
-        message: '建立訂單失敗',
+        message: res.message,
       })
     }
   }
