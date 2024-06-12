@@ -148,7 +148,7 @@ function validateNotEmptyString(rule: any, value: any, callback: any) {
 let formRef = ref<any>()
 
 import useSellShopStore from '@/store/modules/sellShop'
-import { ElMessage, ElMessageBox } from 'element-plus/lib/components/index.js'
+import { ElMessage, ElMessageBox } from 'element-plus'
 let sellShopStore = useSellShopStore()
 
 const captchaRef = ref<typeof Captcha | null>(null)

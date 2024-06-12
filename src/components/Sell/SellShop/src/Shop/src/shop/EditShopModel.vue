@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive, nextTick, watch, computed } from 'vue'
 
-import { ElMessage, UploadProps } from 'element-plus/lib/components/index.js'
+import { ElMessage, UploadProps } from 'element-plus'
 // import { UploadProps } from 'element-plus/es/components/upload/src/upload'
 import { reqSearchUser } from '@/api/backstage/user'
 // import debounce from 'lodash/debounce'

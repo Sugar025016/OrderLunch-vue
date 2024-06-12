@@ -10,7 +10,7 @@ import useUserStore from '@/store/modules/user'
 import { PutShopData } from '@/api/shop/type'
 import { reqAddOrUpdateShop } from '@/api/shop'
 import { useRoute } from 'vue-router'
-import { ElMessage, UploadProps } from 'element-plus/lib/components/index.js'
+import { ElMessage, UploadProps } from 'element-plus'
 import { Address } from '@/api/type'
 
 let $route = useRoute()

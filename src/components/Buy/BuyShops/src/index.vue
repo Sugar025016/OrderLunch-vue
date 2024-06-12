@@ -6,7 +6,7 @@ import useShopStore from '@/store/modules/shop'
 import useUserStore from '@/store/modules/user'
 import rwdBody from '@/components/layout/rwdBody/index.vue'
 import { useRouter } from 'vue-router'
-import { ElMessageBox } from 'element-plus/lib/components/message-box/index.js'
+import { ElMessageBox } from 'element-plus'
 
 import ChooseAddressModel from './ChooseAddressModel/index.vue'
 

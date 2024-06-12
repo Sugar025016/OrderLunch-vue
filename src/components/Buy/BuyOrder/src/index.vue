@@ -9,7 +9,7 @@ import {
   Orders,
 } from '@/api/order/type'
 
-import { ElMessage } from 'element-plus/lib/components/index.js'
+import { ElMessage } from 'element-plus'
 
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { formatDate } from '@/utils/time'

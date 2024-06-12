@@ -6,7 +6,7 @@ import { reqAddCart } from '@/api/cart'
 import { CartRequest } from '@/api/cart/type'
 
 import { useRouter } from 'vue-router'
-import { ElMessageBox } from 'element-plus/lib/components/message-box/index.js'
+import { ElMessageBox } from 'element-plus'
 
 let $router = useRouter()
 
@@ -54,29 +54,30 @@ const checkAddCart = async () => {
         $router.push('/login')
       }
     }, 5000) // 5000 毫秒即为 5 秒
+    return
+  }
+
+  if (
+    userStore.cartShopId != 0 &&
+    userStore.cartShopId != props.product?.shopId
+  ) {
+    ElMessageBox.confirm(
+      '你購買了其他店家商品，購物車將被清空，你確定要要清空舊購物商品！',
+      '清空購物車！',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      },
+    )
+      .then(() => {
+        addCart()
+      })
+      .catch(() => {
+        // 使用者點擊了 "取消" 按鈕或關閉了訊息框
+      })
   } else {
-    if (
-      userStore.cartShopId != 0 &&
-      userStore.cartShopId != props.product?.shopId
-    ) {
-      ElMessageBox.confirm(
-        '你購買了其他店家商品，購物車將被清空，你確定要要清空舊購物商品！',
-        '清空購物車！',
-        {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-        },
-      )
-        .then(() => {
-          addCart()
-        })
-        .catch(() => {
-          // 使用者點擊了 "取消" 按鈕或關閉了訊息框
-        })
-    } else {
-      addCart()
-    }
+    addCart()
   }
 }
 

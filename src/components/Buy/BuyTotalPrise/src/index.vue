@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router'
 import { reqGetCart } from '@/api/cart'
 import { CartResponseData, CartsData } from '@/api/cart/type'
 import useUserStore from '@/store/modules/user'
-import { ElMessage, ElMessageBox } from 'element-plus/lib/components/index.js'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 let userStore = useUserStore()
 

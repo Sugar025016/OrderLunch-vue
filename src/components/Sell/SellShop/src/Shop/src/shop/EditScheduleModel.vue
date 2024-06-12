@@ -77,7 +77,11 @@ const triggerChildEvent = (schedule: Schedule) => {
     checkedWeeks.value = []
     checkedWeeks.value.push(schedule.week)
     timePeriods.value.push(schedule.timePeriods)
-    childRef.value?.handleWeekChange(checkedWeeks.value, schedule.timePeriods) // 调用子组件的方法
+    childRef.value?.handleWeekChange(
+      true,
+      checkedWeeks.value,
+      schedule.timePeriods,
+    ) // 调用子组件的方法
 
     scheduleSetModal.value = true
   }
@@ -87,7 +91,11 @@ const weeksChildEvent = () => {
   if (childRef.value) {
     checkedWeeks.value = [1, 2, 3, 4, 5, 6, 0]
     scheduleSetModal.value = true
-    childRef.value?.handleWeekChange(checkedWeeks.value, timePeriods.value) // 调用子组件的方法
+    childRef.value?.handleWeekChange(
+      false,
+      checkedWeeks.value,
+      timePeriods.value,
+    ) // 调用子组件的方法
   }
 }
 

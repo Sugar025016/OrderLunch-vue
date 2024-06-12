@@ -90,7 +90,7 @@ const handleSelectionChange = (val: Orders) => {
 
 let orderIds = ref<number[]>([])
 
-import ElMessage from 'element-plus/lib/components/message/index.js'
+import {ElMessage} from 'element-plus'
 import { reqPutOrderStatus } from '@/api/order'
 import { ResultResponse } from '@/api/type'
 import { formatDate } from '@/utils/time'

@@ -8,7 +8,7 @@ import {
   Orders,
 } from '@/api/order/type'
 import { reqGetOrderByShop } from '@/api/order'
-import { ElMessage } from 'element-plus/lib/components/index.js'
+import { ElMessage } from 'element-plus'
 
 let $route = useRoute()
 

@@ -1,5 +1,5 @@
 // import { ref } from 'vue'
-// import { ElMessage } from 'element-plus/lib/components/index.js'
+// import { ElMessage } from 'element-plus'
 // import { reqAddOrder } from '@/api/order'
 // import { AddOrder } from '@/api/order/type'
 // import { TimeSelectRef, d, t, radio1, remark } from './index.vue'

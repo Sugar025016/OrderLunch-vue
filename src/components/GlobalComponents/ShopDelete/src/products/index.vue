@@ -55,7 +55,7 @@ import {
 
 import { ProductData } from '@/api/product/type'
 import useUserStore from '@/store/modules/user'
-import { ElScrollbar } from 'element-plus/lib/components/index.js'
+import { ElScrollbar } from 'element-plus'
 
 let userStore = useUserStore()
 

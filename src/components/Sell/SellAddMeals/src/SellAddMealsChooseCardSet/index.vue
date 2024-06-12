@@ -3,9 +3,9 @@ import { markRaw } from 'vue'
 
 import { Delete } from '@element-plus/icons-vue'
 // import setting from '@/setting'
-import ElMessage from 'element-plus/lib/components/message/index.js'
+import {ElMessage} from 'element-plus'
 import { reqDeleteSellProducts } from '@/api/sellProduct'
-import { ElMessageBox } from 'element-plus/lib/components/message-box/index.js'
+import { ElMessageBox } from 'element-plus'
 // import { ResponseBoolean } from '@/api/sellProduct/type'
 
 defineProps(['product', 'setting', 'choose', 'add', 'change'])

@@ -113,7 +113,8 @@ import useUserStore from '@/store/modules/user'
 import { useRoute } from 'vue-router'
 import { ShopNames } from '@/api/shop/type'
 import { onMounted, ref } from 'vue'
-import drawer from 'element-plus/lib/components/drawer/index.js'
+// import drawer from 'element-plus/lib/components/drawer/index.js'
+// import { ElDrawer } from 'element-plus';
 import useSellShopStore from '@/store/modules/sellShop'
 import SellTabBar from '@/components/TabBar/src/index.vue'
 import { isBreakpointMD } from '@/utils/windowSize'
@@ -122,7 +123,7 @@ let LayOutSettingStore = useLayOutSettingStore()
 let userStore = useUserStore()
 let sellShopStore = useSellShopStore()
 let $route = useRoute()
-
+const drawer = ref(false)
 const shopNameItem = ref<ShopNames>([])
 const getItem = async () => {
   drawer.value = true

@@ -15,7 +15,7 @@ import type {
   MenuList,
 } from '@/api/acl/role/type'
 import useLayOutSettingStore from '@/store/modules/setting'
-import { ElMessage } from 'element-plus/lib/components/index.js'
+import { ElMessage } from 'element-plus'
 
 let pageNo = ref<number>(1)
 

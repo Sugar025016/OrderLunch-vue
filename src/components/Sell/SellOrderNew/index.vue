@@ -9,7 +9,7 @@ import {
   Orders,
 } from '@/api/order/type'
 import { reqGetOrderByShop, reqPutOrderByShop } from '@/api/order'
-import { ElMessage, ElTable } from 'element-plus/lib/components/index.js'
+import { ElMessage, ElTable } from 'element-plus'
 
 let $route = useRoute()
 

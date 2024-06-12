@@ -69,7 +69,7 @@ const validatorVerifyCode = (rule: any, value: any, callback: any) => {
   }
 }
 import { Response, ResponseData } from '@/api/type'
-import { ElNotification } from 'element-plus/lib/components/index.js'
+import { ElNotification } from 'element-plus'
 import { LoginResponseData } from '@/api/user/type'
 const login = async () => {
   loginForm.verifyCode = captchaRef.value?.verifyCode

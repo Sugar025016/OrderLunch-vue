@@ -5,7 +5,7 @@ import {
   Action,
   ElMessage,
   ElMessageBox,
-} from 'element-plus/lib/components/index.js'
+} from 'element-plus'
 
 const useLoadingStore = defineStore('LoadingStore', {
   state: () => {

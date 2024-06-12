@@ -6,7 +6,7 @@ import { CartList, CartResponseData, CartsData } from '@/api/cart/type'
 import useUserStore from '@/store/modules/user'
 import useShopStore from '@/store/modules/shop'
 import rwdBody from '@/components/layout/rwdBody/index.vue'
-import { ElMessageBox } from 'element-plus/lib/components/index.js'
+import { ElMessageBox } from 'element-plus'
 
 let userStore = useUserStore()
 let shopStore = useShopStore()

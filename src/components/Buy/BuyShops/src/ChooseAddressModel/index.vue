@@ -7,14 +7,14 @@ import {
   reqGetUserAddresses,
   reqPutUserAddressDelivery,
 } from '@/api/user'
-import ElMessage from 'element-plus/lib/components/message/index.js'
+import {ElMessage} from 'element-plus'
 
 import EditAddressModal from '@/components/Buy/BuyCheck/src/editAddressModal.vue'
 import { Address, Response } from '@/api/type'
 import { Plus, EditPen, Delete, CaretTop } from '@element-plus/icons-vue'
 
 import useShopStore from '@/store/modules/shop'
-import { ElMessageBox } from 'element-plus/lib/components/message-box/index.js'
+import { ElMessageBox } from 'element-plus'
 import { useRouter } from 'vue-router'
 
 let shopStore = useShopStore()

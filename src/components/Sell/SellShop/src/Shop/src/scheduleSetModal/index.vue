@@ -141,18 +141,25 @@ const handleCheckedCitiesChange = (value: number[]) => {
     checkedCount > 0 && checkedCount < weekLists.value.length
 }
 
-const handleWeekChange = (value: number[], timePeriods: TimePeriods) => {
+const handleWeekChange = (
+  isOneDay: boolean,
+  value: number[],
+  timePeriods: TimePeriods,
+) => {
   scheduleParams.value.weeks = value
   handleCheckedCitiesChange(scheduleParams.value.weeks)
   scheduleParams.value.times = [{ startTime: '', endTime: '' }]
   if (timePeriods.length === 0) {
     radio.value = 1
   } else if (
+    isOneDay &&
     timePeriods.length === 1 &&
     timePeriods[0].startTime === '00:00' &&
     timePeriods[0].endTime === '00:00'
   ) {
     radio.value = 2
+  } else if (!isOneDay) {
+    radio.value = 3
   } else {
     scheduleParams.value.times = JSON.parse(JSON.stringify(timePeriods))
     radio.value = 3
@@ -387,7 +394,7 @@ const radioChange = () => {
       border-color: red;
       border: 1px solid $color;
       padding: 5px 5px 5px 10px;
-
+      width: 100%;
       .set-time {
         display: grid;
         grid-template-columns: 3fr auto 3fr auto;

@@ -9,7 +9,7 @@ import { Address, ResultResponse } from '@/api/type'
 
 import EditAddressModal from './editAddressModal.vue'
 import TimeSelect from './timeSelect.vue'
-import { ElMessage, ElMessageBox } from 'element-plus/lib/components/index.js'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import { reqGetUserAddresses, reqPutUserAddresses } from '@/api/user'
 import { Plus } from '@element-plus/icons-vue'
 import { reqAddOrder } from '@/api/order'
