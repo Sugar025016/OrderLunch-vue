@@ -9,7 +9,7 @@ import shopInfoModal from '../shopInfoModal/index.vue'
 import useUserStore from '@/store/modules/user'
 import { deleteSecond as showTime } from '@/utils/time'
 import socialMedia from '../socialMedia/index.vue'
-import {ElMessage} from 'element-plus'
+import { ElMessage } from 'element-plus'
 
 let $route = useRoute()
 

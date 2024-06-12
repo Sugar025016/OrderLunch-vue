@@ -7,7 +7,7 @@ import type {
   ShopData,
 } from '@/api/shop/type'
 import { ShopState } from './types/types'
-import {ElMessage} from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 import useUserStore from './user'
 const $router = useRouter()

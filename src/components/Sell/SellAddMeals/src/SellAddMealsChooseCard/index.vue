@@ -3,7 +3,7 @@ import { markRaw } from 'vue'
 
 import { Delete } from '@element-plus/icons-vue'
 // import setting from '@/setting'
-import {ElMessage} from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { reqDeleteSellProducts } from '@/api/sellProduct'
 import { ElMessageBox } from 'element-plus'
 // import { ResponseBoolean } from '@/api/sellProduct/type'

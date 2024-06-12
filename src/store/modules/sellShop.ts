@@ -7,7 +7,7 @@ import type {
   ShopPageResponse,
 } from '@/api/shop/type'
 import { SellShopState } from './types/types'
-import {ElMessage} from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 import useUserStore from '@/store/modules/user'
 

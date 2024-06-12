@@ -10,7 +10,7 @@ import {
 } from '@/api/addMeals/index'
 import Search from '@/components/SharedComponents/search.vue'
 import SellAddMealsChooseCardSet from '../SellAddMealsChooseCardSet/index.vue'
-import {ElMessage} from 'element-plus'
+import { ElMessage } from 'element-plus'
 
 let sellShopStore = useSellShopStore()
 

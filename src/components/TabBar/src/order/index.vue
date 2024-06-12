@@ -6,7 +6,7 @@ import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { GetOrderNewResponse, Orders } from '@/api/order/type'
 
 import SellOrderModal from './sellOrderModal/index.vue'
-import {ElMessage} from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { reqGetOrderNew } from '@/api/order'
 
 let sellShopStore = useSellShopStore()

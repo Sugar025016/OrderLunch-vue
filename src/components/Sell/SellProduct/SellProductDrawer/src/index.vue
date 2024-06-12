@@ -2,7 +2,7 @@
 import { ref, reactive, nextTick } from 'vue'
 
 import { ResponseBoolean, SellProduct } from '@/api/sellProduct/type'
-import {ElMessage} from 'element-plus'
+import { ElMessage } from 'element-plus'
 import useUserStore from '@/store/modules/user'
 // import { UploadProps } from 'element-plus/es/components/index.js'
 import useSellProductStore from '@/store/modules/sellProduct'

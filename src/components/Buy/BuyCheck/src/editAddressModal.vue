@@ -4,7 +4,7 @@ import { Address } from '@/api/type'
 
 import address from '@/utils/address.js'
 import { reqAddUserAddresses } from '@/api/user'
-import {ElMessage} from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { AddressResponseData } from '@/api/user/type'
 import useUserStore from '@/store/modules/user'
 

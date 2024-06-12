@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { User, Lock } from '@element-plus/icons-vue'
 import { RegisterMember } from '@/api/user/type'
 import { reqAddMember } from '@/api/user'
-import {ElMessage} from 'element-plus'
+import { ElMessage } from 'element-plus'
 import Captcha from '../Captcha/index.vue'
 import { ResponseData } from '@/api/type'
 

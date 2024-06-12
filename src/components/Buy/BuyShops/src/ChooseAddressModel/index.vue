@@ -7,7 +7,7 @@ import {
   reqGetUserAddresses,
   reqPutUserAddressDelivery,
 } from '@/api/user'
-import {ElMessage} from 'element-plus'
+import { ElMessage } from 'element-plus'
 
 import EditAddressModal from '@/components/Buy/BuyCheck/src/editAddressModal.vue'
 import { Address, Response } from '@/api/type'
