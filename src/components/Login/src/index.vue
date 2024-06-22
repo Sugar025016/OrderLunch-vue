@@ -79,7 +79,7 @@ const login = async () => {
     const res: any = await useStore.userLogin(loginForm)
 
     if (res?.status === 200) {
-      const loginResponse: LoginResponseData =res.data
+      const loginResponse: LoginResponseData = res.data
       let redirect: string = $route.query.redirect as string
 
       $router.push({ path: redirect || '/' })
@@ -97,7 +97,7 @@ const login = async () => {
           message: '帳號或密碼錯，請輸入正確的帳號或密碼',
           title: '帳號或密碼錯',
         })
-      } else if (res?.data.code  === 411) {
+      } else if (res?.data.code === 411) {
         captchaRef.value?.refreshCaptcha()
 
         ElNotification({
