@@ -76,9 +76,10 @@ const login = async () => {
   await loginForms.value.validate()
   loading.value = true
   try {
-    const loginResponse: LoginResponseData = await useStore.userLogin(loginForm)
+    const res: any = await useStore.userLogin(loginForm)
 
-    if (loginResponse?.status === 200) {
+    if (res?.status === 200) {
+      const loginResponse: LoginResponseData =res.data
       let redirect: string = $route.query.redirect as string
 
       $router.push({ path: redirect || '/' })
@@ -89,19 +90,19 @@ const login = async () => {
         title: `Hi, ${getTime()}好`,
       })
     } else {
-      if (loginResponse?.status === 401) {
+      if (res?.data.code === 401) {
         // $router.push('/')
         ElNotification({
           type: 'error',
           message: '帳號或密碼錯，請輸入正確的帳號或密碼',
           title: '帳號或密碼錯',
         })
-      } else if (loginResponse?.status === 411) {
+      } else if (res?.data.code  === 411) {
         captchaRef.value?.refreshCaptcha()
 
         ElNotification({
           type: 'error',
-          message: loginResponse.message,
+          message: res.message,
           title: '驗證碼錯誤',
         })
       } else {

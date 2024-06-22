@@ -19,11 +19,11 @@ enum API {
   USERINFO_URL = '/user',
   LOGOUT_URL = '/logout',
   USER_PWD_URL = '/user/pwd',
-  USER_ADDRESS_URL = '/user/address',
+  USER_ADDRESS_URL = '/address',
   USER_FAVORITE_URL = '/user/favorite',
   REGISTER_CAPTCHA = '/register/captcha',
   USER_REGISTER = '/user/register',
-  USER_ADDRESS_DELIVERY_URL = '/user/address/delivery',
+  USER_ADDRESS_DELIVERY_URL = '/address/delivery',
 }
 
 export const reqLogin = (data: FormData) =>
