@@ -68,6 +68,21 @@ const getCart = async () => {
         (total, v) => total + v.qty * v.productResponse.price,
         0,
       )
+      if (sum.value < carts.value.deliveryPrice) {
+        ElMessageBox.alert(
+          `未滿外送金額${carts.value.deliveryPrice}元，還差${
+            carts.value.deliveryPrice - sum.value
+          }元，購物去`,
+          '未滿外送金額',
+          {
+            callback: () => {
+              // 關閉彈跳窗的回調函數
+              ElMessageBox.close()
+              $router.push('/BuyShop/' + carts.value.shopId)
+            },
+          },
+        )
+      }
     } else {
       ElMessageBox.alert('購物車空的，購物去', '購物車', {
         callback: () => {

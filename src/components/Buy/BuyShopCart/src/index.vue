@@ -99,6 +99,8 @@ const deleteCart = async (cartId: number) => {
     }
     if (userStore.cartCount === 0) {
       getElMessageBox()
+    }else{
+      getCart()
     }
   }
 }
