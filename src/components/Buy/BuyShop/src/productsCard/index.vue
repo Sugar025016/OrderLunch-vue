@@ -5,7 +5,7 @@
       <span class="content-description">
         {{ product.description }}
       </span>
-      <span class="content-price">{{ product.prise }}$</span>
+      <span class="content-price">{{ product.price }}$</span>
     </div>
     <img :src="product.imgUrl" v-if="product.imgUrl" alt="AA" />
     <!-- <img src="@/assets/images/product001.jpeg" alt="AA" /> -->

@@ -8,8 +8,8 @@ import { ResultResponse } from '../type'
 
 enum API {
   ORDER_URL = '/order',
-  SELL_ORDER_URL = '/sell/order',
-  SELL_ORDER_URL_NEW = '/sell/order/new',
+  ORDER_SELL_URL = '/order/sell',
+  ORDER_NEW_URL = '/order/new',
 }
 export const reqAddOrder = (data: AddOrder) =>
   request.post<any, ResultResponse>(API.ORDER_URL, data)
@@ -24,7 +24,7 @@ export const reqGetOrderByShop = (
   page: number,
 ) =>
   request.get<any, GetOrderPageResponse>(
-    API.SELL_ORDER_URL +
+    API.ORDER_SELL_URL +
       '/' +
       shopId +
       `?classify=${classify}&page=${page - 1}&size=${limit}`,
@@ -36,12 +36,12 @@ export const reqPutOrderByShop = (
   orderIds: number[],
 ) =>
   request.put<any, ResultResponse>(
-    API.SELL_ORDER_URL + '/' + shopId + '/' + status,
+    API.ORDER_URL + '/' + shopId + '/' + status,
     orderIds,
   )
 
 export const reqPutOrderStatus = (status: number, orderIds: number[]) =>
-  request.put<any, ResultResponse>(API.SELL_ORDER_URL + '/' + status, orderIds)
+  request.put<any, ResultResponse>(API.ORDER_URL + '/' + status, orderIds)
 
 export const reqGetOrderNew = () =>
-  request.get<any, GetOrderNewResponse>(API.SELL_ORDER_URL_NEW)
+  request.get<any, GetOrderNewResponse>(API.ORDER_NEW_URL)

@@ -29,7 +29,8 @@ import {
   sellShop,
 } from '@/router/routes'
 
-import { ShopData } from '@/api/shop/type'
+
+import { ShopData, ShopNames } from '@/api/shop/type'
 import useSellShopStore from '@/store/modules/sellShop'
 import { Address, Response } from '@/api/type'
 
@@ -69,6 +70,7 @@ const useUserStore = defineStore('User', {
       getNewOrderTimer: null,
       orderNew: [],
       isCheckAddress: false,
+      shopNames: []
     }
   },
   // 異步|邏輯的地方
@@ -116,6 +118,10 @@ const useUserStore = defineStore('User', {
         this.orderCount = res.data.orderCount
         this.shopOrderCount = res.data.shopOrderCount
         this.address = res.data.address as Address
+        this.shopNames = res.data.shopNames as ShopNames
+        this.setRouteHaveSell(this.shopNames && this.shopNames.length > 0)
+
+        console.log("222222222222")
 
         return 'ok'
       } else {
@@ -197,6 +203,8 @@ const useUserStore = defineStore('User', {
       this.setCheckAddress(false)
       REMOVE_TOKEN()
       this.stopTimer()
+      this.shopNames = []
+      this.setRouteHaveSell(this.shopNames.length > 0)
 
       const sellShopStore = useSellShopStore()
       sellShopStore.clearSellShopData()
@@ -232,18 +240,18 @@ const useUserStore = defineStore('User', {
       this.isCheckAddress = is
     },
     async setRouteHaveSell(is: boolean) {
-      console.log('有sellShop:', is)
+      console.log("setRouteHaveSell1:", router.getRoutes())
+
       if (is) {
-        this.asyncRoute = [...constantRoute, sellShop, anyRoute]
-        ;[...constantRoute, sellShop, anyRoute].forEach((route: any) => {
+        this.asyncRoute = [...constantRoute, sellShop, anyRoute];
+        [sellShop].forEach((route: any) => {
           router.addRoute(route)
         })
       } else {
-        this.asyncRoute = [...constantRoute, anyRoute]
-        ;[...constantRoute, anyRoute].forEach((route: any) => {
-          router.addRoute(route)
-        })
+        router.removeRoute('sell')
       }
+      console.log("setRouteHaveSell2:", router.getRoutes())
+
     },
   },
   getters: {},

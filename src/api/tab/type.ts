@@ -22,7 +22,7 @@ export interface ProductModalData {
   description: string
   qty: number
   imgUrl: string
-  prise: number
+  price: number
   department: string
   orderUsername: string
   remark: string

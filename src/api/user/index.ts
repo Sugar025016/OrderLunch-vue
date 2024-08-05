@@ -23,7 +23,7 @@ enum API {
   USER_FAVORITE_URL = '/user/favorite',
   REGISTER_CAPTCHA = '/register/captcha',
   USER_REGISTER = '/user/register',
-  USER_ADDRESS_DELIVERY_URL = '/address/delivery',
+  USER_ADDRESS_DELIVERY_URL = '/user/addressDelivery',
 }
 
 export const reqLogin = (data: FormData) =>

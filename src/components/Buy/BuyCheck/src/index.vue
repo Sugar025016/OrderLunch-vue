@@ -220,7 +220,6 @@ const sendOrder = async () => {
     userStore.userInfo()
     $router.push('/BuyOrder')
   } else {
-    console.log(res)
     if (res.data.code == 613) {
       reloadTimeSelect()
       ElMessage({

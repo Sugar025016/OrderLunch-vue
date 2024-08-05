@@ -24,14 +24,22 @@
 
 <script setup lang="ts">
 import useLoadingStore from '@/store/modules/loading'
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 // import SellTabBar from '@/C/src/index.vue'
 import SellTabBar from '@/components/TabBar/index'
+import useSellShopStore from '@/store/modules/sellShop'
+import { useRoute } from 'vue-router'
 
+let $route = useRoute()
+
+
+let sellShopStore = useSellShopStore()
 const loadingStore = useLoadingStore()
 
 const isLoading = ref(loadingStore.isLoading)
-const shopId = ref(0)
+// const shopId = ref(0)
+
+let shopId: number = parseInt($route.params.shopId as string)
 
 watch(
   () => loadingStore.isLoading,
@@ -39,6 +47,13 @@ watch(
     isLoading.value = newValue
   },
 )
+const getSellShop = async () => {
+
+  await sellShopStore.getSellShop(shopId)
+}
+onMounted(async () => {
+  getSellShop()
+})
 </script>
 <style lang="scss" scoped>
 .container {

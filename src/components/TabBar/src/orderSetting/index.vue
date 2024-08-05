@@ -121,7 +121,7 @@ const goRoute = async (shopId: number, shopName: string) => {
           <el-menu-item-group>
             <el-menu-item
               index="1-1"
-              v-for="item in sellShopStore.shopNames"
+              v-for="item in userStore.shopNames"
               @click="goRoute(item.id, item.name)"
             >
               {{ item.name }}

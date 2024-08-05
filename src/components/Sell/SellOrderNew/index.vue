@@ -145,7 +145,7 @@ import { formatDate } from '@/utils/time'
     :row-style="cellStyle()"
     @selection-change="handleSelectionChange"
   >
-    <el-table-column type="selection" width="40" />
+    <el-table-column type="selection" width="55" />
     <el-table-column
       label="#"
       align="center"
@@ -210,7 +210,7 @@ import { formatDate } from '@/utils/time'
       column-key="time"
       :formatter="formatDate"
     />
-    <el-table-column prop="totalPrise" label="金額" width="60" align="center" />
+    <el-table-column prop="totalPrice" label="金額" width="60" align="center" />
     <el-table-column label="地址">
       <template #default="{ row }">
         {{ row.address.city }} - {{ row.address.area }} -

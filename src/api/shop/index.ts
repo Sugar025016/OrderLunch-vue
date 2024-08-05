@@ -17,9 +17,9 @@ enum API {
   SHOPS = '/shop',
   SHOPS_RECOMMEND = '/shop/recommend',
   SHOP = '/shop/',
-  SELL_SHOP = '/sell/shop',
+  SHOP_SELL = '/shop/sell',
   SCHEDULE = '/schedule',
-  SELL_SHOP_REGISTER = '/sell/shop/register',
+  SHOP_REGISTER = '/shop/register',
 }
 
 export const getShop = (data: number) =>
@@ -82,21 +82,21 @@ export const getRecommendShops = (data: ShopSearch) =>
 // request.get<any, ShopsResponseData>(API.SHOPS_RECOMMEND)
 
 export const getShopNames = () =>
-  request.get<any, ShopNamesResponse>(API.SELL_SHOP)
+  request.get<any, ShopNamesResponse>(API.SHOP_SELL)
 
 export const reqGetSellShop = (data: number) =>
-  request.get<any, ShopDetailsResponse>(API.SELL_SHOP + '/' + data)
+  request.get<any, ShopDetailsResponse>(API.SHOP_SELL + '/' + data)
 
 export const reqPutSchedule = (shopId: number, schedule: PutSchedule) =>
   request.put<any, ShopDetailsResponse>(API.SCHEDULE + '/' + shopId, schedule)
 
 export const reqAddOrUpdateShop = (data: PutShopData) => {
   if (data.id) {
-    return request.put<any, PutShopResponse>(API.SELL_SHOP, data)
+    return request.put<any, PutShopResponse>(API.SHOP_SELL, data)
   } else {
-    return request.post<any, PutShopResponse>(API.SELL_SHOP, data)
+    return request.post<any, PutShopResponse>(API.SHOP_SELL, data)
   }
 }
 
 export const reqAddShop = (data: RegisterShop) =>
-  request.post<any, ShopIDResponseData>(API.SELL_SHOP_REGISTER, data)
+  request.post<any, ShopIDResponseData>(API.SHOP_REGISTER, data)

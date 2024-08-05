@@ -125,15 +125,15 @@ let sellShopStore = useSellShopStore()
 let $route = useRoute()
 const drawer = ref(false)
 const shopNameItem = ref<ShopNames>([])
-const getItem = async () => {
-  drawer.value = true
+// const getItem = async () => {
+//   drawer.value = true
 
-  shopNameItem.value = (await sellShopStore.getShopItem()) as ShopNames
-}
+//   shopNameItem.value = (await sellShopStore.getShopItem()) as ShopNames
+// }
 
-onMounted(() => {
-  getItem()
-})
+// onMounted(() => {
+//   getItem()
+// })
 </script>
 
 <style lang="scss" scoped>

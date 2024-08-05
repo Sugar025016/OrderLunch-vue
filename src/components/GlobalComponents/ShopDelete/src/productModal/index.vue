@@ -94,7 +94,7 @@
             round
           >
             加入購物車
-            <span>{{ props.product!.qty * props.product!.prise }}</span>
+            <span>{{ props.product!.qty * props.product!.price }}</span>
           </el-button>
         </div>
       </div>
@@ -119,11 +119,11 @@ const inputUserName = ref('')
 inputUserName.value = userStore.username
 const count = ref(1)
 const totalPrice = ref()
-totalPrice.value = props.product!.prise
+totalPrice.value = props.product!.price
 count.value = 1
 const changeCount = (v: number) => {
   props.product!.qty = props.product!.qty + v
-  totalPrice.value = count.value * props.product!.prise
+  totalPrice.value = count.value * props.product!.price
 }
 
 const addCart = async () => {

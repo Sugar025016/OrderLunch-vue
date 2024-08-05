@@ -8,7 +8,7 @@ import type {
 } from '@/api/shop/type'
 import { SellShopState } from './types/types'
 import { ElMessage } from 'element-plus'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import useUserStore from '@/store/modules/user'
 
 const $router = useRouter()
@@ -47,6 +47,7 @@ const useSellShopStore = defineStore('sellShopStore', {
         orderable: false,
         tabProducts: [],
         products: [],
+        addMeals: [],
       },
       shopNames: [],
       shopId: 0,
@@ -62,12 +63,26 @@ const useSellShopStore = defineStore('sellShopStore', {
     }
   },
   actions: {
-    async getSellShop(shopId: number) {
-      if (isNaN(shopId)) {
-        if (this.shopNames.length === 0) {
-          await this.getShopItem()
+    async getSellShop(shopId: number|null) {
+      let $route = useRoute()
+      // const path = $route.path;
+      console.log($route.params.shopId);
+      // console.log(path);
+      if (shopId==null || isNaN(shopId)) {
+
+        // if (this.shopNames.length === 0) {
+        //   await this.getShopItem()
+        // }
+
+        let $route = useRoute()
+        // const path = $route.path;
+        shopId == parseInt($route.params.shopId as string)
+        const userStore = await useUserStore()
+        if (shopId==null || isNaN(shopId) && userStore.shopNames.length > 0) {
+          userStore.shopNames.length
+          shopId = userStore.shopNames[0].id
         }
-        shopId = this.shopNames[0].id
+
       }
       const res: ShopDetailsResponse = await reqGetSellShop(shopId)
 
@@ -80,50 +95,52 @@ const useSellShopStore = defineStore('sellShopStore', {
         })
       }
     },
+    
     // async deleteSellProduct(shopId: number) {},
-    async getSellShopThisId() {
-      if (this.shopId === 0) {
-        if (this.shopNames.length === 0) {
-          await this.getShopItem()
-        }
-        this.shopId = this.shopNames[0].id
-      }
-      const res: ShopDetailsResponse = await reqGetSellShop(this.shopId)
+    // async getSellShopThisId() {
+    //   // if (this.shopId === 0) {
+    //   //   if (this.shopNames.length === 0) {
+    //   //     await this.getShopItem()
+    //   //   }
+    //   //   this.shopId = this.shopNames[0].id
+    //   // }
+    //   const res: ShopDetailsResponse = await reqGetSellShop(this.shopId)
 
-      if (res.status === 200) {
-        this.shop = res.data
-      } else {
-        ElMessage({
-          type: 'error',
-          message: '搜尋失败',
-        })
-      }
-    },
-    async getShopItem() {
-      const userStore = useUserStore()
-      if (userStore.account) {
-        const res: ShopNamesResponse = await getShopNames()
-        console.log('取sellShop:', res)
-        if (res.status === 200) {
-          userStore.setRouteHaveSell(res.data.length !== 0)
-          if (res.data.length === 0) {
-            // $router.push('/')ㄘ
-            return
-          }
+    //   if (res.status === 200) {
+    //     this.shop = res.data
+    //   } else {
+    //     ElMessage({
+    //       type: 'error',
+    //       message: '搜尋失败',
+    //     })
+    //   }
+    // },
+    // async getShopItem() {
+    //   const userStore =await useUserStore()
+    //   if (userStore.account) {
+    //     const res: ShopNamesResponse = await getShopNames()
+    //     if (res.status === 200) {
+    //       // await userStore.setRouteHaveSell(res.data.length !== 0)
 
-          this.shopNames = res.data
-          if (this.shopId === 0) {
-            this.shopId = this.shopNames[0].id
-          }
-          return this.shopNames
-        } else {
-          ElMessage({
-            type: 'error',
-            message: '搜尋失败',
-          })
-        }
-      }
-    },
+    //       await userStore.userInfo()
+    //       if (res.data.length === 0) {
+    //         // $router.push('/')
+    //         return
+    //       }
+
+    //       this.shopNames = res.data
+    //       if (this.shopId === 0) {
+    //         this.shopId = this.shopNames[0].id
+    //       }
+    //       return this.shopNames
+    //     } else {
+    //       ElMessage({
+    //         type: 'error',
+    //         message: '搜尋失败',
+    //       })
+    //     }
+    //   }
+    // },
 
     async clearSellShopData() {
       this.shop = {} as ShopDetailData

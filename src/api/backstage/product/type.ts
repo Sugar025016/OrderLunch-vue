@@ -16,7 +16,7 @@ export interface ProductData {
   id?: number
   productName: string
   description: string
-  prise: number
+  price: number
   orderable: boolean
   delete: boolean
   createTime?: string
@@ -52,7 +52,7 @@ export interface ProductPutRequest {
   id?: number
   productName: string
   description: string
-  prise: number
+  price: number
   isOrderable: boolean
   isDelete: boolean
   imgId?: number
@@ -67,7 +67,7 @@ export interface ProductAddRequest {
   id?: number
   productName: string
   description: string
-  prise: number
+  price: number
   isOrderable: boolean
   isDelete: boolean
   createTime: string

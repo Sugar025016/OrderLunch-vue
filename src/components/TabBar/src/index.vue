@@ -5,7 +5,7 @@
       <div class="toolbar_left">
         <BreadCrumb />
       </div>
-      <div class="toolbar_order" v-if="sellShopStore.shopNames.length > 0">
+      <div class="toolbar_order" v-if="userStore.shopNames.length > 0">
         <Order :isToolbarVisibleAll="isBreakpointSM"></Order>
       </div>
       <div class="toolbar_right" v-if="userStore.username">
@@ -36,12 +36,12 @@ let userStore = useUserStore()
 // import useSellShopStore from '@/store/modules/sellShop'
 let sellShopStore = useSellShopStore()
 
-const getItem = async () => {
-  await sellShopStore.getShopItem()
-}
-onMounted(() => {
-  getItem()
-})
+// const getItem = async () => {
+//   await sellShopStore.getShopItem()
+// }
+// onMounted(() => {
+//   getItem()
+// })
 
 defineProps(['scene'])
 

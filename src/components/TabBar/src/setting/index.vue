@@ -21,7 +21,7 @@ let memberModelOpen = ref(false)
 const chooseAddressRef = ref<typeof ChooseAddressModel>()
 
 const path = window.location.hash
-$router.getRoutes()
+// $router.getRoutes()
 
 const props = defineProps({
   isToolbarVisibleAll: Boolean,

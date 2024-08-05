@@ -118,12 +118,12 @@ const childBorder = ref(false)
       sortable
     />
     <el-table-column
-      prop="totalPrise"
+      prop="totalPrice"
       label="評價"
       width="160"
       align="center"
     />
-    <el-table-column prop="totalPrise" label="金額" width="60" align="center" />
+    <el-table-column prop="totalPrice" label="金額" width="60" align="center" />
     <el-table-column label="地址">
       <template #default="{ row }">
         {{ row.address.city }} - {{ row.address.area }} -

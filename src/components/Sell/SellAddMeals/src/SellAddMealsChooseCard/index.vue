@@ -8,7 +8,7 @@ import { reqDeleteSellProducts } from '@/api/sellProduct'
 import { ElMessageBox } from 'element-plus'
 // import { ResponseBoolean } from '@/api/sellProduct/type'
 
-defineProps(['product', 'setting', 'choose', 'add', 'change'])
+defineProps(['product', 'setting', 'choose', 'add', 'change', 'price'])
 </script>
 <template>
   <div class="add-meals-modal">
@@ -38,9 +38,9 @@ defineProps(['product', 'setting', 'choose', 'add', 'change'])
       </div>
       <img :src="product.imgUrl" v-if="product.imgUrl" alt="AA" />
     </div>
-    <div class="add-meals-prise">
+    <div class="add-meals-price">
       <span>加購價：</span>
-      <span class="content-price">{{ product.prise }}$</span>
+      <span class="content-price">{{ price }}$</span>
     </div>
   </div>
 </template>
@@ -123,7 +123,7 @@ defineProps(['product', 'setting', 'choose', 'add', 'change'])
     }
   }
 
-  .add-meals-prise {
+  .add-meals-price {
     margin: 8px;
     display: flex;
     flex-direction: column;

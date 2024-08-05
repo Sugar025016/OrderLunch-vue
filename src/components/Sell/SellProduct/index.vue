@@ -72,6 +72,7 @@ const getSearchResult = (sellProductList: SellProductList) => {
       >
         <def-product-card :add="true" @click="addProduct()"></def-product-card>
       </el-tooltip>
+
       <component v-for="product in products" :key="product.id">
         <def-product-card
           :change="true"

@@ -23,7 +23,7 @@ interface ProductSetChoose extends ProductData {
 }
 const productSetChooses = ref<ProductSetChoose[]>([])
 
-const addMealsProduct = ref<AddMealsData>()
+const addMealsProduct = ref<AddMealsData>({})
 
 const inputUserName = ref('')
 inputUserName.value = userStore.username
@@ -36,6 +36,7 @@ let addMealsParams = reactive<PutAddMealsData>({
 })
 
 const setAddMeals = () => {
+  console.log('setAddMeals:', productSetChooses.value)
   addMealsParams = reactive<PutAddMealsData>({
     name: '',
     shopId: 0,
@@ -45,10 +46,13 @@ const setAddMeals = () => {
 }
 
 const getChooses = () => {
+  addMealsParams.name = addMealsProduct.value?.name
+    ? addMealsProduct.value?.name
+    : ''
   productSetChooses.value = []
   sellShopStore.shop.products.forEach((p) => {
-    const selectedAddMeals = addMealsProduct.value?.products.find(
-      (t) => t.id === p.id,
+    const selectedAddMeals = addMealsProduct.value?.products?.find(
+      (t) => t.product.id === p.id,
     )
     const productSetChoose = reactive<ProductSetChoose>({
       isChoose: false,
@@ -56,17 +60,19 @@ const getChooses = () => {
       name: '',
       description: '',
       imgUrl: '',
-      prise: 0,
+      price: 0,
       isOrderable: false,
       shopId: 0,
       isSearch: false,
       addMealsPrice: 0,
     })
     Object.assign(productSetChoose, p)
-    productSetChoose.addMealsPrice = productSetChoose.prise
+    productSetChoose.addMealsPrice =  productSetChoose.price
     productSetChoose.isOrderable = p.isOrderable
     if (selectedAddMeals) {
+      console.log("selectedAddMeals:",selectedAddMeals)
       productSetChoose.isChoose = true
+      productSetChoose.addMealsPrice = selectedAddMeals.price
     } else {
       productSetChoose.isChoose = false
     }
@@ -81,19 +87,27 @@ const save = async () => {
     .map((choose) => {
       return { id: choose.id, price: choose.addMealsPrice }
     }) as [{ id: number; price: number }]
-  let res = await reqAddOrUpdateAddMeals(addMealsParams)
-  if (res.status === 200 && res.data) {
+  let res
+  if (addMealsProduct.value.id) {
+    res = await reqAddOrUpdateAddMeals(addMealsParams, addMealsProduct.value.id)
+  } else {
+    res = await reqAddOrUpdateAddMeals(addMealsParams)
+  }
+  if (res.status === 200) {
     // await sellShopStore.getSellShop(sellShopStore.shop.id)
-    await reqGetAddMealsProducts(sellShopStore.shop.id)
+    // await reqGetAddMealsProducts(sellShopStore.shop.id)
+    window.location.reload()
   }
 
-  AddMealsChooseModalOpen.value = true
+  handleClose()
 }
 
 const getData = (t: AddMealsData) => {
+  console.log('AddMealsData:', t)
   addMealsProduct.value = t
-  getChooses()
   setAddMeals()
+  getChooses()
+  handleOpen()
 }
 
 // const getSearchResult = (sellProductList: any) => {
@@ -118,6 +132,7 @@ const handleOpen = () => {
 }
 
 const handleClose = () => {
+  addMealsProduct.value = {}
   AddMealsChooseModalOpen.value = false
 }
 
@@ -125,7 +140,7 @@ const searchProductIds = ref<number[]>([])
 
 const getSearch = (sellProductList: ProductSetChoose[]) => {
   searchProductIds.value = sellProductList.map((item: any) => item.id) || []
-
+  handleOpen()
   getSearchResult()
 }
 
@@ -152,6 +167,7 @@ defineExpose({
   getData,
   handleClose,
   handleOpen,
+  getSearch,
 })
 </script>
 
@@ -164,6 +180,7 @@ defineExpose({
       height="100%"
       top="2vh"
       z-index="2000"
+      lock-scroll="false"
     >
       <div class="add-meals-choose">
         <div class="modal-header">
@@ -230,7 +247,7 @@ defineExpose({
       <template #footer>
         <div class="dialog-footer">
           <!-- <el-button @click="dialogVisible = false">Cancel</el-button> -->
-          <el-button type="primary" @click="save()">Confirm</el-button>
+          <el-button type="primary" @click="save()">確認</el-button>
         </div>
       </template>
     </el-dialog>

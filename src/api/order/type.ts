@@ -27,7 +27,7 @@ export interface Order {
   name: string
   description: string
   imgUrl: string
-  totalPrise: number
+  totalPrice: number
   remark: string
   status: number
   statusChinese: string
@@ -42,7 +42,7 @@ export interface OrderDetail {
   productId: number
   productName: string
   qty: number
-  prise: number
+  price: number
   remark: string
   imgUrl: URL
 }
@@ -55,7 +55,7 @@ export interface OrderFinish {
   name: string
   description: string
   imgUrl: string
-  totalPrise: number
+  totalPrice: number
   remark: string
   status: number
   statusChinese: string

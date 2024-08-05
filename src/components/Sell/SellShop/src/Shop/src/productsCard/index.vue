@@ -80,7 +80,7 @@ const deleteProduct = async (productId: number) => {
       <span class="content-description">
         {{ product.description }}
       </span>
-      <span class="content-price">{{ product.prise }}$</span>
+      <span class="content-price">{{ product.price }}$</span>
     </div>
     <img :src="product.imgUrl" v-if="product.imgUrl" alt="AA" />
   </div>

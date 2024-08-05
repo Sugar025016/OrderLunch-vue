@@ -10,6 +10,7 @@ import {
 import { Address } from '@/api/type'
 import { SellProductList } from '@/api/sellProduct/type'
 import { Orders } from '@/api/order/type'
+import { AddMealsProductsResponseData } from '@/api/addMeals/type'
 
 export interface UserState {
   token: string | null
@@ -34,6 +35,7 @@ export interface UserState {
   getNewOrderTimer: ReturnType<typeof setInterval> | null
   orderNew: Orders
   isCheckAddress: boolean
+  shopNames: ShopNames
 }
 
 export interface ShopState {

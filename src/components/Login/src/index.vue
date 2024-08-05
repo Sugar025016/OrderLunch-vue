@@ -35,7 +35,7 @@ let useStore = useUserStore()
 let loginForms = ref()
 
 const loginForm = reactive({
-  username: 'admin@gmail.com',
+  username: 'admin@example.com',
   password: 'password',
   verifyCode: '',
   rememberMe: true,

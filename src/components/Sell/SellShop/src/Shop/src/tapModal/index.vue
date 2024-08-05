@@ -50,7 +50,7 @@ const getChooses = () => {
       name: '',
       description: '',
       imgUrl: '',
-      prise: 0,
+      price: 0,
       isOrderable: false,
       shopId: 0,
       isSearch: false,
@@ -73,7 +73,7 @@ const save = async () => {
     .filter((v) => v.isChoose)
     .map((choose) => choose.id)
   let res = await reqAddOrUpdateTab(tabParams)
-  if (res.status === 200 && res.data) {
+  if (res.status === 200 ) {
     await sellShopStore.getSellShop(sellShopStore.shop.id)
   }
 }

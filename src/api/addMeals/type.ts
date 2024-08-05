@@ -4,10 +4,10 @@ import { Response } from '../type'
 export type ProductList = ProductData[]
 
 export interface AddMealsData {
-  id: number
-  name: string
-  shelve: boolean
-  products: [
+  id?: number
+  name?: string 
+  shelve?: boolean
+  products?: [
     {
       id: number
       price: number
@@ -28,7 +28,7 @@ export interface ProductModalData {
   description: string
   qty: number
   imgUrl: string
-  prise: number
+  price: number
   department: string
   orderUsername: string
   remark: string

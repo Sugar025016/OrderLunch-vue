@@ -288,164 +288,165 @@ export const constantRoute = [
 ]
 
 export const sellShop =
-  // {
-  //   path: '/sell',
-  //   component: () => import('@/views/sell/index.vue'),
-  //   meta: {
-  //     title: '餐廳設定',
-  //     hidden: false,
-  //     icon: 'HomeFilled',
-  //     mustToken: false,
-  //   },
-  //   redirect: '/sell/Shop/:id',
-  //   children: [
-  //     {
-  //       path: '/sell/Shop/:id',
-  //       component: () =>
-  //         import('@/components/Sell/SellShop/src/Shop/src/index.vue'),
-  //       meta: {
-  //         title: 'Register',
-  //         hidden: false,
-  //         icon: 'HomeFilled',
-  //         mustToken: false,
-  //         id: 0,
-  //       },
-  //       // children: [
-  //       //   {
-  //       //     path: '/sell/Shop/:id',
-  //       //     component: () => import('@/components/Sell/SellShop/src/Shop/src/index.vue'),
-  //       //     meta: {
-  //       //       title: 'Register',
-  //       //       hidden: false,
-  //       //       icon: 'HomeFilled',
-  //       //       mustToken: false,
-  //       //     },
-  //       //   },
-  //       // ],
-  //     },
+// {
+//   path: '/sell',
+//   component: () => import('@/views/sell/index.vue'),
+//   meta: {
+//     title: '餐廳設定',
+//     hidden: false,
+//     icon: 'HomeFilled',
+//     mustToken: false,
+//   },
+//   redirect: '/sell/Shop/:id',
+//   children: [
+//     {
+//       path: '/sell/Shop/:id',
+//       component: () =>
+//         import('@/components/Sell/SellShop/src/Shop/src/index.vue'),
+//       meta: {
+//         title: 'Register',
+//         hidden: false,
+//         icon: 'HomeFilled',
+//         mustToken: false,
+//         id: 0,
+//       },
+//       // children: [
+//       //   {
+//       //     path: '/sell/Shop/:id',
+//       //     component: () => import('@/components/Sell/SellShop/src/Shop/src/index.vue'),
+//       //     meta: {
+//       //       title: 'Register',
+//       //       hidden: false,
+//       //       icon: 'HomeFilled',
+//       //       mustToken: false,
+//       //     },
+//       //   },
+//       // ],
+//     },
 
-  //     // {
-  //     //   path: '/sell/product/:id',
-  //     //   component: () => import('@/components/Sell/SellProduct/src/index.vue'),
-  //     //   meta: {
-  //     //     title: 'Register',
-  //     //     hidden: false,
-  //     //     icon: 'HomeFilled',
-  //     //     mustToken: false,
-  //     //   },
+//     // {
+//     //   path: '/sell/product/:id',
+//     //   component: () => import('@/components/Sell/SellProduct/src/index.vue'),
+//     //   meta: {
+//     //     title: 'Register',
+//     //     hidden: false,
+//     //     icon: 'HomeFilled',
+//     //     mustToken: false,
+//     //   },
 
-  //     // },
-  //     {
-  //       path: '/sell/shop',
-  //       component: () => import('@/components/Sell/SellShop/src/index.vue'),
-  //       meta: {
-  //         title: 'Register',
-  //         hidden: false,
-  //         icon: 'HomeFilled',
-  //         mustToken: false,
-  //       },
-  //     },
-  //   ],
-  // },
-  {
-    path: '/sell/:shopId',
-    component: () => import('@/views/sell/index.vue'),
-    meta: {
-      title: '餐廳設定',
-      hidden: false,
-      icon: 'HomeFilled',
-      mustToken: false,
-      shopId: 0,
+//     // },
+//     {
+//       path: '/sell/shop',
+//       component: () => import('@/components/Sell/SellShop/src/index.vue'),
+//       meta: {
+//         title: 'Register',
+//         hidden: false,
+//         icon: 'HomeFilled',
+//         mustToken: false,
+//       },
+//     },
+//   ],
+// },
+{
+  path: '/sell/:shopId',
+  component: () => import('@/views/sell/index.vue'),
+  name: 'sell',
+  meta: {
+    title: '餐廳設定',
+    hidden: false,
+    icon: 'HomeFilled',
+    mustToken: false,
+    shopId: 0,
+  },
+  redirect: '/sell/:shopId/Shop',
+  children: [
+    {
+      path: 'Shop',
+      component: () =>
+        import('@/components/Sell/SellShop/src/Shop/src/index.vue'),
+      meta: {
+        title: '商店編輯',
+        hidden: false,
+        icon: 'shopEdit',
+        mustToken: false,
+        id: 0,
+      },
     },
-    redirect: '/sell/:shopId/Shop',
-    children: [
-      {
-        path: 'Shop',
-        component: () =>
-          import('@/components/Sell/SellShop/src/Shop/src/index.vue'),
-        meta: {
-          title: '商店編輯',
-          hidden: false,
-          icon: 'shopEdit',
-          mustToken: false,
-          id: 0,
-        },
+    {
+      path: 'product',
+      component: () => import('@/components/Sell/SellProduct/index.vue'),
+      meta: {
+        title: '餐點編輯',
+        hidden: false,
+        icon: 'product',
+        mustToken: false,
+        id: 0,
       },
-      {
-        path: 'product',
-        component: () => import('@/components/Sell/SellProduct/index.vue'),
-        meta: {
-          title: '餐點編輯',
-          hidden: false,
-          icon: 'product',
-          mustToken: false,
-          id: 0,
-        },
+    },
+    // {
+    //   path: 'Flavor',
+    //   component: () => import('@/components/Sell/SellFlavor/index.vue'),
+    //   meta: {
+    //     title: '餐點調味編輯',
+    //     hidden: false,
+    //     icon: 'addMeals',
+    //     mustToken: false,
+    //     id: 0,
+    //   },
+    // },
+    {
+      path: 'addMeals',
+      component: () => import('@/components/Sell/SellAddMeals/src/index.vue'),
+      meta: {
+        title: '餐點加點編輯',
+        hidden: false,
+        icon: 'addMeals',
+        mustToken: false,
+        id: 0,
       },
-      // {
-      //   path: 'Flavor',
-      //   component: () => import('@/components/Sell/SellFlavor/index.vue'),
-      //   meta: {
-      //     title: '餐點調味編輯',
-      //     hidden: false,
-      //     icon: 'addMeals',
-      //     mustToken: false,
-      //     id: 0,
-      //   },
-      // },
-      {
-        path: 'addMeals',
-        component: () => import('@/components/Sell/SellAddMeals/src/index.vue'),
-        meta: {
-          title: '餐點加點編輯',
-          hidden: false,
-          icon: 'addMeals',
-          mustToken: false,
-          id: 0,
-        },
+    },
+    {
+      path: 'orderNew',
+      component: () => import('@/components/Sell/SellOrderNew/index.vue'),
+      meta: {
+        title: '新訂單',
+        hidden: false,
+        icon: 'order',
+        mustToken: false,
       },
-      {
-        path: 'orderNew',
-        component: () => import('@/components/Sell/SellOrderNew/index.vue'),
-        meta: {
-          title: '新訂單',
-          hidden: false,
-          icon: 'order',
-          mustToken: false,
-        },
+    },
+    {
+      path: 'orderHandle',
+      component: () => import('@/components/Sell/SellOrderHandle/index.vue'),
+      meta: {
+        title: '待處理訂單',
+        hidden: false,
+        icon: 'order',
+        mustToken: false,
       },
-      {
-        path: 'orderHandle',
-        component: () => import('@/components/Sell/SellOrderHandle/index.vue'),
-        meta: {
-          title: '待處理訂單',
-          hidden: false,
-          icon: 'order',
-          mustToken: false,
-        },
+    },
+    {
+      path: 'orderDelivery',
+      component: () => import('@/components/Sell/SellDelivery/index.vue'),
+      meta: {
+        title: '待外送訂單',
+        hidden: false,
+        icon: 'order',
+        mustToken: false,
       },
-      {
-        path: 'orderDelivery',
-        component: () => import('@/components/Sell/SellDelivery/index.vue'),
-        meta: {
-          title: '待外送訂單',
-          hidden: false,
-          icon: 'order',
-          mustToken: false,
-        },
+    },
+    {
+      path: 'orderFinish',
+      component: () => import('@/components/Sell/SellOrderFinish/index.vue'),
+      meta: {
+        title: '已完成訂單',
+        hidden: false,
+        icon: 'order',
+        mustToken: false,
       },
-      {
-        path: 'orderFinish',
-        component: () => import('@/components/Sell/SellOrderFinish/index.vue'),
-        meta: {
-          title: '已完成訂單',
-          hidden: false,
-          icon: 'order',
-          mustToken: false,
-        },
-      },
-    ],
-  }
+    },
+  ],
+}
 
 export const asyncRoute = [
   {

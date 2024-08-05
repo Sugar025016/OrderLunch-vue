@@ -251,7 +251,7 @@ const formatDate = (row: any, column: any) => {
       column-key="time"
       :formatter="formatDate"
     />
-    <el-table-column prop="totalPrise" label="金額" width="60" align="center" />
+    <el-table-column prop="totalPrice" label="金額" width="60" align="center" />
     <el-table-column label="地址">
       <template #default="{ row }">
         {{ row.address.city }} - {{ row.address.area }} -

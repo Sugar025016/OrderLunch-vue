@@ -177,7 +177,7 @@ onMounted(() => {
                       <el-table-column label="數量" prop="qty" align="center" />
                       <el-table-column
                         label="價格"
-                        prop="prise"
+                        prop="price"
                         align="center"
                       />
                       <el-table-column
@@ -213,7 +213,7 @@ onMounted(() => {
                 column-key="time"
                 :formatter="formatDate"
               />
-              <el-table-column prop="totalPrise" label="金額" />
+              <el-table-column prop="totalPrice" label="金額" />
               <el-table-column
                 prop="remark"
                 label="備註"

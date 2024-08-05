@@ -62,7 +62,7 @@ const openSellOrderModal = () => {
 }
 
 watch(
-  () => sellShopStore.shopNames,
+  () => userStore.shopNames,
   (newOrders) => {
     // 在这里执行你的逻辑，更新 shopNameSet
   },
@@ -97,7 +97,7 @@ const getSellShop = async () => {
         </el-link>
       </div>
       <el-dropdown
-        v-if="sellShopStore.shopNames.length > 1 && isToolbarVisibleAll"
+        v-if="userStore.shopNames.length > 1 && isToolbarVisibleAll"
       >
         <span class="el-dropdown-link" style="cursor: pointer">
           商店
@@ -108,7 +108,7 @@ const getSellShop = async () => {
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item
-              v-for="item in sellShopStore.shopNames"
+              v-for="item in userStore.shopNames"
               @click="goRoute(item.id, item.name)"
             >
               {{ item.name }}
@@ -123,9 +123,9 @@ const getSellShop = async () => {
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <div v-if="sellShopStore.shopNames.length == 1">
+      <div v-if="userStore.shopNames.length == 1">
         <span class="el-dropdown-link" style="cursor: pointer">
-          {{ sellShopStore.shopNames[0].name }}
+          {{ userStore.shopNames[0].name }}
         </span>
       </div>
     </div>

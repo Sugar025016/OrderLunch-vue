@@ -6,7 +6,7 @@ export interface SellProduct {
   description: string
   imgId?: number
   imgUrl?: URL
-  prise: number
+  price: number
   orderable: boolean
 }
 

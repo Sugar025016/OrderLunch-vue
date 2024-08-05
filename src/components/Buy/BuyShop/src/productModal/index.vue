@@ -19,11 +19,11 @@ const inputUserName = ref('')
 inputUserName.value = userStore.username
 const count = ref(1)
 const totalPrice = ref()
-totalPrice.value = props.product!.prise
+totalPrice.value = props.product!.price
 count.value = 1
 const changeCount = (v: number) => {
   props.product!.qty = props.product!.qty + v
-  totalPrice.value = count.value * props.product!.prise
+  totalPrice.value = count.value * props.product!.price
 }
 
 let timer: any
@@ -201,7 +201,7 @@ onBeforeUnmount(() => {
               <el-icon><Plus /></el-icon>
             </el-button>
             <span class="fs-5">
-              總額：${{ props.product!.qty * props.product!.prise }}
+              總額：${{ props.product!.qty * props.product!.price }}
             </span>
           </div>
           <el-button

@@ -1,4 +1,4 @@
-import { ShopList } from '../shop/type'
+import { ShopList, ShopNames } from '../shop/type'
 import { Address, Response } from '../type'
 
 export interface RegisterMember {
@@ -44,6 +44,7 @@ export interface UserInfoResponseData extends Response {
     orderCount: number
     shopOrderCount: number
     address?: Address
+    shopNames: ShopNames
   }
 }
 

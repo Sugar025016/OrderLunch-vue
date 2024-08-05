@@ -23,7 +23,7 @@ let productData = ref<ProductModalData>({
   description: '',
   qty: 1,
   imgUrl: '',
-  prise: 0,
+  price: 0,
   department: '',
   orderUsername: '',
   remark: '',
@@ -36,7 +36,7 @@ const openModal = (v: ProductData) => {
   productData.value.description = ''
   productData.value.qty = 1
   productData.value.imgUrl = v.imgUrl
-  productData.value.prise = v.prise
+  productData.value.price = v.price
   productData.value.department = ''
   productData.value.orderUsername = userStore.username
   productData.value.remark = ''
@@ -70,7 +70,7 @@ const scrollToSection = (sectionId: number) => {
 
 const deleteTab = async (tabId: number) => {
   let res = await reqDeleteTab(tabId)
-  if (res.status === 200 && res.data) {
+  if (res.status === 200) {
     await sellShopStore.getSellShop(sellShopStore.shop.id)
   }
 }

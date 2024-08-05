@@ -27,7 +27,7 @@ request.interceptors.request.use(
   (config) => {
     if (
       config.url &&
-      config.url !== '/sell/order/new' &&
+      config.url !== '/order/new' &&
       !/^\/order\/\d+$/.test(config.url)
     ) {
       starLoading()

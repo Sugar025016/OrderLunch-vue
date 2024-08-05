@@ -171,6 +171,8 @@ const save = async () => {
   let res: any = await reqAddShop(registerShop.value)
 
   if (res.status === 200) {
+    let userStore = useUserStore()
+    userStore.userInfo()
     sellShopStore.shopId = res.data
     $router.push(`/sell/${res.data}/Shop`)
   } else {

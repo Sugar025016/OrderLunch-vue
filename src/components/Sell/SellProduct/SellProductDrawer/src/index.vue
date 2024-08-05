@@ -17,7 +17,7 @@ let productParams = reactive<SellProduct>({
   id: 0,
   name: '',
   description: '',
-  prise: 0,
+  price: 0,
   orderable: false,
   imgId: 0,
   imgUrl: undefined,
@@ -31,7 +31,7 @@ const addProduct = () => {
     id: 0,
     name: '',
     description: '',
-    prise: 0,
+    price: 0,
     orderable: false,
     imgId: 0,
     imgUrl: undefined,
@@ -39,7 +39,7 @@ const addProduct = () => {
   nextTick(() => {
     //清除特定字段的驗證狀態
     formRef.value.clearValidate('name')
-    formRef.value.clearValidate('prise')
+    formRef.value.clearValidate('price')
     formRef.value.clearValidate('img')
   })
 }
@@ -49,7 +49,7 @@ const updateProduct = async (row: SellProduct) => {
   drawer.value = true
   nextTick(() => {
     formRef.value.clearValidate('name')
-    formRef.value.clearValidate('prise')
+    formRef.value.clearValidate('price')
     formRef.value.clearValidate('img')
   })
 }
@@ -67,7 +67,7 @@ const validatorProductName = (rule: any, value: any, callBack: any) => {
   }
 }
 
-const validatorProductPrise = (rule: any, value: any, callBack: any) => {
+const validatorProductprice = (rule: any, value: any, callBack: any) => {
   if (value > 0) {
     callBack()
   } else {
@@ -77,11 +77,11 @@ const validatorProductPrise = (rule: any, value: any, callBack: any) => {
 
 const rules = {
   name: [{ required: true, trigger: 'blur', validator: validatorProductName }],
-  prise: [
+  price: [
     {
       required: true,
       trigger: 'blur',
-      validator: validatorProductPrise,
+      validator: validatorProductprice,
     },
   ],
 }
@@ -176,10 +176,10 @@ const uploadHeaders = {
               v-model="productParams.description"
             ></el-input>
           </el-form-item>
-          <el-form-item label="產品價格：" prop="prise">
+          <el-form-item label="產品價格：" prop="price">
             <el-input
               placeholder="请您输入產品價格"
-              v-model="productParams.prise"
+              v-model="productParams.price"
               :formatter="
                 (value: string) =>
                   `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -238,10 +238,10 @@ const uploadHeaders = {
               v-model="productParams.description"
             ></el-input>
           </el-form-item>
-          <el-form-item label="產品價格" prop="prise">
+          <el-form-item label="產品價格" prop="price">
             <el-input
               placeholder="请您输入產品價格"
-              v-model="productParams.prise"
+              v-model="productParams.price"
               :formatter="
                 (value: string) =>
                   `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')

@@ -57,11 +57,11 @@ defineProps(['product', 'setting', 'choose', 'add', 'change'])
             {{ product.name }}
           </span>
         </div>
-        <span class="content-price">{{ product.prise }}$</span>
+        <span class="content-price">{{ product.price }}$</span>
       </div>
       <img :src="product.imgUrl" v-if="product.imgUrl" alt="AA" />
     </div>
-    <div class="add-meals-prise">
+    <div class="add-meals-price">
       <span>加購價：</span>
       <el-input
         v-model="product.addMealsPrice"
@@ -153,7 +153,7 @@ defineProps(['product', 'setting', 'choose', 'add', 'change'])
     }
   }
 
-  .add-meals-prise {
+  .add-meals-price {
     margin: 8px;
     display: flex;
     flex-direction: column;
