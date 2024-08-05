@@ -1,4 +1,7 @@
-import { AddMealsListData, AddMealsProductsResponseData } from '../addMeals/type'
+import {
+  AddMealsListData,
+  AddMealsProductsResponseData,
+} from '../addMeals/type'
 import { TabsData, ProductList } from '../tab/type'
 import { Response, Page, Address } from '../type'
 

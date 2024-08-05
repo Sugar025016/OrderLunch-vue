@@ -96,9 +96,7 @@ const getSellShop = async () => {
           </span>
         </el-link>
       </div>
-      <el-dropdown
-        v-if="userStore.shopNames.length > 1 && isToolbarVisibleAll"
-      >
+      <el-dropdown v-if="userStore.shopNames.length > 1 && isToolbarVisibleAll">
         <span class="el-dropdown-link" style="cursor: pointer">
           商店
           <el-icon class="el-icon--right">

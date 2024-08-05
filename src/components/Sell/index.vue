@@ -32,7 +32,6 @@ import { useRoute } from 'vue-router'
 
 let $route = useRoute()
 
-
 let sellShopStore = useSellShopStore()
 const loadingStore = useLoadingStore()
 
@@ -48,7 +47,6 @@ watch(
   },
 )
 const getSellShop = async () => {
-
   await sellShopStore.getSellShop(shopId)
 }
 onMounted(async () => {

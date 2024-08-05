@@ -5,7 +5,7 @@ export type ProductList = ProductData[]
 
 export interface AddMealsData {
   id?: number
-  name?: string 
+  name?: string
   shelve?: boolean
   products?: [
     {

@@ -67,10 +67,10 @@ const getChooses = () => {
       addMealsPrice: 0,
     })
     Object.assign(productSetChoose, p)
-    productSetChoose.addMealsPrice =  productSetChoose.price
+    productSetChoose.addMealsPrice = productSetChoose.price
     productSetChoose.isOrderable = p.isOrderable
     if (selectedAddMeals) {
-      console.log("selectedAddMeals:",selectedAddMeals)
+      console.log('selectedAddMeals:', selectedAddMeals)
       productSetChoose.isChoose = true
       productSetChoose.addMealsPrice = selectedAddMeals.price
     } else {

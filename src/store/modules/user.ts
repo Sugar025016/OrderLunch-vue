@@ -29,7 +29,6 @@ import {
   sellShop,
 } from '@/router/routes'
 
-
 import { ShopData, ShopNames } from '@/api/shop/type'
 import useSellShopStore from '@/store/modules/sellShop'
 import { Address, Response } from '@/api/type'
@@ -70,7 +69,7 @@ const useUserStore = defineStore('User', {
       getNewOrderTimer: null,
       orderNew: [],
       isCheckAddress: false,
-      shopNames: []
+      shopNames: [],
     }
   },
   // 異步|邏輯的地方
@@ -121,7 +120,7 @@ const useUserStore = defineStore('User', {
         this.shopNames = res.data.shopNames as ShopNames
         this.setRouteHaveSell(this.shopNames && this.shopNames.length > 0)
 
-        console.log("222222222222")
+        console.log('222222222222')
 
         return 'ok'
       } else {
@@ -240,18 +239,17 @@ const useUserStore = defineStore('User', {
       this.isCheckAddress = is
     },
     async setRouteHaveSell(is: boolean) {
-      console.log("setRouteHaveSell1:", router.getRoutes())
+      console.log('setRouteHaveSell1:', router.getRoutes())
 
       if (is) {
-        this.asyncRoute = [...constantRoute, sellShop, anyRoute];
-        [sellShop].forEach((route: any) => {
+        this.asyncRoute = [...constantRoute, sellShop, anyRoute]
+        ;[sellShop].forEach((route: any) => {
           router.addRoute(route)
         })
       } else {
         router.removeRoute('sell')
       }
-      console.log("setRouteHaveSell2:", router.getRoutes())
-
+      console.log('setRouteHaveSell2:', router.getRoutes())
     },
   },
   getters: {},

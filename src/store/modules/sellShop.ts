@@ -63,13 +63,12 @@ const useSellShopStore = defineStore('sellShopStore', {
     }
   },
   actions: {
-    async getSellShop(shopId: number|null) {
+    async getSellShop(shopId: number | null) {
       let $route = useRoute()
       // const path = $route.path;
-      console.log($route.params.shopId);
+      console.log($route.params.shopId)
       // console.log(path);
-      if (shopId==null || isNaN(shopId)) {
-
+      if (shopId == null || isNaN(shopId)) {
         // if (this.shopNames.length === 0) {
         //   await this.getShopItem()
         // }
@@ -78,11 +77,13 @@ const useSellShopStore = defineStore('sellShopStore', {
         // const path = $route.path;
         shopId == parseInt($route.params.shopId as string)
         const userStore = await useUserStore()
-        if (shopId==null || isNaN(shopId) && userStore.shopNames.length > 0) {
+        if (
+          shopId == null ||
+          (isNaN(shopId) && userStore.shopNames.length > 0)
+        ) {
           userStore.shopNames.length
           shopId = userStore.shopNames[0].id
         }
-
       }
       const res: ShopDetailsResponse = await reqGetSellShop(shopId)
 
@@ -95,7 +96,7 @@ const useSellShopStore = defineStore('sellShopStore', {
         })
       }
     },
-    
+
     // async deleteSellProduct(shopId: number) {},
     // async getSellShopThisId() {
     //   // if (this.shopId === 0) {
