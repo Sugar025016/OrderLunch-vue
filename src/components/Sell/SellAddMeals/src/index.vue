@@ -88,51 +88,53 @@ const deleteAddMeal = async (id: number) => {
 <template>
   <div class="add-meals">
     <div class="products-relative">
-      <el-card
-        class="productCard addCard"
-        @click="sellAddMealsModalRef?.handleOpen()"
-      >
-        <div class="products-content add">
-          <div class="add-icon">
-            <el-icon :size="30"><Plus /></el-icon>
-          </div>
-        </div>
-      </el-card>
-    </div>
-    <template v-for="item in sellShopStore.shop.addMeals">
-      <div class="products-relative">
-        <el-button
-          type="danger"
-          class="addMeal-delete"
-          :icon="Delete"
-          circle
-          @click="deleteAddMeal(item.id ? item.id : 0)"
-        />
-        <!-- <div class="add-product"> -->
+      <div class="add-product">
         <el-card
-          class="productCard"
-          @click="sellAddMealsModalRef?.getData(item)"
+          class="productCard addCard"
+          @click="sellAddMealsModalRef?.handleOpen()"
         >
-          <!-- <hr/> -->
-
-          <div class="products-content">
-            <div class="title">{{ item.name }}</div>
-
-            <div
-              class="products-card"
-              v-for="(v, i) in item.products"
-              :key="v.id"
-            >
-              <SellAddMealsChooseCard
-                :product="v.product"
-                :setting="true"
-                :choose="true"
-                :price="v.price"
-              ></SellAddMealsChooseCard>
+          <div class="products-content add">
+            <div class="add-icon">
+              <el-icon :size="30"><Plus /></el-icon>
             </div>
           </div>
         </el-card>
-        <!-- </div> -->
+      </div>
+    </div>
+    <template v-for="item in sellShopStore.shop.addMeals">
+      <div class="products-relative">
+        <div class="add-product">
+          <el-button
+            type="danger"
+            class="addMeal-delete"
+            :icon="Delete"
+            circle
+            @click="deleteAddMeal(item.id ? item.id : 0)"
+          />
+          <el-card
+            class="productCard"
+            @click="sellAddMealsModalRef?.getData(item)"
+          >
+            <!-- <hr/> -->
+
+            <div class="products-content">
+              <div class="title">{{ item.name }}</div>
+
+              <div
+                class="products-card"
+                v-for="(v, i) in item.products"
+                :key="v.id"
+              >
+                <SellAddMealsChooseCard
+                  :product="v.product"
+                  :setting="true"
+                  :choose="true"
+                  :price="v.price"
+                ></SellAddMealsChooseCard>
+              </div>
+            </div>
+          </el-card>
+        </div>
       </div>
     </template>
   </div>
@@ -176,111 +178,77 @@ $breakpoint-xxl-adjusted: calc(#{$breakpoint-xxl} + 200px);
 
   .products-relative {
     min-height: 250px;
-    position: relative;
-    .addMeal-delete {
-      // background-color: aqua;
-      position: absolute;
-      top: 0;
-      right: 0;
-
-      z-index: 100;
-    }
   }
-  .productCard {
-    word-break: break-all;
-
-    display: flex;
-    height: 250px;
-    min-height: 250px;
+  .add-product {
+    position: relative;
     min-width: 350px;
     max-width: 450px;
     margin-left: auto;
     margin-right: auto;
-    // max-width: 500px;
-    width: auto;
-    justify-content: center;
-    border-radius: 40px;
-    // transition: transform 0.3s; /* 添加过渡效果 */
-    margin: 0 auto;
-    position: relative;
-    transition: none;
+    .el-button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 1;
+    }
+    .productCard {
+      word-break: break-all;
 
-    :deep(.el-card__body) {
-      // background-color: aqua;
-      width: 100%;
       display: flex;
+      height: 250px;
+      min-height: 250px;
+      width: auto;
       justify-content: center;
-      .products-content {
-        max-width: 450px;
-        .title {
-          // display: flex;
-          // justify-content: center;
-          // align-items: center;
+      margin: 0 auto;
+      position: relative;
+      transition: none;
+      border-radius: 40px;
 
-          font-size: 30px;
-          color: $color;
-          height: 36px;
-          width: 100%;
-          // background-color: aqua;
-          border: 1px solid #ccc;
-          border-radius: 20px;
-          padding: 0 20px;
-          margin-bottom: 8px;
-        }
+      :deep(.el-card__body) {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        .products-content {
+          max-width: 450px;
+          .title {
+            font-size: 30px;
+            color: $color;
+            height: 36px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            padding: 0 20px;
+            margin-bottom: 8px;
+          }
 
-        .products-card {
-          margin: 10px 0;
-          pointer-events: none;
+          .products-card {
+            margin: 10px 0;
+            pointer-events: none;
+          }
         }
       }
     }
   }
-
-  .productCard:hover {
-    // background-color: rgb(243, 243, 243);
-    position: absolute;
-    // transform: scale(1.02); /* 放大效果 */
-    height: auto;
+  .add-product:hover {
     z-index: 10;
-    left: 50%;
-    transition: none;
-    transform: translateX(-50%) scale(1.02);
-    min-width: 350px;
-    max-width: 450px;
-    max-height: 520px;
+    .el-button {
+      z-index: 100;
+    }
+    .productCard {
+      background-color: rgb(249, 249, 249);
+      position: absolute;
+      height: auto;
+      z-index: 10;
+      left: 50%;
+      transition: none;
+      transform: translateX(-50%) scale(1.02);
+      min-width: 350px;
+      max-width: 450px;
+      max-height: 520px;
 
-    width: 100%;
-    overflow: auto;
-
-    // :deep(.el-card__body) {
-    //   // background-color: aqua;
-    //   width: 100%;
-    //   display: flex;
-    //   justify-content: center;
-    //   .products-content {
-    //     max-width: 450px;
-    //     .title {
-    //       // display: flex;
-    //       // justify-content: center;
-    //       // align-items: center;
-
-    //       font-size: 30px;
-    //       color: $color;
-    //       height: 36px;
-    //       width: 100%;
-    //       // background-color: aqua;
-    //       border: 1px solid #ccc;
-    //       border-radius: 20px;
-    //       padding: 0 20px;
-    //       margin-bottom: 8px;
-    //     }
-
-    //     .products-card {
-    //       margin: 10px 0;
-    //       pointer-events: none;
-    //     }
-    //   }
-    // }
+      width: 100%;
+      overflow: auto;
+    }
   }
 
   .addCard {
@@ -296,7 +264,6 @@ $breakpoint-xxl-adjusted: calc(#{$breakpoint-xxl} + 200px);
       flex-wrap: nowrap;
       justify-content: center;
       align-items: center;
-      // width: 100%;
       .add-icon {
         display: flex;
         justify-content: center;
@@ -309,7 +276,6 @@ $breakpoint-xxl-adjusted: calc(#{$breakpoint-xxl} + 200px);
   }
   .addCard:active {
     background-color: #dddddd8a;
-    // transform: scale(1);
   }
 }
 </style>
