@@ -95,6 +95,11 @@ const getSearchResult = (sellProductList: SellProductList) => {
   display: grid; /* 使用CSS Grid布局 */
   grid-template-columns: repeat(1, 1fr);
   grid-gap: 10px;
+
+  .productCard{
+    max-width: 600px;
+    margin: auto;
+  }
   @media (min-width: $breakpoint-xs) {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -106,5 +111,6 @@ const getSearchResult = (sellProductList: SellProductList) => {
   @media (min-width: $breakpoint-xxl) {
     grid-template-columns: repeat(3, 1fr);
   }
+
 }
 </style>

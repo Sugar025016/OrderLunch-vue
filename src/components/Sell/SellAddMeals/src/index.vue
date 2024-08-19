@@ -144,8 +144,8 @@ const deleteAddMeal = async (id: number) => {
 
 <style lang="scss" scoped>
 $breakpoint-xs-adjusted: calc(#{$breakpoint-xs} - 200px);
-$breakpoint-sm-adjusted: calc(#{$breakpoint-sm} + 30px);
-$breakpoint-md-adjusted: calc(#{$breakpoint-md} + 300px);
+$breakpoint-sm-adjusted: calc(#{$breakpoint-sm} + 200px);
+$breakpoint-md-adjusted: calc(#{$breakpoint-md} + 360px);
 $breakpoint-xl-adjusted: calc(#{$breakpoint-xl} + 200px);
 $breakpoint-xxl-adjusted: calc(#{$breakpoint-xxl} + 200px);
 .add-meals {
@@ -169,9 +169,9 @@ $breakpoint-xxl-adjusted: calc(#{$breakpoint-xxl} + 200px);
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media (min-width: $breakpoint-xl-adjusted) {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  // @media (min-width: $breakpoint-xl-adjusted) {
+  //   grid-template-columns: repeat(3, 1fr);
+  // }
   @media (min-width: $breakpoint-xxl-adjusted) {
     grid-template-columns: repeat(4, 1fr);
   }

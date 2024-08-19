@@ -53,7 +53,7 @@ const addressRules = {
     {
       validator: validateNotEmptyString,
       trigger: 'blur',
-      message: '请输入外送地址',
+      message: '請輸入外送地址',
     },
   ],
 }

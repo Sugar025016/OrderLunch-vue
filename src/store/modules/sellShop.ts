@@ -64,17 +64,8 @@ const useSellShopStore = defineStore('sellShopStore', {
   },
   actions: {
     async getSellShop(shopId: number | null) {
-      let $route = useRoute()
-      // const path = $route.path;
-      console.log($route.params.shopId)
-      // console.log(path);
       if (shopId == null || isNaN(shopId)) {
-        // if (this.shopNames.length === 0) {
-        //   await this.getShopItem()
-        // }
-
         let $route = useRoute()
-        // const path = $route.path;
         shopId == parseInt($route.params.shopId as string)
         const userStore = await useUserStore()
         if (

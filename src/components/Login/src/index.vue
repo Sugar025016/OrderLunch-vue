@@ -7,29 +7,11 @@ import { getTime } from '@/utils/time'
 import useUserStore from '@/store/modules/user'
 import Captcha from '@/components/Register/src/Captcha/index.vue'
 
-// import Identify from '@/components/VerifyCode/index.vue'
-// VerifyCode import
-const captchaRef = ref<typeof Captcha | null>(null)
-
 let $router = useRouter()
 let $route = useRoute()
 let loading = ref(false)
 
-const identifyCode = ref('1234')
-const identifyCodes = ref('1234567890abcdefjhijklinopqrsduvwxyz')
-
-// 重置验证码
-
-const makeCode = (o: Ref<any>, l: number) => {
-  for (let i = 0; i < l; i++) {
-    identifyCode.value +=
-      identifyCodes.value[randomNum(0, identifyCodes.value.length)]
-  }
-}
-
-const randomNum = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min) + min)
-}
+const captchaRef = ref<typeof Captcha | null>(null)
 
 let useStore = useUserStore()
 let loginForms = ref()
@@ -60,30 +42,24 @@ const validatorPassword = (rule: any, value: any, callback: any) => {
 }
 
 const validatorVerifyCode = (rule: any, value: any, callback: any) => {
-  if (value.length === 0) {
-    callback(new Error('请输入验证码'))
-  } else if (value.length < 4) {
-    callback(new Error('请输入正确的验证码'))
+  if (value.length === 0 || value.length < 4) {
+    callback(new Error('请输入4位數验证码'))
   } else {
     callback()
   }
 }
-import { Response, ResponseData } from '@/api/type'
 import { ElNotification } from 'element-plus'
 import { LoginResponseData } from '@/api/user/type'
 const login = async () => {
-  loginForm.verifyCode = captchaRef.value?.verifyCode
   await loginForms.value.validate()
   loading.value = true
   try {
     const res: any = await useStore.userLogin(loginForm)
-
     if (res?.status === 200) {
       const loginResponse: LoginResponseData = res.data
       let redirect: string = $route.query.redirect as string
 
       $router.push({ path: redirect || '/' })
-      // $router.push('/')
       ElNotification({
         type: 'success',
         message: '登陆成功',
@@ -91,60 +67,26 @@ const login = async () => {
       })
     } else {
       if (res?.data.code === 401) {
-        // $router.push('/')
         ElNotification({
           type: 'error',
           message: '帳號或密碼錯，請輸入正確的帳號或密碼',
           title: '帳號或密碼錯',
         })
       } else if (res?.data.code === 411) {
-        captchaRef.value?.refreshCaptcha()
-
         ElNotification({
           type: 'error',
           message: res.message,
           title: '驗證碼錯誤',
         })
       } else {
-        captchaRef.value?.refreshCaptcha()
-
         ElNotification({
           type: 'error',
           message: '驗證碼過期，更新驗證碼',
           title: '驗證碼錯誤',
         })
       }
-
       captchaRef.value?.refreshCaptcha()
     }
-
-    // if (loginResponse?.status === 411) {
-    //   captchaRef.value?.refreshCaptcha()
-
-    //   ElNotification({
-    //     type: 'error',
-    //     message: '驗證碼過期，更新驗證碼',
-    //     title: '驗證碼錯誤',
-    //   })
-    // } else if(loginResponse?.status === 401){
-
-    //   // $router.push('/')
-    //   ElNotification({
-    //     type: 'error',
-    //     message: '帳號或密碼錯，請輸入正確的帳號或密碼',
-    //     title: '帳號或密碼錯',
-    //   })
-    // } else {
-    //   let redirect: string = $route.query.redirect as string
-
-    //   $router.push({ path: redirect || '/' })
-    //   // $router.push('/')
-    //   ElNotification({
-    //     type: 'success',
-    //     message: '登陆成功',
-    //     title: `Hi, ${getTime()}好`,
-    //   })
-    // }
 
     loading.value = false
   } catch (error) {
@@ -171,19 +113,17 @@ const rules = {
   ],
   verifyCode: [
     {
-      trigger: 'blur',
+      trigger: 'change',
       validator: validatorVerifyCode,
     },
   ],
 }
 
-// ../../assets/images/0050.png
 </script>
 
 <template>
   <div class="login_container">
     <el-card class="login_form">
-      <!-- <h1>{{ title }}</h1> -->
       <h3>會員登入</h3>
       <el-form
         label-position="top"
@@ -216,7 +156,10 @@ const rules = {
           prop="verifyCode"
           class="custom-form-item"
         >
-          <Captcha ref="captchaRef"></Captcha>
+          <Captcha
+            ref="captchaRef"
+            v-model:verify-code="loginForm.verifyCode"
+          ></Captcha>
         </el-form-item>
         <el-form-item prop="rememberMe">
           <el-checkbox

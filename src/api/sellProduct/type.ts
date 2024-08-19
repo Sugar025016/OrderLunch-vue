@@ -1,3 +1,4 @@
+import { AddMealsListData } from '../addMeals/type'
 import { Response } from '../type'
 
 export interface SellProduct {
@@ -8,6 +9,7 @@ export interface SellProduct {
   imgUrl?: URL
   price: number
   orderable: boolean
+  addMealsIdList:number[]
 }
 
 export type SellProductList = SellProduct[]

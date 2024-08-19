@@ -1,27 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 import { Warning } from '@element-plus/icons-vue'
 
-const emits = defineEmits(['update:verifyCode'])
 
+const props = defineProps({
+  verifyCode: String, // 接收父組件的數據
+})
+const emits = defineEmits(['update:verifyCode'])
 const captchaUrl = ref<string>('/api/register/captcha?timestamp=' + Date.now())
 
 const refreshCaptcha = async () => {
   captchaUrl.value = (await '/api/register/captcha?timestamp=') + Date.now()
 }
+const localVerifyCode = ref(props.verifyCode) // 本地變數
+watch(localVerifyCode, (newValue) => {
+  emits('update:verifyCode', newValue) // 當本地變數改變時通知父組件
+})
 
-const verifyCode = ref<string>('')
 defineExpose({
   refreshCaptcha,
-  verifyCode,
 })
 </script>
 <template>
   <div class="captcha">
     <el-input
       :prefix-icon="Warning"
-      v-model="verifyCode"
+      v-model="localVerifyCode"
       placeholder="驗證碼"
       size="large"
       maxlength="4"

@@ -5,7 +5,7 @@ enum API {
 }
 
 export const reqGetSellProducts = (shopId: number) =>
-  request.get<any, ResponseProductList>(API.PRODUCT + '/' + shopId)
+  request.get<any, ResponseProductList>(API.PRODUCT + '/sell/' + shopId)
 
 export const reqDeleteSellProducts = (productId: number) =>
   request.delete<any, ResponseBoolean>(API.PRODUCT + '/' + productId)

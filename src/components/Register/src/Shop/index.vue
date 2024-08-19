@@ -52,7 +52,7 @@ const addRegisterShop = ref<AddRegisterShop>({
 })
 const validatorName = (rule: any, value: any, callback: any) => {
   if (value.length === 0) {
-    callback(new Error('请输入名稱'))
+    callback(new Error('請輸入名稱'))
   } else if (value.length < 3) {
     callback(new Error('名稱長度不可小於3字母'))
   } else {
@@ -61,9 +61,9 @@ const validatorName = (rule: any, value: any, callback: any) => {
 }
 const validatorVerifyCode = (rule: any, value: any, callback: any) => {
   if (value.length === 0) {
-    callback(new Error('请输入验证码'))
+    callback(new Error('請輸入驗證碼'))
   } else if (value.length < 4) {
-    callback(new Error('请输入4碼验证码'))
+    callback(new Error('請輸入4碼驗證碼'))
   } else {
     callback()
   }
@@ -154,11 +154,10 @@ let sellShopStore = useSellShopStore()
 const captchaRef = ref<typeof Captcha | null>(null)
 
 const save = async () => {
-  addRegisterShop.value.captcha = captchaRef.value?.verifyCode
   await formRef.value.validate()
 
   const registerShop = ref<RegisterShop>({
-    captcha: captchaRef.value?.verifyCode,
+    captcha: addRegisterShop.value?.captcha,
     shopName: addRegisterShop.value.name,
     phone: addRegisterShop.value.phone,
     description: addRegisterShop.value.description,
@@ -176,6 +175,7 @@ const save = async () => {
     sellShopStore.shopId = res.data
     $router.push(`/sell/${res.data}/Shop`)
   } else {
+    console.loㄒ
     if (res.data.code === 0) {
       getElMessageBox()
     } else {
@@ -343,12 +343,12 @@ onBeforeUnmount(() => {
           label="驗證碼："
           size="large"
         >
-          <!-- <Captcha v-model="addRegisterShop.captcha"></Captcha> -->
-          <Captcha ref="captchaRef"></Captcha>
+          <Captcha
+            ref="captchaRef"
+            v-model:verify-code="addRegisterShop.captcha"
+          ></Captcha>
         </el-form-item>
       </el-form>
-      <!-- <el-checkbox v-model="checked1" label="Option 1" size="large" /> -->
-      <!-- <el-button size="large" round>確認</el-button> -->
       <el-button size="large" type="primary" round @click="save()">
         確認
       </el-button>

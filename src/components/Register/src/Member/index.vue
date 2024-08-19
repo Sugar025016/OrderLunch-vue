@@ -24,7 +24,7 @@ let formRef = ref<any>()
 
 const validatorName = (rule: any, value: any, callback: any) => {
   if (value.length === 0) {
-    callback(new Error('请输入名稱'))
+    callback(new Error('請輸入名稱'))
   } else if (value.length < 3) {
     callback(new Error('名稱t長度不可小於3字母'))
   } else {
@@ -44,9 +44,9 @@ const validatorEmail = (rule: any, value: any, callback: any) => {
 }
 const validatorPassword = (rule: any, value: any, callback: any) => {
   if (value.length === 0) {
-    callback(new Error('请输入密码'))
+    callback(new Error('請輸入密码'))
   } else if (value.length < 6 || value.length > 16) {
-    callback(new Error('密码应为6~16位的英數任意组合'))
+    callback(new Error('密碼應為6~16位的英數任意组合'))
   } else {
     callback()
   }
@@ -54,7 +54,7 @@ const validatorPassword = (rule: any, value: any, callback: any) => {
 const validatorPasswordCheck = (rule: any, value: any, callback: any) => {
   const password = registerMember.value.password
   if (value.length === 0) {
-    callback(new Error('请输入密码確認'))
+    callback(new Error('請輸入密码確認'))
   } else if (value !== password) {
     callback(new Error('密码錯誤'))
   } else {
@@ -63,9 +63,9 @@ const validatorPasswordCheck = (rule: any, value: any, callback: any) => {
 }
 const validatorVerifyCode = (rule: any, value: any, callback: any) => {
   if (value.length === 0) {
-    callback(new Error('请输入验证码'))
+    callback(new Error('請輸入驗證碼'))
   } else if (value.length < 4) {
-    callback(new Error('请输入4碼验证码'))
+    callback(new Error('請輸入4碼驗證碼'))
   } else {
     callback()
   }
@@ -111,8 +111,6 @@ const rules = {
 
 const captchaRef = ref<typeof Captcha | null>(null)
 const save = async () => {
-  registerMember.value.verifyCode = captchaRef.value?.verifyCode
-
   await formRef.value.validate()
 
   let res: ResponseData = await reqAddMember(registerMember.value)
@@ -211,7 +209,7 @@ const save = async () => {
         size="large"
         v-model="registerMember.verifyCode"
       >
-        <Captcha ref="captchaRef"></Captcha>
+        <Captcha ref="captchaRef" v-model:verify-code="registerMember.verifyCode"></Captcha>
       </el-form-item>
     </el-form>
     <!-- <el-checkbox v-model="checked1" label="Option 1" size="large" /> -->
