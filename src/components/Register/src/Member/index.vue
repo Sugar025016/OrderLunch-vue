@@ -209,7 +209,10 @@ const save = async () => {
         size="large"
         v-model="registerMember.verifyCode"
       >
-        <Captcha ref="captchaRef" v-model:verify-code="registerMember.verifyCode"></Captcha>
+        <Captcha
+          ref="captchaRef"
+          v-model:verify-code="registerMember.verifyCode"
+        ></Captcha>
       </el-form-item>
     </el-form>
     <!-- <el-checkbox v-model="checked1" label="Option 1" size="large" /> -->

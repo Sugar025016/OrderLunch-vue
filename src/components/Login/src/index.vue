@@ -118,7 +118,6 @@ const rules = {
     },
   ],
 }
-
 </script>
 
 <template>

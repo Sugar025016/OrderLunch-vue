@@ -3,7 +3,6 @@ import { ref, watch } from 'vue'
 
 import { Warning } from '@element-plus/icons-vue'
 
-
 const props = defineProps({
   verifyCode: String, // 接收父組件的數據
 })

@@ -9,7 +9,7 @@ export interface SellProduct {
   imgUrl?: URL
   price: number
   orderable: boolean
-  addMealsIdList:number[]
+  addMealsIdList: number[]
 }
 
 export type SellProductList = SellProduct[]
