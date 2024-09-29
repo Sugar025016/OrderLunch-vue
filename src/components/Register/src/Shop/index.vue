@@ -175,7 +175,6 @@ const save = async () => {
     sellShopStore.shopId = res.data
     $router.push(`/sell/${res.data}/Shop`)
   } else {
-    console.loㄒ
     if (res.data.code === 0) {
       getElMessageBox()
     } else {

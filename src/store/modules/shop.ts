@@ -46,6 +46,7 @@ const useShopStore = defineStore('Category', {
         orderable: false,
         tabProducts: [],
         products: [],
+        addMeals: []
       },
       shopNames: [],
       shopId: 0,
@@ -59,6 +60,7 @@ const useShopStore = defineStore('Category', {
       shopArr: new Set<ShopData>(),
       scrollTop: 0,
       shopSearch: {},
+      
     }
   },
   actions: {

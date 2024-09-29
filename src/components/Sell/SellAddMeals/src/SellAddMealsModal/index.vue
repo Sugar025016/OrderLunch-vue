@@ -23,7 +23,25 @@ interface ProductSetChoose extends ProductData {
 }
 const productSetChooses = ref<ProductSetChoose[]>([])
 
-const addMealsProduct = ref<AddMealsData>({})
+const addMealsProduct = ref<AddMealsData>({
+  id: 0,
+  name: '',
+  products: [
+    {
+      id: 0,
+      price: 0,
+      product: {
+        id: 0,
+        name: '',
+        description: '',
+        imgUrl: '',
+        isOrderable: true,
+        price: 0,
+        shopId: 0,
+      },
+    },
+  ],
+})
 
 const inputUserName = ref('')
 inputUserName.value = userStore.username
@@ -132,7 +150,25 @@ const handleOpen = () => {
 }
 
 const handleClose = () => {
-  addMealsProduct.value = {}
+  addMealsProduct.value = {
+    id: 0,
+    name: '',
+    products: [
+      {
+        id: 0,
+        price: 0,
+        product: {
+          id: 0,
+          name: '',
+          description: '',
+          imgUrl: '',
+          isOrderable: true,
+          price: 0,
+          shopId: 0,
+        },
+      },
+    ],
+  }
   AddMealsChooseModalOpen.value = false
 }
 

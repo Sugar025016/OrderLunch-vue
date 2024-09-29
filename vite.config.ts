@@ -7,8 +7,6 @@ import removeConsole from 'vite-plugin-remove-console'
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
   let env = loadEnv(mode, process.cwd())
-  console.log('VITE_APP_BASE_API:', env.VITE_APP_BASE_API)
-  console.log('VITE_SERVE:', env.VITE_SERVE)
   return {
     plugins: [
       vue(),

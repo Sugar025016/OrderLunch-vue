@@ -57,6 +57,7 @@ let shopData = ref<ShopDetailData>({
   orderable: false,
   tabProducts: [],
   products: [],
+  addMeals: [],
 })
 
 shopData = computed(() => {

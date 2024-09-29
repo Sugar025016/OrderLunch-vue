@@ -33,6 +33,7 @@ let shopData = ref<ShopDetailData>({
   products: [],
   orderable: false,
   schedules: [],
+  addMeals: [],
 })
 let favorite = ref('')
 
