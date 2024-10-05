@@ -8,6 +8,8 @@ export interface TabData {
   name: string
   shelve: boolean
   products: ProductList
+  phone: number
+  isOrderable: boolean
 }
 
 export type TabsData = TabData[]

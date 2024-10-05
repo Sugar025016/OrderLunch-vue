@@ -1,17 +1,24 @@
+
+import pinia from './store'
 import router from '@/router'
 import setting from './setting'
 //@ts-expect-error-去錯誤訊息
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
-import pinia from './store'
 import useUserStore from './store/modules/user'
 import useSellShopStore from './store/modules/sellShop'
 import { useRouter } from 'vue-router'
-let $router = useRouter()
+// import Loading from 'vue-loading-overlay'
+// import 'vue-loading-overlay/dist/css/index.css'
+import  useLoadingStore  from '@/store/modules/loading';
+
+
+
 
 nprogress.configure({ showSpinner: false })
 const userStore = useUserStore(pinia)
-const shopStore = useSellShopStore(pinia)
+const loadingStore = useLoadingStore()
+let $router = useRouter()
 // 全域前置守衛
 
 async function loadDynamicRoutes() {
@@ -30,11 +37,13 @@ async function loadDynamicRoutes() {
 }
 await loadDynamicRoutes()
 router.beforeEach(async (to, from, next) => {
+  const shopStore = useSellShopStore(pinia)
+  nprogress.start()
+  loadingStore.startLoading()
   console.log('5555555555', router.getRoutes())
   // console.log("5555555555-$router",$router.getRoutes())
   document.title = to.meta.title + ` | ${setting.title}`
   document.title = `${setting.title}`
-  nprogress.start()
   const token = userStore.token
   if (to.meta.mustToken) {
     if (token) {
@@ -61,4 +70,5 @@ router.beforeEach(async (to, from, next) => {
 
 router.afterEach((route) => {
   nprogress.done()
+  loadingStore.stopLoading()
 })

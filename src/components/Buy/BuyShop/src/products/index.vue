@@ -24,11 +24,21 @@
         <div class="products-body">
           <component v-for="product in tab.products" :key="product.id">
             <def-product-card
+              v-if="shopData.orderable"
               :product="product"
               @click="openModal(product)"
               data-bs-toggle="modal"
               data-bs-target="#staticBackdrop"
             ></def-product-card>
+
+            <el-tooltip
+              effect="light"
+              :content="'電話訂購：' + tab.phone"
+              class="box-item"
+              v-else
+            >
+              <def-product-card :product="product"></def-product-card>
+            </el-tooltip>
           </component>
         </div>
       </div>
@@ -56,6 +66,8 @@ import {
 import { ProductData } from '@/api/product/type'
 import useUserStore from '@/store/modules/user'
 import useShopStore from '@/store/modules/shop'
+import { getShop } from '@/api/shop'
+import { ShopDetailData, ShopResponseData } from '@/api/shop/type'
 
 let userStore = useUserStore()
 let shopStore = useShopStore()
@@ -79,6 +91,27 @@ let productData = ref<ProductModalData>({
   shopId: 0,
 })
 
+let shopData = ref<ShopDetailData>({
+  id: 0,
+  name: '',
+  description: '',
+  address: {
+    city: '',
+    area: '',
+    street: '',
+    detail: '',
+    lat: undefined,
+    lng: undefined,
+  },
+  imgId: 0,
+  imgUrl: '',
+  tabProducts: [],
+  products: [],
+  orderable: false,
+  schedules: [],
+  addMeals: [],
+})
+
 const openModal = (v: ProductData) => {
   productData.value.productId = v.id
   productData.value.name = v.name
@@ -97,6 +130,12 @@ const getProductsData = async (id: number) => {
   TabProductsData.value = res.data
 }
 
+const getShopData = async (id: number) => {
+  let res: ShopResponseData = await getShop(id)
+
+  shopData.value = res.data
+}
+
 const scrollToSection = (sectionId: number) => {
   const element = document.getElementById(sectionId + '')
 
@@ -111,6 +150,7 @@ const scrollToSection = (sectionId: number) => {
 
 onMounted(() => {
   getProductsData(id)
+  getShopData(id)
 })
 
 const activeTab = ref(0)

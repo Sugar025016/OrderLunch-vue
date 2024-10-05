@@ -1,8 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
-import router from '@/router'
 import pinia from '@/store'
+import router from '@/router'
 import 'virtual:svg-icons-register'
 import globeComponent from '@/components'
 import ElementPlus from 'element-plus'
@@ -24,11 +24,14 @@ const app = createApp(App)
 const googleMapsApiKey = 'YOUR_GOOGLE_MAPS_API_KEY'
 app.config.globalProperties.$googleMapsApiKey = googleMapsApiKey
 
+app.use(pinia)
 app.use(globeComponent)
 app.use(router)
-app.use(pinia)
 app.use(ElementPlus, {
   zIndex: 3000,
 })
 
 app.mount('#app')
+
+
+

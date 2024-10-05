@@ -1,9 +1,9 @@
 <template>
   <div class="buyShop">
     <div class="header">
-      <div class="header-link">
+      <!-- <div class="header-link">
         <socialMedia></socialMedia>
-      </div>
+      </div> -->
       <div class="header-shop">
         <shop></shop>
       </div>
@@ -28,11 +28,13 @@ import shop from './shop/index.vue'
   overflow: hidden;
 
   .header {
-    .header-link {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-    }
+    // background-color: aqua;
+    margin: 60px;
+    // .header-link {
+    //   display: flex;
+    //   align-items: center;
+    //   justify-content: flex-end;
+    // }
   }
   .buy-product-footer {
     margin: 30px 0 0 0;

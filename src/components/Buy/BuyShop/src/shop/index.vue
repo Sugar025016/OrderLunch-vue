@@ -259,6 +259,7 @@ $b-color: $color;
           margin: 10px 0;
           display: flex;
           align-items: center;
+          flex-wrap: wrap; /* 允許換行 */
           span {
             margin-left: 5px;
             display: block;

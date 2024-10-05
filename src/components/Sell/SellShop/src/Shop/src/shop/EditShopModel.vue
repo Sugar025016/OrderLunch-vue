@@ -376,11 +376,17 @@ const changeArea = () => {
           />
           <span class="km">（公里）</span>
         </el-form-item>
-        <el-form-item label="餐廳上架" prop="isDisable">
-          <el-switch v-model="shopParams.disable" />
+        <el-form-item label="餐廳上架" prop="isOpen">
+          <el-switch v-model="shopParams.open" />
         </el-form-item>
         <el-form-item label="可線上訂購" prop="orderable">
-          <el-switch v-model="shopParams.orderable" />
+          <el-tooltip content="餐廳未上架，請先上架" v-if="!shopParams.open">
+            <el-switch
+              v-model="shopParams.orderable"
+              :disabled="!shopParams.open"
+            />
+          </el-tooltip>
+          <el-switch v-else v-model="shopParams.orderable" />
         </el-form-item>
         <el-form-item label="商店圖" class="img">
           <el-upload

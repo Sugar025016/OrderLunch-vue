@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
-import { reqGetCart, reqDeleteCart, reqPutCart } from '@/api/cart'
+import {
+  reqGetCart,
+  reqDeleteCart,
+  reqPutCart,
+  reqDeleteAllCart,
+} from '@/api/cart'
 import { CartList, CartResponseData, CartsData } from '@/api/cart/type'
 import useUserStore from '@/store/modules/user'
 import useShopStore from '@/store/modules/shop'
@@ -60,6 +65,10 @@ const getCart = async () => {
     userStore.cartCount = getCartCount(res.data.cartResponses)
     sum.value = 0
     if (userStore.cartCount !== 0) {
+      if (!carts.value.orderable) {
+        getElMessageBoxForOrderableFalse()
+      }
+
       sum.value = carts.value.cartResponses.reduce(
         (total, v) => total + v.qty * v.productResponse.price,
         0,
@@ -86,6 +95,30 @@ const getElMessageBox = () => {
       $router.push('/')
     }
   }, 5000) // 10000 毫秒即为 10 秒
+}
+const getElMessageBoxForOrderableFalse = () => {
+  ElMessageBox.alert('店家已關閉，清空購物車', '購物車', {
+    callback: () => {
+      // 關閉彈跳窗的回調函數
+      deleteAllCart()
+      ElMessageBox.close()
+      $router.push('/')
+    },
+  })
+  timer = setTimeout(() => {
+    const messageBoxInstance = ElMessageBox
+    if (messageBoxInstance) {
+      messageBoxInstance.close()
+      $router.push('/')
+    }
+  }, 7000) // 10000 毫秒即为 10 秒
+}
+
+const deleteAllCart = async () => {
+  let res: CartResponseData = await reqDeleteAllCart()
+  if (res.status === 200) {
+    await userStore.userInfo()
+  }
 }
 
 const deleteCart = async (cartId: number) => {

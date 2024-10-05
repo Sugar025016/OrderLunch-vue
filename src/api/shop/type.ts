@@ -118,7 +118,7 @@ export interface PutShopData {
   imgId: number
   imgUrl: string
   orderable: boolean
-  disable: boolean
+  open: boolean
   deliveryKm: number
   deliveryPrice: number
 }

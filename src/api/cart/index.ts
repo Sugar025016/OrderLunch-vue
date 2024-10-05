@@ -10,6 +10,10 @@ export const reqDeleteCart = (data: number) => {
   return request.delete<any, CartResponseData>(API.cart + '/' + data)
 }
 
+export const reqDeleteAllCart = () => {
+  return request.delete<any, CartResponseData>(API.cart )
+}
+
 export const reqAddCart = (data: CartRequest) => {
   return request.post<any, any>(API.cart, data)
 }

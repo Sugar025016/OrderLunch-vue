@@ -25,7 +25,7 @@ export interface ShopData {
   createTime?: string
   updateTime?: string
   isOrderable: boolean
-  isDisable: boolean
+  isOpen: boolean
   isDelete: boolean
 }
 
@@ -68,5 +68,5 @@ export interface ShopPutRequest {
   imgId?: number
   imgUrl?: string
   isOrderable: boolean
-  disable: boolean
+  open: boolean
 }
