@@ -11,7 +11,7 @@ export const reqDeleteCart = (data: number) => {
 }
 
 export const reqDeleteAllCart = () => {
-  return request.delete<any, CartResponseData>(API.cart )
+  return request.delete<any, CartResponseData>(API.cart)
 }
 
 export const reqAddCart = (data: CartRequest) => {

@@ -1,4 +1,3 @@
-
 import pinia from './store'
 import router from '@/router'
 import setting from './setting'
@@ -10,10 +9,7 @@ import useSellShopStore from './store/modules/sellShop'
 import { useRouter } from 'vue-router'
 // import Loading from 'vue-loading-overlay'
 // import 'vue-loading-overlay/dist/css/index.css'
-import  useLoadingStore  from '@/store/modules/loading';
-
-
-
+import useLoadingStore from '@/store/modules/loading'
 
 nprogress.configure({ showSpinner: false })
 const userStore = useUserStore(pinia)

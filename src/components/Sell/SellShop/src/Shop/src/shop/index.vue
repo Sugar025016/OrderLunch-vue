@@ -281,7 +281,6 @@ $b-color: $color;
       min-width: 360px;
       z-index: 10;
 
-
       .shop-title {
         display: flex;
         width: 100%;
@@ -302,8 +301,7 @@ $b-color: $color;
           font-size: 50px;
         }
       }
-      .shop-remark{
-
+      .shop-remark {
         font-size: 20px;
       }
 
@@ -330,8 +328,6 @@ $b-color: $color;
           }
 
           .information-set {
-
-
             margin: 4px 0 0 8px;
             display: flex;
             align-items: center;

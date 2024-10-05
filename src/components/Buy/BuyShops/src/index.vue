@@ -106,7 +106,7 @@ onBeforeUnmount(() => {
             <el-tooltip
               class="box-item"
               effect="light"
-              content="開店" 
+              content="開店"
               placement="top-end"
             >
               <img
