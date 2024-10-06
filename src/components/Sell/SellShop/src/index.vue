@@ -36,7 +36,7 @@ let shopParams = reactive<PutShopData>({
   imgId: 0,
   imgUrl: '',
   orderable: false,
-  disable: false,
+  open: false,
   deliveryKm: 0,
   deliveryPrice: 0,
 })

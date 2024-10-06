@@ -33,7 +33,7 @@
 
             <el-tooltip
               effect="light"
-              :content="'電話訂購：' + tab.phone"
+              :content="'電話訂購：' + shopData.phone"
               class="box-item"
               v-else
             >
