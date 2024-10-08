@@ -96,7 +96,7 @@ export interface ShopDetailData {
   products: ProductList
   orderable: boolean
   addMeals: AddMealsListData
-  category:number[]
+  category: number[]
 }
 
 export interface ShopData {
@@ -122,7 +122,7 @@ export interface PutShopData {
   open: boolean
   deliveryKm: number
   deliveryPrice: number
-  category:number[]
+  category: number[]
 }
 
 export interface ShopDetailsResponse extends Response {

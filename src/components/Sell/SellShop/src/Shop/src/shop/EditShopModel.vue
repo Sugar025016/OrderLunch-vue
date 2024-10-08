@@ -391,9 +391,9 @@ const changeArea = () => {
             <el-checkbox
               :value="item.id"
               name="type"
-              :key="item.id" :label="item.id"
+              :key="item.id"
+              :label="item.id"
               v-for="item in categoryList"
-
             >
               {{ item.name }}
             </el-checkbox>

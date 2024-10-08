@@ -48,7 +48,7 @@ const useSellShopStore = defineStore('sellShopStore', {
         tabProducts: [],
         products: [],
         addMeals: [],
-        category:[],
+        category: [],
       },
       shopNames: [],
       shopId: 0,

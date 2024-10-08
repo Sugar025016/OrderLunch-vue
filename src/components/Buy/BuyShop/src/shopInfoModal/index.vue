@@ -33,7 +33,13 @@
               >
                 <span v-if="index > 0">,</span>
                 <span class="time">
-                  {{ showTime(schedulePeriod.startTime) }}~{{ showTime(schedulePeriod.endTime === '00:00:00' ? '24:00:00' : schedulePeriod.endTime) }}
+                  {{ showTime(schedulePeriod.startTime) }}~{{
+                    showTime(
+                      schedulePeriod.endTime === '00:00:00'
+                        ? '24:00:00'
+                        : schedulePeriod.endTime,
+                    )
+                  }}
                 </span>
               </component>
               <span v-else>非營業日</span>
@@ -66,7 +72,6 @@ import { deleteSecond as showTime } from '@/utils/time'
     border-color: rgb(155, 155, 155);
   }
   .modal-body {
-
     .item {
       margin: 10px 10px 30px 10px;
       .title {
