@@ -17,7 +17,7 @@ const currentUrl = computed(() => window.location.href)
       class="w-8 h-8 rounded-full"
       loading="lazy"
     />
-    <span class="icon-span">分享至 Facebook</span>
+    <span class="icon-span">分享</span>
   </a>
 
   <a
@@ -30,7 +30,7 @@ const currentUrl = computed(() => window.location.href)
       class="w-8 h-8 rounded-full"
       loading="lazy"
     />
-    <span class="icon-span">分享至 LINE</span>
+    <span class="icon-span">分享</span>
   </a>
 </template>
 <style lang="scss" scoped>

@@ -4,7 +4,13 @@
   </router-link>
 </template>
 <script setup lang="ts">
-let title = document.title
+import { ref, onMounted } from 'vue'
+
+const title = ref('')
+
+onMounted(() => {
+  title.value = document.title
+})
 </script>
 <style lang="scss" scoped>
 .link {

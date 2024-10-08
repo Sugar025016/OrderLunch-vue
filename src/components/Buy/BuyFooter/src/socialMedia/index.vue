@@ -1,6 +1,12 @@
 <script setup lang="ts"></script>
 <template>
-  <a class="icon-a" href="https://zh-tw.facebook.com/" target="k" rel="">
+  <a
+    class="icon-a"
+    :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      'https://22blb.com/BuyShops',
+    )}`"
+    target="_blank"
+  >
     <img
       src="@/assets/icons/facebook.png"
       class="w-8 h-8 rounded-full"
@@ -8,7 +14,14 @@
     />
     <span class="icon-span">分享</span>
   </a>
-  <a class="icon-a" href="https://zh-tw.facebook.com/" target="k" rel="">
+
+  <a
+    class="icon-a"
+    :href="`https://line.me/R/msg/text/?${encodeURIComponent(
+      'https://22blb.com/BuyShops',
+    )}`"
+    target="_blank"
+  >
     <img
       src="@/assets/icons/line.png"
       class="w-8 h-8 rounded-full"
