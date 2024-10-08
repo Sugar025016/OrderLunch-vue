@@ -13,6 +13,8 @@ import { reqAddOrUpdateShop } from '@/api/shop'
 
 import address from '@/utils/address.js'
 import { Address } from '@/api/type'
+import { getCategoryList } from '@/api/category'
+import { Category, CategoryListResponse } from '@/api/category/type'
 
 let sellShopStore = useSellShopStore()
 
@@ -38,6 +40,7 @@ let shopParams = reactive<PutShopData>({
   open: false,
   deliveryKm: 0,
   deliveryPrice: 0,
+  category: [],
 })
 
 let shopParamsCheck: string
@@ -56,7 +59,13 @@ const handleClose = () => {
   $emit('update:shopDrawer', (visible.value = false))
 }
 
+let categoryList = ref<Category[]>([])
+const getCategory = async () => {
+  let res: CategoryListResponse = await getCategoryList()
+  categoryList.value = res.data
+}
 const updateShop = () => {
+  getCategory()
   sellShopStore.shopDrawer = true
 
   Object.assign(shopParams, sellShopStore.shop)
@@ -376,6 +385,21 @@ const changeArea = () => {
           />
           <span class="km">（公里）</span>
         </el-form-item>
+
+        <el-form-item label="餐點類型">
+          <el-checkbox-group v-model="shopParams.category">
+            <el-checkbox
+              :value="item.id"
+              name="type"
+              :key="item.id" :label="item.id"
+              v-for="item in categoryList"
+
+            >
+              {{ item.name }}
+            </el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+
         <el-form-item label="餐廳上架" prop="isOpen">
           <el-switch v-model="shopParams.open" />
         </el-form-item>

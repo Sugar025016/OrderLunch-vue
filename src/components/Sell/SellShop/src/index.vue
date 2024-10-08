@@ -237,7 +237,7 @@ onMounted(async () => {
   </el-card> -->
   <el-drawer v-model="sellShopStore.shopDrawer">
     <template #header>
-      <h3>{{ shopParams.id ? '更新商店--' : '添加商店' }}</h3>
+      <h3>{{ shopParams.id ? '更新商店--111' : '添加商店' }}</h3>
     </template>
     <template #default>
       <el-form :model="shopParams" :rules="rules" ref="formRef">
@@ -247,7 +247,7 @@ onMounted(async () => {
             v-model="shopParams.shopName"
           ></el-input>
         </el-form-item> -->
-        <el-form-item label="商店電話" prop="phone">
+        <el-form-item label="商店電話11" prop="phone">
           <el-input
             placeholder="请您输入商店電話"
             v-model="shopParams.phone"

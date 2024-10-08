@@ -34,6 +34,7 @@ let shopData = ref<ShopDetailData>({
   orderable: false,
   schedules: [],
   addMeals: [],
+  category: [],
 })
 let favorite = ref('')
 

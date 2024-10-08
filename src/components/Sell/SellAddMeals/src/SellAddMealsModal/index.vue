@@ -10,7 +10,10 @@ import {
 } from '@/api/addMeals/index'
 import Search from '@/components/SharedComponents/search.vue'
 import SellAddMealsChooseCardSet from '../SellAddMealsChooseCardSet/index.vue'
+import { ElMessageBox } from 'element-plus'
+// import { Action, ElMessageBox } from 'element-plus/es/components'
 import { ElMessage } from 'element-plus'
+import { Action } from 'element-plus/es/components'
 
 let sellShopStore = useSellShopStore()
 
@@ -99,25 +102,36 @@ const getChooses = () => {
 }
 
 const save = async () => {
-  addMealsParams.shopId = sellShopStore.shop.id
-  addMealsParams.products = productSetChooses.value
-    .filter((v) => v.isChoose)
-    .map((choose) => {
-      return { id: choose.id, price: choose.addMealsPrice }
-    }) as [{ id: number; price: number }]
-  let res
-  if (addMealsProduct.value.id) {
-    res = await reqAddOrUpdateAddMeals(addMealsParams, addMealsProduct.value.id)
+  if (addMealsParams.name == '') {
+    ElMessageBox.alert('請輸入分類名稱', '提示', {
+      confirmButtonText: 'OK',
+      type: 'warning',
+    })
   } else {
-    res = await reqAddOrUpdateAddMeals(addMealsParams)
-  }
-  if (res.status === 200) {
-    // await sellShopStore.getSellShop(sellShopStore.shop.id)
-    // await reqGetAddMealsProducts(sellShopStore.shop.id)
-    window.location.reload()
-  }
+    addMealsParams.shopId = sellShopStore.shop.id
+    addMealsParams.products = productSetChooses.value
+      .filter((v) => v.isChoose)
+      .map((choose) => {
+        return { id: choose.id, price: choose.addMealsPrice }
+      }) as [{ id: number; price: number }]
+    let res
 
-  handleClose()
+    if (addMealsProduct.value.id) {
+      res = await reqAddOrUpdateAddMeals(
+        addMealsParams,
+        addMealsProduct.value.id,
+      )
+    } else {
+      res = await reqAddOrUpdateAddMeals(addMealsParams)
+    }
+    if (res.status === 200) {
+      // await sellShopStore.getSellShop(sellShopStore.shop.id)
+      // await reqGetAddMealsProducts(sellShopStore.shop.id)
+      window.location.reload()
+    }
+
+    handleClose()
+  }
 }
 
 const getData = (t: AddMealsData) => {
@@ -176,7 +190,7 @@ const searchProductIds = ref<number[]>([])
 
 const getSearch = (sellProductList: ProductSetChoose[]) => {
   searchProductIds.value = sellProductList.map((item: any) => item.id) || []
-  handleOpen()
+  // handleOpen()
   getSearchResult()
 }
 

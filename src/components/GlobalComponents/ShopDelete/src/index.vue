@@ -15,7 +15,7 @@
 </template>
 <script setup lang="ts">
 import products from './products/index.vue'
-import socialMedia from './socialMedia/index.vue'
+import socialMedia from './socialMedia/index1111111.vue'
 import shop from './shop/index.vue'
 </script>
 <style lang="scss" scoped>

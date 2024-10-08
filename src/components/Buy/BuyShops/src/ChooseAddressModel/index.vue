@@ -111,13 +111,13 @@ const checkAddress = async () => {
           chooseAddress()
           ElMessage({
             type: 'success',
-            message: 'Delete completed',
+            message: '購物車已清空',
           })
         })
         .catch(() => {
           ElMessage({
             type: 'info',
-            message: 'Delete canceled',
+            message: '取消變更外送地址',
           })
         })
     } else {

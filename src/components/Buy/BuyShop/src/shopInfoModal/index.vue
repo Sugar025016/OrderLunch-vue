@@ -9,7 +9,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-3" id="exampleModalLabel">營業資訊</h1>
+          <h1 class="modal-title fs-3" id="exampleModalLabel">營業時間</h1>
           <button
             type="button"
             class="btn-close"
@@ -18,25 +18,7 @@
           ></button>
         </div>
         <div class="modal-body">
-          <div class="item shop-name">
-            <div class="schedule-title title">
-              <span>{{ name }}</span>
-            </div>
-          </div>
-
-          <div class="phone item">
-            <div class="phone-title title">
-              <el-icon :size="20"><Phone /></el-icon>
-              <span>營業電話：</span>
-              <span>{{ phone }}</span>
-            </div>
-          </div>
           <div class="schedule item">
-            <div class="schedule-title title">
-              <el-icon :size="20"><Watch /></el-icon>
-              <span>營業時間</span>
-            </div>
-
             <div v-for="schedulePeriods in schedules" class="week">
               <span v-if="schedulePeriods.week === 0">星期日：</span>
               <span v-else-if="schedulePeriods.week === 1">星期一：</span>
@@ -51,21 +33,13 @@
               >
                 <span v-if="index > 0">,</span>
                 <span class="time">
-                  {{ schedulePeriod.startTime }}~{{ schedulePeriod.endTime }}
+                  {{ showTime(schedulePeriod.startTime) }}~{{ showTime(schedulePeriod.endTime === '00:00:00' ? '24:00:00' : schedulePeriod.endTime) }}
                 </span>
               </component>
               <span v-else>非營業日</span>
             </div>
           </div>
-          <div class="location item">
-            <div class="location-title title">
-              <el-icon :size="20"><Location /></el-icon>
-              <span>營業區域：</span>
-              <span></span>
-            </div>
-          </div>
         </div>
-        <div class="modal-footer">---</div>
       </div>
     </div>
   </div>
@@ -74,6 +48,8 @@
 <script setup lang="ts">
 import { Watch, Phone } from '@element-plus/icons-vue'
 defineProps(['schedules', 'phone', 'name'])
+
+import { deleteSecond as showTime } from '@/utils/time'
 </script>
 
 <style lang="scss" scoped>
@@ -84,22 +60,17 @@ defineProps(['schedules', 'phone', 'name'])
 .modal {
   background-color: rgba(0, 0, 0, 0.5);
 
-  .modal-title {
-    margin: 10px;
-  }
   .modal-header {
     border-bottom: 2px;
     border-style: solid;
     border-color: rgb(155, 155, 155);
   }
   .modal-body {
-    // border-width: 2px;
 
     .item {
       margin: 10px 10px 30px 10px;
       .title {
         display: flex;
-        // justify-content: center;
         align-items: center;
         margin: 10px 0;
         font-size: 20px;
@@ -109,7 +80,7 @@ defineProps(['schedules', 'phone', 'name'])
         }
       }
       .week {
-        font-size: 14px;
+        font-size: 18px;
         margin: 5px 20px;
         span {
           margin: 0 2px;

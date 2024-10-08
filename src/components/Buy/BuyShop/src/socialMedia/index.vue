@@ -1,20 +1,36 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed } from 'vue'
+
+// 動態獲取當前頁面的 URL
+const currentUrl = computed(() => window.location.href)
+</script>
 <template>
-  <a class="icon-a" href="https://zh-tw.facebook.com/" target="k" rel="">
+  <a
+    class="icon-a"
+    :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      currentUrl,
+    )}`"
+    target="_blank"
+  >
     <img
       src="@/assets/icons/facebook.png"
       class="w-8 h-8 rounded-full"
       loading="lazy"
     />
-    <span class="icon-span">分享</span>
+    <span class="icon-span">分享至 Facebook</span>
   </a>
-  <a class="icon-a" href="https://zh-tw.facebook.com/" target="k" rel="">
+
+  <a
+    class="icon-a"
+    :href="`https://line.me/R/msg/text/?${encodeURIComponent(currentUrl)}`"
+    target="_blank"
+  >
     <img
       src="@/assets/icons/line.png"
       class="w-8 h-8 rounded-full"
       loading="lazy"
     />
-    <span class="icon-span">分享</span>
+    <span class="icon-span">分享至 LINE</span>
   </a>
 </template>
 <style lang="scss" scoped>
