@@ -39,6 +39,7 @@ let shopParams = reactive<PutShopData>({
   open: false,
   deliveryKm: 0,
   deliveryPrice: 0,
+  category: [],
 })
 
 let formRef = ref<any>()

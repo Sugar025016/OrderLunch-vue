@@ -47,6 +47,7 @@ const useShopStore = defineStore('Category', {
         tabProducts: [],
         products: [],
         addMeals: [],
+        category: []
       },
       shopNames: [],
       shopId: 0,

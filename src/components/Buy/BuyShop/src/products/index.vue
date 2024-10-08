@@ -110,6 +110,7 @@ let shopData = ref<ShopDetailData>({
   orderable: false,
   schedules: [],
   addMeals: [],
+  category: [],
 })
 
 const openModal = (v: ProductData) => {
